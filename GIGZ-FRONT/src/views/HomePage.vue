@@ -3,7 +3,7 @@ import { Navbar, NavbarCollapse, NavbarLink, NavbarLogo } from "flowbite-vue";
 </script>
 
 <template>
-  <div>home page</div>
+  <div> {{ $t("homepage.hello") }}</div>
 
   <Navbar>
     <template #logo>
