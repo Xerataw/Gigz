@@ -1,56 +1,35 @@
-<template>
-  <ion-page>
-    <ion-header :translucent="true">
-      <ion-toolbar>
-        <ion-title>Blank</ion-title>
-      </ion-toolbar>
-    </ion-header>
-
-    <ion-content :fullscreen="true">
-      <ion-header collapse="condense">
-        <ion-toolbar>
-          <ion-title size="large">Blank</ion-title>
-        </ion-toolbar>
-      </ion-header>
-
-      <div id="container">
-        <strong>Ready to create an app?</strong>
-        <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-      </div>
-    </ion-content>
-  </ion-page>
-</template>
-
 <script setup lang="ts">
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/vue';
+import { Navbar, NavbarCollapse, NavbarLink, NavbarLogo } from "flowbite-vue";
 </script>
 
-<style scoped>
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
+<template>
+  <div>home page</div>
 
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-</style>
+  <Navbar>
+    <template #logo>
+      <NavbarLogo
+        link="https://www.google.com/"
+        alt="Flowbite logo"
+        image-url="https://flowbite.com/docs/images/logo.svg"
+      >
+        Flowbite
+      </NavbarLogo>
+    </template>
+    <template #default="{ isShowMenu }">
+      <NavbarCollapse :isShowMenu="isShowMenu">
+        <NavbarLink is-active>Home</NavbarLink>
+        <NavbarLink>Services</NavbarLink>
+        <NavbarLink>Pricing</NavbarLink>
+        <NavbarLink>Contact</NavbarLink>
+      </NavbarCollapse>
+    </template>
+    <template #right-side>
+      <button
+        type="button"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center mr-3 md:mr-0 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Get started
+      </button>
+    </template>
+  </Navbar>
+</template>

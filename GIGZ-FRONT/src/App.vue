@@ -1,9 +1,13 @@
 <template>
-  <ion-app>
-    <ion-router-outlet />
-  </ion-app>
+  <div class="h-screen bg-white-500">Gigz front
+
+    <HomePage />
+  </div>
+
 </template>
 
 <script setup lang="ts">
-import { IonApp, IonRouterOutlet } from '@ionic/vue';
+import "./index.css";
+import HomePage from "./views/HomePage.vue"
+
 </script>
