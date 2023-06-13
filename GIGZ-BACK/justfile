@@ -7,8 +7,6 @@ down:
 build SERVICE *FLAGS:
     docker compose build {{SERVICE}} {{FLAGS}}
 
-re: down up
-
 logs SERVICE *FLAGS:
     docker compose logs {{SERVICE}} {{FLAGS}}
 
