@@ -1,11 +1,11 @@
 {
-  "name": "ionic-app-base",
+  "name": "gigz",
   "private": true,
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "build": "vue-tsc && vite build",
+    "dev": "ionic serve",
+    "build": "ionic build",
     "preview": "vite preview",
     "test:e2e": "cypress run",
     "test:unit": "vitest",
@@ -14,8 +14,13 @@
   "dependencies": {
     "@ionic/vue": "^7.0.0",
     "@ionic/vue-router": "^7.0.0",
+    "@vueuse/core": "^10.1.2",
+    "flowbite": "^1.6.5",
+    "flowbite-vue": "^0.0.12",
     "ionicons": "^7.0.0",
+    "pinia": "^2.1.3",
     "vue": "^3.2.45",
+    "vue-i18n": "^9.2.2",
     "vue-router": "^4.1.6"
   },
   "devDependencies": {
@@ -23,10 +28,13 @@
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-typescript": "^11.0.2",
     "@vue/test-utils": "^2.3.0",
+    "autoprefixer": "^10.4.14",
     "cypress": "^12.7.0",
     "eslint": "^8.35.0",
     "eslint-plugin-vue": "^9.9.0",
     "jsdom": "^21.1.0",
+    "postcss": "^8.4.24",
+    "tailwindcss": "^3.3.2",
     "typescript": "^4.9.3",
     "vite": "4.3.9",
     "vitest": "^0.29.2",
