@@ -1,7 +1,6 @@
 import { createApp } from "vue";
 import { createI18n } from "vue-i18n";
 import App from "./App.vue";
-import router from "./router";
 
 import { IonicVue } from "@ionic/vue";
 
@@ -25,22 +24,19 @@ import "@ionic/vue/css/text-transformation.css";
 import { createPinia } from "pinia";
 import translations from "./asset/i18n/translations";
 import "./theme/variables.css";
+import router from "./router/index";
 
 const i18n = createI18n({
   locale: "fr",
   fallbackLocale: "en",
   messages: translations,
 });
-
-console.log(translations);
-
 const pinia = createPinia();
 
-const app = createApp(App).use(IonicVue).use(router);
+const app = createApp(App).use(IonicVue);
 
 app.use(pinia);
 app.use(i18n);
+app.use(router);
 
-router.isReady().then(() => {
-  app.mount("#app");
-});
+app.mount("#app");
