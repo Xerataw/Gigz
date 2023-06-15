@@ -1,4 +1,4 @@
-import BottomNabarVue from "@/views/BottomNavbar/BottomNabar.vue";
+import BasicPage from "@/components/BasicPage/BasicPage.vue";
 import FavoritesVue from "@/views/Favorites/Favorites.vue";
 import SearchVue from "@/views/Search/Search.vue";
 import { createRouter, createWebHistory } from "@ionic/vue-router";
@@ -6,16 +6,21 @@ import { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
-    path: "/auth/",
-    component: BottomNabarVue,
+    path: "/",
+    component: BasicPage,
     children: [
       {
-        path: "search",
-        component: SearchVue,
-      },
-      {
-        path: "favorites",
-        component: FavoritesVue,
+        path: "auth",
+        children: [
+          {
+            path: "search",
+            component: SearchVue,
+          },
+          {
+            path: "favorites",
+            component: FavoritesVue,
+          },
+        ],
       },
     ],
   },

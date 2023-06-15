@@ -3,5 +3,7 @@ import "./index.css";
 </script>
 
 <template>
-  <RouterView />
+  <div class="h-screen">
+    <RouterView />
+  </div>
 </template>
