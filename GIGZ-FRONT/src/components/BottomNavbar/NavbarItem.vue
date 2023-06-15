@@ -5,15 +5,15 @@ export default defineComponent({
   name: "NavbarItem",
   props: {
     path: { type: String, required: true },
-    icon: { type: String, required: true },
+    icon: { type: Object, required: true },
   },
 });
 </script>
 
 <template>
-  <div class="h-24">
-    <RouterLink :to="path">
-      <img src="https://picsum.photos/200/300" alt="navbar item picture" />
-    </RouterLink>
-  </div>
+  <RouterLink :to="path">
+    <div class="h-20 w-20 bg-white text-red-500 fill-blue-500">
+      <component :is="icon" />
+    </div>
+  </RouterLink>
 </template>
