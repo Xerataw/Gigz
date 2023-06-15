@@ -1,5 +1,5 @@
 {
   "name": "Gigz",
   "integrations": {},
-  "type": "vue"
+  "type": "vue-vite"
 }
