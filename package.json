@@ -4,7 +4,8 @@
   "description": "",
   "scripts": {
     "setup": "make setup",
-    "lint": "make lint"
+    "lint": "make lint",
+    "format": "make format"
   },
   "author": "Gigz Team <alexandre.sparton@epitech.eu>",
   "license": "ISC",
