@@ -2,3 +2,7 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 npx --no -- commitlint --edit ${1}
+npx --no -- commitlint --edit 
+npx --no -- commitlint --edit 
+npx --no -- commitlint --edit 
+npx --no -- commitlint --edit 

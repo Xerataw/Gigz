@@ -2,7 +2,9 @@
   "name": "gigz",
   "version": "0.0.0",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "setup": "make commitlint-setup"
+  },
   "author": "Gigz Team <alexandre.sparton@epitech.eu>",
   "license": "ISC",
   "devDependencies": {
