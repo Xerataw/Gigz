@@ -1,0 +1,13 @@
+{
+  "name": "gigz",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {},
+  "author": "Gigz Team <alexandre.sparton@epitech.eu>",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
+    "husky": "^8.0.3"
+  }
+}
