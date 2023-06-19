@@ -1,7 +1,0 @@
-{
-  "name": "GIGZ-Front",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "react-vite"
-}
