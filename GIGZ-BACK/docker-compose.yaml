@@ -20,7 +20,7 @@ services:
       - ./prisma:/usr/src/app/prisma
 
     depends_on:
-      - db
+      - database
 
   adminer:
     image: adminer
@@ -31,7 +31,10 @@ services:
     ports:
       - 5555:8080
 
-  db:
+    links:
+      - database:db
+
+  database:
     image: mysql:8.0
     container_name: gigz-database
 

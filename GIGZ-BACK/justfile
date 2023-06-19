@@ -29,3 +29,6 @@ prisma +COMMAND:
 
 migrate:
     docker compose exec api yarn prisma migrate dev
+
+db:
+    docker compose exec -it database mysql -u root -p
