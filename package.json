@@ -1,0 +1,32 @@
+{
+  "name": "gigz",
+  "version": "0.0.0",
+  "description": "",
+  "scripts": {
+    "setup": "make setup",
+    "lint": "make lint",
+    "format": "make format"
+  },
+  "author": "Gigz Team <alexandre.sparton@epitech.eu>",
+  "license": "ISC",
+  "devDependencies": {
+    "@commitlint/cli": "^17.6.5",
+    "@commitlint/config-conventional": "^17.6.5",
+    "@vue/eslint-config-typescript": "^11.0.2",
+    "eslint": "^8.43.0",
+    "eslint-config-prettier": "^8.8.0",
+    "eslint-plugin-vue": "^9.9.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^13.2.2",
+    "prettier": "^2.8.8"
+  },
+  "lint-staged": {
+    "./**/*.{js,jsx,ts,tsx}": [
+      "eslint"
+    ],
+    "./**/*.{js,ts,vue,css,html,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
