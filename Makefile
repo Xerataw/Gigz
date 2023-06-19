@@ -6,7 +6,7 @@ BBLUE=\033[1;34m
 ECHO=@ echo "${BBLUE}-->"
 
 # PATHS
-GIGZ_FRONT_PATH=./GIGZ-FRONT/
+GIGZ_FRONT_PATH=./front/
 GIGZ_BACK_PATH=./GIGZ-BACK/
 
 setup:
@@ -22,9 +22,9 @@ setup:
 	${ECHO} Code linter and formatter set up
 
 lint:
-	${ECHO} Launch linter on gigz-front "$(COLOR_RESET)"
+	${ECHO} Launch linter on front "$(COLOR_RESET)"
 	@- npx eslint $(GIGZ_FRONT_PATH)
-	${ECHO} gigz-front project linted
+	${ECHO} front project linted
 	${ECHO} Launch linter on gigz-back "$(COLOR_RESET)"
 	@- npx eslint $(GIGZ_BACK_PATH)
 	${ECHO} gigz-back project linted

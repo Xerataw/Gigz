@@ -7,11 +7,12 @@ You will need [docker](https://www.docker.com) and [just](https://github.com/cas
 
 ## How to use
 
-*Tips:* to see the list of recipes, type `just -l`.
+_Tips:_ to see the list of recipes, type `just -l`.
 
 To bootstrap the project run the command `just`. It will setup the docker environment (app + database + web interface) and run the prisma migrations on the database.
 
 The following workflows are available:
+
 - To start the docker environment, type `just up` (add `-d` to start in detached mode). To stop it, run `just down`.
 - To see live logs of a service, run `just logs <service>` where service is one of the following: `api`, `database` (add a `-f` flag to keep the logs open).
 - To execute a command in a container, type `just exec <service> <command>`.
