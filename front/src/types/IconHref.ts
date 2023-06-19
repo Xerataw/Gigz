@@ -1,5 +1,6 @@
 import Icon from './Icon';
 
-export default interface IconHref extends Icon {
+export default interface IconNavbar extends Icon {
   path: string;
+  fillColor: string;
 }

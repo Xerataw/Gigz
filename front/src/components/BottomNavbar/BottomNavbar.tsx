@@ -8,32 +8,36 @@ import {
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { v4 } from 'uuid';
-import IconHref from '../../types/IconHref';
+import IconNavbar from '../../types/IconHref';
 import Icon from '../Icon/Icon';
 
 interface Props {
   isShadow?: boolean;
 }
-const icons: IconHref[] = [
+const icons: IconNavbar[] = [
   {
     path: '/liked',
     icon: <IconHeart />,
     label: 'Go to liked page',
+    fillColor: 'primary',
   },
   {
     path: '/search',
     icon: <IconSearch />,
     label: 'Go to search page',
+    fillColor: 'secondary',
   },
   {
     path: '/conversations',
     icon: <IconMessageCircle />,
     label: 'Go to conversations page',
+    fillColor: 'tertiary',
   },
   {
     path: '/profile',
     icon: <IconUserCircle />,
     label: 'Go to profile page',
+    fillColor: 'dark',
   },
 ];
 
@@ -53,7 +57,12 @@ const BottomNavbar: React.FC<Props> = ({ isShadow }) => {
           {icons.map((icon) => {
             return (
               <Link key={v4()} to={icon.path}>
-                <Icon size="large" color="black">
+                <Icon
+                  size="medium"
+                  color="dark"
+                  isFilled={window.location.pathname === icon.path}
+                  fillColor={icon.fillColor}
+                >
                   {icon.icon}
                 </Icon>
               </Link>
