@@ -1,8 +1,6 @@
-import { createRouter, createWebHistory } from '@ionic/vue-router';
-import { RouteRecordRaw } from 'vue-router';
-import TabsPage from '../views/TabsPage.vue'
-import AppLayout from "@/views/AppLayout.vue";
-import Tab4PageVue from "@/components/Tab4Page.vue";
+import AppLayoutVue from "@/views/AppLayout.vue";
+import { createRouter, createWebHistory } from "@ionic/vue-router";
+import { RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -10,8 +8,8 @@ const routes: Array<RouteRecordRaw> = [
     redirect: "/favorites",
   },
   {
-    path: "/",
-    component: AppLayout,
+    path: "/favorites",
+    component: AppLayoutVue,
     // children: [
     //   {
     //     path: "",
@@ -35,7 +33,7 @@ const routes: Array<RouteRecordRaw> = [
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes
-})
+  routes,
+});
 
-export default router
+export default router;

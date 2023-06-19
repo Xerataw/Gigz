@@ -1,6 +1,6 @@
 <template>
 	<h1>
-		Hello
+		Hello test
 	</h1>
 </template>
 
