@@ -49,7 +49,7 @@ const Icon: React.FC<Props> = ({
       <ActionIcon
         size={getSizeLabel(size)}
         color={isFilled ? fillColor : color}
-        variant={isFilled === true ? 'filled' : 'transparent'}
+        variant={isFilled === true ? 'light' : 'transparent'}
       >
         {icon}
       </ActionIcon>
