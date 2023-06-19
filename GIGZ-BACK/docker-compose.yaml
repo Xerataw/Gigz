@@ -17,6 +17,7 @@ services:
 
     volumes:
       - ./src:/usr/src/app/src
+      - ./prisma:/usr/src/app/prisma
 
     depends_on:
       - db
