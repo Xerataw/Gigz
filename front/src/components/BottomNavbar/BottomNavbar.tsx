@@ -1,14 +1,17 @@
 import { Overlay } from '@mantine/core';
 import {
   IconHeart,
+  IconHeartFilled,
   IconMessageCircle,
+  IconMessageCircle2Filled,
   IconSearch,
   IconUserCircle,
+  IconZoomFilled,
 } from '@tabler/icons-react';
 import * as React from 'react';
 import { Link } from 'react-router-dom';
 import { v4 } from 'uuid';
-import IconNavbar from '../../types/IconHref';
+import IconNavbar from '../../types/IconNavbar';
 import Icon from '../Icon/Icon';
 
 interface Props {
@@ -20,24 +23,28 @@ const icons: IconNavbar[] = [
     icon: <IconHeart />,
     label: 'Go to liked page',
     fillColor: 'primary',
+    iconFilled: <IconHeartFilled />,
   },
   {
     path: '/search',
     icon: <IconSearch />,
     label: 'Go to search page',
     fillColor: 'secondary',
+    iconFilled: <IconZoomFilled />,
   },
   {
     path: '/conversations',
     icon: <IconMessageCircle />,
     label: 'Go to conversations page',
     fillColor: 'tertiary',
+    iconFilled: <IconMessageCircle2Filled />,
   },
   {
     path: '/profile',
     icon: <IconUserCircle />,
     label: 'Go to profile page',
     fillColor: 'dark',
+    iconFilled: <IconUserCircle />,
   },
 ];
 
@@ -60,11 +67,9 @@ const BottomNavbar: React.FC<Props> = ({ isShadow }) => {
                 <Icon
                   size="medium"
                   color="dark"
+                  icon={icon}
                   isFilled={window.location.pathname === icon.path}
-                  fillColor={icon.fillColor}
-                >
-                  {icon.icon}
-                </Icon>
+                />
               </Link>
             );
           })}
