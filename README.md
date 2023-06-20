@@ -39,10 +39,8 @@ To locally launch ESLinter or Prettier on both projects when needed.
 2. Run command `npm install` or `yarn install`
 3. Create a `.env` with the following variables :
     - `DATABASE_URL`
-4. Run the following commands:
-    - `just up -d`
-    - `just migrate`
-    - `just populate`
+4. Run the following command:
+    - `just`
 
 ## Test the app on your phone or emulator 📱
 

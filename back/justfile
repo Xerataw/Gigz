@@ -1,10 +1,11 @@
-default:
-    docker compose up -d
-    @sleep 5
-    docker compose exec api yarn prisma migrate dev
+default: up wait migrate populate
+
+wait:
+    @echo '=> Waiting for containers to be ready...'
+    @sleep 15
 
 up *FLAGS:
-    docker compose up {{FLAGS}}
+    docker compose up -d {{FLAGS}}
 
 re *FLAGS:
     docker compose down && docker compose up {{FLAGS}}
@@ -37,4 +38,5 @@ db:
     docker compose exec -it database mysql -u root -p
 
 populate:
-    docker compose exec -it database sh -c 'zcat ./gigz-scripts/*.sql.gz | mysql -u root -p gigz'
+    @docker compose exec -it database sh -c 'zcat ./gigz-scripts/*.sql.gz | mysql -u root -p gigz'
+    @echo "=> Database table populated with default data!"
