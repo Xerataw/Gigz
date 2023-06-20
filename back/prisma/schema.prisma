@@ -15,6 +15,8 @@ model account {
   phone_number                                       String?         @unique(map: "phone_number") @db.VarChar(255)
   email_validated                                    Int             @default(0) @db.TinyInt
   account_genre                                      account_genre[]
+  artist                                             artist[]
+  host                                               host[]
   liked_account_liked_account_liker_accountToaccount liked_account[] @relation("liked_account_liker_accountToaccount")
   liked_account_liked_account_liked_accountToaccount liked_account[] @relation("liked_account_liked_accountToaccount")
   settings                                           settings[]
@@ -44,9 +46,12 @@ model artist {
   website_link     String? @db.VarChar(255)
   deezer_link      String? @db.VarChar(255)
   city_id          Int?
+  account_id       Int
   city             city?   @relation(fields: [city_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "artist_ibfk_1")
+  account          account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "artist_ibfk_2")
 
   @@index([city_id], map: "city_id")
+  @@index([account_id], map: "artist_ibfk_2")
 }
 
 model capacity {
@@ -74,13 +79,16 @@ model host {
   host_type_id   Int
   address        String    @db.VarChar(255)
   city_id        Int
+  account_id     Int
   capacity       capacity  @relation(fields: [capacity_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_1")
   host_type      host_type @relation(fields: [host_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_2")
   city           city      @relation(fields: [city_id], references: [id], onUpdate: Restrict, map: "host_ibfk_3")
+  account        account   @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_4")
 
   @@index([capacity_id], map: "capacity_id")
   @@index([host_type_id], map: "host_type_id")
   @@index([city_id], map: "city_id")
+  @@index([account_id], map: "host_ibfk_4")
 }
 
 model host_type {
@@ -115,13 +123,13 @@ model settings {
 model city {
   id            Int      @id @default(autoincrement())
   name          String?  @db.VarChar(45)
-  zip_code      String?  @db.VarChar(255)
-  longitude_deg Float?   @db.Float
   latitude_deg  Float?   @db.Float
-  longitude_grd String?  @db.VarChar(9)
-  latitude_grd  String?  @db.VarChar(8)
-  longitude_dms String?  @db.VarChar(9)
   latitude_dms  String?  @db.VarChar(8)
+  latitude_grd  String?  @db.VarChar(8)
+  longitude_deg Float?   @db.Float
+  longitude_dms String?  @db.VarChar(9)
+  longitude_grd String?  @db.VarChar(9)
+  zip_code      String?  @db.VarChar(255)
   artist        artist[]
   host          host[]
 
