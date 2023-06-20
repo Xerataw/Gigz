@@ -7,9 +7,9 @@ const container = document.getElementById('root');
 const root = createRoot(container!);
 
 // Configure react query
-const queryClient: QueryClient = new QueryClient();
-queryClient.defaultQueryOptions({ retry: false });
-queryClient.defaultMutationOptions({ retry: false });
+const queryClient: QueryClient = new QueryClient({
+  defaultOptions: { queries: { retry: false }, mutations: { retry: false } },
+});
 
 root.render(
   <MantineProvider withGlobalStyles withNormalizeCSS theme={{ loader: 'bars' }}>
