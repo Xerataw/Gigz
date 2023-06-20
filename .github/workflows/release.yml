@@ -13,6 +13,7 @@ jobs:
       with:
         node-version-file: 'back/.tool-versions'
     - run: cd back/
+    - run: npm ci
     - run: npm run build
 
     - name: Copy files via ssh
