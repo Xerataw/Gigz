@@ -1,5 +1,5 @@
 import express from 'express';
-import useDatabase from '../composition/useDatabase';
+import useDatabase from '../composables/useDatabase';
 
 const router = express.Router();
 const { database } = useDatabase();

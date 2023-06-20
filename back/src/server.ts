@@ -1,12 +1,9 @@
 import express from 'express';
 
 import v1 from './v1';
-import useDatabase from './composition/useDatabase';
 
 const PORT = 3000;
 const app = express();
-
-const { database } = useDatabase();
 
 app.use(express.json());
 
