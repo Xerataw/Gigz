@@ -26,7 +26,8 @@ export default class GigzFetcher {
     isAuth = true
   ): Promise<GigzResponse<T>> {
     // Build request
-    const finalUri = GigzFetcher.API_URL + uri + this.handleGetParams(params);
+    const finalUri =
+      GigzFetcher.API_URL + uri + this.buildURLParamsFromObject(params);
     const finalHeaders = this.getFinalHeaders(headers, isAuth);
 
     try {
@@ -164,7 +165,8 @@ export default class GigzFetcher {
     isAuth = true
   ): Promise<GigzResponse<T>> {
     // Build request
-    const finalUri = GigzFetcher.API_URL + uri + this.handleGetParams(params);
+    const finalUri =
+      GigzFetcher.API_URL + uri + this.buildURLParamsFromObject(params);
     const finalHeaders = this.getFinalHeaders(headers, isAuth);
 
     try {
@@ -190,7 +192,7 @@ export default class GigzFetcher {
    * @param params the parameters given as object
    * @returns the build params string (empty string if no params)
    */
-  private static handleGetParams(params: object): string {
+  private static buildURLParamsFromObject(params: object): string {
     if (Object.keys(params).length > 0) {
       const strParams: Record<string, string> = {};
       for (const [key, value] of Object.entries(params)) {
