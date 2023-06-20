@@ -28,7 +28,7 @@ jobs:
         target: .
 
     - name: Build the docker image and Deploy it
-      uses: appleboy/ssh-actions@master
+      uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.HOST }}
         username: ${{ secrets.USERNAME }}
