@@ -17,30 +17,31 @@ import Icon from '../Icon/Icon';
 interface Props {
   isShadow?: boolean;
 }
+
 const icons: IconNavbar[] = [
   {
-    path: '/liked',
+    path: '/auth/liked',
     icon: <IconHeart />,
     label: 'Go to liked page',
     fillColor: 'primary',
     iconFilled: <IconHeartFilled />,
   },
   {
-    path: '/search',
+    path: '/auth/search',
     icon: <IconSearch />,
     label: 'Go to search page',
     fillColor: 'secondary',
     iconFilled: <IconZoomFilled />,
   },
   {
-    path: '/conversations',
+    path: '/auth/conversations',
     icon: <IconMessageCircle />,
     label: 'Go to conversations page',
     fillColor: 'tertiary',
     iconFilled: <IconMessageCircle2Filled />,
   },
   {
-    path: '/profile',
+    path: '/auth/profile',
     icon: <IconUserCircle />,
     label: 'Go to profile page',
     fillColor: 'dark',

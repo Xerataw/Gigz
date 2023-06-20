@@ -12,39 +12,56 @@ import Profile from './pages/Profile/Profile';
 import Search from './pages/Search/Search';
 
 /* Theme variables */
+import NestedRoute from './components/NestedRoute/NestedRoute';
 import './index.css';
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <div className="bg-slate-500 relative h-screen">
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Redirect to="/liked" />
-        </Route>
-        <Route path="/liked">
-          <Liked />
-        </Route>
+const App: React.FC = () => {
+  const redirectRoute = '/auth/liked';
 
-        <Route path="/search">
-          <Search />
-        </Route>
+  return (
+    <div className="bg-slate-500 relative h-screen">
+      <Router>
+        <Switch>
+          <Route path="/" exact>
+            <Redirect to={redirectRoute} />
+          </Route>
+          <Route exact path="/login"></Route>
 
-        <Route path="/conversations">
-          <Conversations />
-        </Route>
+          <NestedRoute
+            path="/auth"
+            redirectNoMatch={redirectRoute}
+            condition={true}
+          >
+            <Route path="/liked">
+              <Liked />
+            </Route>
 
-        <Route path="/profile">
-          <Profile />
-        </Route>
+            <Route path="/search">
+              <Search />
+            </Route>
 
-        <Route path="/*" exact>
-          <Redirect to="/liked" />
-        </Route>
-      </Switch>
-    </Router>
-  </div>
-);
+            <Route path="/conversations">
+              <Conversations />
+            </Route>
+
+            <Route path="/profile">
+              <Profile />
+            </Route>
+          </NestedRoute>
+
+          <Route path="/auth">
+            <Switch></Switch>
+          </Route>
+
+          <Route path="/*" exact>
+            <Redirect to={redirectRoute} />
+          </Route>
+        </Switch>
+      </Router>
+    </div>
+  );
+};
 
 export default App;
