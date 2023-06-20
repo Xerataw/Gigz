@@ -12,7 +12,7 @@ model account {
   email                                              String          @unique(map: "Account_email_key") @db.VarChar(255)
   password                                           String          @db.VarChar(255)
   creation_date                                      DateTime        @default(now()) @db.DateTime(0)
-  phone_number                                       String          @unique(map: "phone_number") @db.VarChar(255)
+  phone_number                                       String?         @unique(map: "phone_number") @db.VarChar(255)
   email_validated                                    Int             @default(0) @db.TinyInt
   account_genre                                      account_genre[]
   liked_account_liked_account_liker_accountToaccount liked_account[] @relation("liked_account_liker_accountToaccount")
@@ -43,11 +43,15 @@ model artist {
   apple_music_link String? @db.VarChar(255)
   website_link     String? @db.VarChar(255)
   deezer_link      String? @db.VarChar(255)
+  city_id          Int?
+  city             city?   @relation(fields: [city_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "artist_ibfk_1")
+
+  @@index([city_id], map: "city_id")
 }
 
 model capacity {
   id       Int    @id @default(autoincrement())
-  max      Int
+  max      Int    @db.UnsignedInt
   color    String @db.VarChar(7)
   bg_color String @db.VarChar(7)
   host     host[]
@@ -68,11 +72,15 @@ model host {
   instagram_link String?   @db.VarChar(255)
   capacity_id    Int
   host_type_id   Int
+  address        String    @db.VarChar(255)
+  city_id        Int
   capacity       capacity  @relation(fields: [capacity_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_1")
   host_type      host_type @relation(fields: [host_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_2")
+  city           city      @relation(fields: [city_id], references: [id], onUpdate: Restrict, map: "host_ibfk_3")
 
   @@index([capacity_id], map: "capacity_id")
   @@index([host_type_id], map: "host_type_id")
+  @@index([city_id], map: "city_id")
 }
 
 model host_type {
@@ -102,6 +110,24 @@ model settings {
   account        account            @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "settings_ibfk_1")
 
   @@index([account_id], map: "account_id")
+}
+
+model city {
+  id            Int      @id @default(autoincrement())
+  name          String?  @db.VarChar(45)
+  zip_code      String?  @db.VarChar(255)
+  longitude_deg Float?   @db.Float
+  latitude_deg  Float?   @db.Float
+  longitude_grd String?  @db.VarChar(9)
+  latitude_grd  String?  @db.VarChar(8)
+  longitude_dms String?  @db.VarChar(9)
+  latitude_dms  String?  @db.VarChar(8)
+  artist        artist[]
+  host          host[]
+
+  @@index([zip_code], map: "ville_code_postal")
+  @@index([longitude_deg, latitude_deg], map: "ville_longitude_latitude_deg")
+  @@index([name], map: "ville_nom_reel")
 }
 
 enum settings_dark_mode {
