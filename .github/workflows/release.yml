@@ -8,13 +8,11 @@ jobs:
     steps:
     - uses: actions/checkout@v3
 
-    - name: Set working directory in the backend folder
-      run: cd back/
-
     - name: Build the express app
       uses: actions/setup-node@v3
       with:
         node-version-file: 'back/.tool-versions'
+    - run: cd back/
     - run: npm run build
 
     - name: Copy files via ssh
@@ -24,7 +22,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        source: "dist/, prisma/, Dockerfile, package.json, yarn.lock"
+        source: "back/dist/, back/prisma/, back/Dockerfile, back/package.json, back/yarn.lock"
         target: .
 
     - name: Build the docker image and Deploy it
