@@ -12,25 +12,26 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version-file: 'back/.tool-versions'
-    - run: cd back/ && npm ci && npm run build
+    - run: cd back/
+    - run: ls
 
-    - name: Copy files via ssh
-      uses: appleboy/scp-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        source: "back/dist/, back/prisma/, back/Dockerfile, back/package.json, back/yarn.lock"
-        target: .
+#     - name: Copy files via ssh
+#       uses: appleboy/scp-action@master
+#       with:
+#         host: ${{ secrets.HOST }}
+#         username: ${{ secrets.USERNAME }}
+#         key: ${{ secrets.SSH_PRIVATE_KEY }}
+#         port: ${{ secrets.PORT }}
+#         source: "back/dist/, back/prisma/, back/Dockerfile, back/package.json, back/yarn.lock"
+#         target: .
 
-    - name: Build the docker image and Deploy it
-      uses: appleboy/ssh-action@master
-      with:
-        host: ${{ secrets.HOST }}
-        username: ${{ secrets.USERNAME }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
-        port: ${{ secrets.PORT }}
-        script: | 
-          docker stop $(docker ps -aq)
-          docker compose up --build
+#     - name: Build the docker image and Deploy it
+#       uses: appleboy/ssh-action@master
+#       with:
+#         host: ${{ secrets.HOST }}
+#         username: ${{ secrets.USERNAME }}
+#         key: ${{ secrets.SSH_PRIVATE_KEY }}
+#         port: ${{ secrets.PORT }}
+#         script: | 
+#           docker stop $(docker ps -aq)
+#           docker compose up --build
