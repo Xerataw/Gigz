@@ -5,10 +5,14 @@ import App from './App';
 
 const container = document.getElementById('root');
 const root = createRoot(container!);
-const queryClient: QueryClient = new QueryClient(); // To provide the react-query client for query caching
+
+// Configure react query
+const queryClient: QueryClient = new QueryClient();
+queryClient.defaultQueryOptions({ retry: false });
+queryClient.defaultMutationOptions({ retry: false });
 
 root.render(
-  <MantineProvider withGlobalStyles withNormalizeCSS>
+  <MantineProvider withGlobalStyles withNormalizeCSS theme={{ loader: 'bars' }}>
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>

@@ -6,7 +6,7 @@ export type GigzResponse<T> = {
   data?: T;
 };
 
-export class GigzFetcher {
+export default class GigzFetcher {
   private static API_URL = import.meta.env.VITE_GIGZ_API_URL;
   private static BASE_HEADERS = {};
 
@@ -219,15 +219,15 @@ export class GigzFetcher {
    * @param error the axios error after the request has failed
    * @returns GigzResponse with the associated details
    */
-  private static handleError<T>(error: AxiosError): GigzResponse<T> {
+  private static handleError<T>(error: AxiosError): Promise<GigzResponse<T>> {
     if (error.response)
-      return {
+      return Promise.reject({
         message: error.response.statusText,
         code: error.response.status,
-      };
-    return {
+      });
+    return Promise.reject({
       message: error.message,
       code: HttpStatusCode.InternalServerError,
-    };
+    });
   }
 }
