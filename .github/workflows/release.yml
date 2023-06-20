@@ -30,6 +30,6 @@ jobs:
         port: ${{ secrets.PORT }}
         script: |
           cd back/ 
-          docker compose down
-          docker compose up --build -d
+          docker compose build api
+          docker compose up api -d
           docker compose exec api yarn prisma migrate dev
