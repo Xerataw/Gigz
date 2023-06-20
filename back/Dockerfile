@@ -12,5 +12,5 @@ COPY . .
 RUN yarn prisma generate
 RUN yarn build
 
-EXPOSE $PORT
+EXPOSE 3000
 CMD yarn start

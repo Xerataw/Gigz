@@ -35,11 +35,14 @@ To locally launch ESLinter or Prettier on both projects when needed.
 
 #### Setup Express (back) project
 
-1. Go to `/GIGZ-BACK` directory
+1. Go to `/back` directory
 2. Run command `npm install` or `yarn install`
 3. Create a `.env` with the following variables :
     - `DATABASE_URL`
-    - `PORT`
+4. Run the following commands:
+    - `just up -d`
+    - `just migrate`
+    - `just populate`
 
 ## Test the app on your phone or emulator 📱
 
