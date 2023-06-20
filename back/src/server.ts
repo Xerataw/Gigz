@@ -3,8 +3,8 @@ import express from 'express';
 import v1 from './v1';
 import useDatabase from './composition/useDatabase';
 
+const PORT = 3000;
 const app = express();
-const port = process.env.PORT || 8080;
 
 const { database } = useDatabase();
 
@@ -17,4 +17,4 @@ app.use(function (req, _, next) {
 
 app.use('/api/v1/', v1);
 
-app.listen(port, () => console.log(`🚀 API listening on port ${port}`));
+app.listen(PORT, () => console.log(`🚀 API listening on port ${PORT}`));
