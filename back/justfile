@@ -26,7 +26,7 @@ shell SERVICE SHELL='bash':
     docker compose exec -it {{SERVICE}} {{SHELL}}
 
 fetch URL *FLAGS:
-    httpx http://localhost:3000/api/{{URL}} {{FLAGS}}
+    @-httpx http://localhost:3000/api/{{URL}} {{FLAGS}}
 
 prisma +COMMAND:
     docker compose exec api yarn prisma {{COMMAND}}
