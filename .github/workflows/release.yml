@@ -12,9 +12,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version-file: 'back/.tool-versions'
-    - run: cd back/
-    - run: npm ci
-    - run: npm run-script build
+    - run: cd back/ && npm ci && npm run build
 
     - name: Copy files via ssh
       uses: appleboy/scp-action@master
