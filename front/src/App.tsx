@@ -12,54 +12,66 @@ import Profile from './pages/Profile/Profile';
 import Search from './pages/Search/Search';
 
 /* Theme variables */
+import { Container } from '@mantine/core';
 import NestedRoute from './components/NestedRoute/NestedRoute';
 import './index.css';
+import Register from './pages/Register/Register';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const redirectRoute = '/auth/liked';
+  const redirectRoute = '/login/register';
 
   return (
-    <div className="bg-slate-500 relative h-screen">
-      <Router>
-        <Switch>
-          <Route path="/" exact>
-            <Redirect to={redirectRoute} />
-          </Route>
-          <Route exact path="/login"></Route>
+    <div className="bg-white">
+      <Container size={'xs'} px={0}>
+        <div className="bg-white relative h-screen">
+          <Router>
+            <Switch>
+              <Route path="/" exact>
+                <Redirect to={redirectRoute} />
+              </Route>
 
-          <NestedRoute
-            path="/auth"
-            redirectNoMatch={redirectRoute}
-            condition={true}
-          >
-            <Route path="/liked">
-              <Liked />
-            </Route>
+              <NestedRoute
+                condition={true}
+                path="/login"
+                redirectNoMatch={redirectRoute}
+              >
+                <Route exact path="/register">
+                  <Register />
+                </Route>
+                <Route exact path="/login"></Route>
+              </NestedRoute>
 
-            <Route path="/search">
-              <Search />
-            </Route>
+              <NestedRoute
+                path="/auth"
+                redirectNoMatch={redirectRoute}
+                condition={true}
+              >
+                <Route path="/liked">
+                  <Liked />
+                </Route>
 
-            <Route path="/conversations">
-              <Conversations />
-            </Route>
+                <Route path="/search">
+                  <Search />
+                </Route>
 
-            <Route path="/profile">
-              <Profile />
-            </Route>
-          </NestedRoute>
+                <Route path="/conversations">
+                  <Conversations />
+                </Route>
 
-          <Route path="/auth">
-            <Switch></Switch>
-          </Route>
+                <Route path="/profile">
+                  <Profile />
+                </Route>
+              </NestedRoute>
 
-          <Route path="/*" exact>
-            <Redirect to={redirectRoute} />
-          </Route>
-        </Switch>
-      </Router>
+              <Route path="/*" exact>
+                <Redirect to={redirectRoute} />
+              </Route>
+            </Switch>
+          </Router>
+        </div>
+      </Container>
     </div>
   );
 };
