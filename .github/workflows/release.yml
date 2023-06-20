@@ -1,0 +1,39 @@
+name: Deploy to production
+on:
+  workflow_dispatch:
+jobs:
+  build:
+    name: Build & deploy to server
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Set working directory in the backend folder
+      run: cd back/
+
+    - name: Build the express app
+      uses: actions/setup-node@v3
+      with:
+        node-version-file: '.tool-versions'
+    - run: npm run build
+
+    - name: Copy files via ssh
+      uses: appleboy/scp-action@v0.1.4
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        source: "dist/, prisma/, Dockerfile, package.json, yarn.lock"
+        target: .
+
+    - name: Build the docker image and Deploy it
+      uses: appleboy/ssh-actions
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        port: ${{ secrets.PORT }}
+        script: | 
+          docker stop $(docker ps -aq)
+          docker compose up --build
