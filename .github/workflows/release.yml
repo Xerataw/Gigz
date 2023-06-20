@@ -14,7 +14,7 @@ jobs:
     - name: Build the express app
       uses: actions/setup-node@v3
       with:
-        node-version-file: '.tool-versions'
+        node-version-file: 'back/.tool-versions'
     - run: npm run build
 
     - name: Copy files via ssh
