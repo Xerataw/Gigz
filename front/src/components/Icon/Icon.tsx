@@ -1,11 +1,12 @@
 import { ActionIcon } from '@mantine/core';
-import React, { ReactElement, ReactNode } from 'react';
+import React, { ReactElement } from 'react';
+import IconNavbar from '../../types/IconNavbar';
+
 interface Props {
   size: 'small' | 'medium' | 'large';
   color: string;
-  children: ReactNode;
   isFilled: boolean;
-  fillColor: string;
+  icon: IconNavbar;
 }
 
 const getSizePixel = (size: string): number => {
@@ -32,26 +33,27 @@ const getSizeLabel = (size: string): string => {
   return 'md';
 };
 
-const Icon: React.FC<Props> = ({
-  children,
-  size,
-  color,
-  isFilled,
-  fillColor,
-}) => {
-  const icon = React.cloneElement(children as ReactElement, {
-    height: getSizePixel(size)?.toString(),
-    width: getSizePixel(size)?.toString(),
+const Icon: React.FC<Props> = ({ size, color, isFilled, icon }) => {
+  const sizePixel = getSizePixel(size)?.toString();
+
+  const iconChild = React.cloneElement(icon.icon as ReactElement, {
+    height: sizePixel,
+    width: sizePixel,
+  });
+
+  const iconFilledChild = React.cloneElement(icon.iconFilled as ReactElement, {
+    height: sizePixel,
+    width: sizePixel,
   });
 
   return (
     <div className="m-2 flex">
       <ActionIcon
         size={getSizeLabel(size)}
-        color={isFilled ? fillColor : color}
-        variant={isFilled === true ? 'light' : 'transparent'}
+        color={isFilled ? icon.fillColor : color}
+        variant="transparent"
       >
-        {icon}
+        {isFilled ? iconFilledChild : iconChild}
       </ActionIcon>
     </div>
   );

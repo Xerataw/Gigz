@@ -39,9 +39,6 @@ const App: React.FC = () => (
           <Profile />
         </Route>
 
-        <Route path="/" exact>
-          <Redirect to="/liked" />
-        </Route>
         <Route path="/*" exact>
           <Redirect to="/liked" />
         </Route>
