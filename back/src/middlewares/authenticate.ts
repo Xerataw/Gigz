@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from 'express';
 import useDatabase from '../composables/useDatabase';
+import useUtils from '../composables/useUtils';
 
+const { ErrorMessages } = useUtils();
 const { findAccountByToken } = useDatabase();
 
 const authenticate = async (
@@ -15,7 +17,7 @@ const authenticate = async (
   if (!token)
     return res.status(401).json({
       success: false,
-      message: 'Unauthenticated.',
+      message: ErrorMessages.MissingToken,
     });
 
   const account = await findAccountByToken(token);
@@ -23,7 +25,7 @@ const authenticate = async (
   if (!account)
     return res.status(401).json({
       success: false,
-      message: 'Unauthenticated.',
+      message: ErrorMessages.WrongToken,
     });
 
   req.accountId = account.id;
