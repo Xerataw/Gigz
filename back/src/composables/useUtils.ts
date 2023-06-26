@@ -1,9 +1,11 @@
 /**
- * Enumeration containing all error messages return to the front-end.
+ * Enumeration containing all API messages return to the front-end.
  */
-enum ErrorMessages {
+enum ApiMessages {
   MissingToken = 'MISSING_TOKEN',
   WrongToken = 'WRONG_TOKEN',
+
+  ApiRunning = 'API_RUNNING',
 }
 
 /**
@@ -19,7 +21,7 @@ const getEnv = (name: string) => {
 };
 
 const useUtils = () => ({
-  ErrorMessages,
+  ApiMessages,
 
   getEnv,
 });
