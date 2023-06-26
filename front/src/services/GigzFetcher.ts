@@ -1,13 +1,13 @@
 import axios, { HttpStatusCode, AxiosError } from 'axios';
+import GigzResponse from '../types/GigzResponse';
 
-export type GigzResponse<T> = {
-  code: HttpStatusCode;
-  message: string;
-  data?: T;
-};
+const envVars = import.meta.env;
 
 export default class GigzFetcher {
-  private static API_URL = import.meta.env.VITE_GIGZ_API_URL;
+  private static API_URL =
+    envVars.VITE_ENV === 'DEV'
+      ? envVars.VITE_GIGZ_API_URL_DEV
+      : envVars.VITE_GIGZ_API_URL_PROD;
   private static BASE_HEADERS = {};
 
   /**
@@ -26,8 +26,7 @@ export default class GigzFetcher {
     isAuth = true
   ): Promise<GigzResponse<T>> {
     // Build request
-    const finalUri =
-      GigzFetcher.API_URL + uri + this.buildURLParamsFromObject(params);
+    const finalUri = this.API_URL + uri + this.buildURLParamsFromObject(params);
     const finalHeaders = this.getFinalHeaders(headers, isAuth);
 
     try {
@@ -36,7 +35,6 @@ export default class GigzFetcher {
         headers: finalHeaders,
       });
       return {
-        message: axiosResponse.statusText,
         code: axiosResponse.status,
         data: axiosResponse.data,
       };
@@ -60,7 +58,7 @@ export default class GigzFetcher {
     isAuth = true
   ): Promise<GigzResponse<T>> {
     // Build request
-    const finalUri = GigzFetcher.API_URL + uri;
+    const finalUri = this.API_URL + uri;
     const finalHeaders = this.getFinalHeaders(headers, isAuth);
 
     try {
@@ -71,7 +69,6 @@ export default class GigzFetcher {
 
       // Return custom response
       return {
-        message: axiosResponse.statusText,
         code: axiosResponse.status,
         data: axiosResponse.data,
       };
@@ -95,7 +92,7 @@ export default class GigzFetcher {
     isAuth = true
   ): Promise<GigzResponse<T>> {
     // Build request
-    const finalUri = GigzFetcher.API_URL + uri;
+    const finalUri = this.API_URL + uri;
     const finalHeaders = this.getFinalHeaders(headers, isAuth);
 
     try {
@@ -130,7 +127,7 @@ export default class GigzFetcher {
     isAuth = true
   ): Promise<GigzResponse<T>> {
     // Build request
-    const finalUri = GigzFetcher.API_URL + uri;
+    const finalUri = this.API_URL + uri;
     const finalHeaders = this.getFinalHeaders(headers, isAuth);
 
     try {
@@ -165,8 +162,7 @@ export default class GigzFetcher {
     isAuth = true
   ): Promise<GigzResponse<T>> {
     // Build request
-    const finalUri =
-      GigzFetcher.API_URL + uri + this.buildURLParamsFromObject(params);
+    const finalUri = this.API_URL + uri + this.buildURLParamsFromObject(params);
     const finalHeaders = this.getFinalHeaders(headers, isAuth);
 
     try {
@@ -210,7 +206,7 @@ export default class GigzFetcher {
    * @returns the headers object
    */
   private static getFinalHeaders(headers: object, isAuth: boolean): object {
-    let finalHeaders = { ...GigzFetcher.BASE_HEADERS, ...headers };
+    let finalHeaders = { ...this.BASE_HEADERS, ...headers };
     if (isAuth)
       finalHeaders = { Authorization: `Bearer dummyToken`, ...headers };
     return finalHeaders;
