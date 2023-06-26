@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon src/server.ts",
+    "dev": "tsx watch src/server.ts",
     "build": "tsc",
     "start": "node dist/server.js"
   },
@@ -15,7 +15,6 @@
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
     "validator": "^13.9.0",
-    "semver": "^7.5.3",
     "zod": "^3.21.4"
   },
   "devDependencies": {
@@ -25,9 +24,8 @@
     "@types/jsonwebtoken": "^9.0.2",
     "@types/node": "^20.3.1",
     "@types/validator": "^13.7.17",
-    "nodemon": "^2.0.22",
     "prisma": "^4.15.0",
-    "ts-node": "^10.9.1",
+    "tsx": "^3.12.7",
     "typescript": "^5.1.3"
   }
 }
