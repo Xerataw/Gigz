@@ -10,8 +10,9 @@ You will need [docker](https://www.docker.com) and [just](https://github.com/cas
 To bootstrap the application, install the dependencies using:
 `yarn install` or `npm install`
 
-You will also need a `.env` containing the `DATABASE_URL` variable.
-When working in the dev environment, the variable must be set to `mysql://root:root@database/gigz?connect_timeout=300`
+You will also need a `.env` containing the variables:
+- `DATABASE_URL` => default to `mysql://root:root@database/gigz?connect_timeout=300`
+- `TOKEN_SALT`
 
 Then execute the following command to setup the environment:
 - `just`
