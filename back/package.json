@@ -5,7 +5,7 @@
   "license": "MIT",
   "scripts": {
     "dev": "tsx watch src/server.ts",
-    "build": "tsc",
+    "build": "tsc && tsc-alias",
     "start": "node dist/server.js"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "@types/node": "^20.3.1",
     "@types/validator": "^13.7.17",
     "prisma": "^4.15.0",
+    "tsc-alias": "^1.8.6",
     "tsx": "^3.12.7",
     "typescript": "^5.1.3"
   }
