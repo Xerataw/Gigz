@@ -2,10 +2,14 @@
  * Enumeration containing all API messages return to the front-end.
  */
 enum ApiMessages {
+  //AUTH
+  EmailTaken = 'EMAIL_TAKEN',
   MissingToken = 'MISSING_TOKEN',
   WrongToken = 'WRONG_TOKEN',
 
   ApiRunning = 'API_RUNNING',
+
+  WrongRoute = 'WRONG_ROUTE',
 }
 
 /**

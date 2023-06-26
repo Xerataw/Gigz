@@ -8,7 +8,7 @@ const SALT = getEnv('TOKEN_SALT');
 
 const PayloadSchema = z.object({
   id: z.coerce.number(),
-  email: z.string(),
+  email: z.string().email(),
 });
 
 type TokenPayload = z.infer<typeof PayloadSchema>;
