@@ -10,7 +10,7 @@ import authenticate from './middlewares/authenticate';
 const PORT = 3000;
 const app = express();
 
-const { ApiMessages } = useUtils();
+const { sendResponse } = useUtils();
 
 app.use(compression());
 app.use(express.json());
@@ -27,10 +27,7 @@ app.use('/api/auth/', auth);
 app.use('/api/v1/', authenticate, v1);
 
 app.use('/api/status/', (_, res) => {
-  res.status(200).json({
-    success: true,
-    message: ApiMessages.ApiRunning,
-  });
+  sendResponse(res, { message: "Hi it's Gigz API !" }, 200);
 });
 
 app.listen(PORT, () => console.log(`🚀 API listening on port ${PORT}`));
