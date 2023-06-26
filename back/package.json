@@ -9,11 +9,13 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
+    "@mapbox/node-pre-gyp": "^1.0.10",
     "@prisma/client": "4.15.0",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
     "express": "^4.18.2",
     "jsonwebtoken": "^9.0.0",
+    "make-dir": "^4.0.0",
     "validator": "^13.9.0",
     "zod": "^3.21.4"
   },
