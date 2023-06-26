@@ -5,7 +5,7 @@ import register from './register';
 
 const router = express.Router();
 
-router.use('/login/', login);
+router.use('/login', login);
 router.use('/register', register);
 
 export default router;

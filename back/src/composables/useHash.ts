@@ -4,8 +4,10 @@ import useUtils from './useUtils';
 
 const { getEnv } = useUtils();
 
+const ROUNDS = Number(getEnv('SALT_ROUNDS'));
+
 const hash = (password: string) => {
-  return bcrypt.hash(password, getEnv('PASSWORD_SALT'));
+  return bcrypt.hash(password, ROUNDS);
 };
 
 const compare = async (passwordGiven: string, hash: string) => {
