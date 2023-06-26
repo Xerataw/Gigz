@@ -1,2 +1,2 @@
-fail_on_severity: moderate
+fail_on_severity: high
 license_check: false
