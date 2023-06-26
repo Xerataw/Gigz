@@ -32,11 +32,22 @@ const findAccountByToken = async (token: string) => {
   return account;
 };
 
+/**
+ * Return the account from the database corresponding to the given email, if
+ * any.
+ */
+const findAccountByEmail = async (email: string) => {
+  return await database.account.findUnique({
+    where: { email },
+  });
+};
+
 const useDatabase = () => ({
   database,
 
   findAccountById,
   findAccountByToken,
+  findAccountByEmail,
 });
 
 export default useDatabase;
