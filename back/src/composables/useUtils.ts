@@ -6,7 +6,7 @@ import { Response } from 'express';
 enum ApiMessages {
   MissingToken = 'MISSING_TOKEN',
   WrongToken = 'WRONG_TOKEN',
-  WrongPassword = 'WRONG_PASSWORD',
+  WrongCredentials = 'WRONG_CREDENTIALS',
 
   BadRequest = 'BAD_REQUEST',
 

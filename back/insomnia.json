@@ -1,0 +1,111 @@
+{
+  "_type": "export",
+  "__export_format": 4,
+  "__export_date": "2023-06-26T14:11:07.782Z",
+  "__export_source": "insomnia.desktop.app:v2023.2.2",
+  "resources": [
+    {
+      "_id": "req_c9b2217c1b724213bbf9216c59b2fef0",
+      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "modified": 1687788457388,
+      "created": 1687788180759,
+      "url": "{{ _.url }}/status",
+      "name": "Status",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {},
+      "metaSortKey": -1687788180759,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "parentId": null,
+      "modified": 1687788527639,
+      "created": 1687778291139,
+      "name": "GIGZ",
+      "description": "",
+      "scope": "collection",
+      "_type": "workspace"
+    },
+    {
+      "_id": "req_27849ab4aa944ca68a7e0c78e9b2cf98",
+      "parentId": "fld_a9f35d978a6f4f3f9661cd7669f05920",
+      "modified": 1687788448617,
+      "created": 1687778320464,
+      "url": "{{ _.url }}/auth/login",
+      "name": "Login",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"email\": \"alexis.moins@epitech.eu\",\n\t\"password\": \"root\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {},
+      "metaSortKey": -1687778320464,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_a9f35d978a6f4f3f9661cd7669f05920",
+      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "modified": 1687788355448,
+      "created": 1687778301916,
+      "name": "AUTH",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1687778301916,
+      "_type": "request_group"
+    },
+    {
+      "_id": "env_89f2865153cc385ea04c53bb79ad92ce22c8459e",
+      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "modified": 1687788444933,
+      "created": 1687778291141,
+      "name": "Base Environment",
+      "data": { "port": 3000, "url": "localhost:{{ _.port }}/api" },
+      "dataPropertyOrder": { "&": ["port", "url"] },
+      "color": null,
+      "isPrivate": false,
+      "metaSortKey": 1687778291141,
+      "_type": "environment"
+    },
+    {
+      "_id": "jar_89f2865153cc385ea04c53bb79ad92ce22c8459e",
+      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "modified": 1687778291142,
+      "created": 1687778291142,
+      "name": "Default Jar",
+      "cookies": [],
+      "_type": "cookie_jar"
+    },
+    {
+      "_id": "spc_f7d499b1c2774d1ca5b30d0e7cf53d74",
+      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "modified": 1687778291139,
+      "created": 1687778291139,
+      "fileName": "Gigz",
+      "contents": "",
+      "contentType": "yaml",
+      "_type": "api_spec"
+    }
+  ]
+}

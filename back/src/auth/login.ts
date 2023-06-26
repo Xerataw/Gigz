@@ -1,15 +1,17 @@
 import express from 'express';
 import { z } from 'zod';
 
-import useHash from '../composables/useHash';
-import useUtils from '../composables/useUtils';
-import useToken from '../composables/useToken';
-import useDatabase from '../composables/useDatabase';
+import useHash from '@/composables/useHash';
+import useUtils from '@/composables/useUtils';
+
+import useToken from '@/composables/useToken';
+import useDatabase from '@/composables/useDatabase';
 
 const router = express.Router();
 
 const { compare } = useHash();
 const { generateToken } = useToken();
+
 const { findAccountByEmail } = useDatabase();
 const { ApiMessages, sendError, sendResponse } = useUtils();
 
@@ -23,10 +25,10 @@ router.post('/', async (req, res) => {
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
 
   const account = await findAccountByEmail(body.data.email);
-  if (!account) return; // TODO use EmailTaken
+  if (!account) return sendError(res, ApiMessages.WrongCredentials);
 
   if (!(await compare(body.data.password, account.password)))
-    return sendError(res, ApiMessages.WrongPassword);
+    return sendError(res, ApiMessages.WrongCredentials);
 
   const token = generateToken({
     id: account.id,
