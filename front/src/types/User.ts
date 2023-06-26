@@ -1,11 +1,8 @@
-import { LocalStorageUtils } from '../utils/localStorageUtils.utils';
-import { UserTypes } from './UserType';
+import IonicStorageAccessor from '../services/IonicStorageAccessor';
+import UserType from './UserType';
 
 /**
- * This decorator is used to store the user in the local storage on change
- *
- * @param argument
- * @returns
+ * This decorator is used to store the user in the local storage on change.
  */
 const storeUser = (argument: string) => {
   return (target: any, key: string, descriptor: any) => {
@@ -13,7 +10,7 @@ const storeUser = (argument: string) => {
 
     descriptor.value = function (...args: any[]) {
       this[argument] = args[0];
-      LocalStorageUtils.set('user', this);
+      IonicStorageAccessor.set('user', this);
       return originalMethod.apply(target, args);
     };
 
@@ -21,61 +18,111 @@ const storeUser = (argument: string) => {
   };
 };
 
-export interface UserInterface {
-  userName: string;
-  profilePicture: string;
-  token: string;
-  type: UserTypes;
-}
+/**
+ * Singleton to use throughout the front to get global data about the user.
+ */
+export default class User {
+  private static instance: User;
 
-export class User {
-  public userName: string;
-  public profilePicture: string;
-  public token: string;
-  public type: UserTypes;
+  private username: string | null;
+  private profilePicture: string | null;
+  private token: string | null;
+  private type: UserType | null;
 
-  constructor(
-    userName: string,
-    profilePicture: string,
-    token: string,
-    type: UserTypes
+  private constructor(
+    username?: string,
+    profilePicture?: string,
+    token?: string,
+    type?: UserType
   ) {
-    this.userName = userName;
-    this.profilePicture = profilePicture;
-    this.token = token;
-    this.type = type;
+    this.username = username ?? null;
+    this.profilePicture = profilePicture ?? null;
+    this.token = token ?? null;
+    this.type = type ?? null;
   }
 
-  static fromJson(json: UserInterface): User {
-    return new User(json.userName, json.profilePicture, json.token, json.type);
+  /**
+   * If no instance, load possible information from local storage into instance memory.
+   * @returns the unique user instance of the app.
+   */
+  public static async getInstance(): Promise<User> {
+    const localUserInfo = await IonicStorageAccessor.get('localUserInfo');
+    return new Promise<User>((resolve) => {
+      if (!this.instance) {
+        if (!localUserInfo) this.instance = new User();
+        else
+          this.instance = new User(
+            localUserInfo.username,
+            localUserInfo.profilePicture,
+            localUserInfo.token,
+            localUserInfo.type
+          );
+      }
+      resolve(this.instance);
+    });
   }
 
-  toJSON(user: User): UserInterface {
-    return {
-      userName: user.userName,
-      profilePicture: user.profilePicture,
-      token: user.token,
-      type: user.type,
-    };
+  /**
+   * Change the user instance username and write the changes in local storage.
+   * @param username the new username to set.
+   */
+  @storeUser('username')
+  public setUsername(username: string | null) {
+    this.username = username;
   }
 
-  @storeUser('userName')
-  setUsername(userName: string) {
-    this.userName = userName;
+  /**
+   * @returns the username stored in local storage.
+   */
+  public getUsername(): string | null {
+    return this.username;
   }
 
+  /**
+   * Change the user instance profile picture and write the changes in local storage.
+   * @param username the new profile picture to set.
+   */
   @storeUser('profilePicture')
-  setProfilePicture(profilePicture: string) {
+  public setProfilePicture(profilePicture: string | null) {
     this.profilePicture = profilePicture;
   }
 
+  /**
+   * @returns the profile picture stored in local storage.
+   */
+  public getProfilePicture(): string | null {
+    return this.profilePicture;
+  }
+
+  /**
+   * Change the user instance auth token and write the changes in local storage.
+   * @param username the new auth token to set.
+   */
   @storeUser('token')
-  setToken(token: string) {
+  public setToken(token: string | null) {
     this.token = token;
   }
 
+  /**
+   * @returns the auth token stored in local storage.
+   */
+  public getToken(): string | null {
+    return this.token;
+  }
+
+  /**
+   * Change the user instance user type (artist, host) and write the changes in local storage.
+   * @param username the new user type (artist, host) to set.
+   */
   @storeUser('type')
-  setType(type: UserTypes) {
+  public setUserType(type: UserType | null) {
     this.type = type;
+  }
+
+  /**
+   * @returns the user type stored in local storage.
+   */
+  public getUserType(): string | null {
+    return this.type;
   }
 }
