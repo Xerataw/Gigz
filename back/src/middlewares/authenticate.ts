@@ -19,6 +19,7 @@ const authenticate = async (
     });
 
   const account = await findAccountByToken(token);
+
   if (!account)
     return res.status(401).json({
       success: false,

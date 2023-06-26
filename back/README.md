@@ -12,7 +12,7 @@ To bootstrap the application, install the dependencies using:
 
 You will also need a `.env` containing the variables:
 - `DATABASE_URL` => default to `mysql://root:root@database/gigz?connect_timeout=300`
-- `TOKEN_SECRET`
+- `TOKEN_SALT`
 
 Then execute the following command to setup the environment:
 - `just`
