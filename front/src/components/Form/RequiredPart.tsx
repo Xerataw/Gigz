@@ -1,39 +1,103 @@
-import { Checkbox, TextInput } from '@mantine/core';
+import { Button, Group, PasswordInput, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
-import { ReactNode } from 'react';
+import React, { ReactElement, ReactNode } from 'react';
 
-interface Props {
-  children: ReactNode;
-  onSubmit: (values: { [value: string]: string | boolean }) => void;
+interface Input {
+  required: boolean;
+  label: string;
+  placeholder: string;
+  validate: (
+    value: string,
+    values: {
+      [key: string]: string;
+    }
+  ) => string | null;
+  initialValue: string;
+  id: string;
 }
 
-const RequiredPart: React.FC<Props> = ({ children, onSubmit }) => {
-  const form = useForm({
-    initialValues: {
-      email: '',
-      termsOfService: false,
-    },
+const getInput = (input: Input): ReactNode => {
+  const props = {
+    label: input.label,
+    placeholder: input.placeholder,
+    withAsterisk: input.required,
+  };
 
-    validate: {
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Invalid email'),
-    },
+  switch (input.id) {
+    case 'password':
+    case 'passwordConfirmation':
+      return <PasswordInput {...props} />;
+
+    default:
+      return <TextInput {...props} />;
+  }
+};
+
+interface Props {
+  onSubmit: (values: { [value: string]: string | boolean }) => void;
+  currentPart?: number;
+  updateCurrentPart?: (part: number) => void;
+  inputs: Input[];
+}
+
+const RequiredPart: React.FC<Props> = ({
+  onSubmit,
+  currentPart,
+  updateCurrentPart,
+  inputs,
+}) => {
+  const initialValues: { [key: string]: string } = {};
+  const validate: {
+    [key: string]: (
+      value: string,
+      values: {
+        [key: string]: string;
+      }
+    ) => string | null;
+  } = {};
+
+  inputs.forEach((element) => {
+    initialValues[element.id] = element.initialValue;
+    validate[element.id] = (value, values) => element.validate(value, values);
   });
 
-  return (
-    <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-      <TextInput
-        withAsterisk
-        label="Email"
-        placeholder="your@email.com"
-        {...form.getInputProps('email')}
-      />
+  const form = useForm({
+    initialValues,
+    validate,
+  });
 
-      <Checkbox
-        mt="md"
-        label="I agree to sell my privacy"
-        {...form.getInputProps('termsOfService', { type: 'checkbox' })}
-      />
-      {children}
+  const _currentPart = currentPart ?? 0;
+  const _updateCurrentPart = updateCurrentPart ?? (() => undefined);
+
+  return (
+    <form
+      onSubmit={form.onSubmit((values) => {
+        onSubmit(values);
+        if (_currentPart < inputs.length - 1)
+          _updateCurrentPart(_currentPart + 1);
+      })}
+    >
+      {inputs.map((input) => (
+        <div key={input.id}>
+          {React.cloneElement(getInput(input) as ReactElement, {
+            ...form.getInputProps(input.id),
+          })}
+        </div>
+      ))}
+      <Group>
+        {_currentPart > 0 && (
+          <Button
+            onClick={() => {
+              if (_currentPart > 0) _updateCurrentPart(_currentPart - 1);
+            }}
+          >
+            Précédent
+          </Button>
+        )}
+        <Button type="submit">
+          {_currentPart < inputs.length - 1 ? 'Prochaine Étape' : 'Valider'}
+        </Button>
+      </Group>
     </form>
   );
 };

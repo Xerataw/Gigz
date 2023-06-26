@@ -1,5 +1,4 @@
-import { Button, Group } from '@mantine/core';
-import React, { ReactNode, useState } from 'react';
+import React, { ReactElement, ReactNode, useState } from 'react';
 
 interface Props {
   children: ReactNode[];
@@ -7,29 +6,25 @@ interface Props {
 
 const Form: React.FC<Props> = ({ children }) => {
   const [currentPart, setCurrentPart] = useState<number>(0);
+  const values: Map<string, string | boolean> = new Map<
+    string,
+    string | boolean
+  >();
+
+  const updateValue = (key: string, value: string | boolean) => {
+    values.set(key, value);
+  };
 
   return (
     <div>
-      {children[currentPart]}
-      <Group>
-        <Button
-          disabled={currentPart <= 0}
-          onClick={() => {
-            if (currentPart > 0) setCurrentPart((old) => old - 1);
-          }}
-        >
-          Prev Part
-        </Button>
-        <Button
-          disabled={currentPart >= children.length - 1}
-          onClick={() => {
-            if (currentPart < children.length - 1)
-              setCurrentPart((old) => old + 1);
-          }}
-        >
-          Next Part
-        </Button>
-      </Group>
+      {React.cloneElement(children[currentPart] as ReactElement, {
+        values,
+        updateValue,
+        currentPart,
+        updateCurrentPart: (part: number) => {
+          setCurrentPart(part);
+        },
+      })}
     </div>
   );
 };

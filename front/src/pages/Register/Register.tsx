@@ -49,29 +49,86 @@ const Register: React.FC = () => {
         <Title>REGISTER</Title>
         <Form>
           <RequiredPart
+            //TODO : to remove this 2 arguments
+            currentPart={0}
+            updateCurrentPart={() => undefined}
             onSubmit={(values) => {
+              //TODO : rethink this function , maybe move it on the Form component
               console.log('values', values);
             }}
-          >
-            <h1>OUI 1</h1>
-            <h1>OUI 1</h1>
-          </RequiredPart>
+            //TODO : use mantine component instead of an array of inputs
+            inputs={[
+              {
+                id: 'lastname',
+                required: true,
+                label: 'Nom',
+                placeholder: 'Barrade',
+                validate: (value: string) =>
+                  /^.{2,}$/.test(value) ? null : 'Nom invalide',
+                initialValue: '',
+              },
+              {
+                id: 'firstname',
+                required: true,
+                label: 'Prénom',
+                placeholder: 'Jean',
+                validate: (value: string) =>
+                  /^.{2,}$/.test(value) ? null : 'Prénom invalide',
+                initialValue: '',
+              },
+            ]}
+          />
           <RequiredPart
+            currentPart={0}
+            updateCurrentPart={() => undefined}
             onSubmit={(values) => {
               console.log('values', values);
             }}
-          >
-            <h1>OUI 2</h1>
-            <h1>OUI 2</h1>
-          </RequiredPart>
-          <RequiredPart
-            onSubmit={(values) => {
-              console.log('values', values);
-            }}
-          >
-            <h1>OUI 3</h1>
-            <h1>OUI 3</h1>
-          </RequiredPart>
+            inputs={[
+              {
+                id: 'email',
+                required: true,
+                label: 'Email',
+                placeholder: 'exemple@domain.com',
+                validate: (value) =>
+                  /^\S+@\S+$/.test(value) ? null : 'Email invalide',
+                initialValue: '',
+              },
+              {
+                id: 'phone',
+                required: true,
+                label: 'Téléphone',
+                placeholder: '0689455323',
+                validate: (value) =>
+                  /^.{10}$/.test(value) ? null : 'Numéro invalide',
+                initialValue: '',
+              },
+              {
+                id: 'password',
+                initialValue: '',
+                label: 'Mot de passe',
+                placeholder: 'aaaaaaaa',
+                required: true,
+                validate: (value) =>
+                  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
+                    value
+                  )
+                    ? null
+                    : 'Mot de passe invalide',
+              },
+              {
+                id: 'passwordConfirmation',
+                initialValue: '',
+                label: 'Mot de passe',
+                placeholder: 'aaaaaaaa',
+                required: true,
+                validate: (value, values) =>
+                  value === values.password
+                    ? null
+                    : 'Les mots de passe doivent être identiques',
+              },
+            ]}
+          />
         </Form>
       </div>
     </div>
