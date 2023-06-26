@@ -1,10 +1,15 @@
 import express from 'express';
+import compression from 'compression';
 
 import v1 from './v1';
 import authenticate from './middlewares/authenticate';
 
 const PORT = 3000;
 const app = express();
+
+const { database } = useDatabase();
+
+app.use(compression());
 
 app.use(express.json());
 
