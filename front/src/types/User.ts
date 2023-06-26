@@ -35,10 +35,10 @@ export default class User {
     token?: string,
     type?: UserType
   ) {
-    this.username = username ? username : null;
-    this.profilePicture = profilePicture ? profilePicture : null;
-    this.token = token ? token : null;
-    this.type = type ? type : null;
+    this.username = username ?? null;
+    this.profilePicture = profilePicture ?? null;
+    this.token = token ?? null;
+    this.type = type ?? null;
   }
 
   /**
