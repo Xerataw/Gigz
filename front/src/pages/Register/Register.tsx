@@ -4,19 +4,15 @@
   - STEP 0 :
     - is an artist or bar
 
-  - STEP 1 :
-    - Lastname
-    - Firstname
-  
   - STEP 2 :
     - Email
     - Phone
     - Password
 
-  - STEP 3 :
-    - Username (Propositions ?)
-
-  ----> Send from to create a new account
+    ----> Send from to create a new account
+    
+    - STEP 3 :
+      - Username (Propositions ?)
   
   - STEP 4 (optionnal/skipable) :
     - Description
@@ -38,98 +34,72 @@
   ---> Send form to complete profile
 */
 
-import { Title } from '@mantine/core';
-import Form from '../../components/Form/Form';
-import RequiredPart from '../../components/Form/RequiredPart';
+import { Button, Group, PasswordInput, TextInput, Title } from '@mantine/core';
+import { useForm } from '@mantine/form';
+
+const errorPassword = (value: string) => (
+  <div>
+    Votre mot de passe est invalide :
+    <ul>
+      {/.*\d/.test(value) === false && <li>Il manque un nombre</li>}
+      {/.*[a-z]/.test(value) === false && <li>Il manque une minuscule</li>}
+      {/.*[A-Z]/.test(value) === false && <li>Il manque une majuscule</li>}
+      {/.{8}/.test(value) === false && <li>Il faut 8 charactères minimum</li>}
+    </ul>
+  </div>
+);
 
 const Register: React.FC = () => {
+  const form = useForm({
+    initialValues: { email: '', phone: '', password: '', confirmPassword: '' },
+
+    validate: {
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : 'Email Invalide'),
+      phone: (value) => (/^.{10}$/.test(value) ? null : 'Numéro invalide'),
+
+      password: (value) =>
+        /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(value)
+          ? null
+          : errorPassword(value),
+      confirmPassword: (value, values) =>
+        value === values.password
+          ? null
+          : 'Les mots de passe ne correspondent pas',
+    },
+  });
+
   return (
     <div>
       <div className="flex flex-col items-center">
         <Title>REGISTER</Title>
-        <Form>
-          <RequiredPart
-            //TODO : to remove this 2 arguments
-            currentPart={0}
-            updateCurrentPart={() => undefined}
-            onSubmit={(values) => {
-              //TODO : rethink this function , maybe move it on the Form component
-              console.log('values', values);
-            }}
-            //TODO : use mantine component instead of an array of inputs
-            inputs={[
-              {
-                id: 'lastname',
-                required: true,
-                label: 'Nom',
-                placeholder: 'Barrade',
-                validate: (value: string) =>
-                  /^.{2,}$/.test(value) ? null : 'Nom invalide',
-                initialValue: '',
-              },
-              {
-                id: 'firstname',
-                required: true,
-                label: 'Prénom',
-                placeholder: 'Jean',
-                validate: (value: string) =>
-                  /^.{2,}$/.test(value) ? null : 'Prénom invalide',
-                initialValue: '',
-              },
-            ]}
+        <form onSubmit={form.onSubmit(console.log)}>
+          <TextInput
+            mt="sm"
+            label="Email"
+            placeholder="Email"
+            {...form.getInputProps('email')}
           />
-          <RequiredPart
-            currentPart={0}
-            updateCurrentPart={() => undefined}
-            onSubmit={(values) => {
-              console.log('values', values);
-            }}
-            inputs={[
-              {
-                id: 'email',
-                required: true,
-                label: 'Email',
-                placeholder: 'exemple@domain.com',
-                validate: (value) =>
-                  /^\S+@\S+$/.test(value) ? null : 'Email invalide',
-                initialValue: '',
-              },
-              {
-                id: 'phone',
-                required: true,
-                label: 'Téléphone',
-                placeholder: '0689455323',
-                validate: (value) =>
-                  /^.{10}$/.test(value) ? null : 'Numéro invalide',
-                initialValue: '',
-              },
-              {
-                id: 'password',
-                initialValue: '',
-                label: 'Mot de passe',
-                placeholder: 'aaaaaaaa',
-                required: true,
-                validate: (value) =>
-                  /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
-                    value
-                  )
-                    ? null
-                    : 'Mot de passe invalide',
-              },
-              {
-                id: 'passwordConfirmation',
-                initialValue: '',
-                label: 'Mot de passe',
-                placeholder: 'aaaaaaaa',
-                required: true,
-                validate: (value, values) =>
-                  value === values.password
-                    ? null
-                    : 'Les mots de passe doivent être identiques',
-              },
-            ]}
+          <TextInput
+            mt="sm"
+            label="Téléphone"
+            placeholder="0695818549"
+            {...form.getInputProps('phone')}
           />
-        </Form>
+          <PasswordInput
+            label="Password"
+            placeholder="Password"
+            {...form.getInputProps('password')}
+          />
+          <PasswordInput
+            mt="sm"
+            label="Confirm password"
+            placeholder="Confirm password"
+            {...form.getInputProps('confirmPassword')}
+          />
+          <Group position="right" mt="md">
+            <Button type="submit">Submit</Button>
+          </Group>
+        </form>
       </div>
     </div>
   );
