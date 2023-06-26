@@ -22,6 +22,7 @@
 .env.production.local
 /.vscode/*
 !/.vscode/extensions.json
+.vscode
 .idea
 
 npm-debug.log*
