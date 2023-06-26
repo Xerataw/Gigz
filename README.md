@@ -33,14 +33,9 @@ To locally launch ESLinter or Prettier on both projects when needed.
 1. Go to `/front` directory
 2. Run command `npm install` or `yarn install`
 
-#### Setup Express (back) project
+#### Setup Express + database (back) project
 
-1. Go to `/back` directory
-2. Run command `npm install` or `yarn install`
-3. Create a `.env` with the following variables :
-    - `DATABASE_URL`
-4. Run the following command:
-    - `just`
+See installation steps on the [backend README](back/README.md)
 
 ## Test the app on your phone or emulator 📱
 
