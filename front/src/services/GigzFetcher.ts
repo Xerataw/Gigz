@@ -1,7 +1,9 @@
 import axios, { HttpStatusCode, AxiosError } from 'axios';
 import GigzResponse from '../types/GigzResponse';
+import User from '../types/User';
 
 const envVars = import.meta.env;
+const user = await User.getInstance();
 
 export default class GigzFetcher {
   private static API_URL =
@@ -207,8 +209,7 @@ export default class GigzFetcher {
    */
   private static getFinalHeaders(headers: object, isAuth: boolean): object {
     let finalHeaders = { ...this.BASE_HEADERS, ...headers };
-    if (isAuth)
-      finalHeaders = { Authorization: `Bearer dummyToken`, ...headers };
+    if (isAuth) finalHeaders = { Authorization: user.getToken(), ...headers };
     return finalHeaders;
   }
 
