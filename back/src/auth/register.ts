@@ -21,6 +21,7 @@ const BodySchema = z.object({
     .string()
     .refine((phone) => validator.isMobilePhone(phone, 'fr-FR'))
     .optional(),
+  profileType: z.union([z.literal('host'), z.literal('artist')]),
 });
 
 router.post('/', async (req, res) => {
@@ -36,9 +37,11 @@ router.post('/', async (req, res) => {
         email: body.data.email,
         password: await hash(body.data.password),
         phone_number: body.data.phoneNumber,
+        profile_type: body.data.profileType,
       },
     })
     .then((newAccount) => {
+      createBlankProfile(body.data.profileType, newAccount.id);
       sendResponse(
         res,
         {
@@ -48,5 +51,21 @@ router.post('/', async (req, res) => {
       );
     });
 });
+
+const createBlankProfile = async (profileType: string, id: number) => {
+  if (profileType === 'artist') {
+    await database.artist.create({
+      data: {
+        account_id: id,
+      },
+    });
+  } else {
+    await database.host.create({
+      data: {
+        account_id: id,
+      },
+    });
+  }
+};
 
 export default router;
