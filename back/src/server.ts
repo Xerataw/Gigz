@@ -1,6 +1,8 @@
 import express from 'express';
 import compression from 'compression';
 
+import cors from 'cors';
+
 import v1 from '@/v1';
 import auth from '@/auth';
 
@@ -12,6 +14,7 @@ const app = express();
 
 const { ApiMessages, sendResponse } = useUtils();
 
+app.use(cors());
 app.use(compression());
 app.use(express.json());
 
