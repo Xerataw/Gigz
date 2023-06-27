@@ -11,7 +11,6 @@ import Liked from './pages/Liked/Liked';
 import Profile from './pages/Profile/Profile';
 import Search from './pages/Search/Search';
 
-/* Theme variables */
 import { Container } from '@mantine/core';
 import NestedRoute from './components/NestedRoute/NestedRoute';
 import './index.css';
