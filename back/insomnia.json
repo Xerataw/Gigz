@@ -1,16 +1,16 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2023-06-26T14:11:07.782Z",
+  "__export_date": "2023-06-27T13:20:20.058Z",
   "__export_source": "insomnia.desktop.app:v2023.2.2",
   "resources": [
     {
       "_id": "req_c9b2217c1b724213bbf9216c59b2fef0",
       "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
-      "modified": 1687788457388,
+      "modified": 1687871990830,
       "created": 1687788180759,
       "url": "{{ _.url }}/status",
-      "name": "Status",
+      "name": "STATUS",
       "description": "",
       "method": "GET",
       "body": {},
@@ -40,10 +40,10 @@
     {
       "_id": "req_27849ab4aa944ca68a7e0c78e9b2cf98",
       "parentId": "fld_a9f35d978a6f4f3f9661cd7669f05920",
-      "modified": 1687788448617,
+      "modified": 1687871986295,
       "created": 1687778320464,
       "url": "{{ _.url }}/auth/login",
-      "name": "Login",
+      "name": "LOGIN",
       "description": "",
       "method": "POST",
       "body": {
@@ -76,6 +76,78 @@
       "_type": "request_group"
     },
     {
+      "_id": "req_50a51dda10df4c70983f89d343c59914",
+      "parentId": "fld_dd077cb895b347a6a3a3450f83913546",
+      "modified": 1687871973340,
+      "created": 1687857858791,
+      "url": "{{ _.url }}/v1/profile/artist",
+      "name": "UPDATE ARTIST PROFILE",
+      "description": "",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Alexis\",\n\t\"description\": \"C'est un restaurant, oui, oui.\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {
+        "type": "bearer",
+        "prefix": "Bearer",
+        "token": "{{ _.token }}"
+      },
+      "metaSortKey": -1687857858791,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_dd077cb895b347a6a3a3450f83913546",
+      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "modified": 1687871322163,
+      "created": 1687857856552,
+      "name": "V1",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1687778301866,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_0abdb6a1630c474e896dc0436d8c18a2",
+      "parentId": "fld_dd077cb895b347a6a3a3450f83913546",
+      "modified": 1687871981231,
+      "created": 1687871950943,
+      "url": "{{ _.url }}/v1/profile/host",
+      "name": "UPDATE HOST PROFILE",
+      "description": "",
+      "method": "PATCH",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"name\": \"Alexis\",\n\t\"description\": \"C'est un restaurant, oui, oui.\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {
+        "type": "bearer",
+        "prefix": "Bearer",
+        "token": "{{ _.token }}"
+      },
+      "metaSortKey": -1687823019775,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
       "_id": "env_89f2865153cc385ea04c53bb79ad92ce22c8459e",
       "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
       "modified": 1687788444933,
@@ -106,6 +178,21 @@
       "contents": "",
       "contentType": "yaml",
       "_type": "api_spec"
+    },
+    {
+      "_id": "env_857a92c7a4084976829efa2f9099d839",
+      "parentId": "env_89f2865153cc385ea04c53bb79ad92ce22c8459e",
+      "modified": 1687858059111,
+      "created": 1687857650224,
+      "name": "ARTIST",
+      "data": {
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6NSwiZW1haWwiOiJhbGV4aXMubW9pbnNAZXBpdGVjaC5ldSIsImlhdCI6MTY4Nzg1ODA0OSwiZXhwIjoxNjg4NDYyODQ5fQ.TueXHpAYNyoCNFM1wgs9mQximwoZgON9Iuz1FDVpkMA"
+      },
+      "dataPropertyOrder": { "&": ["token"] },
+      "color": "#d04343",
+      "isPrivate": false,
+      "metaSortKey": 1687857650224,
+      "_type": "environment"
     }
   ]
 }

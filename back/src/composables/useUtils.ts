@@ -4,7 +4,7 @@ import { Response } from 'express';
  * Enumeration containing all API messages return to the front-end.
  */
 enum ApiMessages {
-  //AUTH
+  // Auth
   EmailTaken = 'EMAIL_TAKEN',
   MissingToken = 'MISSING_TOKEN',
   WrongToken = 'WRONG_TOKEN',
