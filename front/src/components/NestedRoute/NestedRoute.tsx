@@ -6,7 +6,7 @@ interface Props {
   path: string;
   redirectNoMatch: string;
   condition: boolean;
-  children: ReactNode[];
+  children: ReactNode | ReactNode[];
 }
 
 const NestedRoute: React.FC<Props> = ({
@@ -15,10 +15,12 @@ const NestedRoute: React.FC<Props> = ({
   condition,
   redirectNoMatch,
 }) => {
+  const _children = Array.isArray(children) ? children : [children];
+
   return condition === true ? (
     <Route path={path}>
       <Switch>
-        {children.map((route) =>
+        {_children.map((route) =>
           React.cloneElement(route as ReactElement, {
             path: path + (route as ReactElement).props.path,
             key: v4(),

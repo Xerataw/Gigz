@@ -36,8 +36,8 @@
 
 import {
   Button,
-  Code,
   Group,
+  Loader,
   PasswordInput,
   Stepper,
   Text,
@@ -55,7 +55,7 @@ import {
   IconShieldLock,
 } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import { v4 } from 'uuid';
 
 interface UserTypeButton {
@@ -88,6 +88,9 @@ const userTypes: UserTypeButton[] = [
     value: 'isHost',
   },
 ];
+
+const artistPath = '/login/register/artist';
+const hostPath = '/login/register/host';
 
 const Register: React.FC = () => {
   const [formStep, setFormStep] = useState<number>(0);
@@ -135,13 +138,22 @@ const Register: React.FC = () => {
   const [debounced] = useDebouncedValue(form.values, 600);
 
   const nextStep = () => {
-    if (formStep === 2) console.log('step', formStep, form.values);
-    setFormStep((current) => {
-      if (form.validate().hasErrors) {
-        return current;
-      }
-      return current < 4 ? current + 1 : current;
-    });
+    if (formStep === 2) {
+      console.log('to send', form.values);
+      setFormStep((old) => old + 1);
+
+      // simulate request
+      setTimeout(() => {
+        setFormStep((old) => old + 1);
+      }, 1000);
+    } else {
+      setFormStep((current) => {
+        if (form.validate().hasErrors) {
+          return current;
+        }
+        return current < 4 ? current + 1 : current;
+      });
+    }
   };
 
   const prevStep = () =>
@@ -238,20 +250,23 @@ const Register: React.FC = () => {
           icon={<IconCircleCheck />}
           completedIcon={<IconCircleCheckFilled />}
         >
-          Will send this :
-          <Code block mt="xl">
-            {JSON.stringify(form.values, null, 2)}
-          </Code>
+          <Loader variant="bars" />
         </Stepper.Step>
 
         <Stepper.Completed>
-          <div>token :</div>
+          <Redirect
+            to={form.values.userType === 'isHost' ? hostPath : artistPath}
+          />
         </Stepper.Completed>
       </Stepper>
 
       <Group position="right" mt="xl">
         {formStep > 0 && (
-          <Button variant="default" disabled={formStep >= 3} onClick={prevStep}>
+          <Button
+            variant="default"
+            disabled={formStep === 3}
+            onClick={prevStep}
+          >
             Retour
           </Button>
         )}

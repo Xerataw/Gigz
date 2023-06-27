@@ -37,9 +37,21 @@ const App: React.FC = () => {
                 path="/login"
                 redirectNoMatch={redirectRoute}
               >
-                <Route exact path="/register">
-                  <Register />
-                </Route>
+                <NestedRoute
+                  condition={true}
+                  path="/register"
+                  redirectNoMatch={redirectRoute}
+                >
+                  <Route exact path="/">
+                    <Register />
+                  </Route>
+                  <Route exact path="/host">
+                    <div>HOST REGISTER PROFILE</div>
+                  </Route>
+                  <Route exact path="/artist">
+                    <div>ARTIST REGISTER PROFILE</div>
+                  </Route>
+                </NestedRoute>
                 <Route exact path="/login"></Route>
               </NestedRoute>
 
