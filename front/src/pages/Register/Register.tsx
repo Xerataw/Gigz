@@ -46,9 +46,9 @@ import {
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { Link, Redirect } from 'react-router-dom';
-import FirstStep from './FirstStep';
-import SecondStep from './SecondStep';
-import ThirdStep from './ThirdStep';
+import FirstStep from '../../components/Register/AccountStep/FirstStep';
+import SecondStep from '../../components/Register/AccountStep/SecondStep';
+import ThirdStep from '../../components/Register/AccountStep/ThirdStep';
 
 const errorPassword = (value: string) => (
   <div>
