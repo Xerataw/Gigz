@@ -37,6 +37,7 @@ router.post('/', async (req, res) => {
         email: body.data.email,
         password: await hash(body.data.password),
         phone_number: body.data.phoneNumber,
+        profile_type: body.data.profileType,
       },
     })
     .then((newAccount) => {

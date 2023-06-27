@@ -8,17 +8,18 @@ datasource db {
 }
 
 model account {
-  id                                                 Int             @id @default(autoincrement())
-  email                                              String          @unique(map: "Account_email_key") @db.VarChar(255)
-  password                                           String          @db.VarChar(255)
-  creation_date                                      DateTime        @default(now()) @db.DateTime(0)
-  phone_number                                       String?         @unique(map: "phone_number") @db.VarChar(255)
-  email_validated                                    Int             @default(0) @db.TinyInt
+  id                                                 Int                  @id @default(autoincrement())
+  email                                              String               @unique(map: "Account_email_key") @db.VarChar(255)
+  password                                           String               @db.VarChar(255)
+  creation_date                                      DateTime             @default(now()) @db.DateTime(0)
+  phone_number                                       String?              @unique(map: "phone_number") @db.VarChar(255)
+  email_validated                                    Int                  @default(0) @db.TinyInt
+  profile_type                                       account_profile_type
   account_genre                                      account_genre[]
   artist                                             artist[]
   host                                               host[]
-  liked_account_liked_account_liker_accountToaccount liked_account[] @relation("liked_account_liker_accountToaccount")
-  liked_account_liked_account_liked_accountToaccount liked_account[] @relation("liked_account_liked_accountToaccount")
+  liked_account_liked_account_liker_accountToaccount liked_account[]      @relation("liked_account_liker_accountToaccount")
+  liked_account_liked_account_liked_accountToaccount liked_account[]      @relation("liked_account_liked_accountToaccount")
   settings                                           settings[]
 }
 
@@ -142,4 +143,9 @@ enum settings_dark_mode {
   enabled
   disabled
   auto
+}
+
+enum account_profile_type {
+  host
+  artist
 }
