@@ -12,6 +12,7 @@ const { ApiMessages, sendResponse, sendError } = useUtils();
 const ArtistBodySchema = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
+  genres: z.coerce.number().array().optional(),
 
   // Links
   spotify_link: z.string().optional(),
@@ -26,6 +27,25 @@ const ArtistBodySchema = z.object({
   city_id: z.coerce.number().optional(),
 });
 
+const handleGenres = async (account_id: number, genres: number[]) => {
+  const records = await database.account_genre
+    .findMany({
+      where: { account_id: account_id },
+    })
+    .then((records) => records.map((record) => record.genre_id));
+
+  const toAdd = genres.filter((id) => !records.includes(id));
+  const toDelete = records.filter((id) => !genres.includes(id));
+
+  await database.account_genre.deleteMany({
+    where: { account_id, genre_id: { in: toDelete } },
+  });
+
+  await database.account_genre.createMany({
+    data: toAdd.map((genre_id) => ({ genre_id: genre_id, account_id })),
+  });
+};
+
 router.patch('/artist', async (req, res) => {
   const account = await findAccountById(req.accountId);
   if (!account) return sendError(res, ApiMessages.WrongToken, 401);
@@ -35,6 +55,13 @@ router.patch('/artist', async (req, res) => {
 
   const body = ArtistBodySchema.safeParse(req.body);
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
+  if (body.data.genres !== undefined) {
+    const genres = body.data.genres;
+    delete body.data.genres;
+
+    await handleGenres(account.id, genres);
+  }
 
   const data = await database.artist.upsert({
     where: { id: account.id },
@@ -48,6 +75,7 @@ router.patch('/artist', async (req, res) => {
 const HostBodySchema = z.object({
   name: z.string().optional(),
   description: z.string().optional(),
+  genres: z.coerce.number().array().optional(),
 
   // Links
   website_link: z.string().optional(),
@@ -70,6 +98,13 @@ router.patch('/host', async (req, res) => {
 
   const body = HostBodySchema.safeParse(req.body);
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
+  if (body.data.genres !== undefined) {
+    const genres = body.data.genres;
+    delete body.data.genres;
+
+    await handleGenres(account.id, genres);
+  }
 
   const data = await database.host.upsert({
     where: { id: account.id },
