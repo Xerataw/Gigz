@@ -47,6 +47,7 @@ root.render(
           '#A17100',
         ],
       },
+      primaryColor: 'secondary',
     }}
   >
     <App />
