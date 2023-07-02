@@ -52,7 +52,7 @@ const icons: IconNavbar[] = [
 const BottomNavbar: React.FC<Props> = ({ isShadow }) => {
   return (
     <div>
-      <div className="absolute bottom-0 w-full">
+      <div style={{ zIndex: 10000 }} className="absolute bottom-0 w-full">
         {isShadow && (
           <div className="h-24 relative">
             <Overlay

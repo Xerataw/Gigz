@@ -1,6 +1,8 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import { MantineProvider } from '@mantine/core';
-import mantineThemeConfig from './configs/mantine.config.js';
+import mantineThemeConfig from './configs/mantineTheme.config';
+import { ThemeProvider, THEME_ID } from '@mui/material/styles';
+import muiThemeConfig from './configs/muiTheme.config';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 import './i18n.js';
@@ -16,8 +18,10 @@ const queryClient: QueryClient = new QueryClient({
 
 root.render(
   <MantineProvider withGlobalStyles withNormalizeCSS theme={mantineThemeConfig}>
-    <QueryClientProvider client={queryClient}>
-      <App />
-    </QueryClientProvider>
+    <ThemeProvider theme={{ [THEME_ID]: muiThemeConfig }}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+      </QueryClientProvider>
+    </ThemeProvider>
   </MantineProvider>
 );
