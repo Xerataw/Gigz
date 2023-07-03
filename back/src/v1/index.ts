@@ -1,12 +1,8 @@
 import express from 'express';
+import profile from '@v1/profile';
 
 const router = express.Router();
 
-router.get('/status', async (_, res) => {
-  res.status(200).json({
-    status: 200,
-    message: 'Welcome to the gigz api!',
-  });
-});
+router.use('/profile', profile);
 
 export default router;

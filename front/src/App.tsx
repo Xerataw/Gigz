@@ -13,48 +13,85 @@ import LoginPage from './pages/LoginPage/LoginPage';
 import Profile from './pages/Profile/Profile';
 import Search from './pages/Search/Search';
 
-/* Theme variables */
+import { Container } from '@mantine/core';
+import NestedRoute from './components/NestedRoute/NestedRoute';
 import './index.css';
+import Register from './pages/Register/Register';
 
 setupIonicReact();
 
-const App: React.FC = () => (
-  <div className="bg-slate-500 relative h-screen">
-    <Router>
-      <Switch>
-        <Route path="/" exact>
-          <Redirect to="/liked" />
-        </Route>
-        <Route path="/liked">
-          <Liked />
-        </Route>
+const App: React.FC = () => {
+  const redirectRoute = '/login/register';
 
-        <Route path="/search">
-          <Search />
-        </Route>
+  return (
+    <div className="bg-white">
+      <Container size={'xs'} px={0}>
+        <div className="bg-white relative h-screen">
+          <Router>
+            <Switch>
+              <Route path="/" exact>
+                <Redirect to={redirectRoute} />
+              </Route>
 
-        <Route path="/conversations">
-          <Conversations />
-        </Route>
+              <NestedRoute
+                condition={true}
+                path="/login"
+                redirectNoMatch={redirectRoute}
+              >
+                <NestedRoute
+                  condition={true}
+                  path="/register"
+                  redirectNoMatch={redirectRoute}
+                >
+                  <Route exact path="/">
+                    <Register />
+                  </Route>
+                  <Route exact path="/host">
+                    <div>HOST REGISTER PROFILE</div>
+                  </Route>
+                  <Route exact path="/artist">
+                    <div>ARTIST REGISTER PROFILE</div>
+                  </Route>
+                </NestedRoute>
+                <Route exact path="/">
+                  <LoginPage />
+                </Route>
+                <Route path="/forgot-password">
+                  <ForgotPassword />
+                </Route>
+              </NestedRoute>
 
-        <Route path="/profile">
-          <Profile />
-        </Route>
+              <NestedRoute
+                path="/auth"
+                redirectNoMatch={redirectRoute}
+                condition={true}
+              >
+                <Route path="/liked">
+                  <Liked />
+                </Route>
 
-        <Route path="/login">
-          <LoginPage />
-        </Route>
+                <Route path="/search">
+                  <Search />
+                </Route>
 
-        <Route path="/forgot-password">
-          <ForgotPassword />
-        </Route>
+                <Route path="/conversations">
+                  <Conversations />
+                </Route>
 
-        <Route path="/*" exact>
-          <Redirect to="/liked" />
-        </Route>
-      </Switch>
-    </Router>
-  </div>
-);
+                <Route path="/profile">
+                  <Profile />
+                </Route>
+              </NestedRoute>
+
+              <Route path="/*" exact>
+                <Redirect to={redirectRoute} />
+              </Route>
+            </Switch>
+          </Router>
+        </div>
+      </Container>
+    </div>
+  );
+};
 
 export default App;

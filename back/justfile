@@ -1,4 +1,5 @@
 default: up wait migrate populate
+    @docker compose exec api yarn prisma generate
 
 wait:
     @echo '=> Waiting for containers to be ready...'
@@ -8,7 +9,7 @@ up *FLAGS:
     docker compose up -d {{FLAGS}}
 
 re *FLAGS:
-    docker compose down && docker compose up {{FLAGS}}
+    docker compose down && docker compose up -d {{FLAGS}}
 
 down:
     docker compose down
