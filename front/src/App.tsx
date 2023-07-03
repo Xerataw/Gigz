@@ -6,8 +6,10 @@ import {
   BrowserRouter as Router,
   Switch,
 } from 'react-router-dom';
+import ForgotPassword from './components/Login/ForgotPassword/ForgotPassword';
 import Conversations from './pages/Conversations/Conversations';
 import Liked from './pages/Liked/Liked';
+import LoginPage from './pages/LoginPage/LoginPage';
 import Profile from './pages/Profile/Profile';
 import Search from './pages/Search/Search';
 
@@ -37,6 +39,14 @@ const App: React.FC = () => (
 
         <Route path="/profile">
           <Profile />
+        </Route>
+
+        <Route path="/login">
+          <LoginPage />
+        </Route>
+
+        <Route path="/forgot-password">
+          <ForgotPassword />
         </Route>
 
         <Route path="/*" exact>
