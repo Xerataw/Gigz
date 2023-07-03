@@ -1,11 +1,10 @@
-import BottomNavbar from '../../components/BottomNavbar/BottomNavbar';
+import Layout from '../Layout/Layout';
 
 const Profile: React.FC = () => {
   return (
-    <div>
+    <Layout>
       <div>Profile</div>
-      <BottomNavbar />
-    </div>
+    </Layout>
   );
 };
 

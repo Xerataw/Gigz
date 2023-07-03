@@ -1,11 +1,10 @@
-import BottomNavbar from '../../components/BottomNavbar/BottomNavbar';
+import Layout from '../Layout/Layout';
 
 const Search: React.FC = () => {
   return (
-    <div>
+    <Layout>
       <div>Search</div>
-      <BottomNavbar isShadow />
-    </div>
+    </Layout>
   );
 };
 

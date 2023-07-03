@@ -1,11 +1,10 @@
-import BottomNavbar from '../../components/BottomNavbar/BottomNavbar';
+import Layout from '../Layout/Layout';
 
 const Conversations: React.FC = () => {
   return (
-    <div>
+    <Layout>
       <div>Conversations</div>
-      <BottomNavbar isShadow />
-    </div>
+    </Layout>
   );
 };
 
