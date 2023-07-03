@@ -251,15 +251,6 @@ export default class GigzFetcher {
     isAuth = true,
     version: string = this.API_VERSION
   ) {
-    console.log(
-      'buildURL',
-      origin,
-      pathname,
-      search,
-      isAuth,
-      version,
-      this.API_URL_NO_AUTH
-    );
     isAuth ? (origin += version) : (origin += this.API_URL_NO_AUTH);
     return origin + pathname + this.buildURLParamsFromObject(search);
   }

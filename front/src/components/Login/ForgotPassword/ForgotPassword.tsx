@@ -44,7 +44,6 @@ const ForgotPassword: React.FC = () => {
   }, [debounced]);
 
   const onSubmit = (data: { email: string }) => {
-    console.log(data);
     // TODO call API here to reset password
     // See Login component for example
     setFormSubmited(true);
