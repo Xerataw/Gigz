@@ -46,7 +46,7 @@ const handleGenres = async (account_id: number, genres: number[]) => {
   });
 };
 
-router.get('/artists', async (req, res) => {
+router.get('/artists', async (_, res) => {
   const data = await database.artist.findMany({
     include: {
       account: {
