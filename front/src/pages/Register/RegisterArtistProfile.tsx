@@ -172,9 +172,6 @@ const RegisterArtistProfile: React.FC = () => {
         <Stepper.Completed>
           <div>this form is completed</div>
           <div>redirect to home</div>
-          {/* <Redirect
-            to={form.values.userType === 'isHost' ? hostPath : artistPath}
-          /> */}
         </Stepper.Completed>
       </Stepper>
 

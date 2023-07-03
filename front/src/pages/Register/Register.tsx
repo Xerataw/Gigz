@@ -1,39 +1,3 @@
-/*
-  - Multiple step form
-
-  - STEP 0 :
-    - is an artist or bar
-
-  - STEP 2 :
-    - Email
-    - Phone
-    - Password
-
-    ----> Send from to create a new account
-    
-    - STEP 3 :
-      - Username (Propositions ?)
-  
-  - STEP 4 (optionnal/skipable) :
-    - Description
-    - Profile Pictures
-    - Presantation Pictures
-
-  - STEP 5 (optionnal/skipable) :
-    - Social Media
-      - Insta
-      - FB
-      - Streaming links
-
-      
-  - STEP 5 (optionnal/skipable) :
-    - City
-    - Capacity (depends)
-
-
-  ---> Send form to complete profile
-*/
-
 import { Button, Group, Loader, Stepper, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
@@ -45,10 +9,13 @@ import {
   IconShieldLock,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import CompleteAccount from '../../components/Register/AccountStep/CompleteAccount';
 import FirstStep from '../../components/Register/AccountStep/FirstStep';
 import SecondStep from '../../components/Register/AccountStep/SecondStep';
 import ThirdStep from '../../components/Register/AccountStep/ThirdStep';
+import GigzFetcher from '../../services/GigzFetcher';
+import IonicStorageAccessor from '../../services/IonicStorageAccessor';
 
 const errorPassword = (value: string) => (
   <div>
@@ -61,9 +28,6 @@ const errorPassword = (value: string) => (
     </ul>
   </div>
 );
-
-const artistPath = '/login/register/artist';
-const hostPath = '/login/register/host';
 
 const Register: React.FC = () => {
   const [formStep, setFormStep] = useState<number>(0);
@@ -84,7 +48,11 @@ const Register: React.FC = () => {
         case 1:
           return {
             email: /^\S+@\S+$/.test(values.email) ? null : 'Email Invalide',
-            phone: /^.{10}$/.test(values.phone) ? null : 'Numéro invalide',
+            phone: /^(?:(?:\+|00)33|0)\s*[567](?:[\s.-]*\d{2}){4}$/.test(
+              values.phone
+            )
+              ? null
+              : 'Numéro invalide',
           };
 
         case 2:
@@ -109,15 +77,45 @@ const Register: React.FC = () => {
 
   const [debounced] = useDebouncedValue(form.values, 600);
 
+  const sendRegisterForm = () => {
+    GigzFetcher.post<{ [key: string]: string }>(
+      'register',
+      {
+        email: form.values.email,
+        password: form.values.password,
+        profileType: form.values.userType,
+        phoneNumber: form.values.phone,
+      },
+      {},
+      false
+    ).then((res) => {
+      if (res.ok === true) {
+        if (res.data?.token !== undefined) {
+          IonicStorageAccessor.set('token', res.data.token).then(() => {
+            setFormStep((old) => old + 1);
+          });
+        }
+      } else {
+        setFormStep(1);
+        if (res.message === 'EMAIL_TAKEN') {
+          form.setErrors((values) => ({
+            email: 'Email déjà pris',
+            ...values,
+          }));
+        } else if (res.message === 'PHONE_NUMBER_TAKEN') {
+          form.setErrors((values) => ({
+            phone: 'Téléphone déjà pris',
+            ...values,
+          }));
+        }
+      }
+    });
+  };
+
   const nextStep = () => {
     if (formStep === 2) {
-      console.log('to send', form.values);
       setFormStep((old) => old + 1);
-
-      // simulate request
-      setTimeout(() => {
-        setFormStep((old) => old + 1);
-      }, 1000);
+      sendRegisterForm();
     } else {
       setFormStep((current) => {
         if (form.validate().hasErrors) {
@@ -174,14 +172,14 @@ const Register: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          <Redirect
-            to={form.values.userType === 'isHost' ? hostPath : artistPath}
+          <CompleteAccount
+            userType={form.values.userType as 'artist' | 'host'}
           />
         </Stepper.Completed>
       </Stepper>
 
       <Group position="right" mt="xl">
-        {formStep > 0 && (
+        {formStep > 0 && formStep !== 4 && (
           <Button
             variant="default"
             disabled={formStep === 3}

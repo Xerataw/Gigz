@@ -66,7 +66,7 @@ const Login: React.FC = () => {
   };
 
   const register = () => {
-    history.push('/register');
+    history.push('/login/register');
   };
 
   useEffect(() => {
