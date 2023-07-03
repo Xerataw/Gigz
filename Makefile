@@ -15,14 +15,6 @@ setup:
 	${ECHO} Commit linter, code linter and formatter dependencies installed
 	${ECHO} Set up commit linter "$(COLOR_RESET)"
 	@ npx husky install
-	@ npx husky add .husky/commit-msg  'npx --no -- commitlint --edit ${1}'
-	${ECHO} Commit linter set up "$(COLOR_RESET)"
-	${ECHO} Set up code linter and formatter "$(COLOR_RESET)"
-	@ npx husky add .husky/pre-commit  'npx lint-staged'
-	${ECHO} Code linter and formatter set up
-
-	${ECHO} Add pull hook to install front and back dependencies"$(COLOR_RESET)"
-	@ npx husky add .husky/merge-hook 'make on-pull'
 
 lint:
 	${ECHO} Launch linter on front "$(COLOR_RESET)"
