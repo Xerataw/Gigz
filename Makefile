@@ -30,8 +30,8 @@ format:
 	${ECHO} Code fromatted
 
 on-pull:
-	${ECHO} Installing back dependencies
-	@cd back && just on-pull
+	${ECHO} Installing BACK dependencies
+	@cd back && npm install
 
-	${ECHO} Installing front dependencies
+	${ECHO} Installing FRONT dependencies
 	@cd front && npm install
