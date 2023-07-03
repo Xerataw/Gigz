@@ -64,7 +64,7 @@ router.patch('/artist', async (req, res) => {
   }
 
   const data = await database.artist.upsert({
-    where: { id: account.id },
+    where: { account_id: account.id },
     update: body.data,
     create: { ...body.data, account_id: account.id },
   });
@@ -107,7 +107,7 @@ router.patch('/host', async (req, res) => {
   }
 
   const data = await database.host.upsert({
-    where: { id: account.id },
+    where: { account_id: account.id },
     update: body.data,
     create: { ...body.data, account_id: account.id },
   });
