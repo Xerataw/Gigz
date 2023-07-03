@@ -24,7 +24,7 @@ export default function ProfileDrawer({
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(50% - ${100}px)`,
+            height: `calc(75% - ${100}px)`,
             overflow: 'visible',
           },
         }}
@@ -56,9 +56,9 @@ export default function ProfileDrawer({
             genres={profile.genres}
           />
         </div>
-        <div className="-mt-12 p-4 pt-6 bg-white">
-          <ScrollArea h="1000">{children}</ScrollArea>
-        </div>
+        <ScrollArea className="-mt-12 p-4 pt-6 bg-white" type="never">
+          <div>{children}</div>
+        </ScrollArea>
       </SwipeableDrawer>
     </div>
   );

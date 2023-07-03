@@ -25,7 +25,7 @@ export default function Socials({
           <li>
             <SocialMediaCard
               link={instagramLink}
-              logo={<IconBrandInstagram size="36" stroke="1.75" />}
+              logo={<IconBrandInstagram stroke="1.75" />}
             />
           </li>
         )}
@@ -33,7 +33,7 @@ export default function Socials({
           <li>
             <SocialMediaCard
               link={facebookLink}
-              logo={<IconBrandFacebook size="36" stroke="1.75" />}
+              logo={<IconBrandFacebook stroke="1.75" />}
             />
           </li>
         )}
@@ -41,7 +41,7 @@ export default function Socials({
           <li>
             <SocialMediaCard
               link={twitterLink}
-              logo={<IconBrandTwitter size="36" stroke="1.75" />}
+              logo={<IconBrandTwitter stroke="1.75" />}
             />
           </li>
         )}

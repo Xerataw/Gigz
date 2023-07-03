@@ -8,6 +8,6 @@ export default interface IArtistProfile extends IProfile {
   spotifyLink?: string;
   deezerLink?: string;
   appleMusicLink?: string;
-  soundCloundLink?: string;
+  soundCloudLink?: string;
   embedMusicLink?: string;
 }

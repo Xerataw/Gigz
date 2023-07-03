@@ -9,7 +9,7 @@ export interface ISocialMediaCardProps {
 export default function SocialMediaCard({ link, logo }: ISocialMediaCardProps) {
   return (
     <a href={link} target="_blank" rel="noopener noreferrer">
-      <Card shadow="sm" radius="md" padding="lg">
+      <Card shadow="sm" radius="xl" padding="lg" w="64px" h="64px">
         <Center>{logo}</Center>
       </Card>
     </a>

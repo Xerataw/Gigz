@@ -30,8 +30,12 @@ const testProfile: IArtistProfile = {
   instagramLink: 'https://www.instagram.com/emmawatson/',
   facebookLink: 'https://www.facebook.com/emmawatson/',
   twitterLink: 'https://twitter.com/EmmaWatson',
-  embedMusicLink:
-    'https://open.spotify.com/track/6XBaTMiZa77Du2XEl1RNaa?si=0c7ea688128a474a',
+  embedMusicLink: 'https://open.spotify.com/track/2QSKqb1s96PggfK0hv0W8u',
+  spotifyLink: 'https://open.spotify.com/artist/3EhXtoOJDawjgbDPKcNDJB',
+  appleMusicLink: 'https://music.apple.com/fr/artist/metallica/3996865',
+  deezerLink: 'https://www.deezer.com/en/artist/1003683',
+  soundCloudLink: 'https://soundcloud.com/sick_bee',
+  youtubeLink: 'https://www.youtube.com/channel/UCVBXlR7YhYUr-DfNG1XLrHA',
 };
 
 const Profile: React.FC = () => {
@@ -44,7 +48,14 @@ const Profile: React.FC = () => {
           facebookLink={testProfile.facebookLink}
           twitterLink={testProfile.twitterLink}
         />
-        <Music musicLink={testProfile.embedMusicLink} />
+        <Music
+          musicLink={testProfile.embedMusicLink}
+          spotifyLink={testProfile.spotifyLink}
+          soundCloudLink={testProfile.soundCloudLink}
+          deezerLink={testProfile.deezerLink}
+          youtubeLink={testProfile.youtubeLink}
+          appleMusicLink={testProfile.appleMusicLink}
+        />
       </ProfileView>
       <BottomNavbar />
     </div>
