@@ -8,13 +8,6 @@ wait:
 up *FLAGS:
     docker compose up -d {{FLAGS}}
 
-on-pull:
-    @npm install
-
-    @docker compose build api --no-cache
-    @docker compose exec api npx prisma migrate dev
-    @docker compose exec -it database sh -c 'zcat ./gigz-scripts/*.sql.gz | mysql -u root -p gigz'
-
 re *FLAGS:
     docker compose down && docker compose up -d {{FLAGS}}
 
