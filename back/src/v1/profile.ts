@@ -57,14 +57,14 @@ router.get('/artists', async (_, res) => {
     }
   });
 
-  const formatedData = data.map(artist => ({
+  const formattedData = data.map(artist => ({
     id: artist.id,
     name: artist.name,
     city_id: artist.city_id,
     genres: artist.account.account_genre.map(genre => genre.id)
   }));
 
-  sendResponse(res, formatedData);
+  sendResponse(res, formattedData);
 });
 
 router.patch('/artist', async (req, res) => {
@@ -89,6 +89,8 @@ router.patch('/artist', async (req, res) => {
     update: body.data,
     create: { ...body.data, account_id: account.id },
   });
+
+  // const formattedData = { ...data, account_genre: data. .account_genre.map(genre => genre.id) }
 
   sendResponse(res, data);
 });
