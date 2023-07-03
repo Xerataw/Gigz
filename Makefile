@@ -21,6 +21,9 @@ setup:
 	@ npx husky add .husky/pre-commit  'npx lint-staged'
 	${ECHO} Code linter and formatter set up
 
+	${ECHO} Add pull hook to install front and back dependencies"$(COLOR_RESET)"
+	@ npx husky add .husky/merge-hook 'make on-pull'
+
 lint:
 	${ECHO} Launch linter on front "$(COLOR_RESET)"
 	@- npx eslint $(GIGZ_FRONT_PATH)
@@ -33,3 +36,10 @@ format:
 	${ECHO} Launch Prettier formatting "$(COLOR_RESET)"
 	@ npx prettier --write .
 	${ECHO} Code fromatted
+
+on-pull:
+	${ECHO} Installing back dependencies
+	@cd back && just on-pull
+
+	${ECHO} Installing front dependencies
+	@cd front && npm install
