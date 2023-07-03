@@ -151,7 +151,6 @@ const Register: React.FC = () => {
         }
         break;
     }
-    if (debounced.email !== '') form.validate();
   }, [debounced]);
 
   return (

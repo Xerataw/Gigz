@@ -15,11 +15,12 @@ import { Container } from '@mantine/core';
 import NestedRoute from './components/NestedRoute/NestedRoute';
 import './index.css';
 import Register from './pages/Register/Register';
+import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const redirectRoute = '/login/register';
+  const redirectRoute = '/login/login';
 
   return (
     <div className="bg-white">
@@ -48,7 +49,7 @@ const App: React.FC = () => {
                     <div>HOST REGISTER PROFILE</div>
                   </Route>
                   <Route exact path="/artist">
-                    <div>ARTIST REGISTER PROFILE</div>
+                    <RegisterArtistProfile />
                   </Route>
                 </NestedRoute>
                 <Route exact path="/login"></Route>
