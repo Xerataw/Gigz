@@ -3,7 +3,6 @@ import GigzResponse from '../types/GigzResponse';
 import User from '../types/User';
 
 const envVars = import.meta.env;
-const user = await User.getInstance();
 
 export default class GigzFetcher {
   private static API_VERSION = envVars.VITE_GIGZ_API_V1;
@@ -31,7 +30,7 @@ export default class GigzFetcher {
   ): Promise<GigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
-    const finalHeaders = this.getFinalHeaders(headers, isAuth);
+    const finalHeaders = await this.getFinalHeaders(headers, isAuth);
 
     try {
       // Make request
@@ -64,7 +63,7 @@ export default class GigzFetcher {
   ): Promise<GigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, {}, isAuth);
-    const finalHeaders = this.getFinalHeaders(headers, isAuth);
+    const finalHeaders = await this.getFinalHeaders(headers, isAuth);
 
     try {
       // Make request
@@ -95,7 +94,7 @@ export default class GigzFetcher {
   ): Promise<GigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
-    const finalHeaders = this.getFinalHeaders(headers, isAuth);
+    const finalHeaders = await this.getFinalHeaders(headers, isAuth);
 
     try {
       // Make request
@@ -126,7 +125,7 @@ export default class GigzFetcher {
   ): Promise<GigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
-    const finalHeaders = this.getFinalHeaders(headers, isAuth);
+    const finalHeaders = await this.getFinalHeaders(headers, isAuth);
 
     try {
       // Make request
@@ -157,7 +156,7 @@ export default class GigzFetcher {
   ): Promise<GigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
-    const finalHeaders = this.getFinalHeaders(headers, isAuth);
+    const finalHeaders = await this.getFinalHeaders(headers, isAuth);
 
     try {
       // Make request
@@ -195,9 +194,15 @@ export default class GigzFetcher {
    * @param isAuth if true, will add the Authorization header with the stored token
    * @returns the headers object
    */
-  private static getFinalHeaders(headers: object, isAuth: boolean): object {
+  private static async getFinalHeaders(
+    headers: object,
+    isAuth: boolean
+  ): Promise<object> {
     let finalHeaders = { ...this.BASE_HEADERS, ...headers };
-    if (isAuth) finalHeaders = { Authorization: user.getToken(), ...headers };
+    if (isAuth) {
+      const user = await User.getInstance();
+      finalHeaders = { Authorization: user.getToken, ...headers };
+    }
     return finalHeaders;
   }
 

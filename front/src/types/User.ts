@@ -46,20 +46,18 @@ export default class User {
    * @returns the unique user instance of the app.
    */
   public static async getInstance(): Promise<User> {
-    const localUserInfo = await IonicStorageAccessor.get('localUserInfo');
-    return new Promise<User>((resolve) => {
-      if (!this.instance) {
-        if (!localUserInfo) this.instance = new User();
-        else
-          this.instance = new User(
-            localUserInfo.username,
-            localUserInfo.profilePicture,
-            localUserInfo.token,
-            localUserInfo.type
-          );
-      }
-      resolve(this.instance);
-    });
+    if (!this.instance) {
+      const localUserInfo = await IonicStorageAccessor.get('localUserInfo');
+      if (!localUserInfo) this.instance = new User();
+      else
+        this.instance = new User(
+          localUserInfo.username,
+          localUserInfo.profilePicture,
+          localUserInfo.token,
+          localUserInfo.type
+        );
+    }
+    return this.instance;
   }
 
   /**
