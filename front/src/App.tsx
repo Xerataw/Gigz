@@ -21,7 +21,7 @@ import Register from './pages/Register/Register';
 setupIonicReact();
 
 const App: React.FC = () => {
-  const redirectRoute = '/login/register';
+  const redirectRoute = '/login';
 
   return (
     <div className="bg-white">
