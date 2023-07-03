@@ -4,28 +4,29 @@ import SocialMediaCard from './SocialMediaCard/SocialMediaCard';
 import {
   IconBrandInstagram,
   IconBrandFacebook,
-  IconBrandTwitter,
+  IconWorldWww,
 } from '@tabler/icons-react';
 
 export interface ISocialsProps {
   instagramLink?: string;
   facebookLink?: string;
-  twitterLink?: string;
+  websiteLink?: string;
 }
 
 export default function Socials({
   instagramLink,
   facebookLink,
-  twitterLink,
+  websiteLink,
 }: ISocialsProps) {
   return (
     <ProfileSection name="Réseaux sociaux">
-      <ul className="flex flex-flow flex-nowrap items-center justify-evenly mt-3">
+      <ul className="flex flex-flow flex-nowrap justify-center mt-3 gap-5">
         {instagramLink && (
           <li>
             <SocialMediaCard
               link={instagramLink}
-              logo={<IconBrandInstagram stroke="1.75" />}
+              logo={<IconBrandInstagram color="white" size="32" />}
+              background="radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%,#d6249f 60%,#285AEB 90%)"
             />
           </li>
         )}
@@ -33,15 +34,26 @@ export default function Socials({
           <li>
             <SocialMediaCard
               link={facebookLink}
-              logo={<IconBrandFacebook stroke="1.75" />}
+              logo={
+                <IconBrandFacebook
+                  color="white"
+                  size="32"
+                  stroke="1.5"
+                  style={{
+                    marginRight: '1px',
+                  }}
+                />
+              }
+              background="#4267B2"
             />
           </li>
         )}
-        {twitterLink && (
+        {websiteLink && (
           <li>
             <SocialMediaCard
-              link={twitterLink}
-              logo={<IconBrandTwitter stroke="1.75" />}
+              link={websiteLink}
+              logo={<IconWorldWww color="white" size="32" stroke="1.5" />}
+              background="black"
             />
           </li>
         )}

@@ -8,4 +8,7 @@ export default interface IProfile {
   city?: string;
   genres: Genre[];
   mediaList: Media[];
+  websiteLink?: string;
+  instagramLink?: string;
+  facebookLink?: string;
 }

@@ -10,7 +10,7 @@ export default function ProfileSection({
   children,
 }: IProfileSectionProps) {
   return (
-    <section className="mt-2 mb-2">
+    <section className="mt-2 mb-5">
       <h4 className="mb-2">{name}</h4>
       <div>{children}</div>
     </section>

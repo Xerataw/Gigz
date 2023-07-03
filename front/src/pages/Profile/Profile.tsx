@@ -29,7 +29,7 @@ const testProfile: IArtistProfile = {
   mediaList: [],
   instagramLink: 'https://www.instagram.com/emmawatson/',
   facebookLink: 'https://www.facebook.com/emmawatson/',
-  twitterLink: 'https://twitter.com/EmmaWatson',
+  websiteLink: 'https://twitter.com/EmmaWatson',
   embedMusicLink: 'https://open.spotify.com/track/2QSKqb1s96PggfK0hv0W8u',
   spotifyLink: 'https://open.spotify.com/artist/3EhXtoOJDawjgbDPKcNDJB',
   appleMusicLink: 'https://music.apple.com/fr/artist/metallica/3996865',
@@ -43,11 +43,6 @@ const Profile: React.FC = () => {
     <div>
       <ProfileView profile={testProfile}>
         {testProfile.bio && <Biography content={testProfile.bio} />}
-        <Socials
-          instagramLink={testProfile.instagramLink}
-          facebookLink={testProfile.facebookLink}
-          twitterLink={testProfile.twitterLink}
-        />
         <Music
           musicLink={testProfile.embedMusicLink}
           spotifyLink={testProfile.spotifyLink}
@@ -55,6 +50,11 @@ const Profile: React.FC = () => {
           deezerLink={testProfile.deezerLink}
           youtubeLink={testProfile.youtubeLink}
           appleMusicLink={testProfile.appleMusicLink}
+        />
+        <Socials
+          instagramLink={testProfile.instagramLink}
+          facebookLink={testProfile.facebookLink}
+          websiteLink={testProfile.websiteLink}
         />
       </ProfileView>
       <BottomNavbar />
