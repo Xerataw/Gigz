@@ -1,5 +1,5 @@
 import { setupIonicReact } from '@ionic/react';
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Redirect,
   Route,
@@ -18,11 +18,17 @@ import NestedRoute from './components/NestedRoute/NestedRoute';
 import './index.css';
 import Register from './pages/Register/Register';
 import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
+import User from './types/User';
 
 setupIonicReact();
 
 const App: React.FC = () => {
   const redirectRoute = '/login';
+  const [user, setUser] = useState<User>();
+
+  useEffect(() => {
+    User.getInstance().then((userRes) => setUser(userRes));
+  }, []);
 
   return (
     <div className="bg-white">
@@ -34,24 +40,25 @@ const App: React.FC = () => {
                 <Redirect to={redirectRoute} />
               </Route>
 
-              <NestedRoute
-                condition={true}
-                path="/login"
-                redirectNoMatch={redirectRoute}
-              >
-                <NestedRoute
-                  condition={true}
-                  path="/register"
-                  redirectNoMatch={redirectRoute}
-                >
+              <NestedRoute path="/login" redirectNoMatch={redirectRoute}>
+                <NestedRoute path="/register" redirectNoMatch={redirectRoute}>
                   <Route exact path="/">
                     <Register />
                   </Route>
+
                   <Route exact path="/host">
-                    <div>HOST REGISTER PROFILE</div>
+                    {user?.getToken() !== null ? (
+                      <Redirect to={redirectRoute} />
+                    ) : (
+                      <div>HOST REGISTER PROFILE</div>
+                    )}
                   </Route>
                   <Route exact path="/artist">
-                    <RegisterArtistProfile />
+                    {user?.getToken() !== null ? (
+                      <Redirect to={redirectRoute} />
+                    ) : (
+                      <RegisterArtistProfile />
+                    )}
                   </Route>
                 </NestedRoute>
                 <Route exact path="/">
