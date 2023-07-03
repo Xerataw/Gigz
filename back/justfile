@@ -3,7 +3,7 @@ default: up wait migrate populate
 
 wait:
     @echo '=> Waiting for containers to be ready...'
-    @sleep 15
+    @sleep 60
 
 up *FLAGS:
     docker compose up -d {{FLAGS}}
