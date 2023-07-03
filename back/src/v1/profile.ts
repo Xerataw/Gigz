@@ -25,7 +25,7 @@ const ArtistBodySchema = z.object({
   deezer_link: z.string().optional(),
 
   city_id: z.coerce.number().optional(),
-}).required();
+});
 
 const handleGenres = async (account_id: number, genres: number[]) => {
   const records = await database.account_genre
@@ -107,7 +107,7 @@ const HostBodySchema = z.object({
 
   capacity_id: z.coerce.number().optional(),
   host_type_id: z.coerce.number().optional(),
-}).required();
+});
 
 router.patch('/host', async (req, res) => {
   const account = await findAccountById(req.accountId);
