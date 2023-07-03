@@ -18,6 +18,7 @@ services:
     volumes:
       - ./src:/usr/src/app/src
       - ./prisma:/usr/src/app/prisma
+      - ./tsconfig.json:/usr/src/app/tsconfig.json
 
     depends_on:
       - database

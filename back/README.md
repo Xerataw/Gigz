@@ -16,7 +16,7 @@ You will also need a `.env` containing the variables:
 - `SALT_ROUNDS`
 
 Then execute the following command to setup the environment:
-- `just`
+- `just up`
 
 ## How to use
 

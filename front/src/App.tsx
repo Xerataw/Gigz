@@ -6,8 +6,10 @@ import {
   BrowserRouter as Router,
   Switch,
 } from 'react-router-dom';
+import ForgotPassword from './components/Login/ForgotPassword/ForgotPassword';
 import Conversations from './pages/Conversations/Conversations';
 import Liked from './pages/Liked/Liked';
+import LoginPage from './pages/LoginPage/LoginPage';
 import Profile from './pages/Profile/Profile';
 import Search from './pages/Search/Search';
 
@@ -20,7 +22,7 @@ import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
 setupIonicReact();
 
 const App: React.FC = () => {
-  const redirectRoute = '/login/login';
+  const redirectRoute = '/login';
 
   return (
     <div className="bg-white">
@@ -52,7 +54,12 @@ const App: React.FC = () => {
                     <RegisterArtistProfile />
                   </Route>
                 </NestedRoute>
-                <Route exact path="/login"></Route>
+                <Route exact path="/">
+                  <LoginPage />
+                </Route>
+                <Route path="/forgot-password">
+                  <ForgotPassword />
+                </Route>
               </NestedRoute>
 
               <NestedRoute
