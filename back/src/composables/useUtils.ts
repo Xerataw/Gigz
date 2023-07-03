@@ -6,6 +6,8 @@ import { Response } from 'express';
 enum ApiMessages {
   // Auth
   EmailTaken = 'EMAIL_TAKEN',
+  PhoneNumberTaken = 'PHONE_NUMBER_TAKEN',
+
   MissingToken = 'MISSING_TOKEN',
   WrongToken = 'WRONG_TOKEN',
   WrongCredentials = 'WRONG_CREDENTIALS',
