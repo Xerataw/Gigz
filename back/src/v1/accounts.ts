@@ -30,7 +30,7 @@ const AccountBodySchema = z.object({
 });
 
 router.patch('/', async (req, res) => {
-  const account = await findAccountById(req.accountId);
+  const account = await findAccountById(req.account.id);
   if (!account) return sendError(res, ApiMessages.WrongToken, 401);
 
   const body = AccountBodySchema.safeParse(req.body);

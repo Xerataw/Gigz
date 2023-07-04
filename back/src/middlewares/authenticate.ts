@@ -28,7 +28,11 @@ const authenticate = async (
       message: ApiMessages.WrongToken,
     });
 
-  req.accountId = account.id;
+  req.account = {
+    id: account.id,
+    profileType: account.profile_type,
+  };
+
   next();
 };
 

@@ -7,7 +7,7 @@ ECHO=@ echo "${BBLUE}-->"
 
 # PATHS
 GIGZ_FRONT_PATH=./front/
-GIGZ_BACK_PATH=./GIGZ-BACK/
+GIGZ_BACK_PATH=./back/
 
 setup:
 	${ECHO} Install commit linter, code linter and formatter dependencies
