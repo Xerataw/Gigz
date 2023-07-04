@@ -7,7 +7,7 @@ const router = express.Router();
 const { database } = useDatabase();
 const { sendResponse, fromDbFormat } = useUtils();
 
-router.get('/', async (req, res) => {
+router.get('/', async (_, res) => {
   const data = await database.genre.findMany({});
 
   sendResponse(res, fromDbFormat(data), 200);
