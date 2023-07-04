@@ -5,14 +5,14 @@ import { v4 } from 'uuid';
 interface Props {
   path: string;
   redirectNoMatch: string;
-  condition: boolean;
+  condition?: boolean;
   children: ReactNode | ReactNode[];
 }
 
 const NestedRoute: React.FC<Props> = ({
   path,
   children,
-  condition,
+  condition = true,
   redirectNoMatch,
 }) => {
   const _children = Array.isArray(children) ? children : [children];

@@ -47,7 +47,7 @@ export default class User {
    */
   public static async getInstance(): Promise<User> {
     if (!this.instance) {
-      const localUserInfo = await IonicStorageAccessor.get('localUserInfo');
+      const localUserInfo = await IonicStorageAccessor.get('user');
       if (!localUserInfo) this.instance = new User();
       else
         this.instance = new User(

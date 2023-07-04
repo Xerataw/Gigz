@@ -24,7 +24,7 @@ const ForgotPassword: React.FC = () => {
     },
   });
 
-  const [debounced] = useDebouncedValue(form.values.email, 600);
+  const [debounced] = useDebouncedValue(form.values.email, 1000);
 
   const validateEmail = (email: string) => {
     if (!email) {

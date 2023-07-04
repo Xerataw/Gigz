@@ -40,6 +40,7 @@ const mantineThemeConfig: MantineThemeOverride = {
       '#A17100',
     ],
   },
+  primaryColor: 'secondary',
 };
 
 export default mantineThemeConfig;
