@@ -2,10 +2,10 @@ import express from 'express';
 import { z } from 'zod';
 import validator from 'validator';
 
-import useDatabase from '../composables/useDatabase';
-import useUtils from '../composables/useUtils';
-import useHash from '../composables/useHash';
-import useToken from '../composables/useToken';
+import useDatabase from '@composables/useDatabase';
+import useUtils from '@composables/useUtils';
+import useHash from '@composables/useHash';
+import useToken from '@composables/useToken';
 
 const { database, findAccountByEmail } = useDatabase();
 const { ApiMessages, sendResponse, sendError } = useUtils();
@@ -30,6 +30,14 @@ router.post('/', async (req, res) => {
 
   if (await findAccountByEmail(req.body.email))
     return sendError(res, ApiMessages.EmailTaken);
+
+  if (body.data.phoneNumber !== undefined) {
+    const account = await database.account.findUnique({
+      where: { phone_number: body.data.phoneNumber },
+    });
+
+    if (account !== null) return sendError(res, ApiMessages.PhoneNumberTaken);
+  }
 
   database.account
     .create({

@@ -1,5 +1,5 @@
 default: up wait migrate populate
-    @docker compose exec api yarn prisma generate
+    @docker compose exec api npx prisma generate
 
 wait:
     @echo '=> Waiting for containers to be ready...'
@@ -30,10 +30,10 @@ fetch URL *FLAGS:
     @-httpx http://localhost:3000/api/{{URL}} {{FLAGS}}
 
 prisma +COMMAND:
-    docker compose exec api yarn prisma {{COMMAND}}
+    docker compose exec api npx prisma {{COMMAND}}
 
 migrate:
-    docker compose exec api yarn prisma migrate dev
+    docker compose exec api npx prisma migrate dev
 
 db:
     docker compose exec -it database mysql -u root -p

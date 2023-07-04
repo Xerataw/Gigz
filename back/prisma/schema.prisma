@@ -48,6 +48,7 @@ model artist {
   deezer_link      String? @db.VarChar(255)
   city_id          Int?
   account_id       Int     @unique(map: "account_id")
+  music_link       String? @db.VarChar(255)
   city             city?   @relation(fields: [city_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "artist_ibfk_1")
   account          account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "artist_ibfk_2")
 

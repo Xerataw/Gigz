@@ -7,7 +7,8 @@ import useDatabase from '@composables/useDatabase';
 const router = express.Router();
 
 const { database, findAccountById } = useDatabase();
-const { ApiMessages, sendResponse, sendError } = useUtils();
+const { ApiMessages, sendResponse, sendError, fromDbFormat, toDbFormat } =
+  useUtils();
 
 const ArtistBodySchema = z.object({
   name: z.string().optional(),
@@ -15,16 +16,16 @@ const ArtistBodySchema = z.object({
   genres: z.coerce.number().array().optional(),
 
   // Links
-  spotify_link: z.string().optional(),
-  instagram_link: z.string().optional(),
-  facebook_link: z.string().optional(),
-  soundcloud_link: z.string().optional(),
-  youtube_link: z.string().optional(),
-  apple_music_link: z.string().optional(),
-  website_link: z.string().optional(),
-  deezer_link: z.string().optional(),
+  spotifyLink: z.string().optional(),
+  instagramLink: z.string().optional(),
+  facebookLink: z.string().optional(),
+  soundcloudLink: z.string().optional(),
+  youtubeLink: z.string().optional(),
+  appleMusicLink: z.string().optional(),
+  websiteLink: z.string().optional(),
+  deezerLink: z.string().optional(),
 
-  city_id: z.coerce.number().optional(),
+  cityId: z.coerce.number().optional(),
 });
 
 const handleGenres = async (account_id: number, genres: number[]) => {
@@ -46,6 +47,27 @@ const handleGenres = async (account_id: number, genres: number[]) => {
   });
 };
 
+router.get('/artists', async (_, res) => {
+  const data = await database.artist.findMany({
+    include: {
+      account: {
+        include: {
+          account_genre: true,
+        },
+      },
+    },
+  });
+
+  const formattedData = data.map((artist) => ({
+    id: artist.id,
+    name: artist.name,
+    cityId: artist.city_id,
+    genres: artist.account.account_genre.map((genre) => genre.id),
+  }));
+
+  sendResponse(res, formattedData);
+});
+
 router.patch('/artist', async (req, res) => {
   const account = await findAccountById(req.accountId);
   if (!account) return sendError(res, ApiMessages.WrongToken, 401);
@@ -65,11 +87,13 @@ router.patch('/artist', async (req, res) => {
 
   const data = await database.artist.upsert({
     where: { account_id: account.id },
-    update: body.data,
+    update: toDbFormat(body.data),
     create: { ...body.data, account_id: account.id },
   });
 
-  sendResponse(res, data);
+  // const formattedData = { ...data, account_genre: data. .account_genre.map(genre => genre.id) }
+
+  sendResponse(res, fromDbFormat(data));
 });
 
 const HostBodySchema = z.object({
@@ -78,15 +102,15 @@ const HostBodySchema = z.object({
   genres: z.coerce.number().array().optional(),
 
   // Links
-  website_link: z.string().optional(),
-  facebook_link: z.string().optional(),
-  instagram_link: z.string().optional(),
+  websiteLink: z.string().optional(),
+  facebookLink: z.string().optional(),
+  instagramLink: z.string().optional(),
 
   address: z.string().optional(),
-  city_id: z.coerce.number().optional(),
+  cityId: z.coerce.number().optional(),
 
-  capacity_id: z.coerce.number().optional(),
-  host_type_id: z.coerce.number().optional(),
+  capacityId: z.coerce.number().optional(),
+  hostTypeId: z.coerce.number().optional(),
 });
 
 router.patch('/host', async (req, res) => {
@@ -108,11 +132,11 @@ router.patch('/host', async (req, res) => {
 
   const data = await database.host.upsert({
     where: { account_id: account.id },
-    update: body.data,
+    update: toDbFormat(body.data),
     create: { ...body.data, account_id: account.id },
   });
 
-  sendResponse(res, data);
+  sendResponse(res, fromDbFormat(data));
 });
 
 export default router;

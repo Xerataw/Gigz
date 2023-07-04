@@ -18,12 +18,16 @@ type TokenPayload = z.infer<typeof PayloadSchema>;
  * Returns null if the token was invalid.
  */
 const parseToken = (token: string): TokenPayload | null => {
-  const decodedToken = jwt.verify(token, SALT);
-  const account = PayloadSchema.safeParse(decodedToken);
+  try {
+    const decodedToken = jwt.verify(token, SALT);
+    const account = PayloadSchema.safeParse(decodedToken);
 
-  if (!account.success) return null;
+    if (!account.success) return null;
 
-  return account.data;
+    return account.data;
+  } catch (e) {
+    return null;
+  }
 };
 
 const TOKEN_OPTS = {
