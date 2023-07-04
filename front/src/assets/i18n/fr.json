@@ -27,7 +27,7 @@
       "unspecific": "Une erreur est survenue"
     },
     "forgotPassword": {
-      "title": "Reinitialiser le mot de passe",
+      "title": "Réinitialiser le mot de passe",
       "label": "Mot de passe oublié ?",
       "infos": "Si l'email existe un email de réinitialisation sera envoyé",
       "rememberPassword": "Retour à la connexion",
