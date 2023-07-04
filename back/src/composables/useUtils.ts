@@ -18,7 +18,7 @@ enum ApiMessages {
 
   WrongRoute = 'WRONG_ROUTE',
 
-  SERVER_ERROR = 'SERVER_ERROR',
+  ServerError = 'SERVER_ERROR',
 }
 
 /**

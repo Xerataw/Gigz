@@ -46,7 +46,7 @@ app.use(function (
   next: NextFunction
 ): void {
   console.error(err.stack);
-  sendError(res, ApiMessages.SERVER_ERROR, 500);
+  sendError(res, ApiMessages.ServerError, 500);
   next(err);
 });
 

@@ -156,4 +156,20 @@ router.patch(
   }
 );
 
+router.get('/', async (req, res) => {
+  const procedure = {
+    where: {
+      account_id: req.account.id,
+    },
+  };
+
+  const profile =
+    req.account.profileType === 'host'
+      ? await database.host.findUnique(procedure)
+      : await database.artist.findUnique(procedure);
+
+  if (!profile) return sendError(res, ApiMessages.ServerError, 500);
+  sendResponse(res, fromDbFormat(profile));
+});
+
 export default router;
