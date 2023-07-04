@@ -1,12 +1,12 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2023-07-03T14:28:36.430Z",
-  "__export_source": "insomnia.desktop.app:v2023.2.2",
+  "__export_date": "2023-07-04T10:41:47.731Z",
+  "__export_source": "insomnia.desktop.app:v2023.3.0",
   "resources": [
     {
-      "_id": "req_c9b2217c1b724213bbf9216c59b2fef0",
-      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "_id": "req_9c0db4d48ce94e8a8016d0376ff2a706",
+      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
       "modified": 1687871990830,
       "created": 1687788180759,
       "url": "{{ _.url }}/status",
@@ -28,19 +28,19 @@
       "_type": "request"
     },
     {
-      "_id": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "_id": "wrk_7b52d58577144ab98ce67227777887e7",
       "parentId": null,
-      "modified": 1687788527639,
-      "created": 1687778291139,
+      "modified": 1688462430955,
+      "created": 1688462430955,
       "name": "GIGZ",
       "description": "",
       "scope": "collection",
       "_type": "workspace"
     },
     {
-      "_id": "req_27849ab4aa944ca68a7e0c78e9b2cf98",
-      "parentId": "fld_a9f35d978a6f4f3f9661cd7669f05920",
-      "modified": 1688393379868,
+      "_id": "req_075ca3823ce846c0855283c74436cb91",
+      "parentId": "fld_d78f7a492c3843c78735cf67ce2ba91f",
+      "modified": 1688466955165,
       "created": 1687778320464,
       "url": "{{ _.url }}/auth/login",
       "name": "LOGIN",
@@ -48,7 +48,7 @@
       "method": "POST",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"email\": \"test@test.gigz.com\",\n\t\"password\": \"ouiouioui\"\n}"
+        "text": "{\n\t\"email\": \"alexandre.sparton@epitech.eu\",\n\t\"password\": \"root\"\n}"
       },
       "parameters": [],
       "headers": [{ "name": "Content-Type", "value": "application/json" }],
@@ -64,8 +64,8 @@
       "_type": "request"
     },
     {
-      "_id": "fld_a9f35d978a6f4f3f9661cd7669f05920",
-      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "_id": "fld_d78f7a492c3843c78735cf67ce2ba91f",
+      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
       "modified": 1687788355448,
       "created": 1687778301916,
       "name": "AUTH",
@@ -76,8 +76,8 @@
       "_type": "request_group"
     },
     {
-      "_id": "req_2e89799a1cbe491e84f22fe01a626343",
-      "parentId": "fld_a9f35d978a6f4f3f9661cd7669f05920",
+      "_id": "req_c566ab6b0ca449da84491bdb013c2b63",
+      "parentId": "fld_d78f7a492c3843c78735cf67ce2ba91f",
       "modified": 1688387160098,
       "created": 1688386774981,
       "url": "{{ _.url }}/auth/register",
@@ -102,9 +102,9 @@
       "_type": "request"
     },
     {
-      "_id": "req_ef358878a0534d88a02574bcedd469a2",
-      "parentId": "fld_f62741487f6f42e1a301d84f75ecab04",
-      "modified": 1688393419127,
+      "_id": "req_aee11027b859440791d237b13515f5bc",
+      "parentId": "fld_f95b592374dd461a93211756f59dce8d",
+      "modified": 1688463624046,
       "created": 1688390608518,
       "url": "{{ _.url }}/v1/accounts",
       "name": "UPDATE",
@@ -112,7 +112,7 @@
       "method": "PATCH",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"phoneNumber\": \"0648754884\"\n}"
+        "text": "{\n\t\"phoneNumber\": \"0783243623\"\n}"
       },
       "parameters": [],
       "headers": [{ "name": "Content-Type", "value": "application/json" }],
@@ -132,8 +132,8 @@
       "_type": "request"
     },
     {
-      "_id": "fld_f62741487f6f42e1a301d84f75ecab04",
-      "parentId": "fld_dd077cb895b347a6a3a3450f83913546",
+      "_id": "fld_f95b592374dd461a93211756f59dce8d",
+      "parentId": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
       "modified": 1688390607257,
       "created": 1688390607257,
       "name": "ACCOUNT",
@@ -144,8 +144,8 @@
       "_type": "request_group"
     },
     {
-      "_id": "fld_dd077cb895b347a6a3a3450f83913546",
-      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "_id": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
+      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
       "modified": 1687871322163,
       "created": 1687857856552,
       "name": "V1",
@@ -156,15 +156,18 @@
       "_type": "request_group"
     },
     {
-      "_id": "req_50a51dda10df4c70983f89d343c59914",
-      "parentId": "fld_5f39cecddff64228afe0563243e47d4f",
-      "modified": 1688390468876,
+      "_id": "req_e486e26e87ef4505809b2ffa83225c95",
+      "parentId": "fld_e2d1e6f4cb6d4b25803fda4261165462",
+      "modified": 1688466999987,
       "created": 1687857858791,
-      "url": "{{ _.url }}/v1/profile/artist",
+      "url": "{{ _.url }}/v1/profiles/artist",
       "name": "UPDATE ARTIST",
       "description": "",
       "method": "PATCH",
-      "body": { "mimeType": "application/json", "text": "{}" },
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"description\": \"salut lol c'est alexandre\"\n}"
+      },
       "parameters": [],
       "headers": [{ "name": "Content-Type", "value": "application/json" }],
       "authentication": {
@@ -183,8 +186,8 @@
       "_type": "request"
     },
     {
-      "_id": "fld_5f39cecddff64228afe0563243e47d4f",
-      "parentId": "fld_dd077cb895b347a6a3a3450f83913546",
+      "_id": "fld_e2d1e6f4cb6d4b25803fda4261165462",
+      "parentId": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
       "modified": 1688390461043,
       "created": 1688390461043,
       "name": "PROFILE",
@@ -195,17 +198,17 @@
       "_type": "request_group"
     },
     {
-      "_id": "req_0abdb6a1630c474e896dc0436d8c18a2",
-      "parentId": "fld_5f39cecddff64228afe0563243e47d4f",
-      "modified": 1688393814335,
+      "_id": "req_1d996865afd6469ab6a6349b55ca435b",
+      "parentId": "fld_e2d1e6f4cb6d4b25803fda4261165462",
+      "modified": 1688463634702,
       "created": 1687871950943,
-      "url": "{{ _.url }}/v1/profile/host",
+      "url": "{{ _.url }}/v1/profiles/host",
       "name": "UPDATE HOST",
       "description": "",
       "method": "PATCH",
       "body": {
         "mimeType": "application/json",
-        "text": "{\n\t\"genres\": [1, 2, 3]\n}"
+        "text": "{\n\t\"genres\": [1, 2]\n}"
       },
       "parameters": [],
       "headers": [{ "name": "Content-Type", "value": "application/json" }],
@@ -225,8 +228,8 @@
       "_type": "request"
     },
     {
-      "_id": "env_89f2865153cc385ea04c53bb79ad92ce22c8459e",
-      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "_id": "env_b9324bcea90744429769848255eb7ca9",
+      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
       "modified": 1687788444933,
       "created": 1687778291141,
       "name": "Base Environment",
@@ -238,8 +241,8 @@
       "_type": "environment"
     },
     {
-      "_id": "jar_89f2865153cc385ea04c53bb79ad92ce22c8459e",
-      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "_id": "jar_a20f9e38c25c4f368460b4c46f94d0ec",
+      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
       "modified": 1687778291142,
       "created": 1687778291142,
       "name": "Default Jar",
@@ -247,23 +250,13 @@
       "_type": "cookie_jar"
     },
     {
-      "_id": "spc_f7d499b1c2774d1ca5b30d0e7cf53d74",
-      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
-      "modified": 1687778291139,
-      "created": 1687778291139,
-      "fileName": "Gigz",
-      "contents": "",
-      "contentType": "yaml",
-      "_type": "api_spec"
-    },
-    {
-      "_id": "env_857a92c7a4084976829efa2f9099d839",
-      "parentId": "env_89f2865153cc385ea04c53bb79ad92ce22c8459e",
-      "modified": 1688377044055,
+      "_id": "env_a93b5ab3067348fea90304cb93c2ab97",
+      "parentId": "env_b9324bcea90744429769848255eb7ca9",
+      "modified": 1688466969462,
       "created": 1687857650224,
       "name": "ARTIST",
       "data": {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhbGV4YW5kcmUuc3BhcnRvbkBlcGl0ZWNoLmV1IiwiaWF0IjoxNjg4Mzc1NTg5LCJleHAiOjE2ODg5ODAzODl9.IkPW8UOBe4qDUEPzDDVFbxGomWuke47STtei8FmSDIQ"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhbGV4YW5kcmUuc3BhcnRvbkBlcGl0ZWNoLmV1IiwiaWF0IjoxNjg4NDY2OTU4LCJleHAiOjE2ODkwNzE3NTh9.6Go18wQ5dX0dq_vgye04OTaUyBEQjDtMNkI5VkHTAGk"
       },
       "dataPropertyOrder": { "&": ["token"] },
       "color": "#d04343",
@@ -272,8 +265,8 @@
       "_type": "environment"
     },
     {
-      "_id": "env_99dd44ea7e344aaea69454519c42f922",
-      "parentId": "env_89f2865153cc385ea04c53bb79ad92ce22c8459e",
+      "_id": "env_9ca3aa14efdf497f8f86dcce900559cd",
+      "parentId": "env_b9324bcea90744429769848255eb7ca9",
       "modified": 1688393390407,
       "created": 1688377045685,
       "name": "HOST",
