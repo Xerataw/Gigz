@@ -60,7 +60,11 @@ const sendResponse = (response: Response, data: any, statusCode = 200) => {
   });
 };
 
-const toDbFormat = (body: any) => {
+interface BodyType {
+  [key: string]: any;
+}
+
+const toDbFormat = (body: BodyType) => {
   const convertedBody: any = {};
 
   for (const key in body) {
@@ -76,7 +80,7 @@ const toDbFormat = (body: any) => {
   return convertedBody;
 };
 
-const fromDbFormat = (body: any) => {
+const fromDbFormat = (body: BodyType) => {
   const convertedBody: any = {};
 
   for (const key in body) {

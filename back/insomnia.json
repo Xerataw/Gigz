@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2023-07-04T11:14:39.295Z",
+  "__export_date": "2023-07-04T10:41:47.731Z",
   "__export_source": "insomnia.desktop.app:v2023.3.0",
   "resources": [
     {
@@ -192,6 +192,18 @@
       "environment": {},
       "environmentPropertyOrder": null,
       "metaSortKey": -1688390607257,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
+      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
+      "modified": 1687871322163,
+      "created": 1687857856552,
+      "name": "V1",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1687778301866,
       "_type": "request_group"
     },
     {
