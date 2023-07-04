@@ -10,19 +10,19 @@ export interface StepProps {
 interface UserTypeButton {
   labelTooltip: string;
   label: string;
-  value: 'isHost' | 'isArtist';
+  value: 'host' | 'artist';
 }
 
 const userTypes: UserTypeButton[] = [
   {
     labelTooltip: 'Un artiste, un groupe',
     label: 'Un artiste',
-    value: 'isArtist',
+    value: 'artist',
   },
   {
     labelTooltip: 'Une salle, un bar, un resto',
     label: 'Un host',
-    value: 'isHost',
+    value: 'host',
   },
 ];
 

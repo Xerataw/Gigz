@@ -17,6 +17,8 @@ enum ApiMessages {
   ApiRunning = 'API_RUNNING',
 
   WrongRoute = 'WRONG_ROUTE',
+
+  SERVER_ERROR = 'SERVER_ERROR',
 }
 
 /**
@@ -58,12 +60,49 @@ const sendResponse = (response: Response, data: any, statusCode = 200) => {
   });
 };
 
+interface BodyType {
+  [key: string]: any;
+}
+
+const toDbFormat = (body: BodyType) => {
+  const convertedBody: any = {};
+
+  for (const key in body) {
+    if (Object.prototype.hasOwnProperty.call(body, key)) {
+      const snakeCaseKey = key.replace(
+        /[A-Z]/g,
+        (match) => `_${match.toLowerCase()}`
+      );
+      convertedBody[snakeCaseKey] = body[key];
+    }
+  }
+
+  return convertedBody;
+};
+
+const fromDbFormat = (body: BodyType) => {
+  const convertedBody: any = {};
+
+  for (const key in body) {
+    if (Object.prototype.hasOwnProperty.call(body, key)) {
+      const camelCaseKey = key.replace(/_(\w)/g, (_, match) =>
+        match.toUpperCase()
+      );
+      convertedBody[camelCaseKey] = body[key];
+    }
+  }
+
+  return convertedBody;
+};
+
 const useUtils = () => ({
   ApiMessages,
 
   getEnv,
   sendError,
   sendResponse,
+  toDbFormat,
+  fromDbFormat,
 });
 
 export default useUtils;

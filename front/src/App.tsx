@@ -1,4 +1,5 @@
 import { setupIonicReact } from '@ionic/react';
+import { Container } from '@mantine/core';
 import React from 'react';
 import {
   Redirect,
@@ -7,21 +8,21 @@ import {
   Switch,
 } from 'react-router-dom';
 import ForgotPassword from './components/Login/ForgotPassword/ForgotPassword';
+import NestedRoute from './components/NestedRoute/NestedRoute';
 import Conversations from './pages/Conversations/Conversations';
 import Liked from './pages/Liked/Liked';
 import LoginPage from './pages/LoginPage/LoginPage';
 import Profile from './pages/Profile/Profile';
+import Register from './pages/Register/Register';
+import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
 import Search from './pages/Search/Search';
 
-import { Container } from '@mantine/core';
-import NestedRoute from './components/NestedRoute/NestedRoute';
 import './index.css';
-import Register from './pages/Register/Register';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const redirectRoute = '/login';
+  const defaultRoute = '/';
 
   return (
     <div className="bg-white">
@@ -30,27 +31,24 @@ const App: React.FC = () => {
           <Router>
             <Switch>
               <Route path="/" exact>
-                <Redirect to={redirectRoute} />
+                <Redirect to="/login" />
               </Route>
 
               <NestedRoute
-                condition={true}
                 path="/login"
-                redirectNoMatch={redirectRoute}
+                redirectNoMatch={defaultRoute}
+                condition={true}
               >
-                <NestedRoute
-                  condition={true}
-                  path="/register"
-                  redirectNoMatch={redirectRoute}
-                >
+                <NestedRoute path="/register" redirectNoMatch={defaultRoute}>
                   <Route exact path="/">
                     <Register />
                   </Route>
+
                   <Route exact path="/host">
                     <div>HOST REGISTER PROFILE</div>
                   </Route>
                   <Route exact path="/artist">
-                    <div>ARTIST REGISTER PROFILE</div>
+                    <RegisterArtistProfile />
                   </Route>
                 </NestedRoute>
                 <Route exact path="/">
@@ -63,7 +61,7 @@ const App: React.FC = () => {
 
               <NestedRoute
                 path="/auth"
-                redirectNoMatch={redirectRoute}
+                redirectNoMatch={defaultRoute}
                 condition={true}
               >
                 <Route path="/liked">
@@ -84,7 +82,7 @@ const App: React.FC = () => {
               </NestedRoute>
 
               <Route path="/*" exact>
-                <Redirect to={redirectRoute} />
+                <Redirect to={defaultRoute} />
               </Route>
             </Switch>
           </Router>

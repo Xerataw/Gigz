@@ -37,11 +37,9 @@ export default class GigzFetcher {
       const axiosResponse = await axios.get(finalUri, {
         headers: finalHeaders,
       });
-      return {
-        ok: this.isRequestSucces(axiosResponse.status),
-        code: axiosResponse.status,
-        data: axiosResponse.data.data,
-      };
+
+      // Return custom response
+      return this.formatResponse(axiosResponse, true);
     } catch (error) {
       // Handle custom error response
       return this.handleError<T>(error as AxiosError);
@@ -72,7 +70,7 @@ export default class GigzFetcher {
       });
 
       // Return custom response
-      return this.formatResponse(axiosResponse, true);
+      return this.formatResponse(axiosResponse);
     } catch (error) {
       // Handle custom error response
       return this.handleError<T>(error as AxiosError);
@@ -201,7 +199,7 @@ export default class GigzFetcher {
     let finalHeaders = { ...this.BASE_HEADERS, ...headers };
     if (isAuth) {
       const user = await User.getInstance();
-      finalHeaders = { Authorization: user.getToken, ...headers };
+      finalHeaders = { Authorization: user.getToken(), ...headers };
     }
     return finalHeaders;
   }
@@ -212,13 +210,17 @@ export default class GigzFetcher {
    * @returns GigzResponse with the associated details
    */
   private static handleError<T>(error: AxiosError): Promise<GigzResponse<T>> {
+    const message = (error.response?.data as any).message;
+
     if (error.response)
-      return Promise.reject({
-        message: error.response.statusText,
+      return Promise.resolve({
+        message,
+        ok: false,
         code: error.response.status,
       });
-    return Promise.reject({
+    return Promise.resolve({
       message: error.message,
+      ok: false,
       code: HttpStatusCode.InternalServerError,
     });
   }

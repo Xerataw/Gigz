@@ -1,39 +1,3 @@
-/*
-  - Multiple step form
-
-  - STEP 0 :
-    - is an artist or bar
-
-  - STEP 2 :
-    - Email
-    - Phone
-    - Password
-
-    ----> Send from to create a new account
-    
-    - STEP 3 :
-      - Username (Propositions ?)
-  
-  - STEP 4 (optionnal/skipable) :
-    - Description
-    - Profile Pictures
-    - Presantation Pictures
-
-  - STEP 5 (optionnal/skipable) :
-    - Social Media
-      - Insta
-      - FB
-      - Streaming links
-
-      
-  - STEP 5 (optionnal/skipable) :
-    - City
-    - Capacity (depends)
-
-
-  ---> Send form to complete profile
-*/
-
 import { Button, Group, Loader, Stepper, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
@@ -45,10 +9,13 @@ import {
   IconShieldLock,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
-import { Link, Redirect } from 'react-router-dom';
-import FirstStep from './FirstStep';
-import SecondStep from './SecondStep';
-import ThirdStep from './ThirdStep';
+import { Link } from 'react-router-dom';
+import AccountCreated from '../../components/Register/AccountStep/AccountCreated';
+import FirstStep from '../../components/Register/AccountStep/FirstStep';
+import SecondStep from '../../components/Register/AccountStep/SecondStep';
+import ThirdStep from '../../components/Register/AccountStep/ThirdStep';
+import GigzFetcher from '../../services/GigzFetcher';
+import User from '../../types/User';
 
 const errorPassword = (value: string) => (
   <div>
@@ -62,13 +29,10 @@ const errorPassword = (value: string) => (
   </div>
 );
 
-const artistPath = '/login/register/artist';
-const hostPath = '/login/register/host';
-
 const Register: React.FC = () => {
+  const [user, setUser] = useState<User>();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
-    validateInputOnBlur: true,
     initialValues: {
       email: '',
       phone: '',
@@ -84,7 +48,11 @@ const Register: React.FC = () => {
         case 1:
           return {
             email: /^\S+@\S+$/.test(values.email) ? null : 'Email Invalide',
-            phone: /^.{10}$/.test(values.phone) ? null : 'Numéro invalide',
+            phone: /^(?:(?:\+|00)33|0)\s*[567](?:[\s.-]*\d{2}){4}$/.test(
+              values.phone
+            )
+              ? null
+              : 'Numéro invalide',
           };
 
         case 2:
@@ -107,24 +75,55 @@ const Register: React.FC = () => {
     },
   });
 
-  const [debounced] = useDebouncedValue(form.values, 600);
+  const [debounced] = useDebouncedValue(form.values, 1000);
+
+  useEffect(() => {
+    User.getInstance().then((userRes) => setUser(userRes));
+  }, []);
+
+  const sendRegisterForm = () => {
+    GigzFetcher.post<{ [key: string]: string }>(
+      'register',
+      {
+        email: form.values.email,
+        password: form.values.password,
+        profileType: form.values.userType,
+        phoneNumber: form.values.phone,
+      },
+      {},
+      false
+    ).then((res) => {
+      if (res.ok === true) {
+        if (res.data?.token !== undefined) {
+          user?.setToken(res.data.token);
+          setFormStep((old) => old + 1);
+        }
+      } else {
+        setFormStep(1);
+        if (res.message === 'EMAIL_TAKEN') {
+          form.setErrors((values) => ({
+            email: 'Email déjà pris',
+            ...values,
+          }));
+        } else if (res.message === 'PHONE_NUMBER_TAKEN') {
+          form.setErrors((values) => ({
+            phone: 'Téléphone déjà pris',
+            ...values,
+          }));
+        }
+      }
+    });
+  };
 
   const nextStep = () => {
-    if (formStep === 2) {
-      console.log('to send', form.values);
-      setFormStep((old) => old + 1);
-
-      // simulate request
-      setTimeout(() => {
-        setFormStep((old) => old + 1);
-      }, 1000);
-    } else {
+    if (form.validate().hasErrors === false) {
       setFormStep((current) => {
-        if (form.validate().hasErrors) {
-          return current;
-        }
         return current < 4 ? current + 1 : current;
       });
+      if (formStep === 2) {
+        sendRegisterForm();
+        setFormStep((old) => old + 1);
+      }
     }
   };
 
@@ -137,21 +136,16 @@ const Register: React.FC = () => {
         break;
 
       case 1:
-        if (debounced.email.length > 0 && debounced.phone.length > 0) {
-          form.validate();
-        }
+        if (debounced.email.length > 0) form.validateField('email');
+        if (debounced.phone.length > 0) form.validateField('phone');
         break;
 
       case 2:
-        if (
-          debounced.password.length > 0 &&
-          debounced.confirmPassword.length > 0
-        ) {
-          form.validate();
-        }
+        if (debounced.password.length > 0) form.validateField('password');
+        if (debounced.confirmPassword.length > 0)
+          form.validateField('confirmPassword');
         break;
     }
-    if (debounced.email !== '') form.validate();
   }, [debounced]);
 
   return (
@@ -175,19 +169,15 @@ const Register: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          <Redirect
-            to={form.values.userType === 'isHost' ? hostPath : artistPath}
+          <AccountCreated
+            userType={form.values.userType as 'artist' | 'host'}
           />
         </Stepper.Completed>
       </Stepper>
 
       <Group position="right" mt="xl">
-        {formStep > 0 && (
-          <Button
-            variant="default"
-            disabled={formStep === 3}
-            onClick={prevStep}
-          >
+        {formStep > 0 && formStep < 3 && (
+          <Button variant="default" onClick={prevStep}>
             Retour
           </Button>
         )}
@@ -195,12 +185,14 @@ const Register: React.FC = () => {
           <Button onClick={nextStep}>Prochaine étape</Button>
         )}
       </Group>
-      <div className="text-center mt-10">
-        Vous avez déjà un compte ?
-        <Link to="auth/login" className="font-semibold no-underline">
-          <Text color="secondary">Se connecter</Text>
-        </Link>
-      </div>
+      {formStep < 3 && (
+        <div className="text-center mt-10">
+          Vous avez déjà un compte ?
+          <Link to="auth/login" className="font-semibold no-underline">
+            <Text color="secondary">Se connecter</Text>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

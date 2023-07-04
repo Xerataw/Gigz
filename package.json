@@ -30,7 +30,7 @@
     ]
   },
   "dependencies": {
-    "validator": "^13.9.0",
-    "@mantine/form": "^6.0.14"
+    "@mantine/form": "^6.0.14",
+    "validator": "^13.9.0"
   }
 }
