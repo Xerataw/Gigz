@@ -1,12 +1,12 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2023-07-04T10:41:47.731Z",
+  "__export_date": "2023-07-04T11:30:43.626Z",
   "__export_source": "insomnia.desktop.app:v2023.3.0",
   "resources": [
     {
-      "_id": "req_9c0db4d48ce94e8a8016d0376ff2a706",
-      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
+      "_id": "req_5a850d226ddc426daa1e8c586798b776",
+      "parentId": "wrk_4cbb4d2de60e4ea4b24fbf505f39e262",
       "modified": 1687871990830,
       "created": 1687788180759,
       "url": "{{ _.url }}/status",
@@ -28,18 +28,18 @@
       "_type": "request"
     },
     {
-      "_id": "wrk_7b52d58577144ab98ce67227777887e7",
+      "_id": "wrk_4cbb4d2de60e4ea4b24fbf505f39e262",
       "parentId": null,
-      "modified": 1688462430955,
-      "created": 1688462430955,
+      "modified": 1688470110755,
+      "created": 1688470110755,
       "name": "GIGZ",
       "description": "",
       "scope": "collection",
       "_type": "workspace"
     },
     {
-      "_id": "req_075ca3823ce846c0855283c74436cb91",
-      "parentId": "fld_d78f7a492c3843c78735cf67ce2ba91f",
+      "_id": "req_fb007a5b34574f6fa06395ada2356beb",
+      "parentId": "fld_28e7f90050c548e1b0b7904a04325d4b",
       "modified": 1688466955165,
       "created": 1687778320464,
       "url": "{{ _.url }}/auth/login",
@@ -64,8 +64,8 @@
       "_type": "request"
     },
     {
-      "_id": "fld_d78f7a492c3843c78735cf67ce2ba91f",
-      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
+      "_id": "fld_28e7f90050c548e1b0b7904a04325d4b",
+      "parentId": "wrk_4cbb4d2de60e4ea4b24fbf505f39e262",
       "modified": 1687788355448,
       "created": 1687778301916,
       "name": "AUTH",
@@ -76,8 +76,8 @@
       "_type": "request_group"
     },
     {
-      "_id": "req_c566ab6b0ca449da84491bdb013c2b63",
-      "parentId": "fld_d78f7a492c3843c78735cf67ce2ba91f",
+      "_id": "req_50b1a95c995049b893f1858b63e386fc",
+      "parentId": "fld_28e7f90050c548e1b0b7904a04325d4b",
       "modified": 1688387160098,
       "created": 1688386774981,
       "url": "{{ _.url }}/auth/register",
@@ -102,8 +102,59 @@
       "_type": "request"
     },
     {
-      "_id": "req_aee11027b859440791d237b13515f5bc",
-      "parentId": "fld_f95b592374dd461a93211756f59dce8d",
+      "_id": "req_9bb7c531691847d5b9cc287b7ae2fcf0",
+      "parentId": "fld_aa582a1ccf9f4516acb1aad861dd8965",
+      "modified": 1688470213720,
+      "created": 1688470126813,
+      "url": "{{ _.url }}/v1/genres",
+      "name": "GET GENRES",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": -1688470126813,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_aa582a1ccf9f4516acb1aad861dd8965",
+      "parentId": "fld_e1688c9544344373a232859593e76cdb",
+      "modified": 1688470125609,
+      "created": 1688470125609,
+      "name": "GENRE",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1688470125609,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_e1688c9544344373a232859593e76cdb",
+      "parentId": "wrk_4cbb4d2de60e4ea4b24fbf505f39e262",
+      "modified": 1687871322163,
+      "created": 1687857856552,
+      "name": "V1",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1687778301866,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_88fb98bd30c14135972e03e8f7c9368f",
+      "parentId": "fld_253e4f3795d04492845dd784c7f9ceb1",
       "modified": 1688463624046,
       "created": 1688390608518,
       "url": "{{ _.url }}/v1/accounts",
@@ -132,8 +183,8 @@
       "_type": "request"
     },
     {
-      "_id": "fld_f95b592374dd461a93211756f59dce8d",
-      "parentId": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
+      "_id": "fld_253e4f3795d04492845dd784c7f9ceb1",
+      "parentId": "fld_e1688c9544344373a232859593e76cdb",
       "modified": 1688390607257,
       "created": 1688390607257,
       "name": "ACCOUNT",
@@ -144,20 +195,8 @@
       "_type": "request_group"
     },
     {
-      "_id": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
-      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
-      "modified": 1687871322163,
-      "created": 1687857856552,
-      "name": "V1",
-      "description": "",
-      "environment": {},
-      "environmentPropertyOrder": null,
-      "metaSortKey": -1687778301866,
-      "_type": "request_group"
-    },
-    {
-      "_id": "req_e486e26e87ef4505809b2ffa83225c95",
-      "parentId": "fld_e2d1e6f4cb6d4b25803fda4261165462",
+      "_id": "req_269bd2d2780e4909ba539102268e4599",
+      "parentId": "fld_f178c78de5c04c67a16a74768e45d04d",
       "modified": 1688466999987,
       "created": 1687857858791,
       "url": "{{ _.url }}/v1/profiles/artist",
@@ -186,8 +225,8 @@
       "_type": "request"
     },
     {
-      "_id": "fld_e2d1e6f4cb6d4b25803fda4261165462",
-      "parentId": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
+      "_id": "fld_f178c78de5c04c67a16a74768e45d04d",
+      "parentId": "fld_e1688c9544344373a232859593e76cdb",
       "modified": 1688390461043,
       "created": 1688390461043,
       "name": "PROFILE",
@@ -198,8 +237,8 @@
       "_type": "request_group"
     },
     {
-      "_id": "req_1d996865afd6469ab6a6349b55ca435b",
-      "parentId": "fld_e2d1e6f4cb6d4b25803fda4261165462",
+      "_id": "req_3c5b3932fcd24492b661452a0625a5e8",
+      "parentId": "fld_f178c78de5c04c67a16a74768e45d04d",
       "modified": 1688463634702,
       "created": 1687871950943,
       "url": "{{ _.url }}/v1/profiles/host",
@@ -228,8 +267,8 @@
       "_type": "request"
     },
     {
-      "_id": "env_b9324bcea90744429769848255eb7ca9",
-      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
+      "_id": "env_fff93f2da8f8420ea8786ac17b54b279",
+      "parentId": "wrk_4cbb4d2de60e4ea4b24fbf505f39e262",
       "modified": 1687788444933,
       "created": 1687778291141,
       "name": "Base Environment",
@@ -241,8 +280,8 @@
       "_type": "environment"
     },
     {
-      "_id": "jar_a20f9e38c25c4f368460b4c46f94d0ec",
-      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
+      "_id": "jar_1cdae9d832cc4ee0b45bc8b45d4afc9c",
+      "parentId": "wrk_4cbb4d2de60e4ea4b24fbf505f39e262",
       "modified": 1687778291142,
       "created": 1687778291142,
       "name": "Default Jar",
@@ -250,13 +289,13 @@
       "_type": "cookie_jar"
     },
     {
-      "_id": "env_a93b5ab3067348fea90304cb93c2ab97",
-      "parentId": "env_b9324bcea90744429769848255eb7ca9",
-      "modified": 1688466969462,
+      "_id": "env_ccb203965f7f4de98852e96665c57f1a",
+      "parentId": "env_fff93f2da8f8420ea8786ac17b54b279",
+      "modified": 1688470219566,
       "created": 1687857650224,
       "name": "ARTIST",
       "data": {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhbGV4YW5kcmUuc3BhcnRvbkBlcGl0ZWNoLmV1IiwiaWF0IjoxNjg4NDY2OTU4LCJleHAiOjE2ODkwNzE3NTh9.6Go18wQ5dX0dq_vgye04OTaUyBEQjDtMNkI5VkHTAGk"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhbGV4YW5kcmUuc3BhcnRvbkBlcGl0ZWNoLmV1IiwiaWF0IjoxNjg4NDcwMTk0LCJleHAiOjE2ODkwNzQ5OTR9.--x8_eafDn5ZFPAz-tz9jEZ5BsspmtjS04H6LjmDp80"
       },
       "dataPropertyOrder": { "&": ["token"] },
       "color": "#d04343",
@@ -265,8 +304,8 @@
       "_type": "environment"
     },
     {
-      "_id": "env_9ca3aa14efdf497f8f86dcce900559cd",
-      "parentId": "env_b9324bcea90744429769848255eb7ca9",
+      "_id": "env_9e0ca99a360d4577a7d106b9c1fb1519",
+      "parentId": "env_fff93f2da8f8420ea8786ac17b54b279",
       "modified": 1688393390407,
       "created": 1688377045685,
       "name": "HOST",
