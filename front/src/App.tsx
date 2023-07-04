@@ -1,10 +1,11 @@
 import { setupIonicReact } from '@ionic/react';
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import {
   Redirect,
   Route,
   BrowserRouter as Router,
   Switch,
+  useHistory,
 } from 'react-router-dom';
 import ForgotPassword from './components/Login/ForgotPassword/ForgotPassword';
 import Conversations from './pages/Conversations/Conversations';
@@ -18,17 +19,12 @@ import NestedRoute from './components/NestedRoute/NestedRoute';
 import './index.css';
 import Register from './pages/Register/Register';
 import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
-import User from './types/User';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const redirectRoute = '/login';
-  const [user, setUser] = useState<User>();
-
-  useEffect(() => {
-    User.getInstance().then((userRes) => setUser(userRes));
-  }, []);
+  const redirectRoute = '/';
+  const history = useHistory();
 
   return (
     <div className="bg-white">
@@ -37,28 +33,24 @@ const App: React.FC = () => {
           <Router>
             <Switch>
               <Route path="/" exact>
-                <Redirect to={redirectRoute} />
+                <Redirect to="/login" />
               </Route>
 
-              <NestedRoute path="/login" redirectNoMatch={redirectRoute}>
+              <NestedRoute
+                path="/login"
+                redirectNoMatch={redirectRoute}
+                condition={true}
+              >
                 <NestedRoute path="/register" redirectNoMatch={redirectRoute}>
                   <Route exact path="/">
                     <Register />
                   </Route>
 
                   <Route exact path="/host">
-                    {user?.getToken() !== null ? (
-                      <Redirect to={redirectRoute} />
-                    ) : (
-                      <div>HOST REGISTER PROFILE</div>
-                    )}
+                    <div>HOST REGISTER PROFILE</div>
                   </Route>
                   <Route exact path="/artist">
-                    {user?.getToken() !== null ? (
-                      <Redirect to={redirectRoute} />
-                    ) : (
-                      <RegisterArtistProfile />
-                    )}
+                    <RegisterArtistProfile />
                   </Route>
                 </NestedRoute>
                 <Route exact path="/">

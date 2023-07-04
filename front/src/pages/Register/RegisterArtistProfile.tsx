@@ -1,4 +1,4 @@
-import { Button, Group, Loader, Stepper } from '@mantine/core';
+import { Button, Group, Loader, Stepper, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
@@ -115,8 +115,8 @@ const RegisterArtistProfile: React.FC = () => {
 
   const nextStep = () => {
     if (formStep === 2) {
-      console.log('to send', form.values);
       setFormStep((old) => old + 1);
+      console.log('to send', form.values);
 
       // simulate request
       setTimeout(() => {
@@ -151,6 +151,10 @@ const RegisterArtistProfile: React.FC = () => {
 
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
+      <Text>Informations du profil</Text>
+      <Group position="right" m="xl" className="w-full">
+        <Button disabled={formStep > 2}>Passer</Button>
+      </Group>
       <Stepper active={formStep} orientation="horizontal" p="xl" w={'100%'}>
         <Stepper.Step icon={<IconPencil />}>
           <FirstStepArtist form={form} nextStep={() => nextStep()} />

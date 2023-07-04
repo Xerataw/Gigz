@@ -15,7 +15,7 @@ import FirstStep from '../../components/Register/AccountStep/FirstStep';
 import SecondStep from '../../components/Register/AccountStep/SecondStep';
 import ThirdStep from '../../components/Register/AccountStep/ThirdStep';
 import GigzFetcher from '../../services/GigzFetcher';
-import IonicStorageAccessor from '../../services/IonicStorageAccessor';
+import User from '../../types/User';
 
 const errorPassword = (value: string) => (
   <div>
@@ -30,6 +30,7 @@ const errorPassword = (value: string) => (
 );
 
 const Register: React.FC = () => {
+  const [user, setUser] = useState<User>();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
@@ -77,6 +78,10 @@ const Register: React.FC = () => {
 
   const [debounced] = useDebouncedValue(form.values, 600);
 
+  useEffect(() => {
+    User.getInstance().then((userRes) => setUser(userRes));
+  }, []);
+
   const sendRegisterForm = () => {
     GigzFetcher.post<{ [key: string]: string }>(
       'register',
@@ -91,9 +96,8 @@ const Register: React.FC = () => {
     ).then((res) => {
       if (res.ok === true) {
         if (res.data?.token !== undefined) {
-          IonicStorageAccessor.set('token', res.data.token).then(() => {
-            setFormStep((old) => old + 1);
-          });
+          user?.setToken(res.data.token);
+          setFormStep((old) => old + 1);
         }
       } else {
         setFormStep(1);
