@@ -37,7 +37,6 @@ model account_genre {
 model artist {
   id               Int     @id @default(autoincrement())
   name             String? @db.VarChar(255)
-  profile_picture  String? @db.LongText
   description      String? @db.LongText
   spotify_link     String? @db.VarChar(255)
   instagram_link   String? @db.VarChar(255)
@@ -50,6 +49,7 @@ model artist {
   city_id          Int?
   account_id       Int     @unique(map: "account_id")
   music_link       String? @db.VarChar(255)
+  profile_picture  String? @db.VarChar(255)
   city             city?   @relation(fields: [city_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "artist_ibfk_1")
   account          account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "artist_ibfk_2")
 
@@ -74,7 +74,6 @@ model genre {
 model host {
   id              Int        @id @default(autoincrement())
   name            String?    @db.VarChar(255)
-  profile_picture String?    @db.Text
   description     String?    @db.LongText
   website_link    String?    @db.VarChar(255)
   facebook_link   String?    @db.VarChar(255)
@@ -84,6 +83,7 @@ model host {
   address         String?    @db.VarChar(255)
   city_id         Int?
   account_id      Int        @unique(map: "account_id")
+  profile_picture String?    @db.VarChar(255)
   capacity        capacity?  @relation(fields: [capacity_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_1")
   host_type       host_type? @relation(fields: [host_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_2")
   city            city?      @relation(fields: [city_id], references: [id], onDelete: Restrict, onUpdate: Restrict, map: "host_ibfk_3")
