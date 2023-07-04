@@ -46,6 +46,27 @@ const handleGenres = async (account_id: number, genres: number[]) => {
   });
 };
 
+router.get('/artists', async (_, res) => {
+  const data = await database.artist.findMany({
+    include: {
+      account: {
+        include: {
+          account_genre: true
+        }
+      }
+    }
+  });
+
+  const formattedData = data.map(artist => ({
+    id: artist.id,
+    name: artist.name,
+    city_id: artist.city_id,
+    genres: artist.account.account_genre.map(genre => genre.id)
+  }));
+
+  sendResponse(res, formattedData);
+});
+
 router.patch('/artist', async (req, res) => {
   const account = await findAccountById(req.accountId);
   if (!account) return sendError(res, ApiMessages.WrongToken, 401);
@@ -68,6 +89,8 @@ router.patch('/artist', async (req, res) => {
     update: body.data,
     create: { ...body.data, account_id: account.id },
   });
+
+  // const formattedData = { ...data, account_genre: data. .account_genre.map(genre => genre.id) }
 
   sendResponse(res, data);
 });
