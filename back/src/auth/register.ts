@@ -8,13 +8,13 @@ import useHash from '@composables/useHash';
 import useToken from '@composables/useToken';
 
 const { database, findAccountByEmail } = useDatabase();
-const { ApiMessages, sendResponse, sendError } = useUtils();
+const { ApiMessages, sendResponse, sendError, toDbFormat } = useUtils();
 const { hash } = useHash();
 const { generateToken } = useToken();
 
 const router = express.Router();
 
-const BodySchema = z.object({
+const RegisterBodySchema = z.object({
   email: z.string().email(),
   password: z.string().min(8),
   phoneNumber: z
@@ -25,7 +25,7 @@ const BodySchema = z.object({
 });
 
 router.post('/', async (req, res) => {
-  const body = BodySchema.safeParse(req.body);
+  const body = RegisterBodySchema.safeParse(req.body);
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
 
   if (await findAccountByEmail(req.body.email))
@@ -58,6 +58,41 @@ router.post('/', async (req, res) => {
         201
       );
     });
+});
+
+const verifyEmailBodySchema = z.object({
+  email: z.string().email(),
+});
+
+router.post('/verifyEmail', async (req, res) => {
+  const body = verifyEmailBodySchema.safeParse(req.body);
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
+  if (await findAccountByEmail(req.body.email))
+    return sendError(res, ApiMessages.EmailTaken);
+
+  return sendResponse(res, {}, 200);
+});
+
+const verifyPhoneBodySchema = z.object({
+  phoneNumber: z
+    .string()
+    .refine((phone) => validator.isMobilePhone(phone, 'fr-FR')),
+});
+
+router.post('/verifyPhone', async (req, res) => {
+  const body = verifyPhoneBodySchema.safeParse(req.body);
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
+  const data = await database.account.findUnique({
+    where: {
+      phone_number: body.data.phoneNumber,
+    },
+  });
+
+  if (data) return sendError(res, ApiMessages.PhoneNumberTaken);
+
+  return sendResponse(res, {}, 200);
 });
 
 const createBlankProfile = async (profileType: string, id: number) => {
