@@ -12,7 +12,7 @@ const router = express.Router();
 const { generateToken } = useToken();
 const { compare, hash } = useHash();
 const { database, findAccountById } = useDatabase();
-const { ApiMessages, sendResponse, sendError } = useUtils();
+const { ApiMessages, sendResponse, sendError, fromDbFormat } = useUtils();
 
 const AccountBodySchema = z.object({
   email: z.string().email().optional(),
@@ -72,7 +72,8 @@ router.patch('/', async (req, res) => {
     ...newAccount,
     account_genre: newAccount.account_genre.map((genre) => genre.id),
   };
-  sendResponse(res, { ...formattedAccount, token });
+
+  sendResponse(res, { ...fromDbFormat(formattedAccount), token });
 });
 
 export default router;
