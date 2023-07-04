@@ -1,11 +1,11 @@
 import express from 'express';
 import { z } from 'zod';
 
-import useHash from '@/composables/useHash';
-import useUtils from '@/composables/useUtils';
+import useHash from '@composables/useHash';
+import useUtils from '@composables/useUtils';
 
-import useToken from '@/composables/useToken';
-import useDatabase from '@/composables/useDatabase';
+import useToken from '@composables/useToken';
+import useDatabase from '@composables/useDatabase';
 
 const router = express.Router();
 
@@ -35,8 +35,12 @@ router.post('/', async (req, res) => {
     email: account.email,
   });
 
+  const profile = account.host || account.artist;
+
   return sendResponse(res, {
     token: token,
+    profileType: account.profile_type,
+    profilePicture: profile?.profile_picture || null,
   });
 });
 
