@@ -31,9 +31,6 @@
   },
   "dependencies": {
     "@mantine/form": "^6.0.14",
-    "i18next": "^23.2.6",
-    "i18next-browser-languagedetector": "^7.1.0",
-    "react-i18next": "^13.0.1",
     "validator": "^13.9.0"
   }
 }
