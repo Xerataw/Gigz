@@ -19,6 +19,7 @@ services:
       - ./src:/usr/src/app/src
       - ./prisma:/usr/src/app/prisma
       - ./tsconfig.json:/usr/src/app/tsconfig.json
+      - ./static:/usr/src/app/static
 
     depends_on:
       - database

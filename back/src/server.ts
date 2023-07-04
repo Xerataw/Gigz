@@ -24,6 +24,8 @@ app.use((req, _, next) => {
   next();
 });
 
+app.use('/static', express.static('static'));
+
 // Endpoints to handle login, register and token refresh.
 app.use('/api/auth/', auth);
 
