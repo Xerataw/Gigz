@@ -1,5 +1,6 @@
-import express from 'express';
+import express, { NextFunction, Request, Response } from 'express';
 import compression from 'compression';
+import 'express-async-errors';
 
 import cors from 'cors';
 
@@ -12,7 +13,7 @@ import authenticate from '@/middlewares/authenticate';
 const PORT = 3000;
 const app = express();
 
-const { ApiMessages, sendResponse } = useUtils();
+const { ApiMessages, sendResponse, sendError } = useUtils();
 
 app.use(cors());
 app.use(compression());
@@ -33,6 +34,18 @@ app.use('/api/status/', (_, res) => {
   sendResponse(res, {
     message: ApiMessages.ApiRunning,
   });
+});
+
+// Error handling
+app.use(function (
+  err: Error,
+  req: Request,
+  res: Response,
+  next: NextFunction
+): void {
+  console.error(err.stack);
+  sendError(res, ApiMessages.SERVER_ERROR, 500);
+  next(err);
 });
 
 app.listen(PORT, () => console.log(`🚀 API listening on port ${PORT}`));

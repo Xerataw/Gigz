@@ -17,6 +17,8 @@ enum ApiMessages {
   ApiRunning = 'API_RUNNING',
 
   WrongRoute = 'WRONG_ROUTE',
+
+  SERVER_ERROR = 'SERVER_ERROR',
 }
 
 /**
