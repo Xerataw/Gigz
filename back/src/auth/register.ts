@@ -8,7 +8,7 @@ import useHash from '@composables/useHash';
 import useToken from '@composables/useToken';
 
 const { database, findAccountByEmail } = useDatabase();
-const { ApiMessages, sendResponse, sendError, toDbFormat } = useUtils();
+const { ApiMessages, sendResponse, sendError } = useUtils();
 const { hash } = useHash();
 const { generateToken } = useToken();
 
