@@ -1,4 +1,4 @@
-import { Title, PasswordInput } from '@mantine/core';
+import { PasswordInput, Title } from '@mantine/core';
 import { StepProps } from './FirstStep';
 
 const ThirdStep: React.FC<StepProps> = ({ form }) => {
@@ -6,6 +6,7 @@ const ThirdStep: React.FC<StepProps> = ({ form }) => {
     <>
       <Title>La sécurité</Title>
       <PasswordInput
+        mt="sm"
         autoFocus
         label="Mot de passe"
         {...form.getInputProps('password')}

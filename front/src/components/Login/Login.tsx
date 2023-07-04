@@ -38,7 +38,7 @@ const Login: React.FC = () => {
     },
   });
 
-  const [debouncedEmail] = useDebouncedValue(form.values.email, 600);
+  const [debouncedEmail] = useDebouncedValue(form.values.email, 1000);
   const [debouncedPassword] = useDebouncedValue(form.values.password, 0);
 
   const validateEmail = (email: string) => {
@@ -122,7 +122,7 @@ const Login: React.FC = () => {
       <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
         <TextInput
           withAsterisk
-          type='email'
+          type="email"
           label={t('login.email.label')}
           placeholder={t('login.email.placeholder')}
           {...form.getInputProps('email')}
