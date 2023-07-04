@@ -5,7 +5,6 @@ import {
   Route,
   BrowserRouter as Router,
   Switch,
-  useHistory,
 } from 'react-router-dom';
 import ForgotPassword from './components/Login/ForgotPassword/ForgotPassword';
 import Conversations from './pages/Conversations/Conversations';
@@ -23,8 +22,7 @@ import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
 setupIonicReact();
 
 const App: React.FC = () => {
-  const redirectRoute = '/';
-  const history = useHistory();
+  const defaultRoute = '/';
 
   return (
     <div className="bg-white">
@@ -38,10 +36,10 @@ const App: React.FC = () => {
 
               <NestedRoute
                 path="/login"
-                redirectNoMatch={redirectRoute}
+                redirectNoMatch={defaultRoute}
                 condition={true}
               >
-                <NestedRoute path="/register" redirectNoMatch={redirectRoute}>
+                <NestedRoute path="/register" redirectNoMatch={defaultRoute}>
                   <Route exact path="/">
                     <Register />
                   </Route>
@@ -63,7 +61,7 @@ const App: React.FC = () => {
 
               <NestedRoute
                 path="/auth"
-                redirectNoMatch={redirectRoute}
+                redirectNoMatch={defaultRoute}
                 condition={true}
               >
                 <Route path="/liked">
@@ -84,7 +82,7 @@ const App: React.FC = () => {
               </NestedRoute>
 
               <Route path="/*" exact>
-                <Redirect to={redirectRoute} />
+                <Redirect to={defaultRoute} />
               </Route>
             </Switch>
           </Router>

@@ -111,12 +111,11 @@ const RegisterArtistProfile: React.FC = () => {
     },
   });
 
-  const [debounced] = useDebouncedValue(form.values, 600);
+  const [debounced] = useDebouncedValue(form.values, 1000);
 
   const nextStep = () => {
     if (formStep === 2) {
       setFormStep((old) => old + 1);
-      console.log('to send', form.values);
 
       // simulate request
       setTimeout(() => {

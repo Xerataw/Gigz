@@ -7,7 +7,7 @@ interface Props {
   userType: 'artist' | 'host';
 }
 
-const CompleteAccount: React.FC<Props> = ({ userType }) => {
+const AccountCreated: React.FC<Props> = ({ userType }) => {
   const [time, setTime] = useState<number>(0);
   const history = useHistory();
 
@@ -25,6 +25,10 @@ const CompleteAccount: React.FC<Props> = ({ userType }) => {
   }, [time]);
 
   useEffect(() => {
+    /**
+     * show a progress ring
+     * for the user to understand he is waiting
+     */
     setInterval(() => {
       setTime((old) => {
         if (old < 100) return old + Math.random() * 3;
@@ -60,4 +64,4 @@ const CompleteAccount: React.FC<Props> = ({ userType }) => {
   );
 };
 
-export default CompleteAccount;
+export default AccountCreated;

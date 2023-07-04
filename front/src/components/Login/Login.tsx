@@ -36,7 +36,7 @@ const Login: React.FC = () => {
     },
   });
 
-  const [debouncedEmail] = useDebouncedValue(form.values.email, 600);
+  const [debouncedEmail] = useDebouncedValue(form.values.email, 1000);
   const [debouncedPassword] = useDebouncedValue(form.values.password, 0);
 
   const validateEmail = (email: string) => {

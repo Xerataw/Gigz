@@ -10,7 +10,7 @@ import {
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import CompleteAccount from '../../components/Register/AccountStep/CompleteAccount';
+import AccountCreated from '../../components/Register/AccountStep/AccountCreated';
 import FirstStep from '../../components/Register/AccountStep/FirstStep';
 import SecondStep from '../../components/Register/AccountStep/SecondStep';
 import ThirdStep from '../../components/Register/AccountStep/ThirdStep';
@@ -33,7 +33,6 @@ const Register: React.FC = () => {
   const [user, setUser] = useState<User>();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
-    validateInputOnBlur: true,
     initialValues: {
       email: '',
       phone: '',
@@ -76,7 +75,7 @@ const Register: React.FC = () => {
     },
   });
 
-  const [debounced] = useDebouncedValue(form.values, 600);
+  const [debounced] = useDebouncedValue(form.values, 1000);
 
   useEffect(() => {
     User.getInstance().then((userRes) => setUser(userRes));
@@ -117,16 +116,14 @@ const Register: React.FC = () => {
   };
 
   const nextStep = () => {
-    if (formStep === 2) {
-      setFormStep((old) => old + 1);
-      sendRegisterForm();
-    } else {
+    if (form.validate().hasErrors === false) {
       setFormStep((current) => {
-        if (form.validate().hasErrors) {
-          return current;
-        }
         return current < 4 ? current + 1 : current;
       });
+      if (formStep === 2) {
+        sendRegisterForm();
+        setFormStep((old) => old + 1);
+      }
     }
   };
 
@@ -139,18 +136,14 @@ const Register: React.FC = () => {
         break;
 
       case 1:
-        if (debounced.email.length > 0 && debounced.phone.length > 0) {
-          form.validate();
-        }
+        if (debounced.email.length > 0) form.validateField('email');
+        if (debounced.phone.length > 0) form.validateField('phone');
         break;
 
       case 2:
-        if (
-          debounced.password.length > 0 &&
-          debounced.confirmPassword.length > 0
-        ) {
-          form.validate();
-        }
+        if (debounced.password.length > 0) form.validateField('password');
+        if (debounced.confirmPassword.length > 0)
+          form.validateField('confirmPassword');
         break;
     }
   }, [debounced]);
@@ -176,19 +169,15 @@ const Register: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          <CompleteAccount
+          <AccountCreated
             userType={form.values.userType as 'artist' | 'host'}
           />
         </Stepper.Completed>
       </Stepper>
 
       <Group position="right" mt="xl">
-        {formStep > 0 && formStep !== 4 && (
-          <Button
-            variant="default"
-            disabled={formStep === 3}
-            onClick={prevStep}
-          >
+        {formStep > 0 && formStep < 3 && (
+          <Button variant="default" onClick={prevStep}>
             Retour
           </Button>
         )}
@@ -196,12 +185,14 @@ const Register: React.FC = () => {
           <Button onClick={nextStep}>Prochaine étape</Button>
         )}
       </Group>
-      <div className="text-center mt-10">
-        Vous avez déjà un compte ?
-        <Link to="auth/login" className="font-semibold no-underline">
-          <Text color="secondary">Se connecter</Text>
-        </Link>
-      </div>
+      {formStep < 3 && (
+        <div className="text-center mt-10">
+          Vous avez déjà un compte ?
+          <Link to="auth/login" className="font-semibold no-underline">
+            <Text color="secondary">Se connecter</Text>
+          </Link>
+        </div>
+      )}
     </div>
   );
 };
