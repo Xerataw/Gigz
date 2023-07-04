@@ -68,6 +68,29 @@ router.get('/artists', async (_, res) => {
   sendResponse(res, formattedData);
 });
 
+router.get('/hosts', async (_, res) => {
+  const data = await database.host.findMany({
+    include: {
+      capacity: true,
+      account: {
+        include: {
+          account_genre: true,
+        },
+      },
+    },
+  });
+
+  const formattedData = data.map((host) => ({
+    id: host.id,
+    name: host.name,
+    cityId: host.city_id,
+    genres: host.account.account_genre.map((genre) => genre.id),
+    capacity: host.capacity ? fromDbFormat(host.capacity) : null,
+  }));
+
+  sendResponse(res, formattedData, 200);
+});
+
 router.patch('/artist', async (req, res) => {
   const account = await findAccountById(req.accountId);
   if (!account) return sendError(res, ApiMessages.WrongToken, 401);
