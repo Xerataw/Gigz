@@ -1,4 +1,5 @@
 import { setupIonicReact } from '@ionic/react';
+import { Container } from '@mantine/core';
 import React from 'react';
 import {
   Redirect,
@@ -7,16 +8,15 @@ import {
   Switch,
 } from 'react-router-dom';
 import ForgotPassword from './components/Login/ForgotPassword/ForgotPassword';
+import NestedRoute from './components/NestedRoute/NestedRoute';
 import Conversations from './pages/Conversations/Conversations';
 import Liked from './pages/Liked/Liked';
 import LoginPage from './pages/LoginPage/LoginPage';
 import Profile from './pages/Profile/Profile';
+import Register from './pages/Register/Register';
 import Search from './pages/Search/Search';
 
-import { Container } from '@mantine/core';
-import NestedRoute from './components/NestedRoute/NestedRoute';
 import './index.css';
-import Register from './pages/Register/Register';
 
 setupIonicReact();
 

@@ -11,11 +11,13 @@ import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import { HttpStatusCode } from 'axios';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import login from '../../api/Login.api';
 import IonicStorageAccessor from '../../services/IonicStorageAccessor';
 
 const Login: React.FC = () => {
+  const { t } = useTranslation();
   const history = useHistory();
 
   const [incompleteOrInvalidForm, setIncompleteOrInvalidForm] = useState(true);
@@ -42,31 +44,31 @@ const Login: React.FC = () => {
   const validateEmail = (email: string) => {
     if (!email) {
       setIncompleteOrInvalidForm(true);
-      return 'Email is required';
+      return t('login.error.email.required');
     } else if (/^[A-Za-z0-9._]+@[A-Za-z0-9]+\.[A-Za-z]{2,15}$/.test(email)) {
       setIncompleteOrInvalidForm(false);
       return null;
     } else {
       setIncompleteOrInvalidForm(true);
-      return 'Invalid email';
+      return t('login.error.email.invalid');
     }
   };
 
   const validatePassword = (password: string) => {
     if (!password) {
       setIncompleteOrInvalidForm(true);
-      return 'Password is required';
+      return t('login.error.password.invalid');
     }
     setIncompleteOrInvalidForm(false);
     return null;
   };
 
   const forgotPassword = () => {
-    history.push('/forgot-password');
+    history.push('/login/forgot-password');
   };
 
   const register = () => {
-    history.push('/register');
+    history.push('/login/register');
   };
 
   useEffect(() => {
@@ -97,9 +99,14 @@ const Login: React.FC = () => {
       })
       .catch((err) => {
         if (err.code === HttpStatusCode.BadRequest) {
-          form.setErrors({ email: 'Invalid email or password' });
+          form.setErrors({ email: t('login.error.invalid') });
         } else {
-          form.setErrors({ email: `Error ${err.code}: ${err.data ?? ''}` });
+          form.setErrors({
+            email: t([`login.error.${err.code}`, 'login.error.unspecific'], {
+              code: err.code,
+              message: err.data ?? '',
+            }),
+          });
         }
         setFormSubmited(false);
       });
@@ -111,25 +118,26 @@ const Login: React.FC = () => {
 
   return (
     <Box maw={300} mx="auto" className="flex justify-center flex-col h-screen">
-      <h1 className="m-0 text-center">Login</h1>
+      <h1 className="m-0 text-center">{t('login.title')}</h1>
       <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
         <TextInput
           withAsterisk
-          label="Email"
-          placeholder="me@gigz.music"
+          type='email'
+          label={t('login.email.label')}
+          placeholder={t('login.email.placeholder')}
           {...form.getInputProps('email')}
         />
 
         <PasswordInput
           withAsterisk
-          label="Password"
-          placeholder="mySup3r_S3cr3t_P@ssword"
+          label={t('login.password.label')}
+          placeholder={t('login.password.placeholder')}
           {...form.getInputProps('password')}
         />
 
         <Group position="apart" align="flex-start" pt={14}>
           <Checkbox
-            label="Remember me"
+            label={t('login.rememberMe')}
             {...form.getInputProps('remberMe', { type: 'checkbox' })}
           />
           <Anchor
@@ -138,7 +146,7 @@ const Login: React.FC = () => {
             size={14}
             onClick={() => forgotPassword()}
           >
-            Forgot password ?
+            {t('login.forgotPassword.label')}
           </Anchor>
         </Group>
 
@@ -149,7 +157,7 @@ const Login: React.FC = () => {
             loading={formSubmited}
             className="w-full"
           >
-            Submit
+            {t('login.submit')}
           </Button>
         </Group>
         <Anchor
@@ -158,7 +166,7 @@ const Login: React.FC = () => {
           size={14}
           onClick={() => register()}
         >
-          New here ?
+          {t('login.register')}
         </Anchor>
       </form>
     </Box>

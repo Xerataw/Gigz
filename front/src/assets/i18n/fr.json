@@ -1,0 +1,39 @@
+{
+  "login": {
+    "title": "Se connecter",
+    "email": {
+      "label": "Email",
+      "placeholder": "john@gigz.music"
+    },
+    "password": {
+      "label": "Mot de passe",
+      "placeholder": "monSup3r_M0tDePa22e"
+    },
+    "rememberMe": "Se souvenir de moi",
+    "register": "Pas encore de compte ?",
+    "submit": "Se connecter",
+    "error": {
+      "email": {
+        "required": "Email requis",
+        "invalid": "Email invalide"
+      },
+      "password": {
+        "invalid": "Mot de passe invalide"
+      },
+      "invalid": "Email ou mot de passe invalide",
+      "fallback": "Erreur {{code}}: {{message}}",
+      "500": "$t(fallback, {code: {{code}}, message: {{message}}})",
+      "404": "$t(fallback, {code: {{code}}, message: 'Service introuvable'})",
+      "unspecific": "Une erreur est survenue"
+    },
+    "forgotPassword": {
+      "title": "Réinitialiser le mot de passe",
+      "label": "Mot de passe oublié ?",
+      "infos": "Si l'email existe un email de réinitialisation sera envoyé",
+      "rememberPassword": "Retour à la connexion",
+      "resetPassword": "Réinitialiser",
+      "register": "Pas encore de compte ?",
+      "success": "Un mail a était envoyé à {{email}}"
+    }
+  }
+}

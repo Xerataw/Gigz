@@ -1,0 +1,39 @@
+{
+  "login": {
+    "title": "Login",
+    "email": {
+      "label": "Email",
+      "placeholder": "john@gigz.music"
+    },
+    "password": {
+      "label": "Password",
+      "placeholder": "mySuperPassword"
+    },
+    "rememberMe": "Remember me",
+    "register": "New here?",
+    "submit": "Login",
+    "error": {
+      "email": {
+        "required": "Email is required",
+        "invalid": "Email is not valid"
+      },
+      "password": {
+        "invalid": "Password is required"
+      },
+      "invalid": "Invalid email or password",
+      "fallback": "Error {{code}}: {{message}}",
+      "500": "$t(fallback, {code: {{code}}, message: {{message}}})",
+      "404": "$t(fallback, {code: {{code}}, message: 'Cannot find the server'})",
+      "unspecific": "Something went wrong"
+    },
+    "forgotPassword": {
+      "title": "Reset password",
+      "label": "Forgot password?",
+      "infos": "If the email exist an email will been sent to it",
+      "rememberPassword": "Remember password?",
+      "resetPassword": "Reset password",
+      "register": "New here?",
+      "success": "An email has been sent to {{email}}"
+    }
+  }
+}
