@@ -9,8 +9,8 @@
       "label": "Password",
       "placeholder": "mySuperPassword"
     },
-    "rememberMe": "Remember Me",
-    "register": "New Here ?",
+    "rememberMe": "Remember me",
+    "register": "New here?",
     "submit": "Login",
     "error": {
       "email": {
@@ -27,12 +27,12 @@
       "unspecific": "Something went wrong"
     },
     "forgotPassword": {
-      "title": "Reset Password",
-      "label": "Forgot Password ?",
+      "title": "Reset password",
+      "label": "Forgot password?",
       "infos": "If the email exist an email will been sent to it",
-      "rememberPassword": "Remember Password ?",
-      "resetPassword": "Reset Password",
-      "register": "New Here ?",
+      "rememberPassword": "Remember password?",
+      "resetPassword": "Reset password",
+      "register": "New here?",
       "success": "An email has been sent to {{email}}"
     }
   }
