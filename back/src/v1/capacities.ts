@@ -3,14 +3,18 @@ import useUtils from '@composables/useUtils';
 import express from 'express';
 
 const { database } = useDatabase();
-const { fromDbFormat, sendResponse } = useUtils();
+const { ApiMessages, sendError, sendResponse, fromDbFormat } = useUtils();
 
 const router = express.Router();
 
 router.get('/', async (_, res) => {
-  const data = await database.capacity.findMany();
+  try {
+    const data = await database.capacity.findMany();
 
-  sendResponse(res, fromDbFormat(data), 200);
+    sendResponse(res, fromDbFormat(data), 200);
+  } catch (e) {
+    sendError(res, ApiMessages.SERVER_ERROR, 500);
+  }
 });
 
 export default router;
