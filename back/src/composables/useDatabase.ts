@@ -39,6 +39,7 @@ const findAccountByToken = async (token: string) => {
 const findAccountByEmail = async (email: string) => {
   return await database.account.findUnique({
     where: { email },
+    include: { host: true, artist: true },
   });
 };
 
