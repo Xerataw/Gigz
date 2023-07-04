@@ -7,6 +7,7 @@ import ProfileView from '../../components/ProfileView/ProfileView';
 import Biography from '../../components/ProfileView/ProfileSections/Biography';
 import Socials from '../../components/ProfileView/ProfileSections/Socials';
 import Music from '../../components/ProfileView/ProfileSections/Music';
+import Location from '../../components/ProfileView/ProfileSections/Location';
 
 const testProfile: IArtistProfile = {
   username: 'Alexis Moins 🚀',
@@ -56,6 +57,7 @@ const Profile: React.FC = () => {
           facebookLink={testProfile.facebookLink}
           websiteLink={testProfile.websiteLink}
         />
+        <Location address="ferzbhiufhyu" />
       </ProfileView>
       <BottomNavbar />
     </div>
