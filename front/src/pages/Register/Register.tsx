@@ -48,7 +48,7 @@ const Register: React.FC = () => {
         case 1:
           return {
             email: /^\S+@\S+$/.test(values.email) ? null : 'Email Invalide',
-            phone: /^\d{9}$/.test(values.phone) ? null : 'Numéro invalide',
+            phone: /^[^0]\d{8}$/.test(values.phone) ? null : 'Numéro invalide',
           };
 
         case 2:
