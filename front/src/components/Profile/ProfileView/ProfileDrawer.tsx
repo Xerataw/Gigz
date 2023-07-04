@@ -56,7 +56,7 @@ export default function ProfileDrawer({
             genres={profile.genres}
           />
         </div>
-        <ScrollArea className="-mt-12 p-4 pt-6 bg-white" type="never">
+        <ScrollArea className="-mt-12 p-4 pt-6 pb-16 bg-white" type="never">
           <div>{children}</div>
         </ScrollArea>
       </SwipeableDrawer>

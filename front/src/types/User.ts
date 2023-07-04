@@ -61,22 +61,6 @@ export default class User {
   }
 
   /**
-   * Change the user instance username and write the changes in local storage.
-   * @param username the new username to set.
-   */
-  @storeUser('username')
-  public setUsername(username: string | null) {
-    this.username = username;
-  }
-
-  /**
-   * @returns the username stored in local storage.
-   */
-  public getUsername(): string | null {
-    return this.username;
-  }
-
-  /**
    * Change the user instance profile picture and write the changes in local storage.
    * @param username the new profile picture to set.
    */
@@ -124,7 +108,7 @@ export default class User {
   /**
    * @returns the user type stored in local storage.
    */
-  public getUserType(): string | null {
+  public getUserType(): UserType | null {
     return this.type;
   }
 }

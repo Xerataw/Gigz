@@ -14,7 +14,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
 import login from '../../api/Login.api';
-import IonicStorageAccessor from '../../services/IonicStorageAccessor';
+import User from '../../types/User';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
@@ -68,7 +68,7 @@ const Login: React.FC = () => {
   };
 
   const register = () => {
-    history.push('/login/register');
+    history.push('/register');
   };
 
   useEffect(() => {
@@ -92,8 +92,12 @@ const Login: React.FC = () => {
     login(data.email, data.password)
       .then((res) => {
         if (res.ok) {
-          IonicStorageAccessor.set('token', res.data.token);
-          onSucces();
+          User.getInstance().then((user) => {
+            user.setToken(res.data.token);
+            user.setUserType(res.data.profileType);
+            user.setProfilePicture(res.data.profilePicture);
+          });
+          onSuccess();
         }
         setFormSubmited(false);
       })
@@ -112,7 +116,7 @@ const Login: React.FC = () => {
       });
   };
 
-  const onSucces = () => {
+  const onSuccess = () => {
     history.push('/liked');
   };
 

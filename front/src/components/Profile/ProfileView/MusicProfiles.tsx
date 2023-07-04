@@ -2,7 +2,6 @@
 import SocialMediaCard from './ProfileSections/SocialMediaCard/SocialMediaCard';
 import {
   IconBrandApple,
-  IconBrandDeezer,
   IconBrandSoundcloud,
   IconBrandSpotify,
   IconBrandYoutube,

@@ -5,7 +5,7 @@ import { ThemeProvider, THEME_ID } from '@mui/material/styles';
 import muiThemeConfig from './configs/muiTheme.config';
 import { createRoot } from 'react-dom/client';
 import App from './App';
-import './i18n.js';
+import './i18n';
 
 // Create react root
 const container = document.getElementById('root');
