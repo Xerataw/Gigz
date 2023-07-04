@@ -29,3 +29,10 @@ The following workflows are available:
 - To open a shell in a running container, use `just shell <service>` (you can specify an arbitrary shell).
 - To open a connection to the database, run `just db`, then enter your password.
 - To execute a prisma command in the server, type `just prisma <command>`.
+
+## Interfaces
+
+The following web interfaces are available:
+- localhost:5555        -> database management
+- localhost:3000/api    -> api side of the server
+- localhost:3000/static -> file serving side of the server
