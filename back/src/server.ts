@@ -24,6 +24,8 @@ app.use((req, _, next) => {
   next();
 });
 
+app.use('/static', express.static('static'));
+
 // Endpoints to handle login, register and token refresh.
 app.use('/api/auth/', auth);
 
@@ -44,7 +46,7 @@ app.use(function (
   next: NextFunction
 ): void {
   console.error(err.stack);
-  sendError(res, ApiMessages.SERVER_ERROR, 500);
+  sendError(res, ApiMessages.ServerError, 500);
   next(err);
 });
 

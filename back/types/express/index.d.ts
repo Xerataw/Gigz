@@ -1,5 +1,8 @@
 declare namespace Express {
   export interface Request {
-    accountId: number;
+    account: {
+      id: number;
+      profileType: 'artist' | 'host';
+    };
   }
 }

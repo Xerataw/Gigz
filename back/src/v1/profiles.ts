@@ -1,12 +1,13 @@
 import express from 'express';
 import { z } from 'zod';
+import multer from 'multer';
 
 import useUtils from '@composables/useUtils';
 import useDatabase from '@composables/useDatabase';
 
 const router = express.Router();
 
-const { database, findAccountById } = useDatabase();
+const { database } = useDatabase();
 const { ApiMessages, sendResponse, sendError, fromDbFormat, toDbFormat } =
   useUtils();
 
@@ -92,10 +93,7 @@ router.get('/hosts', async (_, res) => {
 });
 
 router.patch('/artist', async (req, res) => {
-  const account = await findAccountById(req.accountId);
-  if (!account) return sendError(res, ApiMessages.WrongToken, 401);
-
-  if (account.profile_type !== 'artist')
+  if (req.account.profileType !== 'artist')
     return sendError(res, ApiMessages.WrongRoute);
 
   const body = ArtistBodySchema.safeParse(req.body);
@@ -105,13 +103,13 @@ router.patch('/artist', async (req, res) => {
     const genres = body.data.genres;
     delete body.data.genres;
 
-    await handleGenres(account.id, genres);
+    await handleGenres(req.account.id, genres);
   }
 
   const data = await database.artist.upsert({
-    where: { account_id: account.id },
+    where: { account_id: req.account.id },
     update: toDbFormat(body.data),
-    create: { ...body.data, account_id: account.id },
+    create: { ...body.data, account_id: req.account.id },
   });
 
   // const formattedData = { ...data, account_genre: data. .account_genre.map(genre => genre.id) }
@@ -137,10 +135,7 @@ const HostBodySchema = z.object({
 });
 
 router.patch('/host', async (req, res) => {
-  const account = await findAccountById(req.accountId);
-  if (!account) return sendError(res, ApiMessages.WrongToken, 401);
-
-  if (account.profile_type !== 'host')
+  if (req.account.profileType !== 'host')
     return sendError(res, ApiMessages.WrongRoute);
 
   const body = HostBodySchema.safeParse(req.body);
@@ -150,16 +145,54 @@ router.patch('/host', async (req, res) => {
     const genres = body.data.genres;
     delete body.data.genres;
 
-    await handleGenres(account.id, genres);
+    await handleGenres(req.account.id, genres);
   }
 
   const data = await database.host.upsert({
-    where: { account_id: account.id },
+    where: { account_id: req.account.id },
     update: toDbFormat(body.data),
-    create: { ...body.data, account_id: account.id },
+    create: { ...body.data, account_id: req.account.id },
   });
 
   sendResponse(res, fromDbFormat(data));
+});
+
+const upload = multer({ dest: 'static/' });
+
+router.patch(
+  '/profile-picture/',
+  upload.single('profile-picture'),
+  async (req, res) => {
+    if (req.file === undefined) return sendError(res, ApiMessages.BadRequest);
+
+    const procedure = {
+      where: { account_id: req.account.id },
+      data: { profile_picture: req.file.filename },
+    };
+
+    const profile =
+      req.account.profileType === 'host'
+        ? await database.host.update(procedure)
+        : await database.artist.update(procedure);
+
+    sendResponse(res, fromDbFormat(profile));
+  }
+);
+
+router.get('/', async (req, res) => {
+  const procedure = {
+    where: {
+      account_id: req.account.id,
+    },
+  };
+
+  const profile =
+    req.account.profileType === 'host'
+      ? await database.host.findUnique(procedure)
+      : await database.artist.findUnique(procedure);
+
+  if (!profile) return sendError(res, ApiMessages.ServerError, 500);
+  sendResponse(res, fromDbFormat(profile));
 });
 
 export default router;
