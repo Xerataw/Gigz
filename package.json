@@ -28,9 +28,5 @@
     "./**/*.{js,ts,jsx,tsx,css,html,json}": [
       "prettier --write"
     ]
-  },
-  "dependencies": {
-    "@mantine/form": "^6.0.14",
-    "validator": "^13.9.0"
   }
 }
