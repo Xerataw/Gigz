@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2023-07-04T10:41:47.731Z",
+  "__export_date": "2023-07-04T11:14:39.295Z",
   "__export_source": "insomnia.desktop.app:v2023.3.0",
   "resources": [
     {
@@ -102,9 +102,60 @@
       "_type": "request"
     },
     {
+      "_id": "req_836ab91d8aef402f86c6eac7967d4586",
+      "parentId": "fld_3cde4d9f90364e1080ff0a4a6eaeca5e",
+      "modified": 1688469257426,
+      "created": 1688468879742,
+      "url": "{{ _.url }}/v1/capacities",
+      "name": "GET CAPACITIES",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": -1688429803289,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_3cde4d9f90364e1080ff0a4a6eaeca5e",
+      "parentId": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
+      "modified": 1688469021320,
+      "created": 1688468999321,
+      "name": "CAPACITY",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1688468999321,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
+      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
+      "modified": 1687871322163,
+      "created": 1687857856552,
+      "name": "V1",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1687778301866,
+      "_type": "request_group"
+    },
+    {
       "_id": "req_aee11027b859440791d237b13515f5bc",
       "parentId": "fld_f95b592374dd461a93211756f59dce8d",
-      "modified": 1688463624046,
+      "modified": 1688469250850,
       "created": 1688390608518,
       "url": "{{ _.url }}/v1/accounts",
       "name": "UPDATE",
@@ -141,18 +192,6 @@
       "environment": {},
       "environmentPropertyOrder": null,
       "metaSortKey": -1688390607257,
-      "_type": "request_group"
-    },
-    {
-      "_id": "fld_a8d09cdb3f8a4f4d928ac90dc4c1ac7e",
-      "parentId": "wrk_7b52d58577144ab98ce67227777887e7",
-      "modified": 1687871322163,
-      "created": 1687857856552,
-      "name": "V1",
-      "description": "",
-      "environment": {},
-      "environmentPropertyOrder": null,
-      "metaSortKey": -1687778301866,
       "_type": "request_group"
     },
     {
@@ -252,11 +291,11 @@
     {
       "_id": "env_a93b5ab3067348fea90304cb93c2ab97",
       "parentId": "env_b9324bcea90744429769848255eb7ca9",
-      "modified": 1688466969462,
+      "modified": 1688469228254,
       "created": 1687857650224,
       "name": "ARTIST",
       "data": {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhbGV4YW5kcmUuc3BhcnRvbkBlcGl0ZWNoLmV1IiwiaWF0IjoxNjg4NDY2OTU4LCJleHAiOjE2ODkwNzE3NTh9.6Go18wQ5dX0dq_vgye04OTaUyBEQjDtMNkI5VkHTAGk"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhbGV4YW5kcmUuc3BhcnRvbkBlcGl0ZWNoLmV1IiwiaWF0IjoxNjg4NDY5MjAyLCJleHAiOjE2ODkwNzQwMDJ9.9lQsZIyf8LlDpD3-9ms19ZX717p1_fSUZV-6YLK8kTk"
       },
       "dataPropertyOrder": { "&": ["token"] },
       "color": "#d04343",
