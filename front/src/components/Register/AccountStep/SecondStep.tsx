@@ -1,4 +1,4 @@
-import { TextInput, Title } from '@mantine/core';
+import { Text, TextInput, Title } from '@mantine/core';
 import { StepProps } from './FirstStep';
 
 const SecondStep: React.FC<StepProps> = ({ form }) => {
@@ -14,8 +14,13 @@ const SecondStep: React.FC<StepProps> = ({ form }) => {
       />
       <TextInput
         mt="sm"
+        icon={
+          <Text color="black" size="sm">
+            +33
+          </Text>
+        }
         label="Téléphone"
-        placeholder="0695818549"
+        placeholder="612345678"
         {...form.getInputProps('phone')}
       />
     </>
