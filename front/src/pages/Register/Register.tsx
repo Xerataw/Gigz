@@ -48,11 +48,7 @@ const Register: React.FC = () => {
         case 1:
           return {
             email: /^\S+@\S+$/.test(values.email) ? null : 'Email Invalide',
-            phone: /^(?:(?:\+|00)33|0)\s*[567](?:[\s.-]*\d{2}){4}$/.test(
-              values.phone
-            )
-              ? null
-              : 'Numéro invalide',
+            phone: /^[^0]\d{8}$/.test(values.phone) ? null : 'Numéro invalide',
           };
 
         case 2:
@@ -88,7 +84,7 @@ const Register: React.FC = () => {
         email: form.values.email,
         password: form.values.password,
         profileType: form.values.userType,
-        phoneNumber: form.values.phone,
+        phoneNumber: '+33' + form.values.phone,
       },
       {},
       false
@@ -144,6 +140,7 @@ const Register: React.FC = () => {
         if (debounced.password.length > 0) form.validateField('password');
         if (debounced.confirmPassword.length > 0)
           form.validateField('confirmPassword');
+
         break;
     }
   }, [debounced]);
