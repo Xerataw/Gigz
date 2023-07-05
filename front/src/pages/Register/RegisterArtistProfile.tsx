@@ -32,7 +32,7 @@ const valideLink = (
 };
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 4;
+  const numberOfSteps = 5;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
