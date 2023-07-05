@@ -1,0 +1,15 @@
+name: Build for mobile
+on: [pull_request]
+jobs:
+  build:
+    name: Build
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./front
+    steps:
+    - name: Launch the build command
+      run: |
+        npm ci
+        npm run build
+
