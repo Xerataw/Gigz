@@ -51,19 +51,35 @@ const handleGenres = async (account_id: number, genres: number[]) => {
 const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
   capacityId: z.coerce.number().optional(),
+  genres: z.string().min(1).optional(),
 });
 
-const buildArtistsWhereCondition = (query: { name?: string }) => {
+const buildArtistsWhereCondition = (query: {
+  name?: string;
+  genres?: string;
+}) => {
   return {
     name: {
       contains: query.name ? query.name : undefined,
     },
+    account: query.genres
+      ? {
+          account_genre: {
+            some: {
+              genre_id: {
+                in: query.genres.split(',').map((x) => +x),
+              },
+            },
+          },
+        }
+      : undefined,
   };
 };
 
 const buildHostsWhereCondition = (query: {
   name?: string;
   capacityId?: number;
+  genres?: string;
 }) => {
   return {
     name: {
@@ -72,6 +88,17 @@ const buildHostsWhereCondition = (query: {
     capacity_id: {
       equals: query.capacityId ? query.capacityId : undefined,
     },
+    account: query.genres
+      ? {
+          account_genre: {
+            some: {
+              genre_id: {
+                in: query.genres.split(',').map((x) => +x),
+              },
+            },
+          },
+        }
+      : undefined,
   };
 };
 
