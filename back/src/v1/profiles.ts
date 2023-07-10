@@ -53,7 +53,11 @@ router.get('/artists', async (_, res) => {
     include: {
       account: {
         include: {
-          account_genre: true,
+          account_genre: {
+            include: {
+              genre: true,
+            },
+          },
         },
       },
     },
@@ -63,7 +67,7 @@ router.get('/artists', async (_, res) => {
     id: artist.id,
     name: artist.name,
     cityId: artist.city_id,
-    genres: artist.account.account_genre.map((genre) => genre.id),
+    genres: artist.account.account_genre.map((genre) => genre.genre),
   }));
 
   sendResponse(res, formattedData);
@@ -75,7 +79,11 @@ router.get('/hosts', async (_, res) => {
       capacity: true,
       account: {
         include: {
-          account_genre: true,
+          account_genre: {
+            include: {
+              genre: true,
+            },
+          },
         },
       },
     },
@@ -85,8 +93,8 @@ router.get('/hosts', async (_, res) => {
     id: host.id,
     name: host.name,
     cityId: host.city_id,
-    genres: host.account.account_genre.map((genre) => genre.id),
-    capacity: host.capacity
+    genres: host.account.account_genre.map((genre) => genre.genre),
+    capacity: host.capacity,
   }));
 
   sendResponse(res, fromDbFormat(formattedData), 200);
@@ -209,7 +217,7 @@ router.get('/artists/:id', async (req, res) => {
 
   if (!profile) return sendError(res, ApiMessages.NotFound, 404);
 
-  sendResponse(res, profile);
+  sendResponse(res, fromDbFormat(profile));
 });
 
 router.get('/hosts/:id', async (req, res) => {
@@ -222,7 +230,7 @@ router.get('/hosts/:id', async (req, res) => {
 
   if (!profile) return sendError(res, ApiMessages.NotFound, 404);
 
-  sendResponse(res, profile);
+  sendResponse(res, fromDbFormat(profile));
 });
 
 export default router;
