@@ -7,6 +7,17 @@ import { StepProps } from '../AccountStep/FirstStep';
 
 const FifthStepArtist: React.FC<StepProps> = ({ form }) => {
   const [genres, setGenres] = useState<Genre[]>([]);
+  const [selectedGenre, setSelectedGenre] = useState<string[]>(
+    form.values.genres ?? []
+  );
+
+  const handleAddGenre = (id: string) => {
+    if (!selectedGenre.includes(id)) {
+      setSelectedGenre((old) => [...old, id]);
+    } else {
+      setSelectedGenre((old) => old.filter((idGenre) => idGenre != id));
+    }
+  };
 
   useEffect(() => {
     fetchGenres()
@@ -15,23 +26,26 @@ const FifthStepArtist: React.FC<StepProps> = ({ form }) => {
   }, []);
 
   useEffect(() => {
-    console.log('update genres :', genres);
-  }, [genres]);
+    form.values.genres = selectedGenre;
+  }, [selectedGenre]);
 
   return (
     <>
       <Title>Vous êtes plutôt ?</Title>
       <SimpleGrid
-        cols={4}
+        cols={3}
         spacing="lg"
-        breakpoints={[
-          { maxWidth: 'md', cols: 4, spacing: 'md' },
-          { maxWidth: 'sm', cols: 3, spacing: 'sm' },
-          { maxWidth: 'xs', cols: 2, spacing: 'sm' },
-        ]}
+        breakpoints={[{ maxWidth: 'xs', cols: 2, spacing: 'sm' }]}
       >
         {genres.map((genre) => (
-          <MusicGenreCard key={v4()} label={genre.name ?? 'No Label Set'} />
+          <MusicGenreCard
+            key={v4()}
+            onClick={() => {
+              handleAddGenre(genre.id);
+            }}
+            isSelected={selectedGenre.includes(genre.id)}
+            label={genre.name ?? 'No Label Set'}
+          />
         ))}
       </SimpleGrid>
     </>

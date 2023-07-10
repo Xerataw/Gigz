@@ -53,6 +53,7 @@ const RegisterArtistProfile: React.FC = () => {
         longitude: 0,
         latitude: 0,
       },
+      genres: [],
     },
     validate: (values) => {
       switch (formStep) {
@@ -121,6 +122,12 @@ const RegisterArtistProfile: React.FC = () => {
               values.address.value.length > 5
                 ? null
                 : 'Veuillez entrer une adressse valide',
+          };
+
+        case 4:
+          //can have genres but optionnal
+          return {
+            genres: null,
           };
 
         default:
