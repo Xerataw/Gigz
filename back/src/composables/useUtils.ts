@@ -60,39 +60,64 @@ const sendResponse = (response: Response, data: any, statusCode = 200) => {
   });
 };
 
-interface BodyType {
-  [key: string]: any;
-}
-
-const toDbFormat = (body: BodyType) => {
-  const convertedBody: any = {};
-
-  for (const key in body) {
-    if (Object.prototype.hasOwnProperty.call(body, key)) {
-      const snakeCaseKey = key.replace(
-        /[A-Z]/g,
-        (match) => `_${match.toLowerCase()}`
-      );
-      convertedBody[snakeCaseKey] = body[key];
-    }
-  }
-
-  return convertedBody;
+const fromDbFormat = (body: Array<unknown> | object): any => {
+  return transformBody(body, 'fromDB');
 };
 
-const fromDbFormat = (body: BodyType) => {
-  const convertedBody: any = {};
+const toDbFormat = (body: Array<unknown> | object): any => {
+  return transformBody(body, 'toDB');
+};
 
-  for (const key in body) {
-    if (Object.prototype.hasOwnProperty.call(body, key)) {
-      const camelCaseKey = key.replace(/_(\w)/g, (_, match) =>
-        match.toUpperCase()
-      );
-      convertedBody[camelCaseKey] = body[key];
-    }
+/**
+ * Tranform recursively all the keyx of an array or an object into a selected case typing.
+ * fromDB transform a snakeCase strng into a camelCase string.
+ * toDB transform a camelCase strng into a snakeCase string.
+ */
+const transformBody = (body: Array<unknown> | object | any, transform: string): any => {
+  if (Array.isArray(body)) {
+    return body.map(item => transformBody(item, transform));
   }
 
-  return convertedBody;
+  if (typeof body === 'object' && body !== null) {
+    const convertedBody: any = Array.isArray(body) ? [] : {};
+
+    for (const key in body) {
+      if (Object.prototype.hasOwnProperty.call(body, key)) {
+        let convertedKey = '';
+        if (transform === 'fromDB') {
+          convertedKey = toCamelCase(key);
+        } else {
+          convertedKey = toSnakeCase(key);
+        }
+
+        if (typeof body[key] === 'object' && body[key] !== null) {
+          convertedBody[convertedKey] = transformBody(body[key], transform);
+        } else {
+          convertedBody[convertedKey] = body[key];
+        }
+      }
+    }
+
+    return convertedBody;
+  }
+
+  return body;
+};
+
+/**
+ * Convert a camelCase string into a snakeCase string
+ */
+const toSnakeCase = (key: string): string => {
+  return key.replace(/[A-Z]/g, (match) => '_' + match.toLowerCase());
+};
+
+/**
+ * Convert a snakeCase string into a camelCase string
+ */
+const toCamelCase = (key: string): string => {
+  return key.replace(/_([a-z])/g, (_, match) =>
+    match.toUpperCase()
+  );
 };
 
 const useUtils = () => ({

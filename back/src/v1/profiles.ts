@@ -86,10 +86,10 @@ router.get('/hosts', async (_, res) => {
     name: host.name,
     cityId: host.city_id,
     genres: host.account.account_genre.map((genre) => genre.id),
-    capacity: host.capacity ? fromDbFormat(host.capacity) : null,
+    capacity: host.capacity
   }));
 
-  sendResponse(res, formattedData, 200);
+  sendResponse(res, fromDbFormat(formattedData), 200);
 });
 
 router.patch('/artist', async (req, res) => {
