@@ -4,4 +4,9 @@ yarn-error.log
 Session.vim
 dist/
 static/*
-!static/.gitkeep
+!static/image1.png
+!static/image2.png
+!static/image3.png
+!static/image4.png
+!static/image5.png
+!static/image6.png
