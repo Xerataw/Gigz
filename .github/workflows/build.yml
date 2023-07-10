@@ -15,5 +15,6 @@ jobs:
           node-version-file: 'front/.tool-versions'
       - run: npm ci
       - run: npm run build
+      - run: npm i -g @ionic/cli@latest
       - run: npx ionic cap add ios
       - run: npx ionic cap add android
