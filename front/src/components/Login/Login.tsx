@@ -94,6 +94,7 @@ const Login: React.FC = () => {
         if (res.ok) {
           IonicStorageAccessor.set('token', res.data.token);
           onSucces();
+          return;
         }
         setFormSubmited(false);
       })
@@ -113,7 +114,7 @@ const Login: React.FC = () => {
   };
 
   const onSucces = () => {
-    history.push('/liked');
+    history.push('/auth/liked');
   };
 
   return (
