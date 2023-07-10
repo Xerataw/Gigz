@@ -1,6 +1,4 @@
-import { Button, ThemeIcon } from '@mantine/core';
-import { IconCheck } from '@tabler/icons-react';
-import stc from 'string-to-color';
+import { Button } from '@mantine/core';
 
 interface Props {
   label: string;
@@ -9,28 +7,15 @@ interface Props {
 }
 
 const MusicGenreCard: React.FC<Props> = ({ label, onClick, isSelected }) => {
-  const color = stc(label);
   return (
     <Button
       onClick={onClick}
-      styles={(theme) => ({
+      styles={() => ({
         root: {
-          color: 'black',
-          backgroundColor: color,
-          border: 0,
-          '&:not([data-disabled])': theme.fn.hover({
-            backgroundColor: theme.fn.darken(color, 0.05),
-          }),
+          color: isSelected ? '' : 'lightGrey',
         },
       })}
-      variant="outline"
-      leftIcon={
-        isSelected ? (
-          <ThemeIcon color="teal" radius="xl" size="sm">
-            <IconCheck />
-          </ThemeIcon>
-        ) : null
-      }
+      variant={isSelected ? 'outline' : 'default'}
     >
       {label}
     </Button>
