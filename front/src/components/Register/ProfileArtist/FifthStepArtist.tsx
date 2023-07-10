@@ -31,11 +31,7 @@ const FifthStepArtist: React.FC<StepProps> = ({ form }) => {
         ]}
       >
         {genres.map((genre) => (
-          <MusicGenreCard
-            key={v4()}
-            color={genre.color ?? '#DF6600'}
-            label={genre.name ?? 'No Label Set'}
-          />
+          <MusicGenreCard key={v4()} label={genre.name ?? 'No Label Set'} />
         ))}
       </SimpleGrid>
     </>
