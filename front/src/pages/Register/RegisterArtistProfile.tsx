@@ -6,10 +6,12 @@ import {
   IconCircleCheck,
   IconCircleCheckFilled,
   IconExternalLink,
+  IconMapPin,
   IconPencil,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
+import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
 import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
 import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
 
@@ -28,6 +30,8 @@ const valideLink = (
 };
 
 const RegisterArtistProfile: React.FC = () => {
+  const numberOfSteps = 4;
+
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
@@ -42,7 +46,11 @@ const RegisterArtistProfile: React.FC = () => {
       appleMusicLink: '',
       websiteLink: '',
       deezerLink: '',
-      city: '',
+      address: {
+        value: '',
+        longitude: 0,
+        latitude: 0,
+      },
     },
     validate: (values) => {
       switch (formStep) {
@@ -104,17 +112,24 @@ const RegisterArtistProfile: React.FC = () => {
               'de site web valide'
             ),
           };
+        case 3:
+          return {
+            address:
+              values.address.value.length === 0 ||
+              values.address.value.length > 5
+                ? null
+                : 'Veuillez entrer une adressse valide',
+          };
 
         default:
           return {};
       }
     },
   });
-
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   const nextStep = () => {
-    if (formStep === 2) {
+    if (formStep === numberOfSteps - 1) {
       setFormStep((old) => old + 1);
 
       // simulate request
@@ -141,6 +156,10 @@ const RegisterArtistProfile: React.FC = () => {
           form.validate();
         }
         break;
+      case 3:
+        if (debounced.address.value?.length > 0)
+          form.validateField('address.value');
+        break;
 
       case 1:
       case 2:
@@ -164,6 +183,9 @@ const RegisterArtistProfile: React.FC = () => {
         <Stepper.Step icon={<IconExternalLink />}>
           <ThirdStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
+        <Stepper.Step icon={<IconMapPin />}>
+          <FourthStepArtist form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
 
         <Stepper.Step
           icon={<IconCircleCheck />}
@@ -179,16 +201,14 @@ const RegisterArtistProfile: React.FC = () => {
       </Stepper>
 
       <Group position="right" mt="xl">
-        {formStep > 0 && (
-          <Button
-            variant="default"
-            disabled={formStep === 3}
-            onClick={prevStep}
-          >
+        {formStep > 0 && formStep < numberOfSteps && (
+          <Button variant="default" onClick={prevStep}>
             Retour
           </Button>
         )}
-        {formStep < 3 && <Button onClick={nextStep}>Prochaine étape</Button>}
+        {formStep < numberOfSteps && (
+          <Button onClick={nextStep}>Prochaine étape</Button>
+        )}
       </Group>
     </div>
   );
