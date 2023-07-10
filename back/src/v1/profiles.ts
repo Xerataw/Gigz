@@ -50,12 +50,27 @@ const handleGenres = async (account_id: number, genres: number[]) => {
 
 const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
+  capacityId: z.coerce.number().optional(),
 });
 
-const buildFiltersWhereCondition = (query: { name?: string }) => {
+const buildArtistsWhereCondition = (query: { name?: string }) => {
   return {
     name: {
       contains: query.name ? query.name : undefined,
+    },
+  };
+};
+
+const buildHostsWhereCondition = (query: {
+  name?: string;
+  capacityId?: number;
+}) => {
+  return {
+    name: {
+      contains: query.name ? query.name : undefined,
+    },
+    capacity_id: {
+      equals: query.capacityId ? query.capacityId : undefined,
     },
   };
 };
@@ -77,7 +92,7 @@ router.get('/artists', async (req, res) => {
         },
       },
     },
-    where: buildFiltersWhereCondition(body.data),
+    where: buildArtistsWhereCondition(body.data),
   });
 
   const formattedData = data.map((artist) => ({
@@ -108,7 +123,7 @@ router.get('/hosts', async (req, res) => {
         },
       },
     },
-    where: buildFiltersWhereCondition(body.data),
+    where: buildHostsWhereCondition(body.data),
   });
 
   const formattedData = data.map((host) => ({
