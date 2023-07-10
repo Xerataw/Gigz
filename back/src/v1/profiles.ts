@@ -195,4 +195,34 @@ router.get('/', async (req, res) => {
   sendResponse(res, fromDbFormat(profile));
 });
 
+const GetProfileParams = z.object({
+  id: z.coerce.number(),
+});
+
+router.get('/artists/:id', async (req, res) => {
+  const params = GetProfileParams.safeParse(req.params);
+  if (!params.success) return sendError(res, ApiMessages.BadRequest);
+
+  const profile = await database.artist.findUnique({
+    where: { id: params.data.id },
+  });
+
+  if (!profile) return sendError(res, ApiMessages.NotFound, 404);
+
+  sendResponse(res, profile);
+});
+
+router.get('/hosts/:id', async (req, res) => {
+  const params = GetProfileParams.safeParse(req.params);
+  if (!params.success) return sendError(res, ApiMessages.BadRequest);
+
+  const profile = await database.host.findUnique({
+    where: { id: params.data.id },
+  });
+
+  if (!profile) return sendError(res, ApiMessages.NotFound, 404);
+
+  sendResponse(res, profile);
+});
+
 export default router;
