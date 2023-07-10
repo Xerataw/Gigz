@@ -15,7 +15,6 @@ export interface IProfileBannerProps {
   profilePicture?: string;
   city?: string;
   genres: Genre[];
-  musicLink?: string;
 }
 
 export default function ProfileBanner({
@@ -23,7 +22,6 @@ export default function ProfileBanner({
   profilePicture,
   city,
   genres,
-  musicLink,
 }: IProfileBannerProps) {
   return (
     <div
@@ -67,7 +65,6 @@ export default function ProfileBanner({
           </ul>
         </div>
       </div>
-      {musicLink && <MusicEmbed musicLink={musicLink} />}
     </div>
   );
 }

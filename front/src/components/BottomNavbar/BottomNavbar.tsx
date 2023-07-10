@@ -8,6 +8,7 @@ import {
   IconMessageCircle,
   IconMessageCircle2Filled,
   IconSearch,
+  IconUserCircle,
   IconZoomFilled,
 } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
@@ -57,19 +58,17 @@ const BottomNavbar: React.FC<Props> = ({ isShadow }) => {
         const userPP = user.getProfilePicture();
         const ppIcon: IconNavbar = {
           path: '/auth/profile',
-          icon: (
-            <Avatar
-              src={userPP && GigzFetcher.getImageUri(userPP)}
-              radius="xl"
-            />
+          icon: userPP ? (
+            <Avatar src={GigzFetcher.getImageUri(userPP)} radius="xl" />
+          ) : (
+            <IconUserCircle />
           ),
           label: 'Go to profile page',
           fillColor: 'black',
-          iconFilled: (
-            <Avatar
-              src={userPP && GigzFetcher.getImageUri(userPP)}
-              radius="xl"
-            />
+          iconFilled: userPP ? (
+            <Avatar src={GigzFetcher.getImageUri(userPP)} radius="xl" />
+          ) : (
+            <IconUserCircle />
           ),
         };
         setIcons([...icons, ppIcon]);

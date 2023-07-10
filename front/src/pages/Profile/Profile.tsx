@@ -26,7 +26,11 @@ const Profile: React.FC = () => {
   };
 
   function buildProfile(baseProfile: any): IProfile {
-    return { ...baseProfile, mediaList: [], genres: [] };
+    return {
+      ...baseProfile,
+      mediaList: [],
+      genres: [],
+    };
   }
 
   const displayProfileView = (): JSX.Element => {

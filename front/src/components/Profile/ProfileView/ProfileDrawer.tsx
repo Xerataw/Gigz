@@ -10,6 +10,7 @@ import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Global } from '@emotion/react';
 import { ScrollArea } from '@mantine/core';
 import ProfileBanner from './ProfileBanner';
+import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 
 export interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;
@@ -33,7 +34,7 @@ export default function ProfileDrawer({
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(75% - ${hasMusicEmbed ? 200 : 100}px)`,
+            height: `calc(75% - ${hasMusicEmbed ? 150 : 100}px)`,
             overflow: 'visible',
           },
         }}
@@ -65,13 +66,23 @@ export default function ProfileDrawer({
             profilePicture={profile.profilePicture}
             city={profile.city}
             genres={profile.genres}
-            musicLink={
-              hasMusicEmbed ? (profile as IArtistProfile).musicLink : undefined
-            }
           />
         </div>
-        <ScrollArea className="-mt-12 p-4 pt-0 pb-16 bg-white" type="never">
-          <div>{children}</div>
+        <ScrollArea
+          className={
+            hasMusicEmbed
+              ? 'p-4 pt-0 pb-16 bg-white'
+              : 'p-4 pt-0 pb-16 bg-white -mt-12'
+          }
+          style={hasMusicEmbed ? { marginTop: '-9.2rem' } : undefined}
+          type="never"
+        >
+          {hasMusicEmbed && (
+            <div style={{ marginBottom: '-1em', visibility: 'visible' }}>
+              <MusicEmbed musicLink={profile.musicLink as string} />
+            </div>
+          )}
+          {children}
         </ScrollArea>
       </SwipeableDrawer>
     </div>
