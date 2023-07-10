@@ -92,6 +92,7 @@ const Login: React.FC = () => {
     login(data.email, data.password)
       .then((res) => {
         if (res.ok) {
+          console.log(res.data);
           User.getInstance().then((user) => {
             user.setToken(res.data.token);
             user.setUserType(res.data.profileType);

@@ -1,9 +1,9 @@
-import Genre from '../../types/Genre';
+import Genre from '../../../types/Genre';
 
 // Sub components
 import { Avatar } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
-import GenreBadge from '../GenreBadge/GenreBadge';
+import GenreBadge from '../../GenreBadge/GenreBadge';
 
 export interface IProfileBannerProps {
   username: string;
