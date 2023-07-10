@@ -48,7 +48,23 @@ const handleGenres = async (account_id: number, genres: number[]) => {
   });
 };
 
-router.get('/artists', async (_, res) => {
+const searchFiltersBodySchemas = z.object({
+  name: z.string().min(1).optional(),
+});
+
+const buildFiltersWhereCondition = (query: { name?: string }) => {
+  return {
+    name: {
+      contains: query.name ? query.name : undefined,
+    },
+  };
+};
+
+router.get('/artists', async (req, res) => {
+  const body = searchFiltersBodySchemas.safeParse(req.query);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const data = await database.artist.findMany({
     include: {
       account: {
@@ -61,6 +77,7 @@ router.get('/artists', async (_, res) => {
         },
       },
     },
+    where: buildFiltersWhereCondition(body.data),
   });
 
   const formattedData = data.map((artist) => ({
@@ -73,7 +90,11 @@ router.get('/artists', async (_, res) => {
   sendResponse(res, formattedData);
 });
 
-router.get('/hosts', async (_, res) => {
+router.get('/hosts', async (req, res) => {
+  const body = searchFiltersBodySchemas.safeParse(req.query);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const data = await database.host.findMany({
     include: {
       capacity: true,
@@ -87,6 +108,7 @@ router.get('/hosts', async (_, res) => {
         },
       },
     },
+    where: buildFiltersWhereCondition(body.data),
   });
 
   const formattedData = data.map((host) => ({
