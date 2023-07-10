@@ -1,15 +1,21 @@
+// Logic
+import GigzFetcher from '../../../services/GigzFetcher';
+
+// Types
 import Genre from '../../../types/Genre';
 
 // Sub components
 import { Avatar } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 import GenreBadge from '../../GenreBadge/GenreBadge';
+import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 
 export interface IProfileBannerProps {
   username: string;
   profilePicture?: string;
   city?: string;
   genres: Genre[];
+  musicLink?: string;
 }
 
 export default function ProfileBanner({
@@ -17,10 +23,11 @@ export default function ProfileBanner({
   profilePicture,
   city,
   genres,
+  musicLink,
 }: IProfileBannerProps) {
   return (
     <div
-      className="bg-white"
+      className="bg-white pl-3 pr-3"
       style={{
         borderTopLeftRadius: 15,
         borderTopRightRadius: 15,
@@ -30,9 +37,9 @@ export default function ProfileBanner({
         className="inline-block h-1.5 bg-gray-700 rounded-md"
         style={{ width: '15%', marginLeft: '42.5%' }}
       ></span>
-      <div className="flex flex-row flex-nowrap items-center p-3">
+      <div className="flex flex-row flex-nowrap items-center pt-3 pb-3">
         <Avatar
-          src={profilePicture && profilePicture}
+          src={profilePicture && GigzFetcher.getImageUri(profilePicture)}
           radius="xl"
           size="xl"
           className="mr-3"
@@ -60,6 +67,7 @@ export default function ProfileBanner({
           </ul>
         </div>
       </div>
+      {musicLink && <MusicEmbed musicLink={musicLink} />}
     </div>
   );
 }

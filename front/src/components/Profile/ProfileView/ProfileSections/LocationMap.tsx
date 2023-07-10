@@ -1,5 +1,6 @@
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+// Sub components
 import ProfileSection from './ProfileSection';
+import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 
 export interface ILocationProps {
   longitude: number;

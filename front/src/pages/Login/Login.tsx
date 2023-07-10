@@ -1,3 +1,16 @@
+// Logic
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useForm } from '@mantine/form';
+import { useDebouncedValue } from '@mantine/hooks';
+import login from '../../api/Login.api';
+
+// Types
+import User from '../../types/User';
+import { HttpStatusCode } from 'axios';
+
+// Sub components
 import {
   Anchor,
   Box,
@@ -7,14 +20,6 @@ import {
   PasswordInput,
   TextInput,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { useDebouncedValue } from '@mantine/hooks';
-import { HttpStatusCode } from 'axios';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import login from '../../api/Login.api';
-import User from '../../types/User';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
@@ -92,7 +97,6 @@ const Login: React.FC = () => {
     login(data.email, data.password)
       .then((res) => {
         if (res.ok) {
-          console.log(res.data);
           User.getInstance().then((user) => {
             user.setToken(res.data.token);
             user.setUserType(res.data.profileType);
@@ -118,7 +122,7 @@ const Login: React.FC = () => {
   };
 
   const onSuccess = () => {
-    history.push('/liked');
+    history.push('/auth/profile');
   };
 
   return (

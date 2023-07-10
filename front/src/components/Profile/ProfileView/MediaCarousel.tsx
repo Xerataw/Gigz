@@ -1,5 +1,5 @@
 import { Carousel } from '@mantine/carousel';
-import Media from '../../types/Media';
+import Media from '../../../types/Media';
 
 export interface IMediaCarouselProps {
   mediaList: Media[];

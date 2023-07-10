@@ -9,5 +9,5 @@ export default interface IArtistProfile extends IProfile {
   deezerLink?: string;
   appleMusicLink?: string;
   soundCloudLink?: string;
-  embedMusicLink?: string;
+  musicLink?: string;
 }

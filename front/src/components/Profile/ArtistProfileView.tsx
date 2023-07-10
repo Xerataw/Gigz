@@ -1,3 +1,4 @@
+// Logic
 import {
   isBioSectionAvaiblable,
   isMusicSectionAvailable,
@@ -10,7 +11,7 @@ import IArtistProfile from '../../types/IArtistProfile';
 // Sub components
 import ProfileView from './ProfileView/ProfileView';
 import Biography from './ProfileView/ProfileSections/Biography';
-import Music from './ProfileView/ProfileSections/Music';
+import MusicProfiles from './ProfileView/ProfileSections/MusicProfiles';
 import Socials from './ProfileView/ProfileSections/Socials';
 
 export interface IArtistProfileViewProps {
@@ -22,13 +23,14 @@ export default function ArtistProfileView({
 }: IArtistProfileViewProps) {
   const getProfileSections = (profile: IArtistProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];
-    isBioSectionAvaiblable(profile.bio) &&
-      sections.push(<Biography key="bio" content={profile.bio as string} />);
+    isBioSectionAvaiblable(profile.description) &&
+      sections.push(
+        <Biography key="bio" content={profile.description as string} />
+      );
     isMusicSectionAvailable(profile) &&
       sections.push(
-        <Music
+        <MusicProfiles
           key="music"
-          musicLink={profile.embedMusicLink}
           spotifyLink={profile.spotifyLink}
           soundCloudLink={profile.soundCloudLink}
           deezerLink={profile.deezerLink}

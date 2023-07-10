@@ -1,10 +1,19 @@
+// Types
+import { ReactNode } from 'react';
+
+// Sub components
 import BottomNavbar from '../../components/BottomNavbar/BottomNavbar';
 
-function Layout({ children }: { children: React.ReactNode }) {
+interface ILayoutProps {
+  navBarShadow?: boolean;
+  children: ReactNode;
+}
+
+function Layout({ navBarShadow, children }: ILayoutProps) {
   return (
     <div>
       {children}
-      <BottomNavbar isShadow />
+      <BottomNavbar isShadow={navBarShadow} />
     </div>
   );
 }

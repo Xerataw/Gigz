@@ -24,18 +24,18 @@ const storeUser = (argument: string) => {
 export default class User {
   private static instance: User;
 
-  private username: string | null;
+  private name: string | null;
   private profilePicture: string | null;
   private token: string | null;
   private type: UserType | null;
 
   private constructor(
-    username?: string,
+    name?: string,
     profilePicture?: string,
     token?: string,
     type?: UserType
   ) {
-    this.username = username ?? null;
+    this.name = name ?? null;
     this.profilePicture = profilePicture ?? null;
     this.token = token ?? null;
     this.type = type ?? null;
@@ -61,8 +61,24 @@ export default class User {
   }
 
   /**
+   * Change the user instance name and write the changes in local storage.
+   * @param name the new user name to set.
+   */
+  @storeUser('name')
+  public setName(name: string) {
+    this.name = name;
+  }
+
+  /**
+   * @returns the user name stored in local storage.
+   */
+  public getName(): string | null {
+    return this.name;
+  }
+
+  /**
    * Change the user instance profile picture and write the changes in local storage.
-   * @param username the new profile picture to set.
+   * @param profilePicture the new profile picture to set.
    */
   @storeUser('profilePicture')
   public setProfilePicture(profilePicture: string | null) {
@@ -78,7 +94,7 @@ export default class User {
 
   /**
    * Change the user instance auth token and write the changes in local storage.
-   * @param username the new auth token to set.
+   * @param token the new auth token to set.
    */
   @storeUser('token')
   public setToken(token: string | null) {
@@ -98,7 +114,7 @@ export default class User {
 
   /**
    * Change the user instance user type (artist, host) and write the changes in local storage.
-   * @param username the new user type (artist, host) to set.
+   * @param type the new user type (artist, host) to set.
    */
   @storeUser('type')
   public setUserType(type: UserType | null) {

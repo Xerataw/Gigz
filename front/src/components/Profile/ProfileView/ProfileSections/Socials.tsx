@@ -19,8 +19,8 @@ export default function Socials({
   websiteLink,
 }: ISocialsProps) {
   return (
-    <ProfileSection name="Réseaux sociaux">
-      <ul className="flex flex-flow flex-nowrap justify-center mt-3 gap-5">
+    <ProfileSection name="Retrouvez-moi ici">
+      <ul className="flex flex-flow flex-nowrap justify-start mt-3 gap-4">
         {instagramLink && (
           <li>
             <SocialMediaCard

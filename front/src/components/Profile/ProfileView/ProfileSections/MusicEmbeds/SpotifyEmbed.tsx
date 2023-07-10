@@ -7,9 +7,8 @@ export default function SpotifyEmbed({ spotifyLink }: ISpotifyEmbedProps) {
     <div>
       <iframe
         style={{
-          width: '75%',
-          height: '80px',
-          marginLeft: '12.5%',
+          width: '100%',
+          height: '120px',
           border: '0',
           marginBottom: '10px',
         }}

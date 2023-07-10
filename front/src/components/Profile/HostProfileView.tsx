@@ -1,3 +1,4 @@
+// Logic
 import {
   isBioSectionAvaiblable,
   isMapSectionAvailable,
@@ -20,8 +21,10 @@ export interface IHostProfileViewProps {
 export default function HostProfileView({ profile }: IHostProfileViewProps) {
   const getProfileSections = (profile: IHostProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];
-    isBioSectionAvaiblable(profile.bio) &&
-      sections.push(<Biography key="bio" content={profile.bio as string} />);
+    isBioSectionAvaiblable(profile.description) &&
+      sections.push(
+        <Biography key="bio" content={profile.description as string} />
+      );
     isMapSectionAvailable(profile) &&
       sections.push(
         <LocationMap

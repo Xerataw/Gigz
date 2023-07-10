@@ -1,12 +1,14 @@
+// Types
 import { ReactNode } from 'react';
-import Profile from '../../types/IProfile';
+import IArtistProfile from '../../../types/IArtistProfile';
+import IHostProfile from '../../../types/IArtistProfile';
 
 // Sub components
 import MediaCarousel from './MediaCarousel';
 import ProfileDrawer from './ProfileDrawer';
 
 export interface IProfileViewProps {
-  profile: Profile;
+  profile: IArtistProfile | IHostProfile;
   children: ReactNode;
 }
 

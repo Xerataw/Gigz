@@ -2,10 +2,20 @@ import IProfile from '../types/IProfile';
 import IArtistProfile from '../types/IArtistProfile';
 import IHostProfile from '../types/IHostProfile';
 
+/**
+ * Check if the biography section of a profile can be displayed
+ * @param bio the biography returned by the backend
+ * @returns true if the biography can be displayed, false otherwise
+ */
 export function isBioSectionAvaiblable(bio: string | undefined): boolean {
   return typeof bio === 'string' && bio.length > 0;
 }
 
+/**
+ * Check if the music section of an artist profile can be displayed
+ * @param profile the artist profile returned by the backend
+ * @returns true if the music section can be displayed, false otherwise
+ */
 export function isMusicSectionAvailable(profile: IArtistProfile): boolean {
   return (
     (typeof profile.appleMusicLink === 'string' &&
@@ -17,11 +27,15 @@ export function isMusicSectionAvailable(profile: IArtistProfile): boolean {
       profile.soundCloudLink.length > 0) ||
     (typeof profile.youtubeLink === 'string' &&
       profile.youtubeLink.length > 0) ||
-    (typeof profile.embedMusicLink === 'string' &&
-      profile.embedMusicLink.length > 0)
+    (typeof profile.musicLink === 'string' && profile.musicLink.length > 0)
   );
 }
 
+/**
+ * Check if the map section of a host profile can be displayed
+ * @param profile the host profile returned by the backend
+ * @returns true if the map section can be displayed, false otherwise
+ */
 export function isMapSectionAvailable(profile: IHostProfile): boolean {
   return (
     typeof profile.longitude === 'number' &&
@@ -29,8 +43,12 @@ export function isMapSectionAvailable(profile: IHostProfile): boolean {
   );
 }
 
+/**
+ * Check if the social media section of a host or artist profile can be displayed
+ * @param profile the host or artist profile returned by the backend
+ * @returns true if the social media section can be displayed, false otherwise
+ */
 export function isSocialsSectionAvailable(profile: IProfile): boolean {
-  console.log(profile);
   return (
     (typeof profile.instagramLink === 'string' &&
       profile.instagramLink.length > 0) ||

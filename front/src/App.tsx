@@ -7,11 +7,11 @@ import {
   BrowserRouter as Router,
   Switch,
 } from 'react-router-dom';
-import ForgotPassword from './components/Login/ForgotPassword/ForgotPassword';
+import ForgotPassword from './components/ForgotPassword/ForgotPassword';
 import NestedRoute from './components/NestedRoute/NestedRoute';
 import Conversations from './pages/Conversations/Conversations';
 import Liked from './pages/Liked/Liked';
-import LoginPage from './pages/LoginPage/LoginPage';
+import LoginPage from './pages/Login/Login';
 import Profile from './pages/Profile/Profile';
 import Register from './pages/Register/Register';
 import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';

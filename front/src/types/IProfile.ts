@@ -2,9 +2,9 @@ import Media from './Media';
 import Genre from './Genre';
 
 export default interface IProfile {
-  username: string;
+  name: string;
   profilePicture?: string;
-  bio?: string;
+  description?: string;
   city?: string;
   genres: Genre[];
   mediaList: Media[];

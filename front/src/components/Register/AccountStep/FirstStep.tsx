@@ -1,6 +1,5 @@
 import { Button, Title, Tooltip } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
-import { v4 } from 'uuid';
 
 export interface StepProps {
   form: UseFormReturnType<any>;
@@ -31,15 +30,15 @@ const FirstStep: React.FC<StepProps> = ({ form, nextStep }) => {
     <>
       <Title>Vous êtes </Title>
       <Button.Group orientation="vertical">
-        {userTypes.map((item) => (
+        {userTypes.map((userType) => (
           <Tooltip
-            key={v4()}
-            label={item.labelTooltip}
+            key={userType.value}
+            label={userType.labelTooltip}
             withinPortal
             onClick={() => {
               form.setValues((values) => ({
                 ...values,
-                userType: item.value,
+                userType: userType.value,
               }));
               nextStep();
             }}
@@ -48,10 +47,10 @@ const FirstStep: React.FC<StepProps> = ({ form, nextStep }) => {
               size="xl"
               m="lg"
               variant={
-                form.values.userType === item.value ? 'filled' : 'outline'
+                form.values.userType === userType.value ? 'filled' : 'outline'
               }
             >
-              {item.label}
+              {userType.label}
             </Button>
           </Tooltip>
         ))}

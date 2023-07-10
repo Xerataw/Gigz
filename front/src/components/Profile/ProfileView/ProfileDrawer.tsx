@@ -1,14 +1,18 @@
+// Logic
 import { ReactNode, useState } from 'react';
-import Profile from '../../types/IProfile';
+
+// Types
+import IArtistProfile from '../../../types/IArtistProfile';
+import IHostProfile from '../../../types/IHostProfile';
 
 // Sub components
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Global } from '@emotion/react';
-import ProfileBanner from './ProfileBanner';
 import { ScrollArea } from '@mantine/core';
+import ProfileBanner from './ProfileBanner';
 
 export interface IProfileDrawerProps {
-  profile: Profile;
+  profile: IArtistProfile | IHostProfile;
   children: ReactNode;
 }
 
@@ -24,7 +28,7 @@ export default function ProfileDrawer({
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(75% - ${100}px)`,
+            height: `calc(75% - ${200}px)`,
             overflow: 'visible',
           },
         }}
@@ -35,7 +39,9 @@ export default function ProfileDrawer({
         onClose={toggleDrawer}
         anchor="bottom"
         disableSwipeToOpen={false}
-        swipeAreaWidth={200}
+        disableDiscovery={true}
+        allowSwipeInChildren={false}
+        swipeAreaWidth={280}
         ModalProps={{
           keepMounted: true,
         }}
@@ -43,17 +49,18 @@ export default function ProfileDrawer({
         <div
           style={{
             position: 'absolute',
-            top: -180,
+            top: -280,
             visibility: 'visible',
             right: 0,
             left: 0,
           }}
         >
           <ProfileBanner
-            username={profile.username}
+            username={profile.name}
             profilePicture={profile.profilePicture}
             city={profile.city}
             genres={profile.genres}
+            musicLink={(profile as IArtistProfile).musicLink}
           />
         </div>
         <ScrollArea className="-mt-12 p-4 pt-6 pb-16 bg-white" type="never">

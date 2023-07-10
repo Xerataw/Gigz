@@ -1,3 +1,4 @@
+// Types
 import { ReactNode } from 'react';
 
 export interface IProfileSectionProps {
