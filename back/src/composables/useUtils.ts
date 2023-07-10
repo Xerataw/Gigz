@@ -19,6 +19,7 @@ enum ApiMessages {
   WrongRoute = 'WRONG_ROUTE',
 
   ServerError = 'SERVER_ERROR',
+  NotFound = 'NOT_FOUND',
 }
 
 /**
