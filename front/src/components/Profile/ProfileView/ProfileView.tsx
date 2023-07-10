@@ -4,7 +4,6 @@ import IArtistProfile from '../../../types/IArtistProfile';
 import IHostProfile from '../../../types/IArtistProfile';
 
 // Sub components
-import MediaCarousel from './MediaCarousel';
 import ProfileDrawer from './ProfileDrawer';
 
 export interface IProfileViewProps {
@@ -15,7 +14,6 @@ export interface IProfileViewProps {
 export default function ProfileView({ profile, children }: IProfileViewProps) {
   return (
     <>
-      <MediaCarousel mediaList={profile.mediaList} />
       <ProfileDrawer profile={profile}>{children}</ProfileDrawer>
     </>
   );

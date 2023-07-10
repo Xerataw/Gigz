@@ -1,14 +1,24 @@
+import { useState } from 'react';
+
+// Sub components
+import { Skeleton } from '@mantine/core';
+
 export interface ISpotifyEmbedProps {
   spotifyLink: string;
 }
 
 export default function SpotifyEmbed({ spotifyLink }: ISpotifyEmbedProps) {
+  const [skeletonVisible, setSkeletonVisible] = useState<boolean>(true);
+
   return (
-    <div>
+    <Skeleton
+      visible={skeletonVisible}
+      radius={skeletonVisible ? 'md' : undefined}
+    >
       <iframe
         style={{
           width: '100%',
-          height: '120px',
+          height: '100px',
           border: '0',
           marginBottom: '10px',
         }}
@@ -17,7 +27,10 @@ export default function SpotifyEmbed({ spotifyLink }: ISpotifyEmbedProps) {
           '/embed/track'
         )}?utm_source=generator&theme=0`}
         loading="lazy"
+        onLoad={() => {
+          setSkeletonVisible(false);
+        }}
       ></iframe>
-    </div>
+    </Skeleton>
   );
 }
