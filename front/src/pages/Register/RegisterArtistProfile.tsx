@@ -6,12 +6,14 @@ import {
   IconCircleCheck,
   IconCircleCheckFilled,
   IconExternalLink,
+  IconFile,
   IconMapPin,
   IconPencil,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
 import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
+import ProfilePictureStep from '../../components/Register/ProfileArtist/ProfilePictureStep';
 import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
 import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
 
@@ -51,6 +53,7 @@ const RegisterArtistProfile: React.FC = () => {
         longitude: 0,
         latitude: 0,
       },
+      picture: '',
     },
     validate: (values) => {
       switch (formStep) {
@@ -167,6 +170,10 @@ const RegisterArtistProfile: React.FC = () => {
     }
   }, [debounced]);
 
+  // useEffect(() => {
+  //   setFormStep(4);
+  // }, []);
+
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
       <Text>Informations du profil</Text>
@@ -185,6 +192,10 @@ const RegisterArtistProfile: React.FC = () => {
         </Stepper.Step>
         <Stepper.Step icon={<IconMapPin />}>
           <FourthStepArtist form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step icon={<IconFile />}>
+          <ProfilePictureStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step
