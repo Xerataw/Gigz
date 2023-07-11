@@ -1,13 +1,13 @@
-import Media from './Media';
-import Genre from './Genre';
+import IGenre from './IGenre';
+import IMedia from './IMedia';
 
 export default interface IProfile {
   name: string;
   profilePicture?: string;
   description?: string;
   city?: string;
-  genres: Genre[];
-  mediaList: Media[];
+  genres: IGenre[];
+  mediaList: IMedia[];
   websiteLink?: string;
   instagramLink?: string;
   facebookLink?: string;

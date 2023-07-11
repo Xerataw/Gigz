@@ -1,7 +1,7 @@
 import { PasswordInput, Title } from '@mantine/core';
-import { StepProps } from './FirstStep';
+import { IStepProps } from './FirstStep';
 
-const ThirdStep: React.FC<StepProps> = ({ form }) => {
+const ThirdStep: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
       <Title>La sécurité</Title>

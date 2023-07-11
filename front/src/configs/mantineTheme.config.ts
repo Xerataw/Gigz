@@ -4,18 +4,6 @@ const mantineThemeConfig: MantineThemeOverride = {
   loader: 'bars',
   colors: {
     primary: [
-      '#FFD7D2',
-      '#FF9185',
-      '#FF5541',
-      '#FF2E17',
-      '#F22F1D',
-      '#FF0000',
-      '#F50000',
-      '#D00000',
-      '#B10000',
-      '#960000',
-    ],
-    secondary: [
       '#FFF9EF',
       '#FFDE9E',
       '#FFC657',
@@ -26,6 +14,18 @@ const mantineThemeConfig: MantineThemeOverride = {
       '#DF6600',
       '#BE5700',
       '#A14A00',
+    ],
+    secondary: [
+      '#FFD7D2',
+      '#FF9185',
+      '#FF5541',
+      '#FF2E17',
+      '#F22F1D',
+      '#FF0000',
+      '#F50000',
+      '#D00000',
+      '#B10000',
+      '#960000',
     ],
     tertiary: [
       '#FFFDEF',
@@ -40,7 +40,7 @@ const mantineThemeConfig: MantineThemeOverride = {
       '#A17100',
     ],
   },
-  primaryColor: 'secondary',
+  primaryColor: 'primary',
 };
 
 export default mantineThemeConfig;

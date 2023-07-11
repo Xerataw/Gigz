@@ -223,7 +223,7 @@ const RegisterArtistProfile: React.FC = () => {
           </Button>
         )}
         {formStep < numberOfSteps && (
-          <Button onClick={nextStep}>Prochaine étape</Button>
+          <Button onClick={nextStep}>Prochaine étape Y</Button>
         )}
       </Group>
     </div>

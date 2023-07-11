@@ -1,18 +1,18 @@
 import { Button, Title, Tooltip } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 
-export interface StepProps {
+export interface IStepProps {
   form: UseFormReturnType<any>;
   nextStep: () => void;
 }
 
-interface UserTypeButton {
+interface IUserTypeButton {
   labelTooltip: string;
   label: string;
   value: 'host' | 'artist';
 }
 
-const userTypes: UserTypeButton[] = [
+const userTypes: IUserTypeButton[] = [
   {
     labelTooltip: 'Un artiste, un groupe',
     label: 'Un artiste',
@@ -25,7 +25,7 @@ const userTypes: UserTypeButton[] = [
   },
 ];
 
-const FirstStep: React.FC<StepProps> = ({ form, nextStep }) => {
+const FirstStep: React.FC<IStepProps> = ({ form, nextStep }) => {
   return (
     <>
       <Title>Vous êtes </Title>

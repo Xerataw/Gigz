@@ -1,40 +1,37 @@
-// Logic
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { getProfile } from '../../api/User.api';
-
-// Types
-import User from '../../types/User';
-import UserType from '../../types/UserType';
-import ProfileType from '../../types/UserType';
+import { getProfile } from '../../api/user';
+import User from '../../store/User';
+import {
+  default as EUserType,
+  default as ProfileType,
+} from '../../types/EUserType';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
-
-// Sub components
-import Layout from '../Layout/Layout';
-import ArtistProfileView from '../../components/Profile/ArtistProfileView';
-import HostProfileView from '../../components/Profile/HostProfileView';
 import IProfile from '../../types/IProfile';
+import Layout from '../Layout/Layout';
+import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
+import HostProfileView from '../../components/ProfileView/HostProfileView';
 
 const Profile: React.FC = () => {
   const history = useHistory();
-  const [userType, setUserType] = useState<UserType>();
+  const [userType, setUserType] = useState<EUserType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
 
   const redirectToLogin = () => {
     history.push('/login');
   };
 
-  function buildProfile(baseProfile: any): IProfile {
+  const buildProfile = (baseProfile: any): IProfile => {
     return {
       ...baseProfile,
       mediaList: [],
       genres: [],
     };
-  }
+  };
 
   const displayProfileView = (): JSX.Element => {
-    return userType === UserType.ARTIST ? (
+    return userType === EUserType.ARTIST ? (
       <ArtistProfileView profile={profile as IArtistProfile} />
     ) : (
       <HostProfileView profile={profile as IHostProfile} />
