@@ -5,12 +5,11 @@ import useUtils from '@composables/useUtils';
 
 const router = express.Router();
 const { database } = useDatabase();
-const { sendResponse } = useUtils();
+const { sendResponse, fromDbFormat } = useUtils();
 
 router.get('/', async (_, res) => {
   const data = await database.genre.findMany();
-
-  sendResponse(res, data, 200);
+  sendResponse(res, fromDbFormat(data), 200);
 });
 
 export default router;
