@@ -25,7 +25,7 @@ router.post(
 
     // @ts-ignore
     const files: { media: string; account_id: number }[] = req.files.map(
-      (file) => ({ media: file.filename, account_id: req.account.id })
+      (file: any) => ({ media: file.filename, account_id: req.account.id })
     );
 
     await database.gallery.createMany({ data: files });
