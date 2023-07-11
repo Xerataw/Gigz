@@ -74,9 +74,12 @@ const toDbFormat = (body: Array<unknown> | object): any => {
  * fromDB transform a snakeCase strng into a camelCase string.
  * toDB transform a camelCase strng into a snakeCase string.
  */
-const transformBody = (body: Array<unknown> | object | any, transform: string): any => {
+const transformBody = (
+  body: Array<unknown> | object | any,
+  transform: string
+): any => {
   if (Array.isArray(body)) {
-    return body.map(item => transformBody(item, transform));
+    return body.map((item) => transformBody(item, transform));
   }
 
   if (typeof body === 'object' && body !== null) {
@@ -116,9 +119,7 @@ const toSnakeCase = (key: string): string => {
  * Convert a snakeCase string into a camelCase string
  */
 const toCamelCase = (key: string): string => {
-  return key.replace(/_([a-z])/g, (_, match) =>
-    match.toUpperCase()
-  );
+  return key.replace(/_([a-z])/g, (_, match) => match.toUpperCase());
 };
 
 const useUtils = () => ({
