@@ -46,7 +46,7 @@ router.patch(
   }
 );
 
-router.delete('/', async (req, res) => {
+router.delete('/', pictureRateLimiter, async (req, res) => {
   let profile_picture = await database.profile_pictures.findUnique({
     where: { account_id: req.account.id },
   });
