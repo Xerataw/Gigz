@@ -2,7 +2,7 @@ import { ActionIcon } from '@mantine/core';
 import React, { ReactElement } from 'react';
 import IconNavbar from '../../types/IconNavbar';
 
-interface Props {
+interface IIconProps {
   size: 'small' | 'medium' | 'large';
   color: string;
   isFilled: boolean;
@@ -33,7 +33,7 @@ const getSizeLabel = (size: string): string => {
   return 'md';
 };
 
-const Icon: React.FC<Props> = ({ size, color, isFilled, icon }) => {
+const Icon: React.FC<IIconProps> = ({ size, color, isFilled, icon }) => {
   const sizePixel = getSizePixel(size)?.toString();
 
   const iconChild = React.cloneElement(icon.icon as ReactElement, {

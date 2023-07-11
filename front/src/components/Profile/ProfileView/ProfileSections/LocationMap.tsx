@@ -1,13 +1,13 @@
 // Sub components
 import ProfileSection from './ProfileSection';
-import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 
-export interface ILocationProps {
+interface ILocationProps {
   longitude: number;
   latitude: number;
 }
 
-export default function LocationMap({ longitude, latitude }: ILocationProps) {
+const LocationMap: React.FC<ILocationProps> = ({ longitude, latitude }) => {
   return (
     <ProfileSection name="Localisation">
       <MapContainer
@@ -25,4 +25,6 @@ export default function LocationMap({ longitude, latitude }: ILocationProps) {
       </MapContainer>
     </ProfileSection>
   );
-}
+};
+
+export default LocationMap;

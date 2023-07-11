@@ -1,20 +1,24 @@
 // Types
 import { ReactNode } from 'react';
-import IArtistProfile from '../../../types/IArtistProfile';
-import IHostProfile from '../../../types/IArtistProfile';
+import {
+  default as IArtistProfile,
+  default as IHostProfile,
+} from '../../../types/IArtistProfile';
 
 // Sub components
 import ProfileDrawer from './ProfileDrawer';
 
-export interface IProfileViewProps {
+interface IProfileViewProps {
   profile: IArtistProfile | IHostProfile;
   children: ReactNode;
 }
 
-export default function ProfileView({ profile, children }: IProfileViewProps) {
+const ProfileView: React.FC<IProfileViewProps> = ({ profile, children }) => {
   return (
     <>
       <ProfileDrawer profile={profile}>{children}</ProfileDrawer>
     </>
   );
-}
+};
+
+export default ProfileView;

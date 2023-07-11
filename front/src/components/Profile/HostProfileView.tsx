@@ -9,16 +9,16 @@ import {
 import IHostProfile from '../../types/IHostProfile';
 
 // Sub components
-import ProfileView from './ProfileView/ProfileView';
 import Biography from './ProfileView/ProfileSections/Biography';
 import LocationMap from './ProfileView/ProfileSections/LocationMap';
 import Socials from './ProfileView/ProfileSections/Socials';
+import ProfileView from './ProfileView/ProfileView';
 
-export interface IHostProfileViewProps {
+interface IHostProfileViewProps {
   profile: IHostProfile;
 }
 
-export default function HostProfileView({ profile }: IHostProfileViewProps) {
+const HostProfileView: React.FC<IHostProfileViewProps> = ({ profile }) => {
   const getProfileSections = (profile: IHostProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];
     isBioSectionAvaiblable(profile.description) &&
@@ -51,4 +51,6 @@ export default function HostProfileView({ profile }: IHostProfileViewProps) {
       {getProfileSections(profile).map((section) => section)}
     </ProfileView>
   );
-}
+};
+
+export default HostProfileView;

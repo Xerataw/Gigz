@@ -1,14 +1,16 @@
 // Sub components
 import ProfileSection from './ProfileSection';
 
-export interface IBiographyProps {
+interface IBiographyProps {
   content: string;
 }
 
-export default function Biography({ content }: IBiographyProps) {
+const Biography: React.FC<IBiographyProps> = ({ content }) => {
   return (
     <ProfileSection name={'Biographie'}>
       <p>{content}</p>
     </ProfileSection>
   );
-}
+};
+
+export default Biography;

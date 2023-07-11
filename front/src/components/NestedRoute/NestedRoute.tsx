@@ -1,14 +1,14 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
 
-interface Props {
+interface INestedProps {
   path: string;
   redirectNoMatch: string;
   condition?: boolean;
   children: ReactNode | ReactNode[];
 }
 
-const NestedRoute: React.FC<Props> = ({
+const NestedRoute: React.FC<INestedProps> = ({
   path,
   children,
   condition = true,

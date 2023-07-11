@@ -3,11 +3,11 @@ import { useState } from 'react';
 // Sub components
 import { Skeleton } from '@mantine/core';
 
-export interface ISpotifyEmbedProps {
+interface ISpotifyEmbedProps {
   spotifyLink: string;
 }
 
-export default function SpotifyEmbed({ spotifyLink }: ISpotifyEmbedProps) {
+const SpotifyEmbed: React.FC<ISpotifyEmbedProps> = ({ spotifyLink }) => {
   const [skeletonVisible, setSkeletonVisible] = useState<boolean>(true);
 
   return (
@@ -28,4 +28,6 @@ export default function SpotifyEmbed({ spotifyLink }: ISpotifyEmbedProps) {
       ></iframe>
     </Skeleton>
   );
-}
+};
+
+export default SpotifyEmbed;

@@ -2,10 +2,10 @@ import { SimpleGrid, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import fetchGenres from '../../../api/Genres.api';
 import MusicGenreButton from '../../MusicGenreCard/MusicGenreButton';
-import { StepProps } from '../AccountStep/FirstStep';
+import { IStepProps } from '../AccountStep/FirstStep';
 import Genre from '../../../types/Genre';
 
-const FifthStepArtist: React.FC<StepProps> = ({ form }) => {
+const FifthStepArtist: React.FC<IStepProps> = ({ form }) => {
   const [genres, setGenres] = useState<Genre[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<string[]>(
     form.values.genres ?? []

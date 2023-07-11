@@ -1,12 +1,16 @@
 import { Button } from '@mantine/core';
 
-interface Props {
+interface IMusicGenreButtonProps {
   label: string;
   onClick: () => void;
   isSelected: boolean;
 }
 
-const MusicGenreButton: React.FC<Props> = ({ label, onClick, isSelected }) => {
+const MusicGenreButton: React.FC<IMusicGenreButtonProps> = ({
+  label,
+  onClick,
+  isSelected,
+}) => {
   return (
     <Button
       onClick={onClick}

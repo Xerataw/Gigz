@@ -1,17 +1,17 @@
 // Sub components
 import { Card, Center } from '@mantine/core';
 
-export interface IExternalLinkProps {
+interface IExternalLinkProps {
   link: string;
   logo: JSX.Element;
   background?: string;
 }
 
-export default function ExternalLinkIcon({
+const ExternalLinkIcon: React.FC<IExternalLinkProps> = ({
   link,
   logo,
   background,
-}: IExternalLinkProps) {
+}) => {
   return (
     <a href={link} target="_blank" rel="noopener noreferrer">
       <Card
@@ -26,4 +26,6 @@ export default function ExternalLinkIcon({
       </Card>
     </a>
   );
-}
+};
+
+export default ExternalLinkIcon;

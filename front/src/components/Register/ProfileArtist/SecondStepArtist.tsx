@@ -1,7 +1,7 @@
 import { Textarea, Title } from '@mantine/core';
-import { StepProps } from '../AccountStep/FirstStep';
+import { IStepProps } from '../AccountStep/FirstStep';
 
-const SecondStepArtist: React.FC<StepProps> = ({ form }) => {
+const SecondStepArtist: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
       <Title>Qui êtes vous ?</Title>

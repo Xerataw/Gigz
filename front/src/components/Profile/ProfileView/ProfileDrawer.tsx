@@ -6,21 +6,21 @@ import IArtistProfile from '../../../types/IArtistProfile';
 import IHostProfile from '../../../types/IHostProfile';
 
 // Sub components
-import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import { Global } from '@emotion/react';
 import { ScrollArea } from '@mantine/core';
+import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import ProfileBanner from './ProfileBanner';
 import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 
-export interface IProfileDrawerProps {
+interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;
   children: ReactNode;
 }
 
-export default function ProfileDrawer({
+const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
   profile,
   children,
-}: IProfileDrawerProps) {
+}) => {
   const [drawerOpened, setDrawerOpened] = useState<boolean>(false);
   const toggleDrawer = () => setDrawerOpened(!drawerOpened);
 
@@ -83,4 +83,6 @@ export default function ProfileDrawer({
       </SwipeableDrawer>
     </div>
   );
-}
+};
+
+export default ProfileDrawer;

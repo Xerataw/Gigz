@@ -1,8 +1,9 @@
 import { ReactNode } from 'react';
-import Icon from './Icon';
 
-export default interface IconNavbar extends Icon {
-  path: string;
-  fillColor: string;
+export default interface IconNavbar {
+  icon: ReactNode;
   iconFilled: ReactNode;
+  fillColor: string;
+  label: string;
+  path: string;
 }

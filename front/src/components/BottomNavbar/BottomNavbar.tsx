@@ -16,11 +16,11 @@ import Icon from '../Icon/Icon';
 import GigzFetcher from '../../services/GigzFetcher';
 import User from '../../types/User';
 
-interface Props {
+interface IBottomNavBarProps {
   isShadow?: boolean;
 }
 
-const BottomNavbar: React.FC<Props> = ({ isShadow }) => {
+const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
   const history = useHistory();
   const [userPP, setUserPP] = useState<string | null>(null);
 

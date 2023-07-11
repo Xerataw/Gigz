@@ -2,12 +2,14 @@ import { Container, Indicator, Skeleton, Text } from '@mantine/core';
 import { IChat } from '../../../types/Chat';
 import ProfilePicture from '../../ProfilePicture/ProfilePicture';
 
-const Chat = ({
-  chat = null,
-  loading = false,
-}: {
+interface IChatItemProps {
   chat: IChat | null;
   loading: boolean;
+}
+
+const ChatItem: React.FC<IChatItemProps> = ({
+  chat = null,
+  loading = false,
 }) => {
   const lastMessage = () => {
     return (
@@ -59,4 +61,4 @@ const Chat = ({
   );
 };
 
-export default Chat;
+export default ChatItem;

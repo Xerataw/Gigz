@@ -8,7 +8,7 @@ import {
   IconBrandYoutube,
 } from '@tabler/icons-react';
 
-export interface IMusicProps {
+interface IMusicProps {
   youtubeLink?: string;
   spotifyLink?: string;
   deezerLink?: string;
@@ -16,13 +16,13 @@ export interface IMusicProps {
   soundCloudLink?: string;
 }
 
-export default function MusicProfiles({
+const MusicProfiles: React.FC<IMusicProps> = ({
   youtubeLink,
   spotifyLink,
   soundCloudLink,
   deezerLink,
   appleMusicLink,
-}: IMusicProps) {
+}) => {
   return (
     <ProfileSection name="Venez m'écouter ici">
       <ul className="flex flex-row flex-wrap justify-start gap-4">
@@ -74,4 +74,6 @@ export default function MusicProfiles({
       </ul>
     </ProfileSection>
   );
-}
+};
+
+export default MusicProfiles;

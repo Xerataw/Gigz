@@ -1,9 +1,9 @@
 import { Container } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { getChatList } from '../../api/Chat.api';
-import Chat from './ChatItem/ChatItem';
+import ChatItem from './ChatItem/ChatItem';
 
-const ChatList = () => {
+const ChatList: React.FC = () => {
   const [chatList, setChatList] = useState(new Array(20).fill({}));
   const [loading, setLoading] = useState(true);
 
@@ -16,7 +16,7 @@ const ChatList = () => {
 
   const renderChatList = () => {
     return chatList?.map((chat, index) => (
-      <Chat key={index} chat={chat} loading={loading} />
+      <ChatItem key={index} chat={chat} loading={loading} />
     ));
   };
 

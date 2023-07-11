@@ -1,11 +1,11 @@
 import { Carousel } from '@mantine/carousel';
 import Media from '../../../types/Media';
 
-export interface IMediaCarouselProps {
+interface IMediaCarouselProps {
   mediaList: Media[];
 }
 
-export default function MediaCarousel({ mediaList }: IMediaCarouselProps) {
+const MediaCarousel: React.FC<IMediaCarouselProps> = ({ mediaList }) => {
   return (
     <Carousel>
       {mediaList.map((media) => (
@@ -13,4 +13,6 @@ export default function MediaCarousel({ mediaList }: IMediaCarouselProps) {
       ))}
     </Carousel>
   );
-}
+};
+
+export default MediaCarousel;

@@ -1,12 +1,14 @@
 import { Autocomplete, Title } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
-import MapTiler, { AddressSearchItem } from '../../../services/MapTilerFetcher';
-import { StepProps } from '../AccountStep/FirstStep';
+import MapTiler, {
+  IAddressSearchItem,
+} from '../../../services/MapTilerFetcher';
+import { IStepProps } from '../AccountStep/FirstStep';
 
-const FourthStepArtist: React.FC<StepProps> = ({ form }) => {
+const FourthStepArtist: React.FC<IStepProps> = ({ form }) => {
   const [searchValue, setSearchValue] = useState<string>();
-  const [searchItems, setSearchItems] = useState<AddressSearchItem[]>([]);
+  const [searchItems, setSearchItems] = useState<IAddressSearchItem[]>([]);
   const [debounced] = useDebouncedValue(form.values.address, 1000);
 
   useEffect(() => {

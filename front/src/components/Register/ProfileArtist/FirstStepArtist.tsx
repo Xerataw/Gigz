@@ -1,7 +1,7 @@
 import { Title, TextInput } from '@mantine/core';
-import { StepProps } from '../AccountStep/FirstStep';
+import { IStepProps } from '../AccountStep/FirstStep';
 
-const FirstStepArtist: React.FC<StepProps> = ({ form }) => {
+const FirstStepArtist: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
       <Title>Comment on peut vous appeler ?</Title>

@@ -9,18 +9,16 @@ import {
 import IArtistProfile from '../../types/IArtistProfile';
 
 // Sub components
-import ProfileView from './ProfileView/ProfileView';
 import Biography from './ProfileView/ProfileSections/Biography';
 import MusicProfiles from './ProfileView/ProfileSections/MusicProfiles';
 import Socials from './ProfileView/ProfileSections/Socials';
+import ProfileView from './ProfileView/ProfileView';
 
-export interface IArtistProfileViewProps {
+interface IArtistProfileViewProps {
   profile: IArtistProfile;
 }
 
-export default function ArtistProfileView({
-  profile,
-}: IArtistProfileViewProps) {
+const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({ profile }) => {
   const getProfileSections = (profile: IArtistProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];
     isBioSectionAvaiblable(profile.description) &&
@@ -56,4 +54,6 @@ export default function ArtistProfileView({
       {getProfileSections(profile).map((section) => section)}
     </ProfileView>
   );
-}
+};
+
+export default ArtistProfileView;

@@ -8,19 +8,19 @@ import Genre from '../../../types/Genre';
 import { Avatar, Badge } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 
-export interface IProfileBannerProps {
+interface IProfileBannerProps {
   username: string;
   profilePicture?: string;
   city?: string;
   genres: Genre[];
 }
 
-export default function ProfileBanner({
+const ProfileBanner: React.FC<IProfileBannerProps> = ({
   username,
   profilePicture,
   city,
   genres,
-}: IProfileBannerProps) {
+}) => {
   return (
     <div
       className="bg-white pl-3 pr-3"
@@ -61,4 +61,6 @@ export default function ProfileBanner({
       </div>
     </div>
   );
-}
+};
+
+export default ProfileBanner;

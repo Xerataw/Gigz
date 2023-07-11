@@ -1,11 +1,11 @@
 // Embeds
 import SpotifyEmbed from './SpotifyEmbed';
 
-export interface IMusicEmbedProps {
+interface IMusicEmbedProps {
   musicLink: string;
 }
 
-export default function MusicEmbed({ musicLink }: IMusicEmbedProps) {
+const MusicEmbed: React.FC<IMusicEmbedProps> = ({ musicLink }) => {
   const handledEmbeds: Map<string, JSX.Element> = new Map();
   handledEmbeds.set(
     'https://open.spotify.com/track/',
@@ -21,4 +21,6 @@ export default function MusicEmbed({ musicLink }: IMusicEmbedProps) {
   };
 
   return getEmbedFromMusicLink();
-}
+};
+
+export default MusicEmbed;

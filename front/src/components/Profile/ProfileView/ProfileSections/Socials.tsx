@@ -1,23 +1,23 @@
 // Sub components
-import ProfileSection from './ProfileSection';
-import ExternalLinkIcon from '../../../Icon/ExternalLinkIcon';
 import {
-  IconBrandInstagram,
   IconBrandFacebook,
+  IconBrandInstagram,
   IconWorldWww,
 } from '@tabler/icons-react';
+import ExternalLinkIcon from '../../../Icon/ExternalLinkIcon';
+import ProfileSection from './ProfileSection';
 
-export interface ISocialsProps {
+interface ISocialsProps {
   instagramLink?: string;
   facebookLink?: string;
   websiteLink?: string;
 }
 
-export default function Socials({
+const Socials: React.FC<ISocialsProps> = ({
   instagramLink,
   facebookLink,
   websiteLink,
-}: ISocialsProps) {
+}) => {
   return (
     <ProfileSection name="Retrouvez-moi ici">
       <ul className="flex flex-flow flex-nowrap justify-start mt-3 gap-4">
@@ -60,4 +60,6 @@ export default function Socials({
       </ul>
     </ProfileSection>
   );
-}
+};
+
+export default Socials;
