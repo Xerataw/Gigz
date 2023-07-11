@@ -15,7 +15,7 @@ export default function LocationMap({ longitude, latitude }: ILocationProps) {
         zoom={12}
         scrollWheelZoom={false}
         touchZoom={true}
-        style={{ height: '250px', width: '100%', marginLeft: '0%' }}
+        className="h-[250px] w-full ml-0 rounded-xl"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
