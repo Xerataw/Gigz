@@ -9,7 +9,65 @@ const router = express.Router();
 const { database } = useDatabase();
 const { ApiMessages, sendResponse, sendError, fromDbFormat } = useUtils();
 
-router.get('/artists', async (_, res) => {
+const searchFiltersBodySchemas = z.object({
+  name: z.string().min(1).optional(),
+  capacityId: z.coerce.number().optional(),
+  genres: z.string().min(1).optional(),
+});
+
+const buildArtistsWhereCondition = (query: {
+  name?: string;
+  genres?: string;
+}) => {
+  return {
+    name: {
+      contains: query.name ? query.name : undefined,
+    },
+    account: query.genres
+      ? {
+          account_genre: {
+            some: {
+              genre_id: {
+                in: query.genres.split(',').map((x) => +x),
+              },
+            },
+          },
+        }
+      : undefined,
+  };
+};
+
+const buildHostsWhereCondition = (query: {
+  name?: string;
+  capacityId?: number;
+  genres?: string;
+}) => {
+  return {
+    name: {
+      contains: query.name ? query.name : undefined,
+    },
+    capacity_id: {
+      equals: query.capacityId ? query.capacityId : undefined,
+    },
+    account: query.genres
+      ? {
+          account_genre: {
+            some: {
+              genre_id: {
+                in: query.genres.split(',').map((x) => +x),
+              },
+            },
+          },
+        }
+      : undefined,
+  };
+};
+
+router.get('/artists', async (req, res) => {
+  const body = searchFiltersBodySchemas.safeParse(req.query);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const data = await database.artist.findMany({
     include: {
       account: {
@@ -22,6 +80,7 @@ router.get('/artists', async (_, res) => {
         },
       },
     },
+    where: buildArtistsWhereCondition(body.data),
   });
 
   const formattedData = data.map((artist) => ({
@@ -34,7 +93,11 @@ router.get('/artists', async (_, res) => {
   sendResponse(res, formattedData);
 });
 
-router.get('/hosts', async (_, res) => {
+router.get('/hosts', async (req, res) => {
+  const body = searchFiltersBodySchemas.safeParse(req.query);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const data = await database.host.findMany({
     include: {
       capacity: true,
@@ -48,6 +111,7 @@ router.get('/hosts', async (_, res) => {
         },
       },
     },
+    where: buildHostsWhereCondition(body.data),
   });
 
   const formattedData = data.map((host) => ({

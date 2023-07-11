@@ -1,6 +1,6 @@
 enum UserType {
-  HOST = 'HOST',
-  ARTIST = 'ARTIST',
+  HOST = 'host',
+  ARTIST = 'artist',
 }
 
 export default UserType;
