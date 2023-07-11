@@ -1,12 +1,12 @@
 import { ActionIcon } from '@mantine/core';
 import React, { ReactElement } from 'react';
-import IconNavbar from '../../types/IconNavbar';
+import IIconNavbar from '../../types/IIconNavbar';
 
 interface IIconProps {
   size: 'small' | 'medium' | 'large';
   color: string;
   isFilled: boolean;
-  icon: IconNavbar;
+  icon: IIconNavbar;
 }
 
 const getSizePixel = (size: string): number => {

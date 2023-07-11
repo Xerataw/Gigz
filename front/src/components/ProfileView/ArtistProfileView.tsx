@@ -1,18 +1,13 @@
-// Logic
 import {
   isBioSectionAvaiblable,
   isMusicSectionAvailable,
   isSocialsSectionAvailable,
 } from '../../services/SectionAvailability';
-
-// Types
 import IArtistProfile from '../../types/IArtistProfile';
-
-// Sub components
-import Biography from './ProfileView/ProfileSections/Biography';
-import MusicProfiles from './ProfileView/ProfileSections/MusicProfiles';
-import Socials from './ProfileView/ProfileSections/Socials';
-import ProfileView from './ProfileView/ProfileView';
+import Biography from './ProfileSections/Biography';
+import MusicProfiles from './ProfileSections/MusicProfiles';
+import Socials from './ProfileSections/Socials';
+import ProfileView from './ProfileView';
 
 interface IArtistProfileViewProps {
   profile: IArtistProfile;

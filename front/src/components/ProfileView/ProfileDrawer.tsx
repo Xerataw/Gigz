@@ -1,16 +1,11 @@
-// Logic
 import { ReactNode, useState } from 'react';
-
-// Types
-import IArtistProfile from '../../../types/IArtistProfile';
-import IHostProfile from '../../../types/IHostProfile';
-
-// Sub components
 import { Global } from '@emotion/react';
 import { ScrollArea } from '@mantine/core';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
 import ProfileBanner from './ProfileBanner';
 import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
+import IArtistProfile from '../../types/IArtistProfile';
+import IHostProfile from '../../types/IHostProfile';
 
 interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;

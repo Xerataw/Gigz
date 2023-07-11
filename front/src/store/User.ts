@@ -1,5 +1,5 @@
 import IonicStorageAccessor from '../services/IonicStorageAccessor';
-import UserType from './UserType';
+import EUserType from '../types/EUserType';
 
 /**
  * This decorator is used to store the user in the local storage on change.
@@ -27,13 +27,13 @@ export default class User {
   private name: string | null;
   private profilePicture: string | null;
   private token: string | null;
-  private type: UserType | null;
+  private type: EUserType | null;
 
   private constructor(
     name?: string,
     profilePicture?: string,
     token?: string,
-    type?: UserType
+    type?: EUserType
   ) {
     this.name = name ?? null;
     this.profilePicture = profilePicture ?? null;
@@ -117,14 +117,14 @@ export default class User {
    * @param type the new user type (artist, host) to set.
    */
   @storeUser('type')
-  public setUserType(type: UserType | null) {
+  public setUserType(type: EUserType | null) {
     this.type = type;
   }
 
   /**
    * @returns the user type stored in local storage.
    */
-  public getUserType(): UserType | null {
+  public getUserType(): EUserType | null {
     return this.type;
   }
 }

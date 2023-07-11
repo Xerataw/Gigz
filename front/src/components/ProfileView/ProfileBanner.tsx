@@ -1,10 +1,5 @@
-// Logic
-import GigzFetcher from '../../../services/GigzFetcher';
-
-// Types
-import Genre from '../../../types/Genre';
-
-// Sub components
+import GigzFetcher from '../../services/GigzFetcher';
+import IGenre from '../../types/IGenre';
 import { Avatar, Badge } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
 
@@ -12,7 +7,7 @@ interface IProfileBannerProps {
   username: string;
   profilePicture?: string;
   city?: string;
-  genres: Genre[];
+  genres: IGenre[];
 }
 
 const ProfileBanner: React.FC<IProfileBannerProps> = ({

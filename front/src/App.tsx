@@ -7,8 +7,6 @@ import {
   BrowserRouter as Router,
   Switch,
 } from 'react-router-dom';
-import ForgotPassword from './components/ForgotPassword/ForgotPassword';
-import NestedRoute from './components/NestedRoute/NestedRoute';
 import Conversations from './pages/Conversations/Conversations';
 import Liked from './pages/Liked/Liked';
 import LoginPage from './pages/Login/Login';
@@ -18,6 +16,8 @@ import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
 import Search from './pages/Search/Search';
 
 import './index.css';
+import NestedRoute from './components/NestedRoute';
+import ForgotPassword from './components/ForgotPassword';
 
 setupIonicReact();
 

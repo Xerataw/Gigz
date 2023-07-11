@@ -1,6 +1,6 @@
 import { Container, Indicator, Skeleton, Text } from '@mantine/core';
-import { IChat } from '../../../types/Chat';
-import ProfilePicture from '../../ProfilePicture/ProfilePicture';
+import IChat from '../../../types/IChat';
+import ProfilePicture from '../../ProfilePicture';
 
 interface IChatItemProps {
   chat: IChat | null;

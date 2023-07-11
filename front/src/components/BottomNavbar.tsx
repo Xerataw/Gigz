@@ -12,9 +12,9 @@ import {
   IconZoomFilled,
 } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
-import Icon from '../Icon/Icon';
-import GigzFetcher from '../../services/GigzFetcher';
-import User from '../../types/User';
+import GigzFetcher from '../services/GigzFetcher';
+import User from '../store/User';
+import Icon from './Icon';
 
 interface IBottomNavBarProps {
   isShadow?: boolean;

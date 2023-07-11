@@ -1,4 +1,4 @@
-import { IChat } from '../types/Chat';
+import { IChat } from '../types/IChat';
 import GigzResponse from '../types/GigzResponse';
 
 const DUMMY_DATA: IChat[] = [

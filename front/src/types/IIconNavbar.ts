@@ -1,6 +1,6 @@
 import { ReactNode } from 'react';
 
-export default interface IconNavbar {
+export default interface IIconNavbar {
   icon: ReactNode;
   iconFilled: ReactNode;
   fillColor: string;

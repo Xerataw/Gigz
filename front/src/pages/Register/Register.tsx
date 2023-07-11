@@ -11,11 +11,11 @@ import {
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AccountCreated from '../../components/Register/AccountStep/AccountCreated';
+import User from '../../store/User';
 import FirstStep from '../../components/Register/AccountStep/FirstStep';
 import SecondStep from '../../components/Register/AccountStep/SecondStep';
 import ThirdStep from '../../components/Register/AccountStep/ThirdStep';
 import GigzFetcher from '../../services/GigzFetcher';
-import User from '../../types/User';
 
 const errorPassword = (value: string) => (
   <div>

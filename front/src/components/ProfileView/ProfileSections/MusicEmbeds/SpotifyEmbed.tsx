@@ -1,6 +1,4 @@
 import { useState } from 'react';
-
-// Sub components
 import { Skeleton } from '@mantine/core';
 
 interface ISpotifyEmbedProps {

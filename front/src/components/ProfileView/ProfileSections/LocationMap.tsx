@@ -1,4 +1,3 @@
-// Sub components
 import ProfileSection from './ProfileSection';
 import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 

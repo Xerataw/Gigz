@@ -11,11 +11,11 @@ import {
   IconPencil,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
-import FifthStepArtist from '../../components/Register/ProfileArtist/FifthStepArtist';
-import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
-import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
-import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
 import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
+import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
+import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
+import FifthStepArtist from '../../components/Register/ProfileArtist/FifthStepArtist';
+import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
 
 const linkRegex =
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;

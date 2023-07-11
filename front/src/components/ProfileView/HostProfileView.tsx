@@ -1,18 +1,13 @@
-// Logic
 import {
   isBioSectionAvaiblable,
   isMapSectionAvailable,
   isSocialsSectionAvailable,
 } from '../../services/SectionAvailability';
-
-// Types
 import IHostProfile from '../../types/IHostProfile';
-
-// Sub components
-import Biography from './ProfileView/ProfileSections/Biography';
-import LocationMap from './ProfileView/ProfileSections/LocationMap';
-import Socials from './ProfileView/ProfileSections/Socials';
-import ProfileView from './ProfileView/ProfileView';
+import Biography from './ProfileSections/Biography';
+import LocationMap from './ProfileSections/LocationMap';
+import Socials from './ProfileSections/Socials';
+import ProfileView from './ProfileView';
 
 interface IHostProfileViewProps {
   profile: IHostProfile;

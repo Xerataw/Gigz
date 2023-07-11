@@ -1,10 +1,8 @@
 import { HttpStatusCode } from 'axios';
 
-type GigzResponse<T> = {
+export default interface IGigzResponse<T> {
   ok: boolean;
   code: HttpStatusCode;
   message?: string;
   data?: T;
-};
-
-export default GigzResponse;
+}

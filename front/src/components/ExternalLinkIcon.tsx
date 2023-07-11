@@ -1,4 +1,3 @@
-// Sub components
 import { Card, Center } from '@mantine/core';
 
 interface IExternalLinkProps {

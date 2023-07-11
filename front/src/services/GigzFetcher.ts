@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
 import GigzResponse from '../types/GigzResponse';
-import User from '../types/User';
+import User from '../store/User';
 
 const envVars = import.meta.env;
 

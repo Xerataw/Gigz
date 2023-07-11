@@ -1,11 +1,10 @@
-// Sub components
 import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconWorldWww,
 } from '@tabler/icons-react';
-import ExternalLinkIcon from '../../../Icon/ExternalLinkIcon';
 import ProfileSection from './ProfileSection';
+import ExternalLinkIcon from '../../ExternalLinkIcon';
 
 interface ISocialsProps {
   instagramLink?: string;

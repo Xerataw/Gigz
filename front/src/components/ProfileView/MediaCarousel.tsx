@@ -1,8 +1,8 @@
 import { Carousel } from '@mantine/carousel';
-import Media from '../../../types/Media';
+import IMedia from '../../../types/IMedia';
 
 interface IMediaCarouselProps {
-  mediaList: Media[];
+  mediaList: IMedia[];
 }
 
 const MediaCarousel: React.FC<IMediaCarouselProps> = ({ mediaList }) => {

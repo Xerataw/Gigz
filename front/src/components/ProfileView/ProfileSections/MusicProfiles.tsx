@@ -1,12 +1,11 @@
-// Sub components
-import ProfileSection from './ProfileSection';
-import ExternalLinkIcon from '../../../Icon/ExternalLinkIcon';
 import {
   IconBrandApple,
   IconBrandSoundcloud,
   IconBrandSpotify,
   IconBrandYoutube,
 } from '@tabler/icons-react';
+import ExternalLinkIcon from '../../ExternalLinkIcon';
+import ProfileSection from './ProfileSection';
 
 interface IMusicProps {
   youtubeLink?: string;

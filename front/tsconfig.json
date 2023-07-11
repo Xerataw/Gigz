@@ -17,6 +17,15 @@
     "jsx": "react-jsx",
     "experimentalDecorators": true
   },
+  "paths": {
+    "@composents/*": ["./src/components/*"],
+    "@types/*": ["./src/types/*"],
+    "@services/*": ["./src/services/*"],
+    "@pages/*": ["./src/pages/*"],
+    "@store/*": ["./src/store/*"],
+    "@api/*": ["./src/api/*"],
+    "@/*": ["./src/*"]
+  },
   "include": ["src", "assets"],
   "references": [{ "path": "./tsconfig.node.json" }]
 }

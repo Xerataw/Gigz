@@ -21,7 +21,7 @@
     "@ionic/react": "^7.0.0",
     "@ionic/react-router": "^7.0.0",
     "@ionic/storage": "^4.0.0",
-    "@mantine/carousel": "^6.0.15",
+    "@mantine/carousel": "^6.0.16",
     "@mantine/core": "^6.0.13",
     "@mantine/form": "^6.0.13",
     "@mantine/hooks": "^6.0.13",

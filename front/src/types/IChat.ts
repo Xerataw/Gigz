@@ -1,4 +1,4 @@
-export interface IChat {
+export default interface IChat {
   id: number;
   profilePicture: string;
   unread: number;

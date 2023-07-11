@@ -1,11 +1,8 @@
-// Types
 import { ReactNode } from 'react';
 import {
   default as IArtistProfile,
   default as IHostProfile,
-} from '../../../types/IArtistProfile';
-
-// Sub components
+} from '../../types/IArtistProfile';
 import ProfileDrawer from './ProfileDrawer';
 
 interface IProfileViewProps {
@@ -14,11 +11,7 @@ interface IProfileViewProps {
 }
 
 const ProfileView: React.FC<IProfileViewProps> = ({ profile, children }) => {
-  return (
-    <>
-      <ProfileDrawer profile={profile}>{children}</ProfileDrawer>
-    </>
-  );
+  return <ProfileDrawer profile={profile}>{children}</ProfileDrawer>;
 };
 
 export default ProfileView;

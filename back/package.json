@@ -9,6 +9,7 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
+    "@esbuild/win32-x64": "^0.18.11",
     "@prisma/client": "4.15.0",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
