@@ -2,7 +2,7 @@ name: Deploy to production
 on:
   workflow_dispatch:
 jobs:
-  build:
+  deploy-to-production:
     name: Build & deploy to server
     runs-on: ubuntu-latest
     defaults:
@@ -18,7 +18,7 @@ jobs:
         username: ${{ secrets.USERNAME }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
         port: ${{ secrets.PORT }}
-        source: "back/src/, back/prisma/, back/Dockerfile, back/package.json, back/tsconfig.json, back/scripts/, back/types/"
+        source: "back/src/, back/prisma/, back/Dockerfile, back/package.json, back/package-lock.json, back/tsconfig.json, back/scripts/, back/types/, back/static/"
         target: .
 
     - name: Build the docker image and Deploy it

@@ -1,20 +1,26 @@
+// Logic
+import { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import { useTranslation } from 'react-i18next';
+import { useForm } from '@mantine/form';
+import { useDebouncedValue } from '@mantine/hooks';
+import login from '../../api/Login.api';
+
+// Types
+import User from '../../types/User';
+import { HttpStatusCode } from 'axios';
+
+// Sub components
 import {
   Anchor,
   Box,
   Button,
+  Center,
   Checkbox,
   Group,
   PasswordInput,
   TextInput,
 } from '@mantine/core';
-import { useForm } from '@mantine/form';
-import { useDebouncedValue } from '@mantine/hooks';
-import { HttpStatusCode } from 'axios';
-import { useEffect, useState } from 'react';
-import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
-import login from '../../api/Login.api';
-import IonicStorageAccessor from '../../services/IonicStorageAccessor';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
@@ -68,7 +74,7 @@ const Login: React.FC = () => {
   };
 
   const register = () => {
-    history.push('/login/register');
+    history.push('/register');
   };
 
   useEffect(() => {
@@ -92,9 +98,12 @@ const Login: React.FC = () => {
     login(data.email, data.password)
       .then((res) => {
         if (res.ok) {
-          IonicStorageAccessor.set('token', res.data.token);
-          onSucces();
-          return;
+          User.getInstance().then((user) => {
+            user.setToken(res.data.token);
+            user.setUserType(res.data.profileType);
+            user.setProfilePicture(res.data.profilePicture);
+            onSuccess();
+          });
         }
         setFormSubmited(false);
       })
@@ -113,8 +122,8 @@ const Login: React.FC = () => {
       });
   };
 
-  const onSucces = () => {
-    history.push('/auth/liked');
+  const onSuccess = () => {
+    history.push('/auth/profile');
   };
 
   return (
@@ -161,14 +170,19 @@ const Login: React.FC = () => {
             {t('login.submit')}
           </Button>
         </Group>
-        <Anchor
-          color="black"
-          className="flex justify-center mt-2 underline underline-offset-2"
-          size={14}
-          onClick={() => register()}
-        >
-          {t('login.register')}
-        </Anchor>
+        <Center className="mt-2">
+          <Anchor
+            color="black"
+            className="underline underline-offset-2"
+            size={14}
+            onClick={(event) => {
+              event.stopPropagation();
+              register();
+            }}
+          >
+            {t('login.register')}
+          </Anchor>
+        </Center>
       </form>
     </Box>
   );

@@ -48,48 +48,120 @@ const handleGenres = async (account_id: number, genres: number[]) => {
   });
 };
 
-router.get('/artists', async (_, res) => {
+const searchFiltersBodySchemas = z.object({
+  name: z.string().min(1).optional(),
+  capacityId: z.coerce.number().optional(),
+  genres: z.string().min(1).optional(),
+});
+
+const buildArtistsWhereCondition = (query: {
+  name?: string;
+  genres?: string;
+}) => {
+  return {
+    name: {
+      contains: query.name ? query.name : undefined,
+    },
+    account: query.genres
+      ? {
+          account_genre: {
+            some: {
+              genre_id: {
+                in: query.genres.split(',').map((x) => +x),
+              },
+            },
+          },
+        }
+      : undefined,
+  };
+};
+
+const buildHostsWhereCondition = (query: {
+  name?: string;
+  capacityId?: number;
+  genres?: string;
+}) => {
+  return {
+    name: {
+      contains: query.name ? query.name : undefined,
+    },
+    capacity_id: {
+      equals: query.capacityId ? query.capacityId : undefined,
+    },
+    account: query.genres
+      ? {
+          account_genre: {
+            some: {
+              genre_id: {
+                in: query.genres.split(',').map((x) => +x),
+              },
+            },
+          },
+        }
+      : undefined,
+  };
+};
+
+router.get('/artists', async (req, res) => {
+  const body = searchFiltersBodySchemas.safeParse(req.query);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const data = await database.artist.findMany({
     include: {
       account: {
         include: {
-          account_genre: true,
+          account_genre: {
+            include: {
+              genre: true,
+            },
+          },
         },
       },
     },
+    where: buildArtistsWhereCondition(body.data),
   });
 
   const formattedData = data.map((artist) => ({
     id: artist.id,
     name: artist.name,
     cityId: artist.city_id,
-    genres: artist.account.account_genre.map((genre) => genre.id),
+    genres: artist.account.account_genre.map((genre) => genre.genre),
   }));
 
   sendResponse(res, formattedData);
 });
 
-router.get('/hosts', async (_, res) => {
+router.get('/hosts', async (req, res) => {
+  const body = searchFiltersBodySchemas.safeParse(req.query);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const data = await database.host.findMany({
     include: {
       capacity: true,
       account: {
         include: {
-          account_genre: true,
+          account_genre: {
+            include: {
+              genre: true,
+            },
+          },
         },
       },
     },
+    where: buildHostsWhereCondition(body.data),
   });
 
   const formattedData = data.map((host) => ({
     id: host.id,
     name: host.name,
     cityId: host.city_id,
-    genres: host.account.account_genre.map((genre) => genre.id),
-    capacity: host.capacity ? fromDbFormat(host.capacity) : null,
+    genres: host.account.account_genre.map((genre) => genre.genre),
+    capacity: host.capacity,
   }));
 
-  sendResponse(res, formattedData, 200);
+  sendResponse(res, fromDbFormat(formattedData), 200);
 });
 
 router.patch('/artist', async (req, res) => {
@@ -192,6 +264,36 @@ router.get('/', async (req, res) => {
       : await database.artist.findUnique(procedure);
 
   if (!profile) return sendError(res, ApiMessages.ServerError, 500);
+  sendResponse(res, fromDbFormat(profile));
+});
+
+const GetProfileParams = z.object({
+  id: z.coerce.number(),
+});
+
+router.get('/artists/:id', async (req, res) => {
+  const params = GetProfileParams.safeParse(req.params);
+  if (!params.success) return sendError(res, ApiMessages.BadRequest);
+
+  const profile = await database.artist.findUnique({
+    where: { id: params.data.id },
+  });
+
+  if (!profile) return sendError(res, ApiMessages.NotFound, 404);
+
+  sendResponse(res, fromDbFormat(profile));
+});
+
+router.get('/hosts/:id', async (req, res) => {
+  const params = GetProfileParams.safeParse(req.params);
+  if (!params.success) return sendError(res, ApiMessages.BadRequest);
+
+  const profile = await database.host.findUnique({
+    where: { id: params.data.id },
+  });
+
+  if (!profile) return sendError(res, ApiMessages.NotFound, 404);
+
   sendResponse(res, fromDbFormat(profile));
 });
 
