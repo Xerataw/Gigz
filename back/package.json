@@ -9,7 +9,6 @@
     "start": "node dist/server.js"
   },
   "dependencies": {
-    "@esbuild/win32-x64": "^0.18.11",
     "@prisma/client": "4.15.0",
     "bcrypt": "^5.0.1",
     "compression": "^1.7.4",
@@ -22,6 +21,7 @@
     "zod": "^3.21.4"
   },
   "devDependencies": {
+    "@esbuild/win32-x64": "^0.18.11",
     "@types/bcrypt": "^5.0.0",
     "@types/compression": "^1.7.2",
     "@types/cors": "^2.8.13",
