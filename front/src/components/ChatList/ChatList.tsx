@@ -1,6 +1,6 @@
 import { Container } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { getChatList } from '../../api/Chat.api';
+import { getChats } from '../../api/chat';
 import ChatItem from './ChatItem/ChatItem';
 
 const ChatList: React.FC = () => {
@@ -8,7 +8,7 @@ const ChatList: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    getChatList().then((res) => {
+    getChats().then((res) => {
       setChatList(res.data ?? []);
       setLoading(false);
     });

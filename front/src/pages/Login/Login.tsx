@@ -3,7 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
-import login from '../../api/Login.api';
+import login from '../../api/login';
 import User from '../../store/User';
 import { HttpStatusCode } from 'axios';
 import {

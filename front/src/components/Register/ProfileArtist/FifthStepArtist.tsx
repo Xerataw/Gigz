@@ -1,6 +1,6 @@
 import { SimpleGrid, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import fetchGenres from '../../../api/Genres.api';
+import fetchGenres from '../../../api/genres';
 import IGenre from '../../../types/IGenre';
 import MusicGenreButton from '../../MusicGenreButton';
 import { IStepProps } from '../AccountStep/FirstStep';

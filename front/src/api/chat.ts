@@ -1,5 +1,5 @@
-import { IChat } from '../types/IChat';
-import GigzResponse from '../types/GigzResponse';
+import IChat from '../types/IChat';
+import IGigzResponse from '../types/IGigzResponse';
 
 const DUMMY_DATA: IChat[] = [
   {
@@ -40,8 +40,8 @@ const DUMMY_DATA: IChat[] = [
   },
 ];
 
-export const getChatList = () => {
-  return new Promise<GigzResponse<IChat[]>>((resolve, reject) => {
+export const getChats = () => {
+  return new Promise<IGigzResponse<IChat[]>>((resolve, reject) => {
     setTimeout(() => {
       const response = {
         ok: true,

@@ -2,7 +2,7 @@ import {
   isBioSectionAvaiblable,
   isMusicSectionAvailable,
   isSocialsSectionAvailable,
-} from '../../services/SectionAvailability';
+} from '../../services/sectionAvailability';
 import IArtistProfile from '../../types/IArtistProfile';
 import Biography from './ProfileSections/Biography';
 import MusicProfiles from './ProfileSections/MusicProfiles';

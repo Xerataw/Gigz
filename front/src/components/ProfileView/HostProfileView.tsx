@@ -2,7 +2,7 @@ import {
   isBioSectionAvaiblable,
   isMapSectionAvailable,
   isSocialsSectionAvailable,
-} from '../../services/SectionAvailability';
+} from '../../services/sectionAvailability';
 import IHostProfile from '../../types/IHostProfile';
 import Biography from './ProfileSections/Biography';
 import LocationMap from './ProfileSections/LocationMap';

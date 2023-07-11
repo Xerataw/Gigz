@@ -14,7 +14,7 @@ import {
 import { Link } from 'react-router-dom';
 import GigzFetcher from '../services/GigzFetcher';
 import User from '../store/User';
-import Icon from './Icon';
+import GigzIcon from './GigzIcon';
 
 interface IBottomNavBarProps {
   isShadow?: boolean;
@@ -38,7 +38,7 @@ const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
   }, []);
 
   return (
-    <div style={{ zIndex: 10000 }} className="absolute bottom-0 w-full">
+    <div className="absolute bottom-0 w-full z-[10000]">
       {isShadow && (
         <div className="h-24 relative">
           <Overlay
@@ -50,7 +50,7 @@ const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
       <ul className="bg-white flex justify-around w-full">
         <li>
           <Link to="/auth/liked">
-            <Icon
+            <GigzIcon
               size="medium"
               color="dark"
               icon={{
@@ -66,7 +66,7 @@ const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
         </li>
         <li>
           <Link to="/auth/search">
-            <Icon
+            <GigzIcon
               size="medium"
               color="dark"
               icon={{
@@ -82,7 +82,7 @@ const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
         </li>
         <li>
           <Link to="/auth/conversations">
-            <Icon
+            <GigzIcon
               size="medium"
               color="dark"
               icon={{
@@ -98,7 +98,7 @@ const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
         </li>
         <li>
           <Link to="/auth/profile">
-            <Icon
+            <GigzIcon
               size="medium"
               color="dark"
               icon={{

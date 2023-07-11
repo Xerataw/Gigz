@@ -14,7 +14,7 @@ const LocationMap: React.FC<ILocationProps> = ({ longitude, latitude }) => {
         zoom={12}
         scrollWheelZoom={false}
         touchZoom={true}
-        className="h-[250px] w-full ml-0 rounded-xl"
+        className="h-[15.625rem] w-full ml-0 rounded-xl"
       >
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'

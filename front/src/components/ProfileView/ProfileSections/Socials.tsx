@@ -38,9 +38,7 @@ const Socials: React.FC<ISocialsProps> = ({
                   color="white"
                   size="32"
                   stroke="1.5"
-                  style={{
-                    marginRight: '1px',
-                  }}
+                  className="mr-[1px]"
                 />
               }
               background="#4267B2"

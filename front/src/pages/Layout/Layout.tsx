@@ -6,7 +6,7 @@ interface ILayoutProps {
   navBarShadow?: boolean;
 }
 
-const Layout: React.FC<ILayoutProps> = ({ children, navBarShadow = false }) => {
+const Layout: React.FC<ILayoutProps> = ({ children, navBarShadow = true }) => {
   return (
     <Container px={0} className="max-h-screen overflow-hidden">
       {children}

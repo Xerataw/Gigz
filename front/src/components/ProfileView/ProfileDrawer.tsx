@@ -69,7 +69,7 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
           type="never"
         >
           {hasMusicEmbed && (
-            <div style={{ marginBottom: '-2.5rem', visibility: 'visible' }}>
+            <div className="-mb-10 visible">
               <MusicEmbed musicLink={profile.musicLink as string} />
             </div>
           )}

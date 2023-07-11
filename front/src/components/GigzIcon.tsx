@@ -1,6 +1,6 @@
 import { ActionIcon } from '@mantine/core';
 import React, { ReactElement } from 'react';
-import IIconNavbar from '../../types/IIconNavbar';
+import IIconNavbar from '../types/IIconNavbar';
 
 interface IIconProps {
   size: 'small' | 'medium' | 'large';
@@ -33,7 +33,7 @@ const getSizeLabel = (size: string): string => {
   return 'md';
 };
 
-const Icon: React.FC<IIconProps> = ({ size, color, isFilled, icon }) => {
+const GigzIcon: React.FC<IIconProps> = ({ size, color, isFilled, icon }) => {
   const sizePixel = getSizePixel(size)?.toString();
 
   const iconChild = React.cloneElement(icon.icon as ReactElement, {
@@ -59,4 +59,4 @@ const Icon: React.FC<IIconProps> = ({ size, color, isFilled, icon }) => {
   );
 };
 
-export default Icon;
+export default GigzIcon;

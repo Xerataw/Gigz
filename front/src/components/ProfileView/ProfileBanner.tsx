@@ -17,17 +17,8 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   genres,
 }) => {
   return (
-    <div
-      className="bg-white pl-3 pr-3"
-      style={{
-        borderTopLeftRadius: 15,
-        borderTopRightRadius: 15,
-      }}
-    >
-      <span
-        className="inline-block h-1.5 bg-gray-700 rounded-md"
-        style={{ width: '15%', marginLeft: '42.5%' }}
-      ></span>
+    <div className="bg-white pl-3 pr-3 rounded-tl-md rounded-tr-md">
+      <span className="w-[15%] ml-[42.5%] inline-block h-1.5 bg-gray-700 rounded-md"></span>
       <div className="flex flex-row flex-nowrap items-center pt-3 pb-3">
         <Avatar
           src={profilePicture && GigzFetcher.getImageUri(profilePicture)}
@@ -40,7 +31,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             <h3 className="pr-2">{username}</h3>
           </div>
           <div className="flex flex-row flex-nowrap">
-            <IconMapPin size="20" style={{ marginTop: '2px' }} />
+            <IconMapPin size="20" className="mt-[2px]" />
             <p className="italic text-gray-600 font-semibold">
               {city ? city : 'Somewhere in the world'}
             </p>

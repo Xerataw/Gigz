@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { getProfile } from '../../api/User.api';
+import { getProfile } from '../../api/user';
 import User from '../../store/User';
 import {
   default as EUserType,
