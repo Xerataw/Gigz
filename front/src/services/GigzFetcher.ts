@@ -199,7 +199,12 @@ export default class GigzFetcher {
     let finalHeaders = { ...this.BASE_HEADERS, ...headers };
     if (isAuth) {
       const user = await User.getInstance();
-      finalHeaders = { Authorization: user.getToken(), ...headers };
+      const token = await User.getToken();
+
+      finalHeaders = {
+        Authorization: 'bearer ' + token,
+        ...headers,
+      };
     }
     return finalHeaders;
   }

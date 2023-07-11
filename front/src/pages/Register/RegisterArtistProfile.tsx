@@ -7,9 +7,11 @@ import {
   IconCircleCheckFilled,
   IconExternalLink,
   IconMapPin,
+  IconMusic,
   IconPencil,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import FifthStepArtist from '../../components/Register/ProfileArtist/FifthStepArtist';
 import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
 import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
 import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
@@ -30,7 +32,7 @@ const valideLink = (
 };
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 4;
+  const numberOfSteps = 5;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
@@ -51,6 +53,7 @@ const RegisterArtistProfile: React.FC = () => {
         longitude: 0,
         latitude: 0,
       },
+      genres: [],
     },
     validate: (values) => {
       switch (formStep) {
@@ -121,6 +124,12 @@ const RegisterArtistProfile: React.FC = () => {
                 : 'Veuillez entrer une adressse valide',
           };
 
+        case 4:
+          //can have genres but optionnal
+          return {
+            genres: null,
+          };
+
         default:
           return {};
       }
@@ -177,14 +186,21 @@ const RegisterArtistProfile: React.FC = () => {
         <Stepper.Step icon={<IconPencil />}>
           <FirstStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
+
         <Stepper.Step icon={<IconAlignCenter />}>
           <SecondStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
+
         <Stepper.Step icon={<IconExternalLink />}>
           <ThirdStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
+
         <Stepper.Step icon={<IconMapPin />}>
           <FourthStepArtist form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step icon={<IconMusic />}>
+          <FifthStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step

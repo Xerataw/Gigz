@@ -108,6 +108,10 @@ export default class User {
     return this.token;
   }
 
+  static async getToken(): Promise<string> {
+    return await IonicStorageAccessor.get('token');
+  }
+
   /**
    * Change the user instance user type (artist, host) and write the changes in local storage.
    * @param username the new user type (artist, host) to set.
