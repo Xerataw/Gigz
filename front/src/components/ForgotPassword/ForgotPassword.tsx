@@ -52,7 +52,7 @@ const ForgotPassword: React.FC = () => {
     setFormSubmited(true);
   };
 
-  const onSucces = () => {
+  const onSuccess = () => {
     history.push('/login');
   };
 
@@ -61,7 +61,7 @@ const ForgotPassword: React.FC = () => {
   };
 
   const register = () => {
-    history.push('/login/register');
+    history.push('/register');
   };
 
   return (

@@ -11,6 +11,7 @@ export default class GigzFetcher {
     envVars.VITE_ENV === 'DEV'
       ? envVars.VITE_GIGZ_API_URL_DEV
       : envVars.VITE_GIGZ_API_URL_PROD;
+  private static API_IMAGES_URL = this.API_URL + 'static/';
   private static BASE_HEADERS = {};
 
   /**
@@ -44,6 +45,15 @@ export default class GigzFetcher {
       // Handle custom error response
       return this.handleError<T>(error as AxiosError);
     }
+  }
+
+  /**
+   * Build the complete image path to be able to display it
+   * @param uri the image uri
+   * @returns the complete image path
+   */
+  public static getImageUri(uri: string): string {
+    return `${this.API_IMAGES_URL}${uri}`;
   }
 
   /**
@@ -199,12 +209,7 @@ export default class GigzFetcher {
     let finalHeaders = { ...this.BASE_HEADERS, ...headers };
     if (isAuth) {
       const user = await User.getInstance();
-      const token = await User.getToken();
-
-      finalHeaders = {
-        Authorization: 'bearer ' + token,
-        ...headers,
-      };
+      finalHeaders = { Authorization: `Bearer ${user.getToken()}`, ...headers };
     }
     return finalHeaders;
   }

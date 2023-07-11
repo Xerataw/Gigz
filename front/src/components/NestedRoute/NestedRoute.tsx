@@ -1,6 +1,5 @@
 import React, { ReactElement, ReactNode } from 'react';
 import { Redirect, Route, Switch } from 'react-router';
-import { v4 } from 'uuid';
 
 interface Props {
   path: string;
@@ -23,7 +22,7 @@ const NestedRoute: React.FC<Props> = ({
         {_children.map((route) =>
           React.cloneElement(route as ReactElement, {
             path: path + (route as ReactElement).props.path,
-            key: v4(),
+            key: (route as ReactElement).props.path,
           })
         )}
         <Route>

@@ -1,9 +1,8 @@
 import GigzFetcher from '../services/GigzFetcher';
-import { Genre } from '../types/Genre';
 import GigzResponse from '../types/GigzResponse';
 
-export const fetchGenres = async (): Promise<GigzResponse<Genre[]>> => {
-  return GigzFetcher.get('genres', {}, {}, true);
+export const fetchGenres = async (): Promise<GigzResponse<any>> => {
+  return GigzFetcher.get('genres');
 };
 
 export default fetchGenres;

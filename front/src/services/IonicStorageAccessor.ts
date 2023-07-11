@@ -1,5 +1,8 @@
 import { Storage } from '@ionic/storage';
 
+/**
+ * Static class allowing us to manipulate the Ionic Storage.
+ */
 export default class IonicStorageAccessor {
   static store = new Storage();
 
@@ -15,7 +18,9 @@ export default class IonicStorageAccessor {
     return await this.callStorage(() => this.store.remove(key));
   };
 
-  static callStorage = async (callback: () => Promise<any>): Promise<any> => {
+  private static callStorage = async (
+    callback: () => Promise<any>
+  ): Promise<any> => {
     try {
       return await callback();
     } catch (error) {

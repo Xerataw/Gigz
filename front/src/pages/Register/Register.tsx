@@ -29,6 +29,9 @@ const errorPassword = (value: string) => (
   </div>
 );
 
+const artistPath = '/register/artist';
+const hostPath = '/register/host';
+
 const Register: React.FC = () => {
   const [user, setUser] = useState<User>();
   const [formStep, setFormStep] = useState<number>(0);
