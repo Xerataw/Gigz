@@ -34,7 +34,7 @@ export default function ProfileDrawer({
       <Global
         styles={{
           '.MuiDrawer-root > .MuiPaper-root': {
-            height: `calc(75% - ${hasMusicEmbed ? 150 : 100}px)`,
+            height: `calc(75% - ${hasMusicEmbed ? '9.375' : '6.25'}rem)`,
             overflow: 'visible',
           },
         }}
@@ -47,19 +47,15 @@ export default function ProfileDrawer({
         disableSwipeToOpen={false}
         disableDiscovery={true}
         allowSwipeInChildren={false}
-        swipeAreaWidth={hasMusicEmbed ? 280 : 180}
+        swipeAreaWidth={hasMusicEmbed ? '17.5rem' : '11.25rem'}
         ModalProps={{
           keepMounted: true,
         }}
       >
         <div
-          style={{
-            position: 'absolute',
-            top: hasMusicEmbed ? -280 : -180,
-            visibility: 'visible',
-            right: 0,
-            left: 0,
-          }}
+          className={`absolute visible right-0 left-0 ${
+            hasMusicEmbed ? '-top-[17.5rem]' : '-top-[11.25rem]'
+          }`}
         >
           <ProfileBanner
             username={profile.name}
@@ -78,7 +74,7 @@ export default function ProfileDrawer({
           type="never"
         >
           {hasMusicEmbed && (
-            <div style={{ marginBottom: '-1em', visibility: 'visible' }}>
+            <div style={{ marginBottom: '-2.5rem', visibility: 'visible' }}>
               <MusicEmbed musicLink={profile.musicLink as string} />
             </div>
           )}

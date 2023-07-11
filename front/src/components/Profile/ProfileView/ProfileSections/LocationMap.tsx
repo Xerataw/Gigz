@@ -21,11 +21,7 @@ export default function LocationMap({ longitude, latitude }: ILocationProps) {
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         />
-        <Marker position={{ lat: latitude, lng: longitude }}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
+        <Marker position={{ lat: latitude, lng: longitude }}></Marker>
       </MapContainer>
     </ProfileSection>
   );

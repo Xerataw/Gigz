@@ -1,17 +1,17 @@
 // Sub components
 import { Card, Center } from '@mantine/core';
 
-export interface ISocialMediaCardProps {
+export interface IExternalLinkProps {
   link: string;
   logo: JSX.Element;
   background?: string;
 }
 
-export default function SocialMediaCard({
+export default function ExternalLinkIcon({
   link,
   logo,
   background,
-}: ISocialMediaCardProps) {
+}: IExternalLinkProps) {
   return (
     <a href={link} target="_blank" rel="noopener noreferrer">
       <Card
@@ -19,7 +19,7 @@ export default function SocialMediaCard({
         radius="xl"
         padding="xs"
         style={{
-          background: background && background,
+          background: background,
         }}
       >
         <Center>{logo}</Center>

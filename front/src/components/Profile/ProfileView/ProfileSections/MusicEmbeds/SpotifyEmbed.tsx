@@ -16,12 +16,7 @@ export default function SpotifyEmbed({ spotifyLink }: ISpotifyEmbedProps) {
       radius={skeletonVisible ? 'md' : undefined}
     >
       <iframe
-        style={{
-          width: '100%',
-          height: '100px',
-          border: '0',
-          marginBottom: '10px',
-        }}
+        className="w-full h-32 border-0"
         src={`${spotifyLink.replace(
           '/track',
           '/embed/track'
