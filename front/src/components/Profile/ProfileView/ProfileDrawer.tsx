@@ -47,7 +47,7 @@ export default function ProfileDrawer({
         disableSwipeToOpen={false}
         disableDiscovery={true}
         allowSwipeInChildren={false}
-        swipeAreaWidth={hasMusicEmbed ? '17.5rem' : '11.25rem'}
+        swipeAreaWidth={hasMusicEmbed ? 280 : 180}
         ModalProps={{
           keepMounted: true,
         }}
