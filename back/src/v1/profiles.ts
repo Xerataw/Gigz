@@ -63,36 +63,6 @@ const buildHostsWhereCondition = (query: {
   };
 };
 
-router.get('/artists', async (req, res) => {
-  const body = searchFiltersBodySchemas.safeParse(req.query);
-
-  if (!body.success) return sendError(res, ApiMessages.BadRequest);
-
-  const data = await database.artist.findMany({
-    include: {
-      account: {
-        include: {
-          account_genre: {
-            include: {
-              genre: true,
-            },
-          },
-        },
-      },
-    },
-    where: buildArtistsWhereCondition(body.data),
-  });
-
-  const formattedData = data.map((artist) => ({
-    id: artist.id,
-    name: artist.name,
-    cityId: artist.city_id,
-    genres: artist.account.account_genre.map((genre) => genre.genre),
-  }));
-
-  sendResponse(res, formattedData);
-});
-
 router.get('/hosts', async (req, res) => {
   const body = searchFiltersBodySchemas.safeParse(req.query);
 

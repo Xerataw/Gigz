@@ -9,9 +9,46 @@ const router = express.Router();
 const { database } = useDatabase();
 const { ApiMessages, sendResponse, sendError, fromDbFormat } = useUtils();
 
-router.get('/', async (_, res) => {
+const searchFiltersBodySchemas = z.object({
+  name: z.string().min(1).optional(),
+  capacityId: z.coerce.number().optional(),
+  genres: z.string().min(1).optional(),
+});
+
+const buildHostsWhereCondition = (query: {
+  name?: string;
+  capacityId?: number;
+  genres?: string;
+}) => {
+  return {
+    name: {
+      contains: query.name ? query.name : undefined,
+    },
+    capacity_id: {
+      equals: query.capacityId ? query.capacityId : undefined,
+    },
+    account: query.genres
+      ? {
+          account_genre: {
+            some: {
+              genre_id: {
+                in: query.genres.split(',').map((x) => +x),
+              },
+            },
+          },
+        }
+      : undefined,
+  };
+};
+
+router.get('/', async (req, res) => {
+  const body = searchFiltersBodySchemas.safeParse(req.query);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const data = await database.host.findMany({
     include: {
+      capacity: true,
       account: {
         include: {
           account_genre: {
@@ -22,6 +59,7 @@ router.get('/', async (_, res) => {
         },
       },
     },
+    where: buildHostsWhereCondition(body.data),
   });
 
   const formattedData = data.map((host) => ({
@@ -29,9 +67,10 @@ router.get('/', async (_, res) => {
     name: host.name,
     cityId: host.city_id,
     genres: host.account.account_genre.map((genre) => genre.genre),
+    capacity: host.capacity,
   }));
 
-  sendResponse(res, formattedData);
+  sendResponse(res, fromDbFormat(formattedData), 200);
 });
 
 const GetHostByIdParams = z.object({

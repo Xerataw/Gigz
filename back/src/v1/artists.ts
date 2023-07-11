@@ -9,7 +9,38 @@ const router = express.Router();
 const { database } = useDatabase();
 const { ApiMessages, sendResponse, sendError, fromDbFormat } = useUtils();
 
-router.get('/', async (_, res) => {
+const searchFiltersBodySchemas = z.object({
+  name: z.string().min(1).optional(),
+  genres: z.string().min(1).optional(),
+});
+
+const buildArtistsWhereCondition = (query: {
+  name?: string;
+  genres?: string;
+}) => {
+  return {
+    name: {
+      contains: query.name ? query.name : undefined,
+    },
+    account: query.genres
+      ? {
+          account_genre: {
+            some: {
+              genre_id: {
+                in: query.genres.split(',').map((x) => +x),
+              },
+            },
+          },
+        }
+      : undefined,
+  };
+};
+
+router.get('/', async (req, res) => {
+  const body = searchFiltersBodySchemas.safeParse(req.query);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const data = await database.artist.findMany({
     include: {
       account: {
@@ -22,6 +53,7 @@ router.get('/', async (_, res) => {
         },
       },
     },
+    where: buildArtistsWhereCondition(body.data),
   });
 
   const formattedData = data.map((artist) => ({
