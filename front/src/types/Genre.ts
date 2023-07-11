@@ -1,5 +1,6 @@
-export interface Genre {
+type Genre = {
   name: string;
-  color: string;
   id: string;
-}
+};
+
+export default Genre;

@@ -5,10 +5,8 @@ import GigzFetcher from '../../../services/GigzFetcher';
 import Genre from '../../../types/Genre';
 
 // Sub components
-import { Avatar } from '@mantine/core';
+import { Avatar, Badge } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
-import GenreBadge from '../../GenreBadge/GenreBadge';
-import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 
 export interface IProfileBannerProps {
   username: string;
@@ -55,11 +53,7 @@ export default function ProfileBanner({
           <ul className="flex flex-row flew-wrap p-0 m-0">
             {genres.map((genre) => (
               <li key={genre.name} className="mr-1">
-                <GenreBadge
-                  name={genre.name}
-                  textColor={genre.textColor}
-                  bgColor={genre.bgColor}
-                />
+                <Badge variant="filled">{genre.name}</Badge>
               </li>
             ))}
           </ul>
