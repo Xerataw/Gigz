@@ -6,7 +6,7 @@ interface Props {
   isSelected: boolean;
 }
 
-const MusicGenreCard: React.FC<Props> = ({ label, onClick, isSelected }) => {
+const MusicGenreButton: React.FC<Props> = ({ label, onClick, isSelected }) => {
   return (
     <Button
       onClick={onClick}
@@ -22,4 +22,4 @@ const MusicGenreCard: React.FC<Props> = ({ label, onClick, isSelected }) => {
   );
 };
 
-export default MusicGenreCard;
+export default MusicGenreButton;

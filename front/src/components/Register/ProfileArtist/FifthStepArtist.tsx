@@ -1,9 +1,10 @@
 import { SimpleGrid, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { v4 } from 'uuid';
-import fetchGenres, { Genre } from '../../../api/Genres.api';
-import MusicGenreCard from '../../MusicGenreCard/MusicGenreCard';
+import fetchGenres from '../../../api/Genres.api';
+import MusicGenreButton from '../../MusicGenreCard/MusicGenreButton';
 import { StepProps } from '../AccountStep/FirstStep';
+import { Genre } from '../../../types/Genre';
 
 const FifthStepArtist: React.FC<StepProps> = ({ form }) => {
   const [genres, setGenres] = useState<Genre[]>([]);
@@ -38,7 +39,7 @@ const FifthStepArtist: React.FC<StepProps> = ({ form }) => {
         breakpoints={[{ maxWidth: 'xs', cols: 2, spacing: 'sm' }]}
       >
         {genres.map((genre) => (
-          <MusicGenreCard
+          <MusicGenreButton
             key={v4()}
             onClick={() => {
               handleAddGenre(genre.id);
