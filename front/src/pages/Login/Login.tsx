@@ -15,6 +15,7 @@ import {
   Anchor,
   Box,
   Button,
+  Center,
   Checkbox,
   Group,
   PasswordInput,
@@ -101,8 +102,8 @@ const Login: React.FC = () => {
             user.setToken(res.data.token);
             user.setUserType(res.data.profileType);
             user.setProfilePicture(res.data.profilePicture);
+            onSuccess();
           });
-          onSuccess();
         }
         setFormSubmited(false);
       })
@@ -169,14 +170,19 @@ const Login: React.FC = () => {
             {t('login.submit')}
           </Button>
         </Group>
-        <Anchor
-          color="black"
-          className="flex justify-center mt-2 underline underline-offset-2"
-          size={14}
-          onClick={() => register()}
-        >
-          {t('login.register')}
-        </Anchor>
+        <Center className="mt-2">
+          <Anchor
+            color="black"
+            className="underline underline-offset-2"
+            size={14}
+            onClick={(event) => {
+              event.stopPropagation();
+              register();
+            }}
+          >
+            {t('login.register')}
+          </Anchor>
+        </Center>
       </form>
     </Box>
   );
