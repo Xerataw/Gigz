@@ -39,6 +39,20 @@ const findAccountByToken = async (token: string) => {
 const findAccountByEmail = async (email: string) => {
   return await database.account.findUnique({
     where: { email },
+    include: {
+      host: true,
+      artist: true,
+      profile_pictures: true,
+    },
+  });
+};
+
+/**
+ * Return the profiles from the database corresponding to the given account id.
+ */
+const findProfilesById = async (id: number) => {
+  return await database.account.findUnique({
+    where: { id },
     include: { host: true, artist: true },
   });
 };
@@ -49,6 +63,7 @@ const useDatabase = () => ({
   findAccountById,
   findAccountByToken,
   findAccountByEmail,
+  findProfilesById,
 });
 
 export default useDatabase;

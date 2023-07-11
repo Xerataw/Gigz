@@ -39,8 +39,10 @@ router.post('/', async (req, res) => {
 
   return sendResponse(res, {
     token: token,
+    username: profile?.name || null,
+
     profileType: account.profile_type,
-    profilePicture: profile?.profile_picture || null,
+    profilePicture: account.profile_pictures?.media || null,
   });
 });
 

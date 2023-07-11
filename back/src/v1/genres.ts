@@ -9,7 +9,6 @@ const { sendResponse, fromDbFormat } = useUtils();
 
 router.get('/', async (_, res) => {
   const data = await database.genre.findMany();
-
   sendResponse(res, fromDbFormat(data), 200);
 });
 
