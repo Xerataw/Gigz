@@ -45,4 +45,34 @@ router.patch('/', async (req, res) => {
   sendResponse(res, fromDbFormat(data));
 });
 
+router.get('/', async (req, res) => {
+  if (req.account.profileType !== 'host')
+    return sendError(res, ApiMessages.WrongRoute);
+
+  const host = await database.host.findUnique({
+    where: { account_id: req.account.id },
+    include: {
+      account: {
+        include: {
+          gallery: {
+            select: { id: true, media: true },
+          },
+        },
+      },
+    },
+  });
+
+  if (!host) {
+    return sendError(res, ApiMessages.NotFound, 404);
+  }
+
+  // @ts-ignore
+  host.gallery = host.account.gallery;
+
+  // @ts-ignore
+  delete host.account;
+
+  sendResponse(res, fromDbFormat(host));
+});
+
 export default router;

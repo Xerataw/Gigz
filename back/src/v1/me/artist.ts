@@ -48,4 +48,34 @@ router.patch('/', async (req, res) => {
   sendResponse(res, fromDbFormat(data));
 });
 
+router.get('/', async (req, res) => {
+  if (req.account.profileType !== 'artist')
+    return sendError(res, ApiMessages.WrongRoute);
+
+  const artist = await database.artist.findUnique({
+    where: { account_id: req.account.id },
+    include: {
+      account: {
+        include: {
+          gallery: {
+            select: { id: true, media: true },
+          },
+        },
+      },
+    },
+  });
+
+  if (!artist) {
+    return sendError(res, ApiMessages.NotFound, 404);
+  }
+
+  // @ts-ignore
+  artist.gallery = artist.account.gallery;
+
+  // @ts-ignore
+  delete artist.account;
+
+  sendResponse(res, fromDbFormat(artist));
+});
+
 export default router;
