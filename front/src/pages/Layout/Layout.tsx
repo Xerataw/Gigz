@@ -1,12 +1,18 @@
-import BottomNavbar from '../../components/BottomNavbar/BottomNavbar';
+import { Container } from '@mantine/core';
+import BottomNavbar from '../../components/BottomNavbar';
 
-function Layout({ children }: { children: React.ReactNode }) {
-  return (
-    <div>
-      {children}
-      <BottomNavbar isShadow />
-    </div>
-  );
+interface ILayoutProps {
+  children: React.ReactNode;
+  navBarShadow?: boolean;
 }
+
+const Layout: React.FC<ILayoutProps> = ({ children, navBarShadow = true }) => {
+  return (
+    <Container px={0} className="max-h-screen overflow-hidden">
+      {children}
+      <BottomNavbar isShadow={navBarShadow} />
+    </Container>
+  );
+};
 
 export default Layout;

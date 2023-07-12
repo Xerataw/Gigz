@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
-import GigzResponse from '../types/GigzResponse';
-import User from '../types/User';
+import IGigzResponse from '../types/IGigzResponse';
+import User from '../store/User';
 
 const envVars = import.meta.env;
 
@@ -11,6 +11,7 @@ export default class GigzFetcher {
     envVars.VITE_ENV === 'DEV'
       ? envVars.VITE_GIGZ_API_URL_DEV
       : envVars.VITE_GIGZ_API_URL_PROD;
+  private static API_IMAGES_URL = this.API_URL + 'static/';
   private static BASE_HEADERS = {};
 
   /**
@@ -20,14 +21,14 @@ export default class GigzFetcher {
    * @param headers (optional) the additional headers to add to the request
    * @param isAuth if set to True, will try to add the Authorization Bearer header with the stored token.
    * True by default.
-   * @returns a GigzResponse promise
+   * @returns a IGigzResponse promise
    */
   public static async get<T>(
     uri: string,
     params: object = {},
     headers: object = {},
     isAuth = true
-  ): Promise<GigzResponse<T>> {
+  ): Promise<IGigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
     const finalHeaders = await this.getFinalHeaders(headers, isAuth);
@@ -47,18 +48,27 @@ export default class GigzFetcher {
   }
 
   /**
+   * Build the complete image path to be able to display it
+   * @param uri the image uri
+   * @returns the complete image path
+   */
+  public static getImageUri(uri: string): string {
+    return `${this.API_IMAGES_URL}${uri}`;
+  }
+
+  /**
    * Perform a POST request to the Gigz backend server
    * @param uri the uri of the route you want to access
    * @param params (optional) the parameters to add to the request body
    * @param headers (optional) the additional headers to add to the request
-   * @returns a GigzResponse promise
+   * @returns a IGigzResponse promise
    */
   public static async post<T>(
     uri: string,
     params: object = {},
     headers: object = {},
     isAuth = true
-  ): Promise<GigzResponse<T>> {
+  ): Promise<IGigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, {}, isAuth);
     const finalHeaders = await this.getFinalHeaders(headers, isAuth);
@@ -82,14 +92,14 @@ export default class GigzFetcher {
    * @param uri the uri of the route you want to access
    * @param params (optional) the parameters to add to the request body
    * @param headers (optional) the additional headers to add to the request
-   * @returns a GigzResponse promise
+   * @returns a IGigzResponse promise
    */
   public static async patch<T>(
     uri: string,
     params: object = {},
     headers: object = {},
     isAuth = true
-  ): Promise<GigzResponse<T>> {
+  ): Promise<IGigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
     const finalHeaders = await this.getFinalHeaders(headers, isAuth);
@@ -113,14 +123,14 @@ export default class GigzFetcher {
    * @param uri the uri of the route you want to access
    * @param params (optional) the parameters to add to the request body
    * @param headers (optional) the additional headers to add to the request
-   * @returns a GigzResponse promise
+   * @returns a IGigzResponse promise
    */
   public static async put<T>(
     uri: string,
     params: object = {},
     headers: object = {},
     isAuth = true
-  ): Promise<GigzResponse<T>> {
+  ): Promise<IGigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
     const finalHeaders = await this.getFinalHeaders(headers, isAuth);
@@ -144,14 +154,14 @@ export default class GigzFetcher {
    * @param uri the uri of the route you want to access
    * @param params (optional) the parameters to add to the uri
    * @param headers (optional) the additional headers to add to the request
-   * @returns a GigzResponse promise
+   * @returns a IGigzResponse promise
    */
   public static async delete<T>(
     uri: string,
     params: object = {},
     headers: object = {},
     isAuth = true
-  ): Promise<GigzResponse<T>> {
+  ): Promise<IGigzResponse<T>> {
     // Build request
     const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
     const finalHeaders = await this.getFinalHeaders(headers, isAuth);
@@ -198,10 +208,8 @@ export default class GigzFetcher {
   ): Promise<object> {
     let finalHeaders = { ...this.BASE_HEADERS, ...headers };
     if (isAuth) {
-      finalHeaders = {
-        Authorization: 'bearer ' + (await User.getToken()),
-        ...headers,
-      };
+      const user = await User.getInstance();
+      finalHeaders = { Authorization: `Bearer ${user.getToken()}`, ...headers };
     }
     return finalHeaders;
   }
@@ -209,9 +217,9 @@ export default class GigzFetcher {
   /**
    * Returns server response details if there is one, otherwise axios error message.
    * @param error the axios error after the request has failed
-   * @returns GigzResponse with the associated details
+   * @returns IGigzResponse with the associated details
    */
-  private static handleError<T>(error: AxiosError): Promise<GigzResponse<T>> {
+  private static handleError<T>(error: AxiosError): Promise<IGigzResponse<T>> {
     const message = (error.response?.data as any).message;
 
     if (error.response)
@@ -265,19 +273,19 @@ export default class GigzFetcher {
   }
 
   /**
-   * The function `formatResponse` formats an Axios response into a standardized `GigzResponse` object,
+   * The function `formatResponse` formats an Axios response into a standardized `IGigzResponse` object,
    * including the response status, message, code, and data.
    * @param axiosResponse - The `axiosResponse` parameter is the response object returned by an Axios
    * HTTP request. It contains information such as the response status, status text, and response data.
    * @param [noMessage=false] - The `noMessage` parameter is a boolean flag that indicates whether or
    * not to include a message in the response. If `noMessage` is set to `true`, the response object
    * will not include a `message` property. If `noMessage` is set to `false` (or not
-   * @returns The function `formatResponse` returns an object of type `GigzResponse<T>`.
+   * @returns The function `formatResponse` returns an object of type `IGigzResponse<T>`.
    */
   private static formatResponse<T>(
     axiosResponse: AxiosResponse<any, any>,
     noMessage = false
-  ): GigzResponse<T> {
+  ): IGigzResponse<T> {
     if (noMessage) {
       return {
         ok: this.isRequestSucces(axiosResponse.status),

@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const envVars = import.meta.env;
 
-export interface AddressSearchItem {
+export interface IAddressSearchItem {
   value: string;
   address_fr: string;
   address_en: string;
@@ -15,7 +15,7 @@ export default class MapTiler {
 
   static getAutocomplete = (
     searchLocation: string,
-    handleSearchResult: (searchItems: AddressSearchItem[]) => void
+    handleSearchResult: (searchItems: IAddressSearchItem[]) => void
   ) => {
     if (searchLocation.length > 0) {
       axios
@@ -35,7 +35,7 @@ export default class MapTiler {
             value: item.place_name_fr,
           }))
         )
-        .then((res: AddressSearchItem[]) => {
+        .then((res: IAddressSearchItem[]) => {
           handleSearchResult(res);
         });
     }

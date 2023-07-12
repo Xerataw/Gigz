@@ -8,7 +8,7 @@ services:
     container_name: gigz-api
 
     restart: always
-    command: yarn dev
+    command: npm run dev
 
     ports:
       - 3000:3000

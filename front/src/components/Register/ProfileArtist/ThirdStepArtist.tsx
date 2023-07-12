@@ -10,14 +10,7 @@ import {
   IconExternalLink,
   IconWorldWww,
 } from '@tabler/icons-react';
-import { StepProps } from '../AccountStep/FirstStep';
-
-export interface Link {
-  label: string;
-  icon: React.JSX.Element;
-  value: string;
-  color: string;
-}
+import { IStepProps } from '../AccountStep/FirstStep';
 
 const links = [
   {
@@ -70,7 +63,7 @@ const links = [
   },
 ];
 
-const ThirdStepArtist: React.FC<StepProps> = ({ form }) => {
+const ThirdStepArtist: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
       <Title>Où peut-on vous retrouver ?</Title>

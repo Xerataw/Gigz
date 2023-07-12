@@ -1,6 +1,8 @@
 import express, { NextFunction, Request, Response } from 'express';
 import compression from 'compression';
 import 'express-async-errors';
+import { Server } from 'socket.io';
+import { createServer } from 'http';
 
 import cors from 'cors';
 
@@ -12,6 +14,7 @@ import authenticate from '@/middlewares/authenticate';
 
 const PORT = 3000;
 const app = express();
+const httpServer = createServer(app);
 
 const { ApiMessages, sendResponse, sendError } = useUtils();
 
@@ -50,4 +53,11 @@ app.use(function (
   next(err);
 });
 
-app.listen(PORT, () => console.log(`🚀 API listening on port ${PORT}`));
+// Socket.io initialization
+const io = new Server(httpServer, {});
+
+io.on('connection', (socket) => {
+  // ...
+});
+
+httpServer.listen(PORT, () => console.log(`🚀 API listening on port ${PORT}`));

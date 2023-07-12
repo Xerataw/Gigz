@@ -3,11 +3,11 @@ import { IconCheck } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 
-interface Props {
+interface IAccountCreatedProps {
   userType: 'artist' | 'host';
 }
 
-const AccountCreated: React.FC<Props> = ({ userType }) => {
+const AccountCreated: React.FC<IAccountCreatedProps> = ({ userType }) => {
   const [time, setTime] = useState<number>(0);
   const history = useHistory();
 
