@@ -2,11 +2,11 @@ import { ActionIcon, Button, FileButton, Title } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import Profile from '../../../api/Profile.api';
-import User from '../../../types/User';
+import User from '../../../store/User';
 import ProfilePicture from '../../ProfilePicture/ProfilePicture';
-import { StepProps } from '../AccountStep/FirstStep';
+import { IStepProps } from '../AccountStep/FirstStep';
 
-const ProfilePictureStep: React.FC<StepProps> = ({ form }) => {
+const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
   const [pictureLink, setPictureLink] = useState<string | undefined>(
     form.values.picture
   );
@@ -32,7 +32,7 @@ const ProfilePictureStep: React.FC<StepProps> = ({ form }) => {
 
   useEffect(() => {
     User.getInstance().then((user) => {
-      const userName = user.getUsername();
+      const userName = user.getName();
       const userProfilePicture = user.getProfilePicture();
 
       if (userName !== null) {

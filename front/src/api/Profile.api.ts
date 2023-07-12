@@ -1,5 +1,5 @@
 import GigzFetcher from '../services/GigzFetcher';
-import GigzResponse from '../types/GigzResponse';
+import IGigzResponse from '../types/IGigzResponse';
 
 interface IProfile {
   accountId: number;
@@ -22,7 +22,7 @@ interface IProfile {
 export class Profile {
   public static getProfilePicture = async (
     file: File
-  ): Promise<GigzResponse<IProfile>> => {
+  ): Promise<IGigzResponse<IProfile>> => {
     const formData = new FormData();
 
     formData.append('profile-picture', file);
