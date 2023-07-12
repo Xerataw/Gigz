@@ -1,7 +1,10 @@
 import { ActionIcon, Button, FileButton, Title } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
-import Profile from '../../../api/Profile.api';
+import {
+  deleteProfilePicture,
+  patchProfilePicture,
+} from '../../../api/profilePicture.api';
 import User from '../../../store/User';
 import ProfilePicture from '../../ProfilePicture/ProfilePicture';
 import { IStepProps } from '../AccountStep/FirstStep';
@@ -16,13 +19,15 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
   const resetRef = useRef<() => void>(null);
 
   const clearFile = () => {
-    setPictureLink(undefined);
-    resetRef.current?.();
+    deleteProfilePicture().then(() => {
+      setPictureLink(undefined);
+      resetRef.current?.();
+    });
   };
 
   const handleChangeFile = (file: File) => {
-    Profile.getProfilePicture(file)
-      .then((res) => 'http://localhost:3000/static/' + res.data?.profilePicture)
+    patchProfilePicture(file)
+      .then((res) => 'http://localhost:3000/static/' + res.data?.media)
       .then((pictureLink: string) => setPictureLink(pictureLink));
   };
 

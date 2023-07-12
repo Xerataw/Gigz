@@ -179,9 +179,9 @@ const RegisterArtistProfile: React.FC = () => {
     }
   }, [debounced]);
 
-  // useEffect(() => {
-  //   setFormStep(4);
-  // }, []);
+  useEffect(() => {
+    setFormStep(5);
+  }, []);
 
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
