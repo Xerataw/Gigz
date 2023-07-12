@@ -6,9 +6,9 @@ import {
   IconCircleCheck,
   IconCircleCheckFilled,
   IconExternalLink,
-  IconFile,
   IconMapPin,
   IconPencil,
+  IconPhoto,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
@@ -32,7 +32,7 @@ const valideLink = (
 };
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 4;
+  const numberOfSteps = 5;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
@@ -178,7 +178,7 @@ const RegisterArtistProfile: React.FC = () => {
     <div className="pt-10 border border-red-500 flex flex-col items-center">
       <Text>Informations du profil</Text>
       <Group position="right" m="xl" className="w-full">
-        <Button disabled={formStep > 2}>Passer</Button>
+        <Button disabled={formStep > numberOfSteps}>Passer</Button>
       </Group>
       <Stepper active={formStep} orientation="horizontal" p="xl" w={'100%'}>
         <Stepper.Step icon={<IconPencil />}>
@@ -194,7 +194,7 @@ const RegisterArtistProfile: React.FC = () => {
           <FourthStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconFile />}>
+        <Stepper.Step icon={<IconPhoto />}>
           <ProfilePictureStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 

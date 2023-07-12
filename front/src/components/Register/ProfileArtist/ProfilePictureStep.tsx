@@ -2,11 +2,17 @@ import { ActionIcon, Button, FileButton, Title } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import Profile from '../../../api/Profile.api';
+import User from '../../../types/User';
 import ProfilePicture from '../../ProfilePicture/ProfilePicture';
 import { StepProps } from '../AccountStep/FirstStep';
 
 const ProfilePictureStep: React.FC<StepProps> = ({ form }) => {
-  const [pictureLink, setPictureLink] = useState<string | undefined>(undefined);
+  const [pictureLink, setPictureLink] = useState<string | undefined>(
+    form.values.picture
+  );
+  const [username, setUsername] = useState<string>(
+    form.values.name.length > 0 ? form.values.name : '@username'
+  );
   const resetRef = useRef<() => void>(null);
 
   const clearFile = () => {
@@ -24,6 +30,21 @@ const ProfilePictureStep: React.FC<StepProps> = ({ form }) => {
     form.values.picture = pictureLink;
   }, [pictureLink]);
 
+  useEffect(() => {
+    User.getInstance().then((user) => {
+      const userName = user.getUsername();
+      const userProfilePicture = user.getProfilePicture();
+
+      if (userName !== null) {
+        setUsername(userName);
+      }
+
+      if (userProfilePicture !== null) {
+        setPictureLink('http://localhost:3000/static/' + userProfilePicture);
+      }
+    });
+  }, []);
+
   return (
     <>
       <Title mb="sm">À quoi vous ressemblez ?</Title>
@@ -31,9 +52,7 @@ const ProfilePictureStep: React.FC<StepProps> = ({ form }) => {
       <div className="flex">
         <ProfilePicture alt="profile picture" src={pictureLink} />
         <div className="pl-4 flex flex-col justify-center">
-          <h3 className="m-0">
-            {form.values.name.length > 0 ? form.values.name : '@username'}
-          </h3>
+          <h3 className="m-0">{username}</h3>
           <div className="flex justify-center items-center gap-2">
             <FileButton
               resetRef={resetRef}
