@@ -12,6 +12,7 @@ import {
 } from '@mantine/core';
 import { IconPlus, IconTrash } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import { postPhotoGallery } from '../../../api/gallery';
 import { IStepProps } from '../AccountStep/FirstStep';
 
 const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
@@ -19,22 +20,30 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
   const [pictures, setPictures] = useState<string[]>(form.values.gallery);
 
   const handleRemovePicture = (indexToRemove: number) => {
-    // waiting for route to host images
-    // const pictureToRemove = pictures[indexToRemove];
-
-    setPictures((old) => [
-      ...old.slice(0, indexToRemove),
-      ...old.slice(indexToRemove + 1, old.length),
-    ]);
+    /**
+     * May the route be patch
+     *
+     * deletePhotoGallery(indexToRemove).then(() =>
+     *   setPictures((old) => [
+     *     ...old.slice(0, indexToRemove),
+     *     ...old.slice(indexToRemove + 1, old.length),
+     *   ])
+     * );
+     */
   };
 
   const handleAddFiles = (filesToAdd: File[]) => {
-    filesToAdd.forEach(() => {
-      setPictures((old) => {
-        if (old.length === maxFile) return old;
-        return [...old, '5c70b9490afd6907151956905ca3e44a'];
+    postPhotoGallery(filesToAdd)
+      .then((res) => res.data)
+      .then((res) => res?.map((picture) => picture.media))
+      .then((res) => {
+        res?.forEach((picture) => {
+          setPictures((old) => {
+            if (old.length === maxFile) return old;
+            return [...old, picture];
+          });
+        });
       });
-    });
   };
 
   useEffect(() => {
