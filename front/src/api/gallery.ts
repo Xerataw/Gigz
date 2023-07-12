@@ -1,8 +1,8 @@
 import GigzFetcher from '../services/GigzFetcher';
 
-interface IGalleryPhoto {
+export interface IGalleryPhoto {
   media: string;
-  accountId: number;
+  id: number;
 }
 
 export const postPhotoGallery = (files: File[]) => {
