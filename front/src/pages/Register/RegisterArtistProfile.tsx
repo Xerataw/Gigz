@@ -9,8 +9,10 @@ import {
   IconMapPin,
   IconMusic,
   IconPencil,
+  IconRulerMeasure,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import CapacityStep from '../../components/Register/ProfileArtist/CapacityStep';
 import FifthStepArtist from '../../components/Register/ProfileArtist/FifthStepArtist';
 import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
 import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
@@ -32,7 +34,7 @@ const valideLink = (
 };
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 5;
+  const numberOfSteps = 6;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
@@ -54,6 +56,7 @@ const RegisterArtistProfile: React.FC = () => {
         latitude: 0,
       },
       genres: [],
+      capacity: '',
     },
     validate: (values) => {
       switch (formStep) {
@@ -150,10 +153,14 @@ const RegisterArtistProfile: React.FC = () => {
         if (form.validate().hasErrors) {
           return current;
         }
-        return current < 4 ? current + 1 : current;
+        return current < numberOfSteps ? current + 1 : current;
       });
     }
   };
+
+  useEffect(() => {
+    setFormStep(5);
+  }, []);
 
   const prevStep = () =>
     setFormStep((current) => (current > 0 ? current - 1 : current));
@@ -203,6 +210,10 @@ const RegisterArtistProfile: React.FC = () => {
           <FifthStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
+        <Stepper.Step icon={<IconRulerMeasure />}>
+          <CapacityStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
         <Stepper.Step
           icon={<IconCircleCheck />}
           completedIcon={<IconCircleCheckFilled />}
@@ -223,7 +234,7 @@ const RegisterArtistProfile: React.FC = () => {
           </Button>
         )}
         {formStep < numberOfSteps && (
-          <Button onClick={nextStep}>Prochaine étape Y</Button>
+          <Button onClick={nextStep}>Prochaine étape</Button>
         )}
       </Group>
     </div>
