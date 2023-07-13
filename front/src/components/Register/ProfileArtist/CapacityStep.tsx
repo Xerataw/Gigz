@@ -19,7 +19,16 @@ const CapacityStep: React.FC<IStepProps> = ({ form }) => {
   /**
    * temporary array to get color
    */
-  const colors = ['', 'teal', 'green', 'lime', 'yellow', 'cyan'];
+  //                        50      100     250       500      25
+  // const colors = ['', 'cyan', 'lime', 'yellow', 'orange', 'blue'];
+  const colors = [
+    '',
+    'primary.3',
+    'primary.4',
+    'primary.5',
+    'primary.6',
+    'primary.2',
+  ];
 
   useEffect(() => {
     getCapacities()
@@ -51,7 +60,7 @@ const CapacityStep: React.FC<IStepProps> = ({ form }) => {
       </Text>
       <SegmentedControl
         fullWidth
-        color={capacity?.color ?? 'primary'}
+        color={capacity?.color ?? 'primary'} // only primary so don't need colors
         orientation="vertical"
         data={capacities.map((cp) => ({
           label: cp.max.toString() + ' personnes maximum',
