@@ -16,6 +16,7 @@ import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepAr
 import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
 import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
 import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
+import StepperIcons from '../../components/Register/StepperIcons';
 
 const linkRegex =
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
@@ -182,8 +183,33 @@ const RegisterArtistProfile: React.FC = () => {
       <Group position="right" m="xl" className="w-full">
         <Button disabled={formStep > 2}>Passer</Button>
       </Group>
-      <Stepper active={formStep} orientation="horizontal" p="xl" w={'100%'}>
+      <StepperIcons
+        icons={[
+          <IconPencil key={0} />,
+          <IconAlignCenter key={1} />,
+          <IconExternalLink key={2} />,
+          <IconMapPin key={3} />,
+          <IconMusic key={4} />,
+        ]}
+        currentStep={formStep}
+      />
+      <Stepper
+        active={formStep}
+        p="xl"
+        w={'100%'}
+        styles={{
+          stepIcon: {
+            display: 'none',
+            borderWidth: 4,
+          },
+
+          separator: {
+            display: 'none',
+          },
+        }}
+      >
         <Stepper.Step icon={<IconPencil />}>
+          {/* <Stepper.Step icon={<></>} > */}
           <FirstStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
