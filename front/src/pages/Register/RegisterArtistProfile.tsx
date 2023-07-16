@@ -1,8 +1,12 @@
-import { Button, Group, Loader, Stepper, Text } from '@mantine/core';
+import { ActionIcon, Group, Loader, Stepper, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
   IconAlignCenter,
+  IconArrowLeft,
+  IconArrowRight,
+  IconArrowUpBar,
+  IconChecks,
   IconCircleCheck,
   IconCircleCheckFilled,
   IconExternalLink,
@@ -31,6 +35,8 @@ const valideLink = (
     ? null
     : 'Veuillez inclure un lien ' + errorLabel + '.';
 };
+
+const pathRoute = '/register/artist/';
 
 const RegisterArtistProfile: React.FC = () => {
   const numberOfSteps = 5;
@@ -179,10 +185,9 @@ const RegisterArtistProfile: React.FC = () => {
 
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
-      <Text>Informations du profil</Text>
-      <Group position="right" m="xl" className="w-full">
-        <Button disabled={formStep > 2}>Passer</Button>
-      </Group>
+      <Title order={2} mb={'sm'}>
+        Complétez votre profil
+      </Title>
       <StepperIcons
         icons={[
           <IconPencil key={0} />,
@@ -190,8 +195,11 @@ const RegisterArtistProfile: React.FC = () => {
           <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
           <IconMusic key={4} />,
+          <IconArrowUpBar key={5} />,
+          <IconChecks key={6} />,
         ]}
         currentStep={formStep}
+        nextStep={nextStep}
       />
       <Stepper
         active={formStep}
@@ -244,12 +252,19 @@ const RegisterArtistProfile: React.FC = () => {
 
       <Group position="right" mt="xl">
         {formStep > 0 && formStep < numberOfSteps && (
-          <Button variant="default" onClick={prevStep}>
-            Retour
-          </Button>
+          <ActionIcon variant="default" onClick={prevStep} size="lg">
+            <IconArrowLeft />
+          </ActionIcon>
         )}
         {formStep < numberOfSteps && (
-          <Button onClick={nextStep}>Prochaine étape Y</Button>
+          <ActionIcon
+            variant="filled"
+            color="primary"
+            onClick={nextStep}
+            size="xl"
+          >
+            <IconArrowRight />
+          </ActionIcon>
         )}
       </Group>
     </div>

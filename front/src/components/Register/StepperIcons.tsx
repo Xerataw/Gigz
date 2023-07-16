@@ -1,9 +1,11 @@
-import { Center } from '@mantine/core';
+import { ActionIcon, Center } from '@mantine/core';
+import { IconArrowRightBar } from '@tabler/icons-react';
 import React from 'react';
 
 interface IStepperIconsProps {
   icons: React.JSX.Element[];
   currentStep: number;
+  nextStep: () => void;
 }
 
 const getClass = (currentStep: number, index: number): string => {
@@ -18,9 +20,26 @@ const getClass = (currentStep: number, index: number): string => {
   return 'hidden';
 };
 
-const StepperIcons: React.FC<IStepperIconsProps> = ({ icons, currentStep }) => {
+const StepperIcons: React.FC<IStepperIconsProps> = ({
+  icons,
+  currentStep,
+  nextStep,
+}) => {
   return (
-    <div className="flex">
+    <div className="flex relative w-full justify-center">
+      {currentStep < 5 && (
+        <div className="absolute right-0 h-full flex items-center">
+          <ActionIcon
+            color="primary"
+            radius="xl"
+            size="lg"
+            variant="filled"
+            onClick={nextStep}
+          >
+            <IconArrowRightBar />
+          </ActionIcon>
+        </div>
+      )}
       {icons.map((icon, indexI) => (
         <Center key={indexI}>
           {React.cloneElement(icon, {
