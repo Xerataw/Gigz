@@ -1,7 +1,7 @@
-import { Title, TextInput } from '@mantine/core';
+import { TextInput, Title } from '@mantine/core';
 import { IStepProps } from '../AccountStep/FirstStep';
 
-const FirstStepArtist: React.FC<IStepProps> = ({ form }) => {
+const NameStep: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
       <Title>Comment on peut vous appeler ?</Title>
@@ -16,4 +16,4 @@ const FirstStepArtist: React.FC<IStepProps> = ({ form }) => {
   );
 };
 
-export default FirstStepArtist;
+export default NameStep;

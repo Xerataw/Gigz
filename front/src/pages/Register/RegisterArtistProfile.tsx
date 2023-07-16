@@ -15,28 +15,13 @@ import {
   IconPencil,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
-import FifthStepArtist from '../../components/Register/ProfileArtist/FifthStepArtist';
-import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
-import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
-import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
-import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
+import AddressCompleteStep from '../../components/Register/ProfileSteps/AddressCompleteStep';
+import DescriptionStep from '../../components/Register/ProfileSteps/DescriptionStep';
+import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
+import NameStep from '../../components/Register/ProfileSteps/NameStep';
+import SocialLinksStep from '../../components/Register/ProfileSteps/SocialLinksStep';
 import StepperIcons from '../../components/Register/StepperIcons';
-
-const linkRegex =
-  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
-
-const valideLink = (
-  value: string,
-  includeTag: string,
-  errorLabel: string
-): string | null => {
-  return value.length === 0 ||
-    (value.includes(includeTag) && linkRegex.test(value))
-    ? null
-    : 'Veuillez inclure un lien ' + errorLabel + '.';
-};
-
-const pathRoute = '/register/artist/';
+import { artistInitialValues, artistValidate } from './ProfileFormArtistConfig';
 
 const RegisterArtistProfile: React.FC = () => {
   const numberOfSteps = 5;
@@ -44,103 +29,8 @@ const RegisterArtistProfile: React.FC = () => {
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
-    initialValues: {
-      name: '',
-      description: '',
-      spotifyLink: '',
-      instagramLink: '',
-      facebookLink: '',
-      soundcloudLink: '',
-      youtubeLink: '',
-      appleMusicLink: '',
-      websiteLink: '',
-      deezerLink: '',
-      address: {
-        value: '',
-        longitude: 0,
-        latitude: 0,
-      },
-      genres: [],
-    },
-    validate: (values) => {
-      switch (formStep) {
-        case 0:
-          return {
-            name: /^.{2,255}$/.test(values.name)
-              ? null
-              : 'Veuillez entrer un nom de plus de 2 caractères',
-          };
-
-        case 1:
-          return {
-            description: /^.{0,2000}$/.test(values.description)
-              ? null
-              : 'La description est trop longue',
-          };
-
-        // links are all optional
-        case 2:
-          return {
-            spotifyLink: valideLink(
-              values.spotifyLink,
-              'spotify.com/artist',
-              'Spotify'
-            ),
-            instagramLink: valideLink(
-              values.instagramLink,
-              'instagram.com/',
-              'Instagram'
-            ),
-            facebookLink: valideLink(
-              values.facebookLink,
-              'facebook.com',
-              'Facebook'
-            ),
-            soundcloudLink: valideLink(
-              values.soundcloudLink,
-              'soundcloud.com',
-              'SoundCloud'
-            ),
-            youtubeLink: valideLink(
-              values.youtubeLink,
-              'youtube.com',
-              'Youtube'
-            ),
-            appleMusicLink: valideLink(
-              values.appleMusicLink,
-              'music.apple.com',
-              'Apple Music'
-            ),
-            deezerLink: valideLink(
-              values.deezerLink,
-              'www.deezer.com',
-              'Deezer'
-            ),
-            websiteLink: valideLink(
-              values.websiteLink,
-              'http',
-              'de site web valide'
-            ),
-          };
-        case 3:
-          return {
-            address:
-              values.address.value.length === 0 ||
-              values.address.value.length > 5
-                ? null
-                : 'Veuillez entrer une adressse valide',
-          };
-
-        case 4:
-          //can have genres but optionnal
-          return {
-            genres: null,
-          };
-
-        default:
-          return {};
-      }
-    },
+    initialValues: artistInitialValues,
+    validate: (values) => artistValidate(values, formStep),
   });
   const [debounced] = useDebouncedValue(form.values, 1000);
 
@@ -217,24 +107,23 @@ const RegisterArtistProfile: React.FC = () => {
         }}
       >
         <Stepper.Step icon={<IconPencil />}>
-          {/* <Stepper.Step icon={<></>} > */}
-          <FirstStepArtist form={form} nextStep={() => nextStep()} />
+          <NameStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step icon={<IconAlignCenter />}>
-          <SecondStepArtist form={form} nextStep={() => nextStep()} />
+          <DescriptionStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step icon={<IconExternalLink />}>
-          <ThirdStepArtist form={form} nextStep={() => nextStep()} />
+          <SocialLinksStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step icon={<IconMapPin />}>
-          <FourthStepArtist form={form} nextStep={() => nextStep()} />
+          <AddressCompleteStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step icon={<IconMusic />}>
-          <FifthStepArtist form={form} nextStep={() => nextStep()} />
+          <GenreStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step

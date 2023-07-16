@@ -63,7 +63,7 @@ const links = [
   },
 ];
 
-const ThirdStepArtist: React.FC<IStepProps> = ({ form }) => {
+const SocialLinksStep: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
       <Title>Où peut-on vous retrouver ?</Title>
@@ -106,4 +106,4 @@ const ThirdStepArtist: React.FC<IStepProps> = ({ form }) => {
   );
 };
 
-export default ThirdStepArtist;
+export default SocialLinksStep;

@@ -6,7 +6,7 @@ import MapTiler, {
 } from '../../../services/MapTilerFetcher';
 import { IStepProps } from '../AccountStep/FirstStep';
 
-const FourthStepArtist: React.FC<IStepProps> = ({ form }) => {
+const AddressCompleteStep: React.FC<IStepProps> = ({ form }) => {
   const [searchValue, setSearchValue] = useState<string>();
   const [searchItems, setSearchItems] = useState<IAddressSearchItem[]>([]);
   const [debounced] = useDebouncedValue(form.values.address, 1000);
@@ -52,4 +52,4 @@ const FourthStepArtist: React.FC<IStepProps> = ({ form }) => {
   );
 };
 
-export default FourthStepArtist;
+export default AddressCompleteStep;
