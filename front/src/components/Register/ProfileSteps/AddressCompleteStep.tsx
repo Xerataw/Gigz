@@ -1,12 +1,13 @@
-import { Autocomplete, Title } from '@mantine/core';
+import { Autocomplete } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import MapTiler, {
   IAddressSearchItem,
 } from '../../../services/MapTilerFetcher';
-import { IStepProps } from '../AccountStep/FirstStep';
+import { IStepProps } from '../../../types/IStepProps';
+import TitleStep from './TitleStep';
 
-const AddressCompleteStep: React.FC<IStepProps> = ({ form }) => {
+const AddressCompleteStep: React.FC<IStepProps> = ({ form, label }) => {
   const [searchValue, setSearchValue] = useState<string>();
   const [searchItems, setSearchItems] = useState<IAddressSearchItem[]>([]);
   const [debounced] = useDebouncedValue(form.values.address, 1000);
@@ -36,7 +37,7 @@ const AddressCompleteStep: React.FC<IStepProps> = ({ form }) => {
 
   return (
     <>
-      <Title>Où êtes-vous présent ?</Title>
+      <TitleStep label={label} />
 
       <Autocomplete
         autoFocus

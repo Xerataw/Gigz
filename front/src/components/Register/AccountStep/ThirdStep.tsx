@@ -1,10 +1,11 @@
-import { PasswordInput, Title } from '@mantine/core';
-import { IStepProps } from './FirstStep';
+import { PasswordInput } from '@mantine/core';
+import TitleStep from '../ProfileSteps/TitleStep';
+import { IStepProps } from '../../../types/IStepProps';
 
-const ThirdStep: React.FC<IStepProps> = ({ form }) => {
+const PasswordStep: React.FC<IStepProps> = ({ form, label }) => {
   return (
     <>
-      <Title>La sécurité</Title>
+      <TitleStep label={label} />
       <PasswordInput
         mt="sm"
         autoFocus
@@ -20,4 +21,4 @@ const ThirdStep: React.FC<IStepProps> = ({ form }) => {
   );
 };
 
-export default ThirdStep;
+export default PasswordStep;

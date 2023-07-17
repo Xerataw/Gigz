@@ -89,7 +89,6 @@ const RegisterArtistProfile: React.FC = () => {
           <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
           <IconMusic key={4} />,
-          // <IconRulerMeasure key={7} />,
           <IconBoxMultiple key={5} />,
           <IconUserCircle key={6} />,
 
@@ -115,35 +114,34 @@ const RegisterArtistProfile: React.FC = () => {
         }}
       >
         <Stepper.Step>
-          <NameStep form={form} nextStep={() => nextStep()} />
+          <NameStep form={form} label="Vous êtes ?" />
         </Stepper.Step>
 
         <Stepper.Step>
-          <DescriptionStep form={form} nextStep={() => nextStep()} />
+          <DescriptionStep form={form} label="Qui êtes vous ?" />
         </Stepper.Step>
 
         <Stepper.Step>
-          <SocialLinksStep form={form} nextStep={() => nextStep()} />
+          <SocialLinksStep form={form} label="Où peut-on vous retrouver ?" />
         </Stepper.Step>
 
         <Stepper.Step>
-          <AddressCompleteStep form={form} nextStep={() => nextStep()} />
+          <AddressCompleteStep form={form} label="Où êtes-vous présent ?" />
         </Stepper.Step>
 
         <Stepper.Step>
-          <GenreStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step>
-
-        {/* <Stepper.Step>
-          <CapacityStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step> */}
-
-        <Stepper.Step>
-          <PresentationPicturesStep form={form} nextStep={() => nextStep()} />
+          <GenreStep form={form} label="Vous êtes plutôt ?" />
         </Stepper.Step>
 
         <Stepper.Step>
-          <ProfilePictureStep form={form} nextStep={() => nextStep()} />
+          <PresentationPicturesStep
+            form={form}
+            label="À quoi ressemble votre groupe ?"
+          />
+        </Stepper.Step>
+
+        <Stepper.Step>
+          <ProfilePictureStep form={form} label="À quoi vous ressemblez ?" />
         </Stepper.Step>
 
         <Stepper.Step>

@@ -2,8 +2,8 @@ import { Button, Group, Loader, Stepper, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
-  IconCircleCheck,
-  IconCircleCheckFilled,
+  IconArrowUpBar,
+  IconChecks,
   IconDisc,
   IconInfoCircle,
   IconShieldLock,
@@ -11,11 +11,12 @@ import {
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AccountCreated from '../../components/Register/AccountStep/AccountCreated';
-import User from '../../store/User';
-import FirstStep from '../../components/Register/AccountStep/FirstStep';
-import SecondStep from '../../components/Register/AccountStep/SecondStep';
-import ThirdStep from '../../components/Register/AccountStep/ThirdStep';
+import MailPhoneStep from '../../components/Register/AccountStep/MailPhoneStep';
+import ProfileTypeStep from '../../components/Register/AccountStep/ProfileTypeStep';
+import PasswordStep from '../../components/Register/AccountStep/ThirdStep';
+import StepperIcons from '../../components/Register/StepperIcons';
 import GigzFetcher from '../../services/GigzFetcher';
+import User from '../../store/User';
 
 const errorPassword = (value: string) => (
   <div>
@@ -150,21 +151,48 @@ const Register: React.FC = () => {
 
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
-      <Stepper active={formStep} orientation="horizontal" p="xl" w={'100%'}>
-        <Stepper.Step icon={<IconDisc />}>
-          <FirstStep form={form} nextStep={() => nextStep()} />
+      <StepperIcons
+        icons={[
+          <IconDisc key={0} />,
+          <IconInfoCircle key={1} />,
+          <IconShieldLock key={2} />,
+
+          <IconArrowUpBar key={8} />,
+          <IconChecks key={9} />,
+        ]}
+        currentStep={formStep}
+        nextStep={nextStep}
+      />
+      <Stepper
+        active={formStep}
+        p="xl"
+        w={'100%'}
+        styles={{
+          stepIcon: {
+            display: 'none',
+            borderWidth: 4,
+          },
+
+          separator: {
+            display: 'none',
+          },
+        }}
+      >
+        <Stepper.Step>
+          <ProfileTypeStep
+            form={form}
+            nextStep={nextStep}
+            label="Vous êtes ?"
+          />
         </Stepper.Step>
-        <Stepper.Step icon={<IconInfoCircle />}>
-          <SecondStep form={form} nextStep={() => nextStep()} />
+        <Stepper.Step>
+          <MailPhoneStep form={form} label="Pour vous retrouver" />
         </Stepper.Step>
-        <Stepper.Step icon={<IconShieldLock />}>
-          <ThirdStep form={form} nextStep={() => nextStep()} />
+        <Stepper.Step>
+          <PasswordStep form={form} label="La sécurité" />
         </Stepper.Step>
 
-        <Stepper.Step
-          icon={<IconCircleCheck />}
-          completedIcon={<IconCircleCheckFilled />}
-        >
+        <Stepper.Step>
           <Loader variant="bars" />
         </Stepper.Step>
 

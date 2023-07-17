@@ -1,10 +1,6 @@
-import { Button, Title, Tooltip } from '@mantine/core';
-import { UseFormReturnType } from '@mantine/form';
-
-export interface IStepProps {
-  form: UseFormReturnType<any>;
-  nextStep: () => void;
-}
+import { Button, Tooltip } from '@mantine/core';
+import { IStepProps } from '../../../types/IStepProps';
+import TitleStep from '../ProfileSteps/TitleStep';
 
 interface IUserTypeButton {
   labelTooltip: string;
@@ -25,10 +21,10 @@ const userTypes: IUserTypeButton[] = [
   },
 ];
 
-const FirstStep: React.FC<IStepProps> = ({ form, nextStep }) => {
+const ProfileTypeStep: React.FC<IStepProps> = ({ form, label, nextStep }) => {
   return (
     <>
-      <Title>Vous êtes </Title>
+      <TitleStep label={label} />
       <Button.Group orientation="vertical">
         {userTypes.map((userType) => (
           <Tooltip
@@ -40,7 +36,7 @@ const FirstStep: React.FC<IStepProps> = ({ form, nextStep }) => {
                 ...values,
                 userType: userType.value,
               }));
-              nextStep();
+              if (nextStep) nextStep();
             }}
           >
             <Button
@@ -59,4 +55,4 @@ const FirstStep: React.FC<IStepProps> = ({ form, nextStep }) => {
   );
 };
 
-export default FirstStep;
+export default ProfileTypeStep;

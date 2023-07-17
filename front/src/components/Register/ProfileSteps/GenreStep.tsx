@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react';
 import { getGenres } from '../../../api/genres';
 import IGenre from '../../../types/IGenre';
 import MusicGenreButton from '../../MusicGenreButton';
-import { IStepProps } from '../AccountStep/FirstStep';
+import TitleStep from './TitleStep';
+import { IStepProps } from '../../../types/IStepProps';
 
-const GenreStep: React.FC<IStepProps> = ({ form }) => {
+const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
   const [genres, setGenres] = useState<IGenre[]>([]);
   const [selectedGenre, setSelectedGenre] = useState<string[]>(
     form.values.genres ?? []
@@ -31,7 +32,7 @@ const GenreStep: React.FC<IStepProps> = ({ form }) => {
 
   return (
     <>
-      <Title>Vous êtes plutôt ?</Title>
+      <TitleStep label={label} />
       <SimpleGrid
         cols={3}
         spacing="lg"

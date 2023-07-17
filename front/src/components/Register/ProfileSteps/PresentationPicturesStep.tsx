@@ -16,9 +16,10 @@ import {
   deletePhotoGallery,
   postPhotoGallery,
 } from '../../../api/gallery';
-import { IStepProps } from '../AccountStep/FirstStep';
+import { IStepProps } from '../../../types/IStepProps';
+import TitleStep from './TitleStep';
 
-const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
+const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
   const maxFile = 5;
   const [pictures, setPictures] = useState<IGalleryPhoto[]>(
     form.values.gallery
@@ -55,7 +56,7 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
 
   return (
     <>
-      <Title mb="sm">À quoi ressemble votre groupe ?</Title>
+      <TitleStep label={label} />
 
       <Grid justify="center">
         {pictures.map((image, index) => (

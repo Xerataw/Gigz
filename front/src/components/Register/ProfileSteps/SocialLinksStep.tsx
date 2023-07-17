@@ -1,4 +1,4 @@
-import { ActionIcon, Chip, TextInput, ThemeIcon, Title } from '@mantine/core';
+import { ActionIcon, Chip, TextInput, ThemeIcon } from '@mantine/core';
 import {
   IconBrandApple,
   IconBrandDeezer,
@@ -10,7 +10,8 @@ import {
   IconExternalLink,
   IconWorldWww,
 } from '@tabler/icons-react';
-import { IStepProps } from '../AccountStep/FirstStep';
+import { IStepProps } from '../../../types/IStepProps';
+import TitleStep from './TitleStep';
 
 const links = [
   {
@@ -63,10 +64,10 @@ const links = [
   },
 ];
 
-const SocialLinksStep: React.FC<IStepProps> = ({ form }) => {
+const SocialLinksStep: React.FC<IStepProps> = ({ form, label }) => {
   return (
     <>
-      <Title>Où peut-on vous retrouver ?</Title>
+      <TitleStep label={label} />
       <Chip.Group>
         {links.map((link) => (
           <div className="my-3" key={link.value}>

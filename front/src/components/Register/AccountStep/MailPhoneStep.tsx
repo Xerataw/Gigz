@@ -1,10 +1,11 @@
-import { Text, TextInput, Title } from '@mantine/core';
-import { IStepProps } from './FirstStep';
+import { Text, TextInput } from '@mantine/core';
+import { IStepProps } from '../../../types/IStepProps';
+import TitleStep from '../ProfileSteps/TitleStep';
 
-const SecondStep: React.FC<IStepProps> = ({ form }) => {
+const MailPhoneStep: React.FC<IStepProps> = ({ form, label }) => {
   return (
     <>
-      <Title>Pour vous retrouver</Title>
+      <TitleStep label={label} />
       <TextInput
         autoFocus
         mt="sm"
@@ -27,4 +28,4 @@ const SecondStep: React.FC<IStepProps> = ({ form }) => {
   );
 };
 
-export default SecondStep;
+export default MailPhoneStep;
