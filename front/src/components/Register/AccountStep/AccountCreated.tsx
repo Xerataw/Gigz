@@ -11,8 +11,8 @@ const AccountCreated: React.FC<IAccountCreatedProps> = ({ userType }) => {
   const [time, setTime] = useState<number>(0);
   const history = useHistory();
 
-  const artistPath = '/login/register/artist';
-  const hostPath = '/login/register/host';
+  const artistPath = '/register/artist';
+  const hostPath = '/register/host';
 
   useEffect(() => {
     if (time >= 100) {
@@ -43,7 +43,7 @@ const AccountCreated: React.FC<IAccountCreatedProps> = ({ userType }) => {
         Votre compte est en cours de création
       </Text>
       <RingProgress
-        sections={[{ value: time, color: 'secondary' }]}
+        sections={[{ value: time, color: 'primary' }]}
         className="mt-4"
         roundCaps
         label={
