@@ -3,6 +3,7 @@ import {
   default as IArtistProfile,
   default as IHostProfile,
 } from '../../types/IArtistProfile';
+import Gallery from './Gallery';
 import ProfileDrawer from './ProfileDrawer';
 
 interface IProfileViewProps {
@@ -11,7 +12,17 @@ interface IProfileViewProps {
 }
 
 const ProfileView: React.FC<IProfileViewProps> = ({ profile, children }) => {
-  return <ProfileDrawer profile={profile}>{children}</ProfileDrawer>;
+  const hasMusicEmbed =
+    'musicLink' in profile &&
+    typeof profile.musicLink === 'string' &&
+    profile.musicLink.length > 0;
+
+  return (
+    <>
+      <Gallery mediaList={profile.gallery} withEmbed={hasMusicEmbed} />
+      <ProfileDrawer profile={profile}>{children}</ProfileDrawer>
+    </>
+  );
 };
 
 export default ProfileView;

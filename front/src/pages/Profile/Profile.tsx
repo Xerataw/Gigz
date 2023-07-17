@@ -1,13 +1,15 @@
-import { useEffect, useState, createContext } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
+import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
+import HostProfileView from '../../components/ProfileView/HostProfileView';
 import User from '../../store/User';
+import EMediaType from '../../types/EMediaType';
 import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
+import IMedia from '../../types/IMedia';
 import Layout from '../Layout/Layout';
-import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
-import HostProfileView from '../../components/ProfileView/HostProfileView';
 
 export const ProfileLoadingContext = createContext<boolean>(true);
 
@@ -25,8 +27,17 @@ const Profile: React.FC = () => {
     baseProfile: any,
     profilePicture?: string
   ): IArtistProfile | IHostProfile => {
+    const finalGallery: IMedia[] = [];
+    for (const galleryItem of baseProfile.gallery) {
+      finalGallery.push({
+        id: galleryItem.id,
+        source: galleryItem.media,
+        type: EMediaType.IMAGE,
+      });
+    }
     return {
       ...baseProfile,
+      gallery: finalGallery.sort((media1, media2) => media1.id - media2.id),
       genres: baseProfile.genres ? baseProfile.genres : [],
       profilePicture,
     };
@@ -46,6 +57,7 @@ const Profile: React.FC = () => {
       .then((user) => {
         if (user.getToken() === null) redirectToLogin();
         getProfile(user.getProfileType() as EProfileType).then((profile) => {
+          console.log(profile);
           setProfileType(user.getProfileType() as EProfileType);
           setProfile(
             buildProfile(profile.data, user.getProfilePicture() as string)
@@ -58,7 +70,7 @@ const Profile: React.FC = () => {
 
   return (
     <ProfileLoadingContext.Provider value={profileLoading}>
-      <Layout navBarShadow={false}>{displayProfileView()}</Layout>
+      {profile && <Layout navBarShadow={false}>{displayProfileView()}</Layout>}
     </ProfileLoadingContext.Provider>
   );
 };
