@@ -28,7 +28,7 @@ const StepperIcons: React.FC<IStepperIconsProps> = ({
   return (
     <div className="flex relative w-full justify-center">
       {currentStep < 5 && (
-        <div className="absolute right-0 h-full flex items-center">
+        <div className="absolute right-0 right-5 h-full flex items-center">
           <ActionIcon
             color="primary"
             radius="xl"
