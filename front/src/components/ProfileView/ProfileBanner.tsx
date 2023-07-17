@@ -1,7 +1,8 @@
-import GigzFetcher from '../../services/GigzFetcher';
-import IGenre from '../../types/IGenre';
 import { Badge, Skeleton } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
+import GigzFetcher from '../../services/GigzFetcher';
+import IGenre from '../../types/IGenre';
 import ProfilePicture from '../ProfilePicture';
 
 interface IProfileBannerProps {
@@ -27,6 +28,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   genres,
   withDrawer = false,
 }) => {
+  const { t } = useTranslation();
   const genresToDisplay = loading ? loadingGenres : genres;
 
   return (
@@ -60,7 +62,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
           >
             <IconMapPin size="20" className="mt-[2px]" />
             <p className="italic text-gray-600 font-semibold">
-              {city ? city : 'Somewhere in the world'}
+              {city ? city : t('profile.banner.emptyCity')}
             </p>
           </Skeleton>
           <ul className="flex flex-row flew-wrap p-0 m-0">

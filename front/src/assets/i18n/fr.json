@@ -35,5 +35,22 @@
       "register": "Pas encore de compte ?",
       "success": "Un mail a était envoyé à {{email}}"
     }
+  },
+  "profile": {
+    "banner": {
+      "emptyCity": "Quelque part dans le monde"
+    },
+    "biography": {
+      "title": "Biographie"
+    },
+    "locationMap": {
+      "title": "Localisation"
+    },
+    "musicProfiles": {
+      "title": "Musique"
+    },
+    "socials": {
+      "title": "Réseaux sociaux"
+    }
   }
 }
