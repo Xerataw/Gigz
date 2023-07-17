@@ -24,7 +24,10 @@ const ArtistBodySchema = z.object({
   websiteLink: z.string().optional(),
   deezerLink: z.string().optional(),
 
-  cityId: z.coerce.number().optional(),
+  // Address
+  city: z.string().optional(),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
 });
 
 router.patch('/', async (req, res) => {
@@ -65,6 +68,13 @@ router.get('/', async (req, res) => {
     },
   });
 
+  const genres = await database.account_genre.findMany({
+    where: { account_id: req.account.id },
+    include: { genre: true },
+  });
+
+  const formattedGenres = genres.map((genre) => genre.genre);
+
   if (!artist) {
     return sendError(res, ApiMessages.NotFound, 404);
   }
@@ -74,6 +84,9 @@ router.get('/', async (req, res) => {
 
   // @ts-ignore
   delete artist.account;
+
+  // @ts-ignore
+  artist.genres = formattedGenres;
 
   sendResponse(res, fromDbFormat(artist));
 });

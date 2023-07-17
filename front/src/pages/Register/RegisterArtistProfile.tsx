@@ -6,25 +6,32 @@ import {
   IconArrowLeft,
   IconArrowRight,
   IconArrowUpBar,
+  IconBoxMultiple,
   IconChecks,
-  IconCircleCheck,
-  IconCircleCheckFilled,
   IconExternalLink,
   IconMapPin,
   IconMusic,
   IconPencil,
+  IconRulerMeasure,
+  IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import AddressCompleteStep from '../../components/Register/ProfileSteps/AddressCompleteStep';
+import CapacityStep from '../../components/Register/ProfileSteps/CapacityStep';
 import DescriptionStep from '../../components/Register/ProfileSteps/DescriptionStep';
 import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
 import NameStep from '../../components/Register/ProfileSteps/NameStep';
+import PresentationPicturesStep from '../../components/Register/ProfileSteps/PresentationPicturesStep';
+import ProfilePictureStep from '../../components/Register/ProfileSteps/ProfilePictureStep';
 import SocialLinksStep from '../../components/Register/ProfileSteps/SocialLinksStep';
 import StepperIcons from '../../components/Register/StepperIcons';
-import { artistInitialValues, artistValidate } from './ProfileFormArtistConfig';
+import {
+  artistInitialValues,
+  artistValidate,
+} from '../../configs/profileFormArtistConfig';
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 5;
+  const numberOfSteps = 8;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
@@ -47,7 +54,7 @@ const RegisterArtistProfile: React.FC = () => {
         if (form.validate().hasErrors) {
           return current;
         }
-        return current < 4 ? current + 1 : current;
+        return current < numberOfSteps - 1 ? current + 1 : current;
       });
     }
   };
@@ -85,8 +92,12 @@ const RegisterArtistProfile: React.FC = () => {
           <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
           <IconMusic key={4} />,
-          <IconArrowUpBar key={5} />,
-          <IconChecks key={6} />,
+          <IconRulerMeasure key={7} />,
+          <IconBoxMultiple key={5} />,
+          <IconUserCircle key={6} />,
+
+          <IconArrowUpBar key={8} />,
+          <IconChecks key={9} />,
         ]}
         currentStep={formStep}
         nextStep={nextStep}
@@ -106,30 +117,39 @@ const RegisterArtistProfile: React.FC = () => {
           },
         }}
       >
-        <Stepper.Step icon={<IconPencil />}>
+        <Stepper.Step>
           <NameStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconAlignCenter />}>
+        <Stepper.Step>
           <DescriptionStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconExternalLink />}>
+        <Stepper.Step>
           <SocialLinksStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconMapPin />}>
+        <Stepper.Step>
           <AddressCompleteStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconMusic />}>
+        <Stepper.Step>
           <GenreStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step
-          icon={<IconCircleCheck />}
-          completedIcon={<IconCircleCheckFilled />}
-        >
+        <Stepper.Step>
+          <CapacityStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step>
+          <PresentationPicturesStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step>
+          <ProfilePictureStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step>
           <Loader variant="bars" />
         </Stepper.Step>
 

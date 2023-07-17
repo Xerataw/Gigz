@@ -1,4 +1,4 @@
-import { LinkUtils } from '../../services/LinkUtils';
+import { LinkUtils } from '../services/LinkUtils';
 export const artistInitialValues = {
   name: '',
   description: '',
@@ -16,6 +16,8 @@ export const artistInitialValues = {
     latitude: 0,
   },
   genres: [],
+  gallery: [],
+  picture: '',
 };
 
 export const artistValidate = (
