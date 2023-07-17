@@ -3,6 +3,7 @@ import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
   IconAlignCenter,
+  IconBoxMultiple,
   IconArrowLeft,
   IconArrowRight,
   IconArrowUpBar,
@@ -23,6 +24,7 @@ import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStep
 import ProfilePictureStep from '../../components/Register/ProfileArtist/ProfilePictureStep';
 import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
 import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
+import PresentationPicturesStep from '../../components/Register/ProfileArtist/PresentationPicturesStep';
 import StepperIcons from '../../components/Register/StepperIcons';
 
 const linkRegex =
@@ -61,7 +63,8 @@ const RegisterArtistProfile: React.FC = () => {
         longitude: 0,
         latitude: 0,
       },
-      genres: [],
+      genres: [], // id genre
+      gallery: [], // uri file link
       picture: '',
     },
     validate: (values) => {
@@ -159,7 +162,7 @@ const RegisterArtistProfile: React.FC = () => {
         if (form.validate().hasErrors) {
           return current;
         }
-        return current < numberOfSteps ? current + 1 : current;
+        return current < numberOfSteps - 1 ? current + 1 : current;
       });
     }
   };
@@ -184,6 +187,10 @@ const RegisterArtistProfile: React.FC = () => {
         break;
     }
   }, [debounced]);
+
+  useEffect(() => {
+    setFormStep(5);
+  }, []);
 
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
@@ -241,6 +248,9 @@ const RegisterArtistProfile: React.FC = () => {
           <FifthStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
+        <Stepper.Step icon={<IconBoxMultiple />}>
+          <PresentationPicturesStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
         <Stepper.Step icon={<IconPhoto />}>
           <ProfilePictureStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
