@@ -21,7 +21,10 @@ import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
 import NameStep from '../../components/Register/ProfileSteps/NameStep';
 import SocialLinksStep from '../../components/Register/ProfileSteps/SocialLinksStep';
 import StepperIcons from '../../components/Register/StepperIcons';
-import { artistInitialValues, artistValidate } from './ProfileFormArtistConfig';
+import {
+  hostInitialValues,
+  hostValidate,
+} from '../../configs/profileFormHostConfig';
 
 const RegisterArtistProfile: React.FC = () => {
   const numberOfSteps = 5;
@@ -29,8 +32,8 @@ const RegisterArtistProfile: React.FC = () => {
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
-    initialValues: artistInitialValues,
-    validate: (values) => artistValidate(values, formStep),
+    initialValues: hostInitialValues,
+    validate: (values) => hostValidate(values, formStep),
   });
   const [debounced] = useDebouncedValue(form.values, 1000);
 
