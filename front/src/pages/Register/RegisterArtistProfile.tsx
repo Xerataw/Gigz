@@ -12,10 +12,12 @@ import {
   IconMapPin,
   IconMusic,
   IconPencil,
+  IconRulerMeasure,
   IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import AddressCompleteStep from '../../components/Register/ProfileSteps/AddressCompleteStep';
+import CapacityStep from '../../components/Register/ProfileSteps/CapacityStep';
 import DescriptionStep from '../../components/Register/ProfileSteps/DescriptionStep';
 import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
 import NameStep from '../../components/Register/ProfileSteps/NameStep';
@@ -29,7 +31,7 @@ import {
 } from '../../configs/profileFormArtistConfig';
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 7;
+  const numberOfSteps = 8;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
@@ -90,11 +92,12 @@ const RegisterArtistProfile: React.FC = () => {
           <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
           <IconMusic key={4} />,
+          <IconRulerMeasure key={7} />,
           <IconBoxMultiple key={5} />,
           <IconUserCircle key={6} />,
 
-          <IconArrowUpBar key={7} />,
-          <IconChecks key={8} />,
+          <IconArrowUpBar key={8} />,
+          <IconChecks key={9} />,
         ]}
         currentStep={formStep}
         nextStep={nextStep}
@@ -132,6 +135,10 @@ const RegisterArtistProfile: React.FC = () => {
 
         <Stepper.Step>
           <GenreStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step>
+          <CapacityStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step>
