@@ -1,17 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, createContext } from 'react';
 import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
 import User from '../../store/User';
 import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
-import IProfile from '../../types/IProfile';
 import Layout from '../Layout/Layout';
 import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
 import HostProfileView from '../../components/ProfileView/HostProfileView';
 
+export const ProfileLoadingContext = createContext<boolean>(true);
+
 const Profile: React.FC = () => {
   const history = useHistory();
+  const [profileLoading, setProfileLoading] = useState<boolean>(true);
   const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
 
@@ -35,15 +37,16 @@ const Profile: React.FC = () => {
         getProfile(user.getProfileType() as EProfileType).then((profile) => {
           setProfileType(user.getProfileType() as EProfileType);
           setProfile(profile.data);
+          setProfileLoading(false);
         });
       })
       .catch(() => redirectToLogin());
   }, []);
 
   return (
-    <Layout navBarShadow={false}>
-      {profileType !== undefined && displayProfileView()}
-    </Layout>
+    <ProfileLoadingContext.Provider value={profileLoading}>
+      <Layout navBarShadow={false}>{displayProfileView()}</Layout>
+    </ProfileLoadingContext.Provider>
   );
 };
 
