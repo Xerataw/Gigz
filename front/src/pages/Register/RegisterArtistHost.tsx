@@ -1,0 +1,163 @@
+import { ActionIcon, Group, Loader, Stepper, Title } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useDebouncedValue } from '@mantine/hooks';
+import {
+  IconAlignCenter,
+  IconArrowLeft,
+  IconArrowRight,
+  IconArrowUpBar,
+  IconChecks,
+  IconCircleCheck,
+  IconCircleCheckFilled,
+  IconExternalLink,
+  IconMapPin,
+  IconMusic,
+  IconPencil,
+} from '@tabler/icons-react';
+import React, { useEffect, useState } from 'react';
+import AddressCompleteStep from '../../components/Register/ProfileSteps/AddressCompleteStep';
+import DescriptionStep from '../../components/Register/ProfileSteps/DescriptionStep';
+import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
+import NameStep from '../../components/Register/ProfileSteps/NameStep';
+import SocialLinksStep from '../../components/Register/ProfileSteps/SocialLinksStep';
+import StepperIcons from '../../components/Register/StepperIcons';
+import { artistInitialValues, artistValidate } from './ProfileFormArtistConfig';
+
+const RegisterArtistProfile: React.FC = () => {
+  const numberOfSteps = 5;
+
+  const [formStep, setFormStep] = useState<number>(0);
+  const form = useForm({
+    validateInputOnBlur: true,
+    initialValues: artistInitialValues,
+    validate: (values) => artistValidate(values, formStep),
+  });
+  const [debounced] = useDebouncedValue(form.values, 1000);
+
+  const nextStep = () => {
+    if (formStep === numberOfSteps - 1) {
+      setFormStep((old) => old + 1);
+
+      // simulate request
+      setTimeout(() => {
+        setFormStep((old) => old + 1);
+      }, 1000);
+    } else {
+      setFormStep((current) => {
+        if (form.validate().hasErrors) {
+          return current;
+        }
+        return current < 4 ? current + 1 : current;
+      });
+    }
+  };
+
+  const prevStep = () =>
+    setFormStep((current) => (current > 0 ? current - 1 : current));
+
+  useEffect(() => {
+    switch (formStep) {
+      case 0:
+        if (debounced.name.length > 0) {
+          form.validate();
+        }
+        break;
+      case 3:
+        if (debounced.address.value?.length > 0)
+          form.validateField('address.value');
+        break;
+
+      case 1:
+      case 2:
+        break;
+    }
+  }, [debounced]);
+
+  return (
+    <div className="pt-10 border border-red-500 flex flex-col items-center">
+      <Title order={2} mb={'sm'}>
+        Complétez votre profil
+      </Title>
+      <StepperIcons
+        icons={[
+          <IconPencil key={0} />,
+          <IconAlignCenter key={1} />,
+          <IconExternalLink key={2} />,
+          <IconMapPin key={3} />,
+          <IconMusic key={4} />,
+          <IconArrowUpBar key={5} />,
+          <IconChecks key={6} />,
+        ]}
+        currentStep={formStep}
+        nextStep={nextStep}
+      />
+      <Stepper
+        active={formStep}
+        p="xl"
+        w={'100%'}
+        styles={{
+          stepIcon: {
+            display: 'none',
+            borderWidth: 4,
+          },
+
+          separator: {
+            display: 'none',
+          },
+        }}
+      >
+        <Stepper.Step icon={<IconPencil />}>
+          <NameStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step icon={<IconAlignCenter />}>
+          <DescriptionStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step icon={<IconExternalLink />}>
+          <SocialLinksStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step icon={<IconMapPin />}>
+          <AddressCompleteStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step icon={<IconMusic />}>
+          <GenreStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step
+          icon={<IconCircleCheck />}
+          completedIcon={<IconCircleCheckFilled />}
+        >
+          <Loader variant="bars" />
+        </Stepper.Step>
+
+        <Stepper.Completed>
+          <div>this form is completed</div>
+          <div>redirect to home</div>
+        </Stepper.Completed>
+      </Stepper>
+
+      <Group position="right" mt="xl">
+        {formStep > 0 && formStep < numberOfSteps && (
+          <ActionIcon variant="default" onClick={prevStep} size="lg">
+            <IconArrowLeft />
+          </ActionIcon>
+        )}
+        {formStep < numberOfSteps && (
+          <ActionIcon
+            variant="filled"
+            color="primary"
+            onClick={nextStep}
+            size="xl"
+          >
+            <IconArrowRight />
+          </ActionIcon>
+        )}
+      </Group>
+    </div>
+  );
+};
+
+export default RegisterArtistProfile;
