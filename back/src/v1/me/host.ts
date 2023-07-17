@@ -83,7 +83,7 @@ router.get('/', async (req, res) => {
   delete host.account;
 
   // @ts-ignore
-  artist.genres = formattedGenres;
+  host.genres = formattedGenres;
 
   sendResponse(res, fromDbFormat(host));
 });

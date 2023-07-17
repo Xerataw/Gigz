@@ -5,7 +5,6 @@ import User from '../../store/User';
 import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
-import IProfile from '../../types/IProfile';
 import Layout from '../Layout/Layout';
 import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
 import HostProfileView from '../../components/ProfileView/HostProfileView';
@@ -34,7 +33,10 @@ const Profile: React.FC = () => {
         if (user.getToken() === null) redirectToLogin();
         getProfile(user.getProfileType() as EProfileType).then((profile) => {
           setProfileType(user.getProfileType() as EProfileType);
-          setProfile(profile.data);
+          setProfile({
+            ...(profile.data as IArtistProfile | IHostProfile),
+            profilePicture: user.getProfilePicture() as string,
+          });
         });
       })
       .catch(() => redirectToLogin());
