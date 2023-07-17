@@ -65,7 +65,8 @@ router.get('/', async (req, res) => {
   const formattedData = data.map((host) => ({
     id: host.id,
     name: host.name,
-    cityId: host.city_id,
+    address: host.address,
+    city: host.city,
     genres: host.account.account_genre.map((genre) => genre.genre),
     capacity: host.capacity,
   }));

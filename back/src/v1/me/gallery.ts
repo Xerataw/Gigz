@@ -28,8 +28,16 @@ router.post(
       (file: any) => ({ media: file.filename, account_id: req.account.id })
     );
 
-    await database.gallery.createMany({ data: files });
-    sendResponse(res, fromDbFormat(files));
+    const medium = await database.$transaction(
+      files.map((file) =>
+        database.gallery.create({
+          data: file,
+          select: { id: true, media: true },
+        })
+      )
+    );
+
+    sendResponse(res, fromDbFormat(medium));
   }
 );
 
