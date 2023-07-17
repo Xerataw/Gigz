@@ -59,7 +59,7 @@ router.get('/', async (req, res) => {
   const formattedData = data.map((artist) => ({
     id: artist.id,
     name: artist.name,
-    cityId: artist.city_id,
+    city: artist.city,
     genres: artist.account.account_genre.map((genre) => genre.genre),
   }));
 
