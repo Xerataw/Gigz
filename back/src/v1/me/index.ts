@@ -1,14 +1,12 @@
 import express from 'express';
 
-import gallery from '@v1/me/gallery';
-
-import host from '@v1/me/host';
-import artist from '@v1/me/artist';
-
-import genres from '@v1/me/genres';
-import profilePicture from '@v1/me/profilePicture';
-
 import account from '@v1/me/account';
+import artist from '@v1/me/artist';
+import favorites from '@v1/me/favorites';
+import gallery from '@v1/me/gallery';
+import genres from '@v1/me/genres';
+import host from '@v1/me/host';
+import profilePicture from '@v1/me/profilePicture';
 
 const router = express.Router();
 
@@ -21,5 +19,7 @@ router.use('/account', account);
 
 router.use('/genres', genres);
 router.use('/profile-picture', profilePicture);
+
+router.use('/favorites', favorites);
 
 export default router;
