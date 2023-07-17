@@ -11,7 +11,7 @@ import {
   IconWorldWww,
 } from '@tabler/icons-react';
 import { IStepProps } from '../../../types/IStepProps';
-import TitleStep from './TitleStep';
+import StepTitle from './Utils/StepTitle';
 
 const links = [
   {
@@ -67,7 +67,7 @@ const links = [
 const SocialLinksStep: React.FC<IStepProps> = ({ form, label }) => {
   return (
     <>
-      <TitleStep label={label} />
+      <StepTitle label={label} />
       <Chip.Group>
         {links.map((link) => (
           <div className="my-3" key={link.value}>

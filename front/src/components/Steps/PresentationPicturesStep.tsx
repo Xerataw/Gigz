@@ -11,13 +11,13 @@ import {
 } from '@mantine/core';
 import { IconPlus, IconTrash } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import StepTitle from './Utils/StepTitle';
+import { IStepProps } from '../../types/IStepProps';
 import {
   IGalleryPhoto,
   deletePhotoGallery,
   postPhotoGallery,
-} from '../../../api/gallery';
-import { IStepProps } from '../../../types/IStepProps';
-import TitleStep from './TitleStep';
+} from '../../api/gallery';
 
 const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
   const maxFile = 5;
@@ -56,7 +56,7 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
 
   return (
     <>
-      <TitleStep label={label} />
+      <StepTitle label={label} />
 
       <Grid justify="center">
         {pictures.map((image, index) => (

@@ -1,10 +1,10 @@
 import { SimpleGrid, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { getGenres } from '../../../api/genres';
-import IGenre from '../../../types/IGenre';
-import MusicGenreButton from '../../MusicGenreButton';
-import TitleStep from './TitleStep';
-import { IStepProps } from '../../../types/IStepProps';
+import { getGenres } from '../../api/genres';
+import IGenre from '../../types/IGenre';
+import { IStepProps } from '../../types/IStepProps';
+import MusicGenreButton from '../MusicGenreButton';
+import StepTitle from './Utils/StepTitle';
 
 const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
   const [genres, setGenres] = useState<IGenre[]>([]);
@@ -32,7 +32,7 @@ const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
 
   return (
     <>
-      <TitleStep label={label} />
+      <StepTitle label={label} />
       <SimpleGrid
         cols={3}
         spacing="lg"

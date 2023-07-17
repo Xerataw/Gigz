@@ -4,12 +4,12 @@ import { useEffect, useRef, useState } from 'react';
 import {
   deleteProfilePicture,
   patchProfilePicture,
-} from '../../../api/profilePicture';
-import GigzFetcher from '../../../services/GigzFetcher';
-import User from '../../../store/User';
-import { IStepProps } from '../../../types/IStepProps';
-import ProfilePicture from '../../ProfilePicture/ProfilePicture';
-import TitleStep from './TitleStep';
+} from '../../api/profilePicture';
+import GigzFetcher from '../../services/GigzFetcher';
+import User from '../../store/User';
+import { IStepProps } from '../../types/IStepProps';
+import ProfilePicture from '../ProfilePicture';
+import StepTitle from './Utils/StepTitle';
 
 const ProfilePictureStep: React.FC<IStepProps> = ({ form, label }) => {
   const [pictureLink, setPictureLink] = useState<string | undefined>(
@@ -54,7 +54,7 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form, label }) => {
 
   return (
     <>
-      <TitleStep label={label} />
+      <StepTitle label={label} />
 
       <div className="flex">
         <ProfilePicture

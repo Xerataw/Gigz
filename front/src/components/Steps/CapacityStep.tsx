@@ -1,8 +1,8 @@
 import { SegmentedControl, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { ICapacities, getCapacities } from '../../../api/capacities';
-import { IStepProps } from '../../../types/IStepProps';
-import TitleStep from './TitleStep';
+import { ICapacities, getCapacities } from '../../api/capacities';
+import { IStepProps } from '../../types/IStepProps';
+import StepTitle from './Utils/StepTitle';
 
 const CapacityStep: React.FC<IStepProps> = ({ form, label }) => {
   const [capacities, setCapacities] = useState<ICapacities[]>([]);
@@ -54,7 +54,7 @@ const CapacityStep: React.FC<IStepProps> = ({ form, label }) => {
 
   return (
     <>
-      <TitleStep label={label} />
+      <StepTitle label={label} />
       <Text m="sm" color="dimmed" align="center">
         Nombre de personne maxium que vous pouvez acceuillir dans votre
         établissement

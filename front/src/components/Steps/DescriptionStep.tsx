@@ -1,11 +1,11 @@
 import { Textarea } from '@mantine/core';
 import { IStepProps } from '../../../types/IStepProps';
-import TitleStep from './TitleStep';
+import StepTitle from './Utils/StepTitle';
 
 const DescriptionStep: React.FC<IStepProps> = ({ form, label }) => {
   return (
     <>
-      <TitleStep label={label} />
+      <StepTitle label={label} />
       <Textarea
         autoFocus
         placeholder="Les membres du groupe 'Antarctic Lemur' fusionnent leur passion pour le rock alternatif et l'électro-pop pour créer une expérience musicale unique. 'Antarctic Lemur' offre une atmosphère envoûtante où se mêlent énergie et sensibilité."

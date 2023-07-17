@@ -1,4 +1,5 @@
-import { LinkUtils } from '../services/LinkUtils';
+import { LinkUtils } from '../../services/LinkUtils';
+
 export const hostInitialValues = {
   name: '',
   description: '',

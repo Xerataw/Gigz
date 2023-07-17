@@ -1,10 +1,8 @@
-import { ActionIcon, Group, Loader, Stepper, Title } from '@mantine/core';
+import { Loader, Stepper, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
   IconAlignCenter,
-  IconArrowLeft,
-  IconArrowRight,
   IconArrowUpBar,
   IconBoxMultiple,
   IconChecks,
@@ -19,19 +17,20 @@ import {
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { patchHostProfile } from '../../api/profile';
-import AddressCompleteStep from '../../components/Register/ProfileSteps/AddressCompleteStep';
-import CapacityStep from '../../components/Register/ProfileSteps/CapacityStep';
-import DescriptionStep from '../../components/Register/ProfileSteps/DescriptionStep';
-import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
-import NameStep from '../../components/Register/ProfileSteps/NameStep';
-import PresentationPicturesStep from '../../components/Register/ProfileSteps/PresentationPicturesStep';
-import ProfilePictureStep from '../../components/Register/ProfileSteps/ProfilePictureStep';
-import SocialLinksStep from '../../components/Register/ProfileSteps/SocialLinksStep';
-import StepperIcons from '../../components/Register/StepperIcons';
+import AddressCompleteStep from '../../components/Steps/AddressCompleteStep';
+import CapacityStep from '../../components/Steps/CapacityStep';
+import DescriptionStep from '../../components/Steps/DescriptionStep';
+import GenreStep from '../../components/Steps/GenreStep';
+import NameStep from '../../components/Steps/NameStep';
+import PresentationPicturesStep from '../../components/Steps/PresentationPicturesStep';
+import ProfilePictureStep from '../../components/Steps/ProfilePictureStep';
+import SocialLinksStep from '../../components/Steps/SocialLinksStep';
+import StepButtons from '../../components/Steps/Utils/StepButtons';
+import StepperIcons from '../../components/Steps/Utils/StepperIcons';
 import {
   hostInitialValues,
   hostValidate,
-} from '../../configs/profileFormHostConfig';
+} from '../../configs/steppers/stepperHostConfig';
 
 const RegisterHostProfile: React.FC = () => {
   const numberOfSteps = 8;
@@ -166,23 +165,12 @@ const RegisterHostProfile: React.FC = () => {
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="right" mt="xl">
-        {formStep > 0 && formStep < numberOfSteps && (
-          <ActionIcon variant="default" onClick={prevStep} size="lg">
-            <IconArrowLeft />
-          </ActionIcon>
-        )}
-        {formStep < numberOfSteps && (
-          <ActionIcon
-            variant="filled"
-            color="primary"
-            onClick={nextStep}
-            size="xl"
-          >
-            <IconArrowRight />
-          </ActionIcon>
-        )}
-      </Group>
+      <StepButtons
+        formStep={formStep}
+        nextStep={nextStep}
+        numberOfSteps={numberOfSteps}
+        prevStep={prevStep}
+      />
     </div>
   );
 };

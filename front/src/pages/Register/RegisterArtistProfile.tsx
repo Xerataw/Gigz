@@ -1,10 +1,8 @@
-import { ActionIcon, Group, Loader, Stepper, Title } from '@mantine/core';
+import { Loader, Stepper, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
   IconAlignCenter,
-  IconArrowLeft,
-  IconArrowRight,
   IconArrowUpBar,
   IconBoxMultiple,
   IconChecks,
@@ -16,18 +14,19 @@ import {
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { patchArtistProfile } from '../../api/profile';
-import AddressCompleteStep from '../../components/Register/ProfileSteps/AddressCompleteStep';
-import DescriptionStep from '../../components/Register/ProfileSteps/DescriptionStep';
-import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
-import NameStep from '../../components/Register/ProfileSteps/NameStep';
-import PresentationPicturesStep from '../../components/Register/ProfileSteps/PresentationPicturesStep';
-import ProfilePictureStep from '../../components/Register/ProfileSteps/ProfilePictureStep';
-import SocialLinksStep from '../../components/Register/ProfileSteps/SocialLinksStep';
-import StepperIcons from '../../components/Register/StepperIcons';
+import AddressCompleteStep from '../../components/Steps/AddressCompleteStep';
+import DescriptionStep from '../../components/Steps/DescriptionStep';
+import GenreStep from '../../components/Steps/GenreStep';
+import NameStep from '../../components/Steps/NameStep';
+import PresentationPicturesStep from '../../components/Steps/PresentationPicturesStep';
+import ProfilePictureStep from '../../components/Steps/ProfilePictureStep';
+import SocialLinksStep from '../../components/Steps/SocialLinksStep';
+import StepButtons from '../../components/Steps/Utils/StepButtons';
+import StepperIcons from '../../components/Steps/Utils/StepperIcons';
 import {
   artistInitialValues,
   artistValidate,
-} from '../../configs/profileFormArtistConfig';
+} from '../../configs/steppers/stepperArtistConfig';
 
 const RegisterArtistProfile: React.FC = () => {
   const numberOfSteps = 7;
@@ -105,7 +104,6 @@ const RegisterArtistProfile: React.FC = () => {
         styles={{
           stepIcon: {
             display: 'none',
-            borderWidth: 4,
           },
 
           separator: {
@@ -154,23 +152,12 @@ const RegisterArtistProfile: React.FC = () => {
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="right" mt="xl">
-        {formStep > 0 && formStep < numberOfSteps && (
-          <ActionIcon variant="default" onClick={prevStep} size="lg">
-            <IconArrowLeft />
-          </ActionIcon>
-        )}
-        {formStep < numberOfSteps && (
-          <ActionIcon
-            variant="filled"
-            color="primary"
-            onClick={nextStep}
-            size="xl"
-          >
-            <IconArrowRight />
-          </ActionIcon>
-        )}
-      </Group>
+      <StepButtons
+        formStep={formStep}
+        numberOfSteps={numberOfSteps}
+        nextStep={nextStep}
+        prevStep={prevStep}
+      />
     </div>
   );
 };
