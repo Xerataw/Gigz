@@ -14,11 +14,14 @@ import {
   IconMapPin,
   IconMusic,
   IconPencil,
+  IconPhoto,
+  IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import FifthStepArtist from '../../components/Register/ProfileArtist/FifthStepArtist';
 import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
 import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
+import ProfilePictureStep from '../../components/Register/ProfileArtist/ProfilePictureStep';
 import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
 import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
 import PresentationPicturesStep from '../../components/Register/ProfileArtist/PresentationPicturesStep';
@@ -62,6 +65,7 @@ const RegisterArtistProfile: React.FC = () => {
       },
       genres: [], // id genre
       gallery: [], // uri file link
+      picture: '',
     },
     validate: (values) => {
       switch (formStep) {
@@ -200,8 +204,10 @@ const RegisterArtistProfile: React.FC = () => {
           <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
           <IconMusic key={4} />,
-          <IconArrowUpBar key={5} />,
-          <IconChecks key={6} />,
+          <IconUserCircle key={5} />,
+
+          <IconArrowUpBar key={6} />,
+          <IconChecks key={7} />,
         ]}
         currentStep={formStep}
         nextStep={nextStep}
@@ -244,6 +250,9 @@ const RegisterArtistProfile: React.FC = () => {
 
         <Stepper.Step icon={<IconBoxMultiple />}>
           <PresentationPicturesStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+        <Stepper.Step icon={<IconPhoto />}>
+          <ProfilePictureStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step

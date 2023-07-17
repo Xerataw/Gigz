@@ -11,7 +11,7 @@ export default class GigzFetcher {
     envVars.VITE_ENV === 'DEV'
       ? envVars.VITE_GIGZ_API_URL_DEV
       : envVars.VITE_GIGZ_API_URL_PROD;
-  private static API_IMAGES_URL = this.API_URL + 'static/';
+  private static API_IMAGES_URL = this.API_URL + envVars.VITE_URL_PICTURE;
   private static BASE_HEADERS = {};
 
   /**
