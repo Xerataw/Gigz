@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import {
   deleteProfilePicture,
   patchProfilePicture,
-} from '../../../api/profilePicture.api';
+} from '../../../api/profilePicture';
 import User from '../../../store/User';
 import ProfilePicture from '../../ProfilePicture/ProfilePicture';
 import { IStepProps } from '../AccountStep/FirstStep';
@@ -55,7 +55,11 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
       <Title mb="sm">À quoi vous ressemblez ?</Title>
 
       <div className="flex">
-        <ProfilePicture alt="profile picture" src={pictureLink} />
+        <ProfilePicture
+          alt="profile picture"
+          src={pictureLink}
+          placeholderIcon
+        />
         <div className="pl-4 flex flex-col justify-center">
           <h3 className="m-0">{username}</h3>
           <div className="flex justify-center items-center gap-2">
