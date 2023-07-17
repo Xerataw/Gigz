@@ -13,11 +13,14 @@ import {
   IconMapPin,
   IconMusic,
   IconPencil,
+  IconPhoto,
+  IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import FifthStepArtist from '../../components/Register/ProfileArtist/FifthStepArtist';
 import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
 import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
+import ProfilePictureStep from '../../components/Register/ProfileArtist/ProfilePictureStep';
 import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
 import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
 import StepperIcons from '../../components/Register/StepperIcons';
@@ -36,10 +39,8 @@ const valideLink = (
     : 'Veuillez inclure un lien ' + errorLabel + '.';
 };
 
-const pathRoute = '/register/artist/';
-
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 5;
+  const numberOfSteps = 6;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
@@ -61,6 +62,7 @@ const RegisterArtistProfile: React.FC = () => {
         latitude: 0,
       },
       genres: [],
+      picture: '',
     },
     validate: (values) => {
       switch (formStep) {
@@ -157,7 +159,7 @@ const RegisterArtistProfile: React.FC = () => {
         if (form.validate().hasErrors) {
           return current;
         }
-        return current < 4 ? current + 1 : current;
+        return current < numberOfSteps ? current + 1 : current;
       });
     }
   };
@@ -195,8 +197,10 @@ const RegisterArtistProfile: React.FC = () => {
           <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
           <IconMusic key={4} />,
-          <IconArrowUpBar key={5} />,
-          <IconChecks key={6} />,
+          <IconUserCircle key={5} />,
+
+          <IconArrowUpBar key={6} />,
+          <IconChecks key={7} />,
         ]}
         currentStep={formStep}
         nextStep={nextStep}
@@ -235,6 +239,10 @@ const RegisterArtistProfile: React.FC = () => {
 
         <Stepper.Step icon={<IconMusic />}>
           <FifthStepArtist form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
+        <Stepper.Step icon={<IconPhoto />}>
+          <ProfilePictureStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
         <Stepper.Step
