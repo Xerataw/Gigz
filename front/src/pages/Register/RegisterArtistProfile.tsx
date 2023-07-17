@@ -12,13 +12,11 @@ import {
   IconMapPin,
   IconMusic,
   IconPencil,
-  IconRulerMeasure,
   IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { patchArtistProfile } from '../../api/profile';
 import AddressCompleteStep from '../../components/Register/ProfileSteps/AddressCompleteStep';
-import CapacityStep from '../../components/Register/ProfileSteps/CapacityStep';
 import DescriptionStep from '../../components/Register/ProfileSteps/DescriptionStep';
 import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
 import NameStep from '../../components/Register/ProfileSteps/NameStep';
@@ -74,8 +72,7 @@ const RegisterArtistProfile: React.FC = () => {
           form.validateField('address.value');
         break;
 
-      case 1:
-      case 2:
+      default:
         break;
     }
   }, [debounced]);

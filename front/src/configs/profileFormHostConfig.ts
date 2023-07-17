@@ -2,16 +2,24 @@ import { LinkUtils } from '../services/LinkUtils';
 export const hostInitialValues = {
   name: '',
   description: '',
+
+  spotifyLink: '',
   instagramLink: '',
   facebookLink: '',
+  soundcloudLink: '',
   youtubeLink: '',
+  appleMusicLink: '',
   websiteLink: '',
+  deezerLink: '',
+
   address: {
     value: '',
     longitude: 0,
     latitude: 0,
   },
   genres: [],
+  gallery: [],
+  picture: '',
 };
 
 export const hostValidate = (

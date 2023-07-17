@@ -15,9 +15,10 @@ import Register from './pages/Register/Register';
 import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
 import Search from './pages/Search/Search';
 
-import './index.css';
-import NestedRoute from './components/NestedRoute';
 import ForgotPassword from './components/ForgotPassword';
+import NestedRoute from './components/NestedRoute';
+import './index.css';
+import RegisterHostProfile from './pages/Register/RegisterHostProfile';
 
 setupIonicReact();
 
@@ -43,7 +44,7 @@ const App: React.FC = () => {
                   <Register />
                 </Route>
                 <Route exact path="/host">
-                  <div>HOST REGISTER PROFILE</div>
+                  <RegisterHostProfile />
                 </Route>
                 <Route exact path="/artist">
                   <RegisterArtistProfile />

@@ -45,6 +45,41 @@ export const patchArtistProfile = (values: any) => {
   });
 };
 
-export const patchHostProfile = () => {
-  GigzFetcher.patch<IHostProfile>('profiles/host', {});
+export const patchHostProfile = (values: any) => {
+  const {
+    name,
+    description,
+    spotifyLink,
+    instagramLink,
+    facebookLink,
+    soundcloudLink,
+    youtubeLink,
+    appleMusicLink,
+    websiteLink,
+    deezerLink,
+    genres,
+    address,
+  } = values;
+
+  const genreReq: Promise<IGigzResponse<IGenre>>[] = [];
+
+  genres.forEach((genreId: number) => {
+    genreReq.push(postGenre(genreId));
+  });
+
+  Promise.all(genreReq);
+  return GigzFetcher.patch<IHostProfile>('me/host', {
+    name,
+    description,
+    spotifyLink,
+    instagramLink,
+    facebookLink,
+    soundcloudLink,
+    youtubeLink,
+    appleMusicLink,
+    websiteLink,
+    deezerLink,
+    latitude: address.latitude,
+    longitude: address.longitude,
+  });
 };
