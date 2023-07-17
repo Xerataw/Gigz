@@ -1,12 +1,13 @@
 import { Text, TextInput } from '@mantine/core';
-import { IStepProps } from '../../../types/IStepProps';
-import TitleStep from '../ProfileSteps/TitleStep';
+import { IStepProps } from '../../types/IStepProps';
+import StepTitle from './Utils/StepTitle';
 
 const MailPhoneStep: React.FC<IStepProps> = ({ form, label }) => {
   return (
     <>
-      <TitleStep label={label} />
+      <StepTitle label={label} />
       <TextInput
+        withAsterisk
         autoFocus
         mt="sm"
         label="Email"
@@ -14,6 +15,7 @@ const MailPhoneStep: React.FC<IStepProps> = ({ form, label }) => {
         {...form.getInputProps('email')}
       />
       <TextInput
+        withAsterisk
         mt="sm"
         icon={
           <Text color="black" size="sm">

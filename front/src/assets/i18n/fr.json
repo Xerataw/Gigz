@@ -35,5 +35,10 @@
       "register": "Pas encore de compte ?",
       "success": "Un mail a était envoyé à {{email}}"
     }
+  },
+  "stepper": {
+    "profileTypeStep": "Vous êtes ?",
+    "mailPhoneStep": "Pour vous retrouver",
+    "passwordStep": "La sécurité"
   }
 }

@@ -1,12 +1,13 @@
 import { PasswordInput } from '@mantine/core';
-import TitleStep from '../ProfileSteps/TitleStep';
-import { IStepProps } from '../../../types/IStepProps';
+import { IStepProps } from '../../types/IStepProps';
+import StepTitle from './Utils/StepTitle';
 
 const PasswordStep: React.FC<IStepProps> = ({ form, label }) => {
   return (
     <>
-      <TitleStep label={label} />
+      <StepTitle label={label} />
       <PasswordInput
+        withAsterisk
         mt="sm"
         autoFocus
         label="Mot de passe"

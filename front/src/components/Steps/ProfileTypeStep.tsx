@@ -1,6 +1,6 @@
 import { Button, Tooltip } from '@mantine/core';
-import { IStepProps } from '../../../types/IStepProps';
-import TitleStep from '../ProfileSteps/TitleStep';
+import { IStepProps } from '../../types/IStepProps';
+import StepTitle from './Utils/StepTitle';
 
 interface IUserTypeButton {
   labelTooltip: string;
@@ -24,7 +24,7 @@ const userTypes: IUserTypeButton[] = [
 const ProfileTypeStep: React.FC<IStepProps> = ({ form, label, nextStep }) => {
   return (
     <>
-      <TitleStep label={label} />
+      <StepTitle label={label} />
       <Button.Group orientation="vertical">
         {userTypes.map((userType) => (
           <Tooltip

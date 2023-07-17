@@ -1,4 +1,4 @@
-import { Button, Group, Loader, Stepper, Text } from '@mantine/core';
+import { Loader, Stepper, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
@@ -9,72 +9,31 @@ import {
   IconShieldLock,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import AccountCreated from '../../components/Register/AccountStep/AccountCreated';
-import MailPhoneStep from '../../components/Register/AccountStep/MailPhoneStep';
-import ProfileTypeStep from '../../components/Register/AccountStep/ProfileTypeStep';
-import PasswordStep from '../../components/Register/AccountStep/ThirdStep';
-import StepperIcons from '../../components/Register/StepperIcons';
-import GigzFetcher from '../../services/GigzFetcher';
+import register from '../../api/register';
+import AccountCreated from '../../components/Steps/AccountCreated';
+import MailPhoneStep from '../../components/Steps/MailPhoneStep';
+import PasswordStep from '../../components/Steps/PasswordStep';
+import ProfileTypeStep from '../../components/Steps/ProfileTypeStep';
+import StepButtons from '../../components/Steps/Utils/StepButtons';
+import StepperIcons from '../../components/Steps/Utils/StepperIcons';
+import { stepperProps } from '../../configs/steppers/globalConfig';
+import {
+  registerInitialValues,
+  regsiterValidate,
+} from '../../configs/steppers/stepperRegisterConfig';
 import User from '../../store/User';
 
-const errorPassword = (value: string) => (
-  <div>
-    Votre mot de passe est invalide :
-    <ul>
-      {/.*\d/.test(value) === false && <li>Il manque un nombre</li>}
-      {/.*[a-z]/.test(value) === false && <li>Il manque une minuscule</li>}
-      {/.*[A-Z]/.test(value) === false && <li>Il manque une majuscule</li>}
-      {/.{8}/.test(value) === false && <li>Il faut 8 charactères minimum</li>}
-    </ul>
-  </div>
-);
-
-const artistPath = '/register/artist';
-const hostPath = '/register/host';
-
 const Register: React.FC = () => {
+  const { t } = useTranslation();
   const [user, setUser] = useState<User>();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
-    initialValues: {
-      email: '',
-      phone: '',
-      password: '',
-      confirmPassword: '',
-      userType: '',
-    },
-    validate: (values) => {
-      switch (formStep) {
-        case 0:
-          return {};
-
-        case 1:
-          return {
-            email: /^\S+@\S+$/.test(values.email) ? null : 'Email Invalide',
-            phone: /^[^0]\d{8}$/.test(values.phone) ? null : 'Numéro invalide',
-          };
-
-        case 2:
-          return {
-            password:
-              /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
-                values.password
-              )
-                ? null
-                : errorPassword(values.password),
-            confirmPassword:
-              values.confirmPassword === values.password
-                ? null
-                : 'Les mots de passe ne correspondent pas',
-          };
-
-        default:
-          return {};
-      }
-    },
+    validateInputOnBlur: true,
+    initialValues: registerInitialValues,
+    validate: (values) => regsiterValidate(values, formStep),
   });
-
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   useEffect(() => {
@@ -82,17 +41,7 @@ const Register: React.FC = () => {
   }, []);
 
   const sendRegisterForm = () => {
-    GigzFetcher.post<{ [key: string]: string }>(
-      'register',
-      {
-        email: form.values.email,
-        password: form.values.password,
-        profileType: form.values.userType,
-        phoneNumber: '+33' + form.values.phone,
-      },
-      {},
-      false
-    ).then((res) => {
+    register(form.values).then((res) => {
       if (res.ok === true) {
         if (res.data?.token !== undefined) {
           user?.setToken(res.data.token);
@@ -163,26 +112,12 @@ const Register: React.FC = () => {
         currentStep={formStep}
         nextStep={nextStep}
       />
-      <Stepper
-        active={formStep}
-        p="xl"
-        w={'100%'}
-        styles={{
-          stepIcon: {
-            display: 'none',
-            borderWidth: 4,
-          },
-
-          separator: {
-            display: 'none',
-          },
-        }}
-      >
+      <Stepper active={formStep} {...stepperProps}>
         <Stepper.Step>
           <ProfileTypeStep
             form={form}
             nextStep={nextStep}
-            label="Vous êtes ?"
+            label={t('stepper.profileTypeStep')}
           />
         </Stepper.Step>
         <Stepper.Step>
@@ -203,16 +138,14 @@ const Register: React.FC = () => {
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="right" mt="xl">
-        {formStep > 0 && formStep < 3 && (
-          <Button variant="default" onClick={prevStep}>
-            Retour
-          </Button>
-        )}
-        {formStep > 0 && formStep < 3 && (
-          <Button onClick={nextStep}>Prochaine étape</Button>
-        )}
-      </Group>
+      <StepButtons
+        formStep={formStep}
+        nextStep={nextStep}
+        numberOfSteps={3}
+        prevStep={prevStep}
+        nextDisabled={form.values.userType === ''}
+      />
+
       {formStep < 3 && (
         <div className="text-center mt-10">
           Vous avez déjà un compte ?

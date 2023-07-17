@@ -4,7 +4,7 @@ interface ITitleStepProps {
   label: string;
 }
 
-const TitleStep: React.FC<ITitleStepProps> = ({ label }) => {
+const StepTitle: React.FC<ITitleStepProps> = ({ label }) => {
   return (
     <Title order={2} align="center" mb="sm">
       {label}
@@ -12,4 +12,4 @@ const TitleStep: React.FC<ITitleStepProps> = ({ label }) => {
   );
 };
 
-export default TitleStep;
+export default StepTitle;

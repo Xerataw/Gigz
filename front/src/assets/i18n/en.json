@@ -35,5 +35,10 @@
       "register": "New here?",
       "success": "An email has been sent to {{email}}"
     }
+  },
+  "stepper": {
+    "profileTypeStep": "You are ?",
+    "mailPhoneStep": "To find you",
+    "passwordStep": "Safety first"
   }
 }

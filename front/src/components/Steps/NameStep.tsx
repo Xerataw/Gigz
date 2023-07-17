@@ -1,11 +1,11 @@
 import { TextInput } from '@mantine/core';
 import { IStepProps } from '../../../types/IStepProps';
-import TitleStep from './TitleStep';
+import StepTitle from './Utils/StepTitle';
 
 const NameStep: React.FC<IStepProps> = ({ form, label }) => {
   return (
     <>
-      <TitleStep label="Comment on peut vous appeler ?" />
+      <StepTitle label="Comment on peut vous appeler ?" />
       <TextInput
         autoFocus
         mt="sm"
