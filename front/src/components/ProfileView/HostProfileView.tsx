@@ -1,3 +1,5 @@
+import { useContext } from 'react';
+import { ProfileLoadingContext } from '../../pages/Profile/Profile';
 import {
   isBioSectionAvaiblable,
   isMapSectionAvailable,
@@ -14,6 +16,8 @@ interface IHostProfileViewProps {
 }
 
 const HostProfileView: React.FC<IHostProfileViewProps> = ({ profile }) => {
+  const profileLoading = useContext(ProfileLoadingContext);
+
   const getProfileSections = (profile: IHostProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];
     isBioSectionAvaiblable(profile.description) &&
@@ -43,7 +47,11 @@ const HostProfileView: React.FC<IHostProfileViewProps> = ({ profile }) => {
 
   return (
     <ProfileView profile={profile}>
-      {getProfileSections(profile).map((section) => section)}
+      {profileLoading ? (
+        <Biography loading={true} content={''} />
+      ) : (
+        getProfileSections(profile).map((section) => section)
+      )}
     </ProfileView>
   );
 };

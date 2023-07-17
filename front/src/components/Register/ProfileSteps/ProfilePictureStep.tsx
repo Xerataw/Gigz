@@ -7,7 +7,7 @@ import {
 } from '../../../api/profilePicture';
 import GigzFetcher from '../../../services/GigzFetcher';
 import User from '../../../store/User';
-import ProfilePicture from '../../ProfilePicture/ProfilePicture';
+import ProfilePicture from '../../ProfilePicture';
 import { IStepProps } from '../AccountStep/FirstStep';
 
 const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {

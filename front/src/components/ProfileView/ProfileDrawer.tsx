@@ -1,4 +1,4 @@
-import { ReactNode, useState } from 'react';
+import { ReactNode, useContext, useState } from 'react';
 import { Global } from '@emotion/react';
 import { ScrollArea } from '@mantine/core';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
@@ -6,6 +6,7 @@ import ProfileBanner from './ProfileBanner';
 import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
+import { ProfileLoadingContext } from '../../pages/Profile/Profile';
 
 interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;
@@ -16,10 +17,12 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
   profile,
   children,
 }) => {
+  const profileLoading = useContext(ProfileLoadingContext);
   const [drawerOpened, setDrawerOpened] = useState<boolean>(false);
   const toggleDrawer = () => setDrawerOpened(!drawerOpened);
 
   const hasMusicEmbed =
+    !profileLoading &&
     'musicLink' in profile &&
     typeof profile.musicLink === 'string' &&
     profile.musicLink.length > 0;
@@ -53,10 +56,16 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
           }`}
         >
           <ProfileBanner
-            username={profile.name}
-            profilePicture={profile.profilePicture}
-            city={profile.city}
-            genres={profile.genres}
+            username={profileLoading ? 'loading username' : profile.name}
+            loading={profileLoading}
+            profilePicture={
+              profileLoading
+                ? 'loading profile picture'
+                : profile.profilePicture
+            }
+            city={profileLoading ? 'loading city name' : profile.city}
+            genres={profileLoading ? [] : profile.genres}
+            withDrawer={true}
           />
         </div>
         <ScrollArea
