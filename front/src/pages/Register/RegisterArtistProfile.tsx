@@ -3,149 +3,39 @@ import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
   IconAlignCenter,
-  IconBoxMultiple,
   IconArrowLeft,
   IconArrowRight,
   IconArrowUpBar,
+  IconBoxMultiple,
   IconChecks,
-  IconCircleCheck,
-  IconCircleCheckFilled,
   IconExternalLink,
   IconMapPin,
   IconMusic,
   IconPencil,
-  IconPhoto,
   IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
-import FifthStepArtist from '../../components/Register/ProfileArtist/FifthStepArtist';
-import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
-import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
-import ProfilePictureStep from '../../components/Register/ProfileArtist/ProfilePictureStep';
-import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
-import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
-import PresentationPicturesStep from '../../components/Register/ProfileArtist/PresentationPicturesStep';
+import AddressCompleteStep from '../../components/Register/ProfileSteps/AddressCompleteStep';
+import DescriptionStep from '../../components/Register/ProfileSteps/DescriptionStep';
+import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
+import NameStep from '../../components/Register/ProfileSteps/NameStep';
+import PresentationPicturesStep from '../../components/Register/ProfileSteps/PresentationPicturesStep';
+import ProfilePictureStep from '../../components/Register/ProfileSteps/ProfilePictureStep';
+import SocialLinksStep from '../../components/Register/ProfileSteps/SocialLinksStep';
 import StepperIcons from '../../components/Register/StepperIcons';
-
-const linkRegex =
-  /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
-
-const valideLink = (
-  value: string,
-  includeTag: string,
-  errorLabel: string
-): string | null => {
-  return value.length === 0 ||
-    (value.includes(includeTag) && linkRegex.test(value))
-    ? null
-    : 'Veuillez inclure un lien ' + errorLabel + '.';
-};
+import {
+  artistInitialValues,
+  artistValidate,
+} from '../../configs/profileFormArtistConfig';
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 6;
+  const numberOfSteps = 7;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
-    initialValues: {
-      name: '',
-      description: '',
-      spotifyLink: '',
-      instagramLink: '',
-      facebookLink: '',
-      soundcloudLink: '',
-      youtubeLink: '',
-      appleMusicLink: '',
-      websiteLink: '',
-      deezerLink: '',
-      address: {
-        value: '',
-        longitude: 0,
-        latitude: 0,
-      },
-      genres: [], // id genre
-      gallery: [], // uri file link
-      picture: '',
-    },
-    validate: (values) => {
-      switch (formStep) {
-        case 0:
-          return {
-            name: /^.{2,255}$/.test(values.name)
-              ? null
-              : 'Veuillez entrer un nom de plus de 2 caractères',
-          };
-
-        case 1:
-          return {
-            description: /^.{0,2000}$/.test(values.description)
-              ? null
-              : 'La description est trop longue',
-          };
-
-        // links are all optional
-        case 2:
-          return {
-            spotifyLink: valideLink(
-              values.spotifyLink,
-              'spotify.com/artist',
-              'Spotify'
-            ),
-            instagramLink: valideLink(
-              values.instagramLink,
-              'instagram.com/',
-              'Instagram'
-            ),
-            facebookLink: valideLink(
-              values.facebookLink,
-              'facebook.com',
-              'Facebook'
-            ),
-            soundcloudLink: valideLink(
-              values.soundcloudLink,
-              'soundcloud.com',
-              'SoundCloud'
-            ),
-            youtubeLink: valideLink(
-              values.youtubeLink,
-              'youtube.com',
-              'Youtube'
-            ),
-            appleMusicLink: valideLink(
-              values.appleMusicLink,
-              'music.apple.com',
-              'Apple Music'
-            ),
-            deezerLink: valideLink(
-              values.deezerLink,
-              'www.deezer.com',
-              'Deezer'
-            ),
-            websiteLink: valideLink(
-              values.websiteLink,
-              'http',
-              'de site web valide'
-            ),
-          };
-        case 3:
-          return {
-            address:
-              values.address.value.length === 0 ||
-              values.address.value.length > 5
-                ? null
-                : 'Veuillez entrer une adressse valide',
-          };
-
-        case 4:
-          //can have genres but optionnal
-          return {
-            genres: null,
-          };
-
-        default:
-          return {};
-      }
-    },
+    initialValues: artistInitialValues,
+    validate: (values) => artistValidate(values, formStep),
   });
   const [debounced] = useDebouncedValue(form.values, 1000);
 
@@ -188,10 +78,6 @@ const RegisterArtistProfile: React.FC = () => {
     }
   }, [debounced]);
 
-  useEffect(() => {
-    setFormStep(5);
-  }, []);
-
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
       <Title order={2} mb={'sm'}>
@@ -204,10 +90,11 @@ const RegisterArtistProfile: React.FC = () => {
           <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
           <IconMusic key={4} />,
-          <IconUserCircle key={5} />,
+          <IconBoxMultiple key={5} />,
+          <IconUserCircle key={6} />,
 
-          <IconArrowUpBar key={6} />,
-          <IconChecks key={7} />,
+          <IconArrowUpBar key={7} />,
+          <IconChecks key={8} />,
         ]}
         currentStep={formStep}
         nextStep={nextStep}
@@ -227,38 +114,35 @@ const RegisterArtistProfile: React.FC = () => {
           },
         }}
       >
-        <Stepper.Step icon={<IconPencil />}>
-          {/* <Stepper.Step icon={<></>} > */}
-          <FirstStepArtist form={form} nextStep={() => nextStep()} />
+        <Stepper.Step>
+          <NameStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconAlignCenter />}>
-          <SecondStepArtist form={form} nextStep={() => nextStep()} />
+        <Stepper.Step>
+          <DescriptionStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconExternalLink />}>
-          <ThirdStepArtist form={form} nextStep={() => nextStep()} />
+        <Stepper.Step>
+          <SocialLinksStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconMapPin />}>
-          <FourthStepArtist form={form} nextStep={() => nextStep()} />
+        <Stepper.Step>
+          <AddressCompleteStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconMusic />}>
-          <FifthStepArtist form={form} nextStep={() => nextStep()} />
+        <Stepper.Step>
+          <GenreStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step icon={<IconBoxMultiple />}>
+        <Stepper.Step>
           <PresentationPicturesStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
-        <Stepper.Step icon={<IconPhoto />}>
+
+        <Stepper.Step>
           <ProfilePictureStep form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
-        <Stepper.Step
-          icon={<IconCircleCheck />}
-          completedIcon={<IconCircleCheckFilled />}
-        >
+        <Stepper.Step>
           <Loader variant="bars" />
         </Stepper.Step>
 
