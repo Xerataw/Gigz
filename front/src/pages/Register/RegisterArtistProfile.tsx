@@ -31,7 +31,7 @@ import {
 } from '../../configs/profileFormArtistConfig';
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 7;
+  const numberOfSteps = 8;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
@@ -58,10 +58,6 @@ const RegisterArtistProfile: React.FC = () => {
       });
     }
   };
-
-  useEffect(() => {
-    setFormStep(5);
-  }, []);
 
   const prevStep = () =>
     setFormStep((current) => (current > 0 ? current - 1 : current));
@@ -96,9 +92,9 @@ const RegisterArtistProfile: React.FC = () => {
           <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
           <IconMusic key={4} />,
+          <IconRulerMeasure key={7} />,
           <IconBoxMultiple key={5} />,
           <IconUserCircle key={6} />,
-          <IconRulerMeasure key={7} />,
 
           <IconArrowUpBar key={8} />,
           <IconChecks key={9} />,
