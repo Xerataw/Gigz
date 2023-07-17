@@ -116,7 +116,7 @@ export default class User {
    * Change the user instance user type (artist, host) and write the changes in local storage.
    * @param profileType the new user type (artist, host) to set.
    */
-  @storeUser('type')
+  @storeUser('profileType')
   public setProfileType(profileType: EProfileType | null) {
     this.profileType = profileType;
   }

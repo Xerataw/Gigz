@@ -22,11 +22,7 @@ const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({ profile }) => {
     const sections: JSX.Element[] = [];
     isBioSectionAvaiblable(profile.description) &&
       sections.push(
-        <Biography
-          loading={false}
-          key="bio"
-          content={profile.description as string}
-        />
+        <Biography key="bio" content={profile.description as string} />
       );
     isMusicSectionAvailable(profile) &&
       sections.push(

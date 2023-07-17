@@ -40,7 +40,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             src={profilePicture && GigzFetcher.getImageUri(profilePicture)}
             radius="xl"
             size="xl"
-            alt={`${username} profile picture`}
+            alt={username}
           />
         </Skeleton>
         <div className="ml-3">

@@ -21,6 +21,17 @@ const Profile: React.FC = () => {
     history.push('/login');
   };
 
+  const buildProfile = (
+    baseProfile: any,
+    profilePicture?: string
+  ): IArtistProfile | IHostProfile => {
+    return {
+      ...baseProfile,
+      genres: baseProfile.genres ? baseProfile.genres : [],
+      profilePicture,
+    };
+  };
+
   const displayProfileView = (): JSX.Element => {
     return profileType === EProfileType.ARTIST ? (
       <ArtistProfileView profile={profile as IArtistProfile} />
@@ -31,17 +42,21 @@ const Profile: React.FC = () => {
 
   // Get the stored user information and query the profile
   useEffect(() => {
+    console.log('here');
     User.getInstance()
       .then((user) => {
         if (user.getToken() === null) redirectToLogin();
+        console.log(user);
         getProfile(user.getProfileType() as EProfileType).then((profile) => {
           setProfileType(user.getProfileType() as EProfileType);
-          setProfile(profile.data);
+          setProfile(
+            buildProfile(profile.data, user.getProfilePicture() as string)
+          );
           setProfileLoading(false);
         });
       })
       .catch(() => redirectToLogin());
-  }, []);
+  }, [history]);
 
   return (
     <ProfileLoadingContext.Provider value={profileLoading}>
