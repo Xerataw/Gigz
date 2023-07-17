@@ -5,6 +5,7 @@ import {
   deleteProfilePicture,
   patchProfilePicture,
 } from '../../../api/profilePicture';
+import GigzFetcher from '../../../services/GigzFetcher';
 import User from '../../../store/User';
 import ProfilePicture from '../../ProfilePicture/ProfilePicture';
 import { IStepProps } from '../AccountStep/FirstStep';
@@ -27,7 +28,7 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
 
   const handleChangeFile = (file: File) => {
     patchProfilePicture(file)
-      .then((res) => 'http://localhost:3000/static/' + res.data?.media)
+      .then((res) => GigzFetcher.getImageUri(res.data?.media ?? ''))
       .then((pictureLink: string) => setPictureLink(pictureLink));
   };
 
@@ -45,7 +46,7 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
       }
 
       if (userProfilePicture !== null) {
-        setPictureLink('http://localhost:3000/static/' + userProfilePicture);
+        setPictureLink(GigzFetcher.getImageUri(userProfilePicture));
       }
     });
   }, []);
