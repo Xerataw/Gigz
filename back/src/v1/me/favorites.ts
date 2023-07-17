@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
   sendResponse(res, fromDbFormat(favorites));
 });
 
-router.patch('/', async (req, res) => {
+router.post('/', async (req, res) => {
   const body = favoriteBodySchema.safeParse(req.body);
 
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
