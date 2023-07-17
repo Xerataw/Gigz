@@ -42,11 +42,9 @@ const Profile: React.FC = () => {
 
   // Get the stored user information and query the profile
   useEffect(() => {
-    console.log('here');
     User.getInstance()
       .then((user) => {
         if (user.getToken() === null) redirectToLogin();
-        console.log(user);
         getProfile(user.getProfileType() as EProfileType).then((profile) => {
           setProfileType(user.getProfileType() as EProfileType);
           setProfile(
