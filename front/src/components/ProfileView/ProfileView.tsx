@@ -13,13 +13,17 @@ interface IProfileViewProps {
 
 const ProfileView: React.FC<IProfileViewProps> = ({ profile, children }) => {
   const hasMusicEmbed =
+    profile &&
     'musicLink' in profile &&
     typeof profile.musicLink === 'string' &&
     profile.musicLink.length > 0;
 
   return (
     <>
-      <Gallery mediaList={profile.gallery} withEmbed={hasMusicEmbed} />
+      <Gallery
+        mediaList={profile && profile.gallery}
+        withEmbed={hasMusicEmbed}
+      />
       <ProfileDrawer profile={profile}>{children}</ProfileDrawer>
     </>
   );

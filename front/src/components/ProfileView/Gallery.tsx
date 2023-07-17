@@ -1,5 +1,7 @@
 import { Carousel } from '@mantine/carousel';
-import { Image } from '@mantine/core';
+import { Center, Image, Loader } from '@mantine/core';
+import { useContext } from 'react';
+import { ProfileLoadingContext } from '../../pages/Profile/Profile';
 import GigzFetcher from '../../services/GigzFetcher';
 import EMediaType from '../../types/EMediaType';
 import IMedia from '../../types/IMedia';
@@ -10,9 +12,14 @@ interface IGalleryProps {
 }
 
 const Gallery: React.FC<IGalleryProps> = ({ mediaList, withEmbed = false }) => {
+  const profileLoading = useContext(ProfileLoadingContext);
   const slidesHeight = withEmbed ? '35.75rem' : '42.25rem';
 
-  return (
+  return profileLoading ? (
+    <Center h={slidesHeight}>
+      <Loader />
+    </Center>
+  ) : (
     <Carousel withIndicators withControls={false} height={slidesHeight}>
       {mediaList.map(
         (media) =>

@@ -70,7 +70,7 @@ const Profile: React.FC = () => {
 
   return (
     <ProfileLoadingContext.Provider value={profileLoading}>
-      {profile && <Layout navBarShadow={false}>{displayProfileView()}</Layout>}
+      <Layout navBarShadow={false}>{displayProfileView()}</Layout>
     </ProfileLoadingContext.Provider>
   );
 };
