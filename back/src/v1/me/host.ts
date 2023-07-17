@@ -19,8 +19,11 @@ const HostBodySchema = z.object({
   facebookLink: z.string().optional(),
   instagramLink: z.string().optional(),
 
+  // Address
   address: z.string().optional(),
-  cityId: z.coerce.number().optional(),
+  city: z.string().optional(),
+  latitude: z.coerce.number(),
+  longitude: z.coerce.number(),
 
   capacityId: z.coerce.number().optional(),
   hostTypeId: z.coerce.number().optional(),

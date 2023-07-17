@@ -48,11 +48,11 @@ model artist {
   apple_music_link String? @db.VarChar(255)
   website_link     String? @db.VarChar(255)
   deezer_link      String? @db.VarChar(255)
-  account_id       Int     @unique(map: "account_id")
   music_link       String? @db.VarChar(255)
   city             String? @db.VarChar(255)
-  longitude        String? @db.VarChar(255)
-  latitude         String? @db.VarChar(255)
+  latitude         Float?  @db.Float
+  longitude        Float?  @db.Float
+  account_id       Int     @unique(map: "account_id")
   account          account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "artist_ibfk_2")
 
   @@index([account_id], map: "artist_ibfk_2")
@@ -81,11 +81,11 @@ model host {
   instagram_link String?    @db.VarChar(255)
   capacity_id    Int?
   host_type_id   Int?
-  account_id     Int        @unique(map: "account_id")
   address        String?    @db.VarChar(255)
   city           String?    @db.VarChar(255)
-  longitude      String?    @db.VarChar(255)
-  latitude       String?    @db.VarChar(255)
+  latitude       Float?     @db.Float
+  longitude      Float?     @db.Float
+  account_id     Int        @unique(map: "account_id")
   capacity       capacity?  @relation(fields: [capacity_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_1")
   host_type      host_type? @relation(fields: [host_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_2")
   account        account    @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_4")

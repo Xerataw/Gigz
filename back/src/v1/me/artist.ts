@@ -24,7 +24,10 @@ const ArtistBodySchema = z.object({
   websiteLink: z.string().optional(),
   deezerLink: z.string().optional(),
 
-  cityId: z.coerce.number().optional(),
+  // Address
+  city: z.string().optional(),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
 });
 
 router.patch('/', async (req, res) => {
