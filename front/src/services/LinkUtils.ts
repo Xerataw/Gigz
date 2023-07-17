@@ -7,7 +7,9 @@ export class LinkUtils {
   };
 
   static isLinkIncluding = (value: string, includeTag: string) => {
-    return this.isLink(value) && value.includes(includeTag);
+    return (
+      (this.isLink(value) && value.includes(includeTag)) || value.length === 0
+    );
   };
 
   static validateLink = (
