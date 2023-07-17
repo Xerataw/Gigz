@@ -19,14 +19,6 @@ const Profile: React.FC = () => {
     history.push('/login');
   };
 
-  const buildProfile = (baseProfile: any): IProfile => {
-    return {
-      ...baseProfile,
-      mediaList: [],
-      genres: [],
-    };
-  };
-
   const displayProfileView = (): JSX.Element => {
     return profileType === EProfileType.ARTIST ? (
       <ArtistProfileView profile={profile as IArtistProfile} />
@@ -42,7 +34,7 @@ const Profile: React.FC = () => {
         if (user.getToken() === null) redirectToLogin();
         getProfile(user.getProfileType() as EProfileType).then((profile) => {
           setProfileType(user.getProfileType() as EProfileType);
-          setProfile(buildProfile(profile.data));
+          setProfile(profile.data);
         });
       })
       .catch(() => redirectToLogin());

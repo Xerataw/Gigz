@@ -7,8 +7,10 @@ export default interface IProfile {
   description?: string;
   city?: string;
   genres: IGenre[];
-  mediaList: IMedia[];
+  gallery: IMedia[];
   websiteLink?: string;
   instagramLink?: string;
   facebookLink?: string;
+  longitude?: number;
+  latitude?: number;
 }
