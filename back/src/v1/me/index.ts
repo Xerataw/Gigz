@@ -9,15 +9,17 @@ import genres from '@v1/me/genres';
 import profilePicture from '@v1/me/profilePicture';
 
 import account from '@v1/me/account';
+import conversations from '@v1/me/conversations';
 
 const router = express.Router();
-
-router.use('/gallery', gallery);
 
 router.use('/artist', artist);
 router.use('/host', host);
 
+router.use('/gallery', gallery);
 router.use('/account', account);
+
+router.use('/conversations', conversations);
 
 router.use('/genres', genres);
 router.use('/profile-picture', profilePicture);
