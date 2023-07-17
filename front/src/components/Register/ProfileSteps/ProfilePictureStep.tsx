@@ -56,11 +56,7 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
       <Title mb="sm">À quoi vous ressemblez ?</Title>
 
       <div className="flex">
-        <ProfilePicture
-          alt="profile picture"
-          src={pictureLink}
-          placeholderIcon
-        />
+        <ProfilePicture alt="profile picture" src={pictureLink} />
         <div className="pl-4 flex flex-col justify-center">
           <h3 className="m-0">{username}</h3>
           <div className="flex justify-center items-center gap-2">
