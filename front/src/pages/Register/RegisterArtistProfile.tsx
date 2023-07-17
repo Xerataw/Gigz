@@ -1,21 +1,31 @@
-import { Button, Group, Loader, Stepper, Text } from '@mantine/core';
+import { ActionIcon, Group, Loader, Stepper, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
   IconAlignCenter,
+  IconBoxMultiple,
+  IconArrowLeft,
+  IconArrowRight,
+  IconArrowUpBar,
+  IconChecks,
   IconCircleCheck,
   IconCircleCheckFilled,
   IconExternalLink,
   IconMapPin,
   IconMusic,
   IconPencil,
+  IconPhoto,
+  IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import FifthStepArtist from '../../components/Register/ProfileArtist/FifthStepArtist';
 import FirstStepArtist from '../../components/Register/ProfileArtist/FirstStepArtist';
 import FourthStepArtist from '../../components/Register/ProfileArtist/FourthStepArtist';
+import ProfilePictureStep from '../../components/Register/ProfileArtist/ProfilePictureStep';
 import SecondStepArtist from '../../components/Register/ProfileArtist/SecondStepArtist';
 import ThirdStepArtist from '../../components/Register/ProfileArtist/ThirdStepArtist';
+import PresentationPicturesStep from '../../components/Register/ProfileArtist/PresentationPicturesStep';
+import StepperIcons from '../../components/Register/StepperIcons';
 
 const linkRegex =
   /^https?:\/\/(?:www\.)?[-a-zA-Z0-9@:%._+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b(?:[-a-zA-Z0-9()@:%_+.~#?&/=]*)$/;
@@ -32,7 +42,7 @@ const valideLink = (
 };
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 5;
+  const numberOfSteps = 6;
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
@@ -53,7 +63,9 @@ const RegisterArtistProfile: React.FC = () => {
         longitude: 0,
         latitude: 0,
       },
-      genres: [],
+      genres: [], // id genre
+      gallery: [], // uri file link
+      picture: '',
     },
     validate: (values) => {
       switch (formStep) {
@@ -150,7 +162,7 @@ const RegisterArtistProfile: React.FC = () => {
         if (form.validate().hasErrors) {
           return current;
         }
-        return current < 4 ? current + 1 : current;
+        return current < numberOfSteps - 1 ? current + 1 : current;
       });
     }
   };
@@ -176,14 +188,47 @@ const RegisterArtistProfile: React.FC = () => {
     }
   }, [debounced]);
 
+  useEffect(() => {
+    setFormStep(5);
+  }, []);
+
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
-      <Text>Informations du profil</Text>
-      <Group position="right" m="xl" className="w-full">
-        <Button disabled={formStep > 2}>Passer</Button>
-      </Group>
-      <Stepper active={formStep} orientation="horizontal" p="xl" w={'100%'}>
+      <Title order={2} mb={'sm'}>
+        Complétez votre profil
+      </Title>
+      <StepperIcons
+        icons={[
+          <IconPencil key={0} />,
+          <IconAlignCenter key={1} />,
+          <IconExternalLink key={2} />,
+          <IconMapPin key={3} />,
+          <IconMusic key={4} />,
+          <IconUserCircle key={5} />,
+
+          <IconArrowUpBar key={6} />,
+          <IconChecks key={7} />,
+        ]}
+        currentStep={formStep}
+        nextStep={nextStep}
+      />
+      <Stepper
+        active={formStep}
+        p="xl"
+        w={'100%'}
+        styles={{
+          stepIcon: {
+            display: 'none',
+            borderWidth: 4,
+          },
+
+          separator: {
+            display: 'none',
+          },
+        }}
+      >
         <Stepper.Step icon={<IconPencil />}>
+          {/* <Stepper.Step icon={<></>} > */}
           <FirstStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
@@ -203,6 +248,13 @@ const RegisterArtistProfile: React.FC = () => {
           <FifthStepArtist form={form} nextStep={() => nextStep()} />
         </Stepper.Step>
 
+        <Stepper.Step icon={<IconBoxMultiple />}>
+          <PresentationPicturesStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+        <Stepper.Step icon={<IconPhoto />}>
+          <ProfilePictureStep form={form} nextStep={() => nextStep()} />
+        </Stepper.Step>
+
         <Stepper.Step
           icon={<IconCircleCheck />}
           completedIcon={<IconCircleCheckFilled />}
@@ -218,12 +270,19 @@ const RegisterArtistProfile: React.FC = () => {
 
       <Group position="right" mt="xl">
         {formStep > 0 && formStep < numberOfSteps && (
-          <Button variant="default" onClick={prevStep}>
-            Retour
-          </Button>
+          <ActionIcon variant="default" onClick={prevStep} size="lg">
+            <IconArrowLeft />
+          </ActionIcon>
         )}
         {formStep < numberOfSteps && (
-          <Button onClick={nextStep}>Prochaine étape Y</Button>
+          <ActionIcon
+            variant="filled"
+            color="primary"
+            onClick={nextStep}
+            size="xl"
+          >
+            <IconArrowRight />
+          </ActionIcon>
         )}
       </Group>
     </div>
