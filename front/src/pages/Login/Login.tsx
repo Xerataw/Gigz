@@ -95,7 +95,7 @@ const Login: React.FC = () => {
         if (res.ok) {
           User.getInstance().then((user) => {
             user.setToken(res.data.token);
-            user.setUserType(res.data.profileType);
+            user.setProfileType(res.data.profileType);
             user.setProfilePicture(res.data.profilePicture);
             onSuccess();
           });

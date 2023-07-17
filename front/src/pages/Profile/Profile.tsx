@@ -2,10 +2,7 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
 import User from '../../store/User';
-import {
-  default as EUserType,
-  default as ProfileType,
-} from '../../types/EUserType';
+import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
 import IProfile from '../../types/IProfile';
@@ -15,7 +12,7 @@ import HostProfileView from '../../components/ProfileView/HostProfileView';
 
 const Profile: React.FC = () => {
   const history = useHistory();
-  const [userType, setUserType] = useState<EUserType>();
+  const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
 
   const redirectToLogin = () => {
@@ -31,7 +28,7 @@ const Profile: React.FC = () => {
   };
 
   const displayProfileView = (): JSX.Element => {
-    return userType === EUserType.ARTIST ? (
+    return profileType === EProfileType.ARTIST ? (
       <ArtistProfileView profile={profile as IArtistProfile} />
     ) : (
       <HostProfileView profile={profile as IHostProfile} />
@@ -43,8 +40,8 @@ const Profile: React.FC = () => {
     User.getInstance()
       .then((user) => {
         if (user.getToken() === null) redirectToLogin();
-        getProfile().then((profile) => {
-          setUserType(user.getUserType() as ProfileType);
+        getProfile(user.getProfileType() as EProfileType).then((profile) => {
+          setProfileType(user.getProfileType() as EProfileType);
           setProfile(buildProfile(profile.data));
         });
       })
@@ -53,7 +50,7 @@ const Profile: React.FC = () => {
 
   return (
     <Layout navBarShadow={false}>
-      {userType !== undefined && displayProfileView()}
+      {profileType !== undefined && displayProfileView()}
     </Layout>
   );
 };
