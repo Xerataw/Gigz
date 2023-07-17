@@ -43,7 +43,7 @@ router.patch('/', async (req, res) => {
   const data = await database.artist.upsert({
     where: { account_id: req.account.id },
     update: toDbFormat(body.data),
-    create: { ...body.data, account_id: req.account.id },
+    create: { ...toDbFormat(body.data), account_id: req.account.id },
   });
 
   // const formattedData = { ...data, account_genre: data. .account_genre.map(genre => genre.id) }

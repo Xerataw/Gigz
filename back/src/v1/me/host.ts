@@ -42,7 +42,7 @@ router.patch('/', async (req, res) => {
   const data = await database.host.upsert({
     where: { account_id: req.account.id },
     update: toDbFormat(body.data),
-    create: { ...body.data, account_id: req.account.id },
+    create: { ...toDbFormat(body.data), account_id: req.account.id },
   });
 
   sendResponse(res, fromDbFormat(data));
