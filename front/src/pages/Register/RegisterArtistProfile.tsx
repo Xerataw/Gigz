@@ -13,6 +13,7 @@ import {
   IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { patchArtistProfile } from '../../api/profile';
 import AddressCompleteStep from '../../components/Steps/AddressCompleteStep';
 import DescriptionStep from '../../components/Steps/DescriptionStep';
@@ -31,6 +32,7 @@ import {
 const RegisterArtistProfile: React.FC = () => {
   const numberOfSteps = 7;
 
+  const { t } = useTranslation();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
@@ -112,34 +114,40 @@ const RegisterArtistProfile: React.FC = () => {
         }}
       >
         <Stepper.Step>
-          <NameStep form={form} label="Vous êtes ?" />
+          <NameStep form={form} label={t('stepper.nameStep')} />
         </Stepper.Step>
 
         <Stepper.Step>
-          <DescriptionStep form={form} label="Qui êtes vous ?" />
+          <DescriptionStep form={form} label={t('stepper.descriptionStep')} />
         </Stepper.Step>
 
         <Stepper.Step>
-          <SocialLinksStep form={form} label="Où peut-on vous retrouver ?" />
+          <SocialLinksStep form={form} label={t('stepper.socialLinksStep')} />
         </Stepper.Step>
 
         <Stepper.Step>
-          <AddressCompleteStep form={form} label="Où êtes-vous présent ?" />
+          <AddressCompleteStep
+            form={form}
+            label={t('stepper.addressCompleteStep')}
+          />
         </Stepper.Step>
 
         <Stepper.Step>
-          <GenreStep form={form} label="Vous êtes plutôt ?" />
+          <GenreStep form={form} label={t('stepper.genreStep')} />
         </Stepper.Step>
 
         <Stepper.Step>
           <PresentationPicturesStep
             form={form}
-            label="À quoi ressemble votre groupe ?"
+            label={t('stepper.presentationPicturesStep')}
           />
         </Stepper.Step>
 
         <Stepper.Step>
-          <ProfilePictureStep form={form} label="À quoi vous ressemblez ?" />
+          <ProfilePictureStep
+            form={form}
+            label={t('stepper.presentationPicturesStep')}
+          />
         </Stepper.Step>
 
         <Stepper.Step>

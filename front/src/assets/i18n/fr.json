@@ -39,6 +39,14 @@
   "stepper": {
     "profileTypeStep": "Vous êtes ?",
     "mailPhoneStep": "Pour vous retrouver",
-    "passwordStep": "La sécurité"
+    "passwordStep": "La sécurité",
+    "nameStep": "Votre nom est ?",
+    "descriptionStep": "Qui êtes vous ?",
+    "socialLinksStep": "Où êtes vous présent ?",
+    "addressCompleteStep": "Où êtes vous présent ?",
+    "genreStep": "Vous êtes plutôt ?",
+    "presentationPicturesStep": "À quoi ressemble votre groupe ?",
+    "profilePictureStep": "À quoi vous ressemblez ?",
+    "capacityStep": "Vous pouvez acceuillir combien de personne ?"
   }
 }

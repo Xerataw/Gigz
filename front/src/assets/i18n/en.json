@@ -39,6 +39,14 @@
   "stepper": {
     "profileTypeStep": "You are ?",
     "mailPhoneStep": "To find you",
-    "passwordStep": "Safety first"
+    "passwordStep": "Safety first",
+    "nameStep": "Your name is ?",
+    "descriptionStep": "Who are you ?",
+    "socialLinksStep": "Where can we find you ?",
+    "addressCompleteStep": "Where do you perform ?",
+    "genreStep": "You are quite ?",
+    "presentationPicturesStep": "What does your group look like ?",
+    "profilePictureStep": "What does you look like ?",
+    "capacityStep": "How many people can you accommodate ?"
   }
 }
