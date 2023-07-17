@@ -19,5 +19,5 @@ export const postPhotoGallery = (files: File[]) => {
 };
 
 export const deletePhotoGallery = (index: number) => {
-  return GigzFetcher.delete<IGalleryPhoto>('me/gallery/' + index, {}, {}, true);
+  return GigzFetcher.delete<IGalleryPhoto>('me/gallery/' + index);
 };
