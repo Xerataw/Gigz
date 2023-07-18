@@ -3,7 +3,7 @@ import IGenre from './IGenre';
 interface IResult {
   id: number;
   profilePicture: string;
-  username: string;
+  name: string;
   city: string;
   genres: IGenre[];
 }
