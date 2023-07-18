@@ -7,7 +7,7 @@ interface ILocationChipProps {
   address: string;
 }
 
-const LocationChip = ({ address }: ILocationChipProps) => {
+const LocationChip: React.FC<ILocationChipProps> = ({ address }) => {
   const { t } = useTranslation();
 
   return (
