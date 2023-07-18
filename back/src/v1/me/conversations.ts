@@ -37,8 +37,6 @@ router.post('/', async (req, res) => {
     },
   });
 
-  console.log(conversations);
-
   if (conversations.length > 0) {
     // There is already a conversation
     return sendError(res, ApiMessages.BadRequest);
