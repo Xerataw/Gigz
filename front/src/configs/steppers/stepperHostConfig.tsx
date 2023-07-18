@@ -17,6 +17,8 @@ export const hostInitialValues = {
 
   address: {
     value: '',
+    city: '',
+    code: '',
     longitude: 0,
     latitude: 0,
   },

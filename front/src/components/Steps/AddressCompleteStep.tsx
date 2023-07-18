@@ -26,10 +26,13 @@ const AddressCompleteStep: React.FC<IStepProps> = ({ form, label }) => {
   }, [debounced]);
 
   const getAddressResult = (address: string) => {
+    //get address object from the one choosen by the user
     const addressItem = searchItems.find((item) => item.value === address);
 
     form.setFieldValue('address.longitude', addressItem?.longitude ?? 0);
     form.setFieldValue('address.latitude', addressItem?.latitude ?? 0);
+    form.setFieldValue('address.city', addressItem?.city ?? 0);
+    form.setFieldValue('address.code', addressItem?.code ?? 0);
     setSearchValue(address);
   };
 

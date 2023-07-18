@@ -4,9 +4,10 @@ const envVars = import.meta.env;
 
 export interface IAddressSearchItem {
   value: string;
-  address_fr: string;
   longitude: number;
   latitude: number;
+  code: number;
+  city: string;
 }
 
 export default class MapTiler {
@@ -25,17 +26,15 @@ export default class MapTiler {
         .then((res) =>
           res.filter((item: any) => item.place_type[0] === 'address')
         )
-        .then((res) => {
-          return res.map((item: any) => ({
+        .then((res) =>
+          res.map((item: any) => ({
             latitude: item.geometry.coordinates[1],
             longitude: item.geometry.coordinates[0],
-            address_fr: item.place_name,
             value: item.place_name,
-            key:
-              String(Number(item.geometry.coordinates[1])) +
-              String(Number(item.geometry.coordinates[0])),
-          }));
-        })
+            city: res[0].context[2].text,
+            code: res[0].context[0].text,
+          }))
+        )
         .then((res: IAddressSearchItem[]) => {
           handleSearchResult(res);
         });
