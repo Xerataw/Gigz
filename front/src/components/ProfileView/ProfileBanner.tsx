@@ -15,9 +15,9 @@ interface IProfileBannerProps {
 }
 
 const loadingGenres: IGenre[] = [
-  { id: '1', name: 'loading' },
-  { id: '2', name: 'loading' },
-  { id: '3', name: 'loading' },
+  { id: 1, name: 'loading' },
+  { id: 2, name: 'loading' },
+  { id: 3, name: 'loading' },
 ];
 
 const ProfileBanner: React.FC<IProfileBannerProps> = ({
