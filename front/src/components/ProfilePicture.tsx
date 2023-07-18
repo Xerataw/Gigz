@@ -6,17 +6,15 @@ const ProfilePicture = ({
   radius = 'xl',
   size = 'xl',
   alt,
-  placeholderIcon = false,
 }: {
   src: string | null | undefined;
   radius?: number | string;
   size?: number | string;
   alt: string | null | undefined;
-  placeholderIcon?: boolean;
 }) => {
   return (
     <Avatar radius={radius} size={size} src={src} alt={alt ?? ''}>
-      {placeholderIcon && <IconUserCircle size="3rem" />}
+      <IconUserCircle size="2.5rem" />
     </Avatar>
   );
 };

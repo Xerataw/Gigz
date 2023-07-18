@@ -30,7 +30,9 @@ export const regsiterValidate = (
       case 1:
         return {
           email: /^\S+@\S+$/.test(values.email) ? null : 'Email Invalide',
-          phone: /^[^0]\d{8}$/.test(values.phone) ? null : 'Numéro invalide',
+          phone: /^[^01234589]\d{8}$/.test(values.phone)
+            ? null
+            : 'Numéro invalide',
         };
 
       case 2:
