@@ -36,7 +36,9 @@ const ProfileTypeStep: React.FC<IStepProps> = ({ form, label, nextStep }) => {
                 ...values,
                 userType: userType.value,
               }));
-              if (nextStep) nextStep();
+              setTimeout(() => {
+                if (nextStep) nextStep();
+              }, 200);
             }}
           >
             <Button

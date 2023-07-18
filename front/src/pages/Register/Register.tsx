@@ -111,6 +111,7 @@ const Register: React.FC = () => {
         ]}
         currentStep={formStep}
         form={form}
+        hasSkip={false}
       />
       <Stepper active={formStep} {...stepperProps}>
         <Stepper.Step>

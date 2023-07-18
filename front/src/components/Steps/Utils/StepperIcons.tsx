@@ -8,6 +8,7 @@ interface IStepperIconsProps {
   icons: React.JSX.Element[];
   currentStep: number;
   form: UseFormReturnType<any>;
+  hasSkip?: boolean;
 }
 
 const getClass = (currentStep: number, index: number): string => {
@@ -26,12 +27,13 @@ const StepperIcons: React.FC<IStepperIconsProps> = ({
   icons,
   currentStep,
   form,
+  hasSkip = false,
 }) => {
   const history = useHistory();
 
   return (
     <div className="flex relative w-full justify-center">
-      {currentStep < 5 && (
+      {currentStep < 5 && hasSkip === true && (
         <div className="absolute right-0 right-5 h-full flex items-center">
           <ActionIcon
             color="primary"
