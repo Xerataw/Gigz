@@ -4,7 +4,6 @@ export const stepperProps = {
   styles: {
     stepIcon: {
       display: 'none',
-      borderWidth: 4,
     },
 
     separator: {

@@ -29,6 +29,7 @@ import {
   artistValidate,
   linksArtist,
 } from '../../configs/steppers/stepperArtistConfig';
+import { stepperProps } from '../../configs/steppers/globalConfig';
 
 const RegisterArtistProfile: React.FC = () => {
   const numberOfSteps = 7;
@@ -100,20 +101,7 @@ const RegisterArtistProfile: React.FC = () => {
         currentStep={formStep}
         form={form}
       />
-      <Stepper
-        active={formStep}
-        p="xl"
-        w={'100%'}
-        styles={{
-          stepIcon: {
-            display: 'none',
-          },
-
-          separator: {
-            display: 'none',
-          },
-        }}
-      >
+      <Stepper active={formStep} {...stepperProps}>
         <Stepper.Step>
           <NameStep form={form} label={t('stepper.nameStep')} />
         </Stepper.Step>

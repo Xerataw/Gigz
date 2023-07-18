@@ -28,6 +28,7 @@ import ProfilePictureStep from '../../components/Steps/ProfilePictureStep';
 import SocialLinksStep from '../../components/Steps/SocialLinksStep';
 import StepButtons from '../../components/Steps/Utils/StepButtons';
 import StepperIcons from '../../components/Steps/Utils/StepperIcons';
+import { stepperProps } from '../../configs/steppers/globalConfig';
 import {
   hostInitialValues,
   hostValidate,
@@ -103,21 +104,7 @@ const RegisterHostProfile: React.FC = () => {
         currentStep={formStep}
         form={form}
       />
-      <Stepper
-        active={formStep}
-        p="xl"
-        w={'100%'}
-        styles={{
-          stepIcon: {
-            display: 'none',
-            borderWidth: 4,
-          },
-
-          separator: {
-            display: 'none',
-          },
-        }}
-      >
+      <Stepper active={formStep} {...stepperProps}>
         <Stepper.Step>
           <NameStep form={form} label={t('stepper.nameStep')} />
         </Stepper.Step>
