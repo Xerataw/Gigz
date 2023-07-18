@@ -6,6 +6,7 @@ import StepTitle from './Utils/StepTitle';
 interface ISocialLinksStep extends IStepProps {
   links: {
     label: string;
+    placeholder: string;
     value: string;
     color: string;
     icon: JSX.Element;
@@ -25,6 +26,7 @@ const SocialLinksStep: React.FC<ISocialLinksStep> = ({
           <div className="my-3" key={link.value}>
             <TextInput
               {...form.getInputProps(link.value)}
+              placeholder={link.placeholder}
               icon={
                 <ThemeIcon color={link.color} radius="xl" className="w-8 h-8">
                   {link.icon}

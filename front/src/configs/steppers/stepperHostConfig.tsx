@@ -47,7 +47,7 @@ export const hostValidate = (
       };
 
     // links are all optional
-    case 2:
+    case 7:
       return {
         instagramLink: LinkUtils.validateLink(
           values.instagramLink,
@@ -70,18 +70,12 @@ export const hostValidate = (
           'de site web valide'
         ),
       };
-    case 3:
+    case 2:
       return {
         address:
           values.address.value.length === 0 || values.address.value.length > 5
             ? null
             : 'Veuillez entrer une adressse valide',
-      };
-
-    case 4:
-      //can have genres but optionnal
-      return {
-        genres: null,
       };
 
     default:
@@ -92,24 +86,28 @@ export const hostValidate = (
 export const linksHost = [
   {
     label: 'Instagram',
+    placeholder: 'https://www.instagram.com/...',
     value: 'instagramLink',
     color: 'pink',
     icon: <IconBrandInstagram />,
   },
   {
     label: 'Facebook',
+    placeholder: 'https://www.facebook.com/...',
     value: 'facebookLink',
     color: 'indigo',
     icon: <IconBrandFacebookFilled />,
   },
   {
     label: 'Youtube',
+    placeholder: 'https://www.youtube.com/channel/...',
     value: 'youtubeLink',
     color: 'red',
     icon: <IconBrandYoutube />,
   },
   {
     label: 'Site',
+    placeholder: 'https://www.mysite.com/...',
     value: 'websiteLink',
     color: 'blue',
     icon: <IconWorldWww />,

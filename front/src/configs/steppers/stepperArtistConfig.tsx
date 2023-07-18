@@ -52,7 +52,7 @@ export const artistValidate = (
       };
 
     // links are all optional
-    case 2:
+    case 6:
       return {
         spotifyLink: LinkUtils.validateLink(
           values.spotifyLink,
@@ -95,18 +95,12 @@ export const artistValidate = (
           'de site web valide'
         ),
       };
-    case 3:
+    case 2:
       return {
         address:
           values.address.value.length === 0 || values.address.value.length > 5
             ? null
             : 'Veuillez entrer une adressse valide',
-      };
-
-    case 4:
-      //can have genres but optionnal
-      return {
-        genres: null,
       };
 
     default:
@@ -117,48 +111,56 @@ export const artistValidate = (
 export const linksArtist = [
   {
     label: 'Spotify',
+    placeholder: 'https://open.spotify.com/...',
     value: 'spotifyLink',
     color: 'green',
     icon: <IconBrandSpotify />,
   },
   {
-    label: 'Instagram',
-    value: 'instagramLink',
-    color: 'pink',
-    icon: <IconBrandInstagram />,
-  },
-  {
-    label: 'Facebook',
-    value: 'facebookLink',
-    color: 'indigo',
-    icon: <IconBrandFacebookFilled />,
-  },
-  {
     label: 'Soundcloud',
+    placeholder: 'https://soundcloud.com/...',
     value: 'soundcloudLink',
     color: 'orange',
     icon: <IconBrandSoundcloud />,
   },
   {
-    label: 'Youtube',
-    value: 'youtubeLink',
-    color: 'red',
-    icon: <IconBrandYoutube />,
-  },
-  {
     label: 'AppleMusic',
+    placeholder: 'https://music.apple.com/...',
     value: 'appleMusicLink',
     color: 'gray',
     icon: <IconBrandApple />,
   },
   {
     label: 'Deezer',
+    placeholder: 'https://www.deezer.com/...',
     value: 'deezerLink',
     color: 'dark',
     icon: <IconBrandDeezer />,
   },
   {
+    label: 'Instagram',
+    placeholder: 'https://www.instagram.com/...',
+    value: 'instagramLink',
+    color: 'pink',
+    icon: <IconBrandInstagram />,
+  },
+  {
+    label: 'Facebook',
+    placeholder: 'https://www.facebook.com/...',
+    value: 'facebookLink',
+    color: 'indigo',
+    icon: <IconBrandFacebookFilled />,
+  },
+  {
+    label: 'Youtube',
+    placeholder: 'https://www.youtube.com/channel/...',
+    value: 'youtubeLink',
+    color: 'red',
+    icon: <IconBrandYoutube />,
+  },
+  {
     label: 'Site',
+    placeholder: 'https://www.mysite.com/...',
     value: 'websiteLink',
     color: 'blue',
     icon: <IconWorldWww />,
