@@ -35,5 +35,22 @@
       "register": "New here?",
       "success": "An email has been sent to {{email}}"
     }
+  },
+  "profile": {
+    "banner": {
+      "emptyCity": "Somewhere in the world"
+    },
+    "biography": {
+      "title": "Biography"
+    },
+    "locationMap": {
+      "title": "Location"
+    },
+    "musicProfiles": {
+      "title": "Music"
+    },
+    "socials": {
+      "title": "Social media"
+    }
   }
 }

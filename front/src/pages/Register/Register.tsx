@@ -189,7 +189,7 @@ const Register: React.FC = () => {
         <div className="text-center mt-10">
           Vous avez déjà un compte ?
           <Link to="auth/login" className="font-semibold no-underline">
-            <Text color="secondary">Se connecter</Text>
+            <Text color="primary">Se connecter</Text>
           </Link>
         </div>
       )}
