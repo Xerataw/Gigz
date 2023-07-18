@@ -39,6 +39,7 @@
   "stepper": {
     "title": "Complete your profile",
     "completeRegister": "Your account is being created",
+    "competeProfile": "Your profile is being created",
 
     "profileTypeStep": "You are ?",
     "mailPhoneStep": "To find you",

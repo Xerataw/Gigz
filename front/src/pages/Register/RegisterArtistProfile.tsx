@@ -30,6 +30,7 @@ import {
   linksArtist,
 } from '../../configs/steppers/stepperArtistConfig';
 import { stepperProps } from '../../configs/steppers/globalConfig';
+import StepperCompleted from '../../components/Steps/StepperCompleted';
 
 const RegisterArtistProfile: React.FC = () => {
   const numberOfSteps = 7;
@@ -148,8 +149,10 @@ const RegisterArtistProfile: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          <div>this form is completed</div>
-          <div>redirect to home</div>
+          <StepperCompleted
+            label={t('stepper.competeProfile')}
+            path="auth/profile"
+          />
         </Stepper.Completed>
       </Stepper>
 

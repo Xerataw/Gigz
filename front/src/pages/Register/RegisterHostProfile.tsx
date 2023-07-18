@@ -26,6 +26,7 @@ import NameStep from '../../components/Steps/NameStep';
 import PresentationPicturesStep from '../../components/Steps/PresentationPicturesStep';
 import ProfilePictureStep from '../../components/Steps/ProfilePictureStep';
 import SocialLinksStep from '../../components/Steps/SocialLinksStep';
+import StepperCompleted from '../../components/Steps/StepperCompleted';
 import StepButtons from '../../components/Steps/Utils/StepButtons';
 import StepperIcons from '../../components/Steps/Utils/StepperIcons';
 import { stepperProps } from '../../configs/steppers/globalConfig';
@@ -158,8 +159,10 @@ const RegisterHostProfile: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          <div>this form is completed</div>
-          <div>redirect to home</div>
+          <StepperCompleted
+            label={t('stepper.competeProfile')}
+            path="auth/profile"
+          />
         </Stepper.Completed>
       </Stepper>
 
