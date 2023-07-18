@@ -48,7 +48,7 @@ const RegisterArtistProfile: React.FC = () => {
     if (formStep === numberOfSteps - 1) {
       setFormStep((old) => old + 1);
 
-      patchArtistProfile(form.values).then((res) => {
+      patchArtistProfile(form.values).then(() => {
         setFormStep((old) => old + 1);
       });
     } else {

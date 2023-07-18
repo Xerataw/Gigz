@@ -49,14 +49,10 @@ export const patchHostProfile = (values: any) => {
   const {
     name,
     description,
-    spotifyLink,
     instagramLink,
     facebookLink,
-    soundcloudLink,
     youtubeLink,
-    appleMusicLink,
     websiteLink,
-    deezerLink,
     genres,
     address,
   } = values;
@@ -71,14 +67,10 @@ export const patchHostProfile = (values: any) => {
   return GigzFetcher.patch<IHostProfile>('me/host', {
     name,
     description,
-    spotifyLink,
     instagramLink,
     facebookLink,
-    soundcloudLink,
     youtubeLink,
-    appleMusicLink,
     websiteLink,
-    deezerLink,
     latitude: address.latitude,
     longitude: address.longitude,
   });
