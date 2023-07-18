@@ -124,7 +124,7 @@ const toCamelCase = (key: string): string => {
   return key.replace(/_([a-z])/g, (_, match) => match.toUpperCase());
 };
 
-const calculate_distance = (
+const calculateDistance = (
   lat1: number,
   lon1: number,
   lat2: number,
@@ -147,7 +147,7 @@ const useUtils = () => ({
   sendResponse,
   toDbFormat,
   fromDbFormat,
-  calculate_distance,
+  calculateDistance,
 });
 
 export default useUtils;

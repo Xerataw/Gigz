@@ -12,7 +12,7 @@ const {
   sendResponse,
   sendError,
   fromDbFormat,
-  calculate_distance,
+  calculateDistance,
 } = useUtils();
 
 const searchFiltersBodySchemas = z.object({
@@ -85,13 +85,13 @@ router.get('/', async (req, res) => {
   ) {
     formattedData = formattedData.sort((host1, host2) => {
       return (
-        calculate_distance(
+        calculateDistance(
           req.account.longitude as number,
           host1.longitude as number,
           req.account.latitude as number,
           host1.latitude as number
         ) -
-        calculate_distance(
+        calculateDistance(
           req.account.longitude as number,
           host2.longitude as number,
           req.account.latitude as number,
