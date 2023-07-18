@@ -27,7 +27,7 @@ const StepperIcons: React.FC<IStepperIconsProps> = ({
   icons,
   currentStep,
   form,
-  hasSkip = false,
+  hasSkip = true,
 }) => {
   const history = useHistory();
 
