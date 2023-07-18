@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2023-07-17T15:12:07.843Z",
+  "__export_date": "2023-07-18T14:47:27.614Z",
   "__export_source": "insomnia.desktop.app:v2023.2.2",
   "resources": [
     {
@@ -102,6 +102,99 @@
       "_type": "request"
     },
     {
+      "_id": "req_aed7712c9adb4eb090b66cd84ce1ba3b",
+      "parentId": "fld_ae5ca4ebaeeb4540808cb1ae5dcfa0a2",
+      "modified": 1689690872874,
+      "created": 1689689057676,
+      "url": "{{ _.url }}/v1/me/messages",
+      "name": "CREATE",
+      "description": "",
+      "method": "POST",
+      "body": {
+        "mimeType": "application/json",
+        "text": "{\n\t\"conversationId\": 1,\n\t\"content\": \"Hello dude!\"\n}"
+      },
+      "parameters": [],
+      "headers": [{ "name": "Content-Type", "value": "application/json" }],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": -1689595746857,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "fld_ae5ca4ebaeeb4540808cb1ae5dcfa0a2",
+      "parentId": "fld_de4767c802fd4a92921b17614547cef1",
+      "modified": 1689689066677,
+      "created": 1689689057672,
+      "name": "MESSAGES",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1689466405603.625,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_de4767c802fd4a92921b17614547cef1",
+      "parentId": "fld_dd077cb895b347a6a3a3450f83913546",
+      "modified": 1689078893240,
+      "created": 1688996630074,
+      "name": "ME",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1689078389469.5,
+      "_type": "request_group"
+    },
+    {
+      "_id": "fld_dd077cb895b347a6a3a3450f83913546",
+      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
+      "modified": 1687871322163,
+      "created": 1687857856552,
+      "name": "V1",
+      "description": "",
+      "environment": {},
+      "environmentPropertyOrder": null,
+      "metaSortKey": -1687778301866,
+      "_type": "request_group"
+    },
+    {
+      "_id": "req_d041384257c64bf9a8671418b3feb990",
+      "parentId": "fld_ae5ca4ebaeeb4540808cb1ae5dcfa0a2",
+      "modified": 1689689077320,
+      "created": 1689689057678,
+      "url": "{{ _.url }}/v1/me/messages",
+      "name": "GET ALL",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": -1689337453271.125,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
       "_id": "req_7b60ce4f14c94ab3b0abc41112f91cbf",
       "parentId": "fld_dd826b04fb9c40838bc3bb29a8e43fd3",
       "modified": 1689605121859,
@@ -134,37 +227,13 @@
     {
       "_id": "fld_dd826b04fb9c40838bc3bb29a8e43fd3",
       "parentId": "fld_de4767c802fd4a92921b17614547cef1",
-      "modified": 1689595744315,
+      "modified": 1689689067869,
       "created": 1689595744315,
-      "name": "CONVERSATION",
+      "name": "CONVERSATIONS",
       "description": "",
       "environment": {},
       "environmentPropertyOrder": null,
-      "metaSortKey": -1689595744315,
-      "_type": "request_group"
-    },
-    {
-      "_id": "fld_de4767c802fd4a92921b17614547cef1",
-      "parentId": "fld_dd077cb895b347a6a3a3450f83913546",
-      "modified": 1689078893240,
-      "created": 1688996630074,
-      "name": "ME",
-      "description": "",
-      "environment": {},
-      "environmentPropertyOrder": null,
-      "metaSortKey": -1689078389469.5,
-      "_type": "request_group"
-    },
-    {
-      "_id": "fld_dd077cb895b347a6a3a3450f83913546",
-      "parentId": "wrk_d24abb1e3ffa45a0b8afc19774f33bf3",
-      "modified": 1687871322163,
-      "created": 1687857856552,
-      "name": "V1",
-      "description": "",
-      "environment": {},
-      "environmentPropertyOrder": null,
-      "metaSortKey": -1687778301866,
+      "metaSortKey": -1689271358748.8125,
       "_type": "request_group"
     },
     {
@@ -887,11 +956,11 @@
     {
       "_id": "env_857a92c7a4084976829efa2f9099d839",
       "parentId": "env_89f2865153cc385ea04c53bb79ad92ce22c8459e",
-      "modified": 1689604554913,
+      "modified": 1689686676228,
       "created": 1687857650224,
       "name": "ARTIST",
       "data": {
-        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhbGV4YW5kcmUuc3BhcnRvbkBlcGl0ZWNoLmV1IiwiaWF0IjoxNjg5NjA0NTQ0LCJleHAiOjE2OTAyMDkzNDR9.YKYLtPKK6PnunigbjuB1O6XSHTtHEPMWNBZMH0a47qo"
+        "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwiZW1haWwiOiJhbGV4YW5kcmUuc3BhcnRvbkBlcGl0ZWNoLmV1IiwiaWF0IjoxNjg5Njg2NjY1LCJleHAiOjE2OTAyOTE0NjV9.IXzsDxjgd52w8mrwmucyHn_E3IAToNbffpWlMUll3Wc"
       },
       "dataPropertyOrder": { "&": ["token"] },
       "color": "#d04343",
