@@ -1,70 +1,22 @@
 import { ActionIcon, Chip, TextInput, ThemeIcon } from '@mantine/core';
-import {
-  IconBrandApple,
-  IconBrandDeezer,
-  IconBrandFacebookFilled,
-  IconBrandInstagram,
-  IconBrandSoundcloud,
-  IconBrandSpotify,
-  IconBrandYoutube,
-  IconExternalLink,
-  IconWorldWww,
-} from '@tabler/icons-react';
-import { IStepProps } from '../../../types/IStepProps';
+import { IconExternalLink } from '@tabler/icons-react';
+import { IStepProps } from '../../types/IStepProps';
 import StepTitle from './Utils/StepTitle';
 
-const links = [
-  {
-    label: 'Spotify',
-    value: 'spotifyLink',
-    color: 'green',
-    icon: <IconBrandSpotify />,
-  },
-  {
-    label: 'Instagram',
-    value: 'instagramLink',
-    color: 'pink',
-    icon: <IconBrandInstagram />,
-  },
-  {
-    label: 'Facebook',
-    value: 'facebookLink',
-    color: 'indigo',
-    icon: <IconBrandFacebookFilled />,
-  },
-  {
-    label: 'Soundcloud',
-    value: 'soundcloudLink',
-    color: 'orange',
-    icon: <IconBrandSoundcloud />,
-  },
-  {
-    label: 'Youtube',
-    value: 'youtubeLink',
-    color: 'red',
-    icon: <IconBrandYoutube />,
-  },
-  {
-    label: 'AppleMusic',
-    value: 'appleMusicLink',
-    color: 'gray',
-    icon: <IconBrandApple />,
-  },
-  {
-    label: 'Deezer',
-    value: 'deezerLink',
-    color: 'dark',
-    icon: <IconBrandDeezer />,
-  },
-  {
-    label: 'Site',
-    value: 'websiteLink',
-    color: 'blue',
-    icon: <IconWorldWww />,
-  },
-];
+interface ISocialLinksStep extends IStepProps {
+  links: {
+    label: string;
+    value: string;
+    color: string;
+    icon: JSX.Element;
+  }[];
+}
 
-const SocialLinksStep: React.FC<IStepProps> = ({ form, label }) => {
+const SocialLinksStep: React.FC<ISocialLinksStep> = ({
+  form,
+  label,
+  links,
+}) => {
   return (
     <>
       <StepTitle label={label} />

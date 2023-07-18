@@ -27,6 +27,7 @@ import StepperIcons from '../../components/Steps/Utils/StepperIcons';
 import {
   artistInitialValues,
   artistValidate,
+  linksArtist,
 } from '../../configs/steppers/stepperArtistConfig';
 
 const RegisterArtistProfile: React.FC = () => {
@@ -122,7 +123,11 @@ const RegisterArtistProfile: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Step>
-          <SocialLinksStep form={form} label={t('stepper.socialLinksStep')} />
+          <SocialLinksStep
+            links={linksArtist}
+            form={form}
+            label={t('stepper.socialLinksStep')}
+          />
         </Stepper.Step>
 
         <Stepper.Step>

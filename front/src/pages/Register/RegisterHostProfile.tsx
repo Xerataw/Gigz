@@ -31,6 +31,7 @@ import StepperIcons from '../../components/Steps/Utils/StepperIcons';
 import {
   hostInitialValues,
   hostValidate,
+  linksHost,
 } from '../../configs/steppers/stepperHostConfig';
 
 const RegisterHostProfile: React.FC = () => {
@@ -126,7 +127,11 @@ const RegisterHostProfile: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Step>
-          <SocialLinksStep form={form} label={t('stepper.socialLinksStep')} />
+          <SocialLinksStep
+            links={linksHost}
+            form={form}
+            label={t('stepper.socialLinksStep')}
+          />
         </Stepper.Step>
 
         <Stepper.Step>

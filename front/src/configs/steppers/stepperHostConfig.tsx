@@ -1,15 +1,20 @@
+import {
+  IconBrandFacebookFilled,
+  IconBrandInstagram,
+  IconBrandYoutube,
+  IconWorldWww,
+} from '@tabler/icons-react';
 import { LinkUtils } from '../../services/LinkUtils';
-export const artistInitialValues = {
+
+export const hostInitialValues = {
   name: '',
   description: '',
-  spotifyLink: '',
+
   instagramLink: '',
   facebookLink: '',
-  soundcloudLink: '',
   youtubeLink: '',
-  appleMusicLink: '',
   websiteLink: '',
-  deezerLink: '',
+
   address: {
     value: '',
     longitude: 0,
@@ -20,7 +25,7 @@ export const artistInitialValues = {
   picture: '',
 };
 
-export const artistValidate = (
+export const hostValidate = (
   values: { [key: string]: any },
   formStep: number
 ) => {
@@ -42,11 +47,6 @@ export const artistValidate = (
     // links are all optional
     case 2:
       return {
-        spotifyLink: LinkUtils.validateLink(
-          values.spotifyLink,
-          'spotify.com/artist',
-          'Spotify'
-        ),
         instagramLink: LinkUtils.validateLink(
           values.instagramLink,
           'instagram.com/',
@@ -57,25 +57,10 @@ export const artistValidate = (
           'facebook.com',
           'Facebook'
         ),
-        soundcloudLink: LinkUtils.validateLink(
-          values.soundcloudLink,
-          'soundcloud.com',
-          'SoundCloud'
-        ),
         youtubeLink: LinkUtils.validateLink(
           values.youtubeLink,
           'youtube.com',
           'Youtube'
-        ),
-        appleMusicLink: LinkUtils.validateLink(
-          values.appleMusicLink,
-          'music.apple.com',
-          'Apple Music'
-        ),
-        deezerLink: LinkUtils.validateLink(
-          values.deezerLink,
-          'www.deezer.com',
-          'Deezer'
         ),
         websiteLink: LinkUtils.validateLink(
           values.websiteLink,
@@ -101,3 +86,30 @@ export const artistValidate = (
       return {};
   }
 };
+
+export const linksHost = [
+  {
+    label: 'Instagram',
+    value: 'instagramLink',
+    color: 'pink',
+    icon: <IconBrandInstagram />,
+  },
+  {
+    label: 'Facebook',
+    value: 'facebookLink',
+    color: 'indigo',
+    icon: <IconBrandFacebookFilled />,
+  },
+  {
+    label: 'Youtube',
+    value: 'youtubeLink',
+    color: 'red',
+    icon: <IconBrandYoutube />,
+  },
+  {
+    label: 'Site',
+    value: 'websiteLink',
+    color: 'blue',
+    icon: <IconWorldWww />,
+  },
+];
