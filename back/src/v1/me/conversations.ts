@@ -72,4 +72,58 @@ router.get('/', async (req, res) => {
   sendResponse(res, conversations);
 });
 
+const ConversationParamsSchema = z.object({
+  id: z.coerce.number(),
+});
+
+router.get('/:id/', async (req, res) => {
+  const params = ConversationParamsSchema.safeParse(req.params);
+
+  if (!params.success) {
+    console.error('Error: invalid params arguments');
+    return sendError(res, ApiMessages.BadRequest);
+  }
+
+  const conversation = await database.conversation.findUnique({
+    where: { id: params.data.id },
+    include: {
+      _count: {
+        select: {
+          messages: {
+            where: {
+              seen: 0,
+            },
+          },
+        },
+      },
+
+      messages: {
+        orderBy: {
+          send_date: 'desc',
+        },
+      },
+    },
+  });
+
+  if (!conversation) {
+    console.error(`Error: conversation ${params.data.id} not found`);
+    return sendError(res, ApiMessages.NotFound, 404);
+  }
+
+  if (
+    ![conversation.creator_id, conversation.member_id].includes(req.account.id)
+  ) {
+    console.error(`Error: not a member of conversation ${params.data.id}`);
+    return sendError(res, ApiMessages.BadRequest);
+  }
+
+  // @ts-ignore
+  conversation.unread_messages = conversation._count.messages;
+
+  // @ts-ignore
+  delete conversation._count;
+
+  sendResponse(res, conversation);
+});
+
 export default router;
