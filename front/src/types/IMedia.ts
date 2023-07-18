@@ -1,6 +1,7 @@
 import EMediaType from './EMediaType';
 
 export default interface IMedia {
-  type: EMediaType;
+  id: number;
   source: string;
+  type: EMediaType;
 }
