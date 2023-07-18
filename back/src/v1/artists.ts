@@ -58,12 +58,13 @@ router.get('/', async (req, res) => {
   const data = await database.artist.findMany({
     include: {
       account: {
-        include: {
+        select: {
           account_genre: {
             include: {
               genre: true,
             },
           },
+          profile_pictures: true,
         },
       },
     },
@@ -77,6 +78,7 @@ router.get('/', async (req, res) => {
     genres: artist.account.account_genre.map((genre) => genre.genre),
     longitude: artist.longitude,
     latitude: artist.latitude,
+    profilePicture: artist.account.profile_pictures?.media || null,
   }));
 
   if (

@@ -56,12 +56,13 @@ router.get('/', async (req, res) => {
     include: {
       capacity: true,
       account: {
-        include: {
+        select: {
           account_genre: {
-            include: {
+            select: {
               genre: true,
             },
           },
+          profile_pictures: true,
         },
       },
     },
@@ -77,6 +78,7 @@ router.get('/', async (req, res) => {
     capacity: host.capacity,
     longitude: host.longitude,
     latitude: host.latitude,
+    profilePicture: host.account.profile_pictures?.media || null,
   }));
 
   if (
