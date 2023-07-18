@@ -145,17 +145,17 @@ model profile_pictures {
 }
 
 model conversation {
-  id                                              Int       @id @default(autoincrement())
-  creator_id                                      Int
-  member_id                                       Int
-  creation_date                                   DateTime  @db.DateTime(0)
-  latest_message_id                               Int?
-  update_date                                     DateTime  @db.DateTime(0)
-  account_conversation_creator_idToaccount        account   @relation("conversation_creator_idToaccount", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_1")
-  account_conversation_member_idToaccount         account   @relation("conversation_member_idToaccount", fields: [member_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_2")
-  message_conversation_latest_message_idTomessage message?  @relation("conversation_latest_message_idTomessage", fields: [latest_message_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_3")
-  message_message_conversation_idToconversation   message[] @relation("message_conversation_idToconversation")
+  id                Int       @id @default(autoincrement())
+  creator_id        Int
+  member_id         Int
+  creation_date     DateTime? @default(now()) @db.DateTime(0)
+  latest_message_id Int?
+  creator           account   @relation("conversation_creator_idToaccount", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_1")
+  member            account   @relation("conversation_member_idToaccount", fields: [member_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_2")
+  latest_message    message?  @relation("conversation_latest_message_idTomessage", fields: [latest_message_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_3")
+  messages          message[] @relation("message_conversation_idToconversation")
 
+  @@unique([creator_id, member_id], map: "creator_id_member_id")
   @@index([creator_id], map: "creator_id")
   @@index([latest_message_id], map: "latest_message_id")
   @@index([member_id], map: "member_id")
@@ -167,7 +167,7 @@ model message {
   recipient_id                                         Int
   conversation_id                                      Int
   content                                              String         @db.Text
-  send_date                                            DateTime       @db.DateTime(0)
+  send_date                                            DateTime?      @default(now()) @db.DateTime(0)
   seen                                                 Int            @default(0) @db.TinyInt
   conversation_conversation_latest_message_idTomessage conversation[] @relation("conversation_latest_message_idTomessage")
   account_message_sender_idToaccount                   account        @relation("message_sender_idToaccount", fields: [sender_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_1")

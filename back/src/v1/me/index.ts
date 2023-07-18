@@ -7,15 +7,17 @@ import gallery from '@v1/me/gallery';
 import genres from '@v1/me/genres';
 import host from '@v1/me/host';
 import profilePicture from '@v1/me/profilePicture';
+import conversations from '@v1/me/conversations';
 
 const router = express.Router();
-
-router.use('/gallery', gallery);
 
 router.use('/artist', artist);
 router.use('/host', host);
 
+router.use('/gallery', gallery);
 router.use('/account', account);
+
+router.use('/conversations', conversations);
 
 router.use('/genres', genres);
 router.use('/profile-picture', profilePicture);
