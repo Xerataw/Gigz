@@ -12,7 +12,7 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import register from '../../api/register';
-import AccountCreated from '../../components/Steps/AccountCreated';
+import StepperCompleted from '../../components/Steps/StepperCompleted';
 import MailPhoneStep from '../../components/Steps/MailPhoneStep';
 import PasswordStep from '../../components/Steps/PasswordStep';
 import ProfileTypeStep from '../../components/Steps/ProfileTypeStep';
@@ -25,7 +25,12 @@ import {
 } from '../../configs/steppers/stepperRegisterConfig';
 import User from '../../store/User';
 
+const artistPath = '/register/artist';
+const hostPath = '/register/host';
+
 const Register: React.FC = () => {
+  const numberOfSteps = 3;
+
   const { t } = useTranslation();
   const [user, setUser] = useState<User>();
   const [formStep, setFormStep] = useState<number>(0);
@@ -45,7 +50,6 @@ const Register: React.FC = () => {
       if (res.ok === true) {
         if (res.data?.token !== undefined) {
           user?.setToken(res.data.token);
-          setFormStep((old) => old + 1);
         }
       } else {
         setFormStep(1);
@@ -65,14 +69,17 @@ const Register: React.FC = () => {
   };
 
   const nextStep = () => {
-    if (form.validate().hasErrors === false) {
+    if (formStep === numberOfSteps - 1) {
+      setFormStep((old) => old + 1);
+      sendRegisterForm();
+      setFormStep((old) => old + 1);
+    } else {
       setFormStep((current) => {
-        return current < 4 ? current + 1 : current;
+        if (form.validate().hasErrors) {
+          return current;
+        }
+        return current < numberOfSteps - 1 ? current + 1 : current;
       });
-      if (formStep === 2) {
-        sendRegisterForm();
-        setFormStep((old) => old + 1);
-      }
     }
   };
 
@@ -122,10 +129,10 @@ const Register: React.FC = () => {
           />
         </Stepper.Step>
         <Stepper.Step>
-          <MailPhoneStep form={form} label="Pour vous retrouver" />
+          <MailPhoneStep form={form} label={t('stepper.mailPhoneStep')} />
         </Stepper.Step>
         <Stepper.Step>
-          <PasswordStep form={form} label="La sécurité" />
+          <PasswordStep form={form} label={t('stepper.passwordStep')} />
         </Stepper.Step>
 
         <Stepper.Step>
@@ -133,8 +140,9 @@ const Register: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Completed>
-          <AccountCreated
-            userType={form.values.userType as 'artist' | 'host'}
+          <StepperCompleted
+            label={t('stepper.completeRegister')}
+            path={form.values.userType === 'artist' ? artistPath : hostPath}
           />
         </Stepper.Completed>
       </Stepper>
