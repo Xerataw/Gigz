@@ -7,7 +7,13 @@ import useDatabase from '@composables/useDatabase';
 const router = express.Router();
 
 const { database } = useDatabase();
-const { ApiMessages, sendResponse, sendError, fromDbFormat } = useUtils();
+const {
+  ApiMessages,
+  sendResponse,
+  sendError,
+  fromDbFormat,
+  calculate_distance,
+} = useUtils();
 
 const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
@@ -62,14 +68,45 @@ router.get('/', async (req, res) => {
     where: buildHostsWhereCondition(body.data),
   });
 
-  const formattedData = data.map((host) => ({
+  let formattedData = data.map((host) => ({
     id: host.id,
     name: host.name,
     address: host.address,
     city: host.city,
     genres: host.account.account_genre.map((genre) => genre.genre),
     capacity: host.capacity,
+    longitude: host.longitude,
+    latitude: host.latitude,
   }));
+
+  if (
+    typeof req.account.longitude === 'number' &&
+    typeof req.account.latitude === 'number'
+  ) {
+    formattedData = formattedData.sort((host1, host2) => {
+      return (
+        calculate_distance(
+          req.account.longitude as number,
+          host1.longitude as number,
+          req.account.latitude as number,
+          host1.latitude as number
+        ) -
+        calculate_distance(
+          req.account.longitude as number,
+          host2.longitude as number,
+          req.account.latitude as number,
+          host2.latitude as number
+        )
+      );
+    });
+  }
+
+  formattedData.map((host) => {
+    // @ts-ignore
+    delete host.longitude;
+    // @ts-ignore
+    delete host.latitude;
+  });
 
   sendResponse(res, fromDbFormat(formattedData), 200);
 });

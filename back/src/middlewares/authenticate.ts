@@ -22,6 +22,8 @@ const authenticate = async (
 
   const account = await findAccountByToken(token);
 
+  const profile = account?.artist || account?.host;
+
   if (!account)
     return res.status(401).json({
       success: false,
@@ -31,6 +33,8 @@ const authenticate = async (
   req.account = {
     id: account.id,
     profileType: account.profile_type,
+    longitude: profile?.longitude,
+    latitude: profile?.latitude,
   };
 
   next();
