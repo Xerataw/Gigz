@@ -26,7 +26,13 @@ const findAccountByToken = async (token: string) => {
 
   if (!payload) return null;
 
-  const account = await findAccountById(payload.id);
+  const account = await await database.account.findUnique({
+    where: { id: payload.id },
+    include: {
+      artist: true,
+      host: true,
+    },
+  });
   if (!account || account.email !== payload.email) return null;
 
   return account;
