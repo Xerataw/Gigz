@@ -26,7 +26,7 @@ const SocialLinksStep: React.FC<ISocialLinksStep> = ({
             <TextInput
               {...form.getInputProps(link.value)}
               icon={
-                <ThemeIcon size="lg" color={link.color} radius="xl">
+                <ThemeIcon color={link.color} radius="xl" className="w-8 h-8">
                   {link.icon}
                 </ThemeIcon>
               }
@@ -47,7 +47,7 @@ const SocialLinksStep: React.FC<ISocialLinksStep> = ({
                 input: {
                   '&:focus-within': {
                     borderColor: theme.colors[link.color][7],
-                    borderWidth: 3,
+                    borderWidth: 2,
                   },
                 },
               })}
