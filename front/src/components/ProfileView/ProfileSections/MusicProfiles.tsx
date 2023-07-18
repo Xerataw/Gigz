@@ -4,6 +4,7 @@ import {
   IconBrandSpotify,
   IconBrandYoutube,
 } from '@tabler/icons-react';
+import { useTranslation } from 'react-i18next';
 import ExternalLinkIcon from '../../ExternalLinkIcon';
 import ProfileSection from './ProfileSection';
 
@@ -22,8 +23,10 @@ const MusicProfiles: React.FC<IMusicProps> = ({
   deezerLink,
   appleMusicLink,
 }) => {
+  const { t } = useTranslation();
+
   return (
-    <ProfileSection name="Venez m'écouter ici">
+    <ProfileSection name={t('profile.musicProfiles.title')}>
       <ul className="flex flex-row flex-wrap justify-start gap-4">
         {spotifyLink && (
           <li>

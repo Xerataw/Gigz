@@ -3,8 +3,9 @@ import {
   IconBrandInstagram,
   IconWorldWww,
 } from '@tabler/icons-react';
-import ProfileSection from './ProfileSection';
+import { useTranslation } from 'react-i18next';
 import ExternalLinkIcon from '../../ExternalLinkIcon';
+import ProfileSection from './ProfileSection';
 
 interface ISocialsProps {
   instagramLink?: string;
@@ -17,9 +18,11 @@ const Socials: React.FC<ISocialsProps> = ({
   facebookLink,
   websiteLink,
 }) => {
+  const { t } = useTranslation();
+
   return (
-    <ProfileSection name="Retrouvez-moi ici">
-      <ul className="flex flex-flow flex-nowrap justify-start mt-3 gap-4">
+    <ProfileSection name={t('profile.socials.title')}>
+      <ul className="flex flex-flow flex-nowrap justify-start gap-4">
         {instagramLink && (
           <li>
             <ExternalLinkIcon
