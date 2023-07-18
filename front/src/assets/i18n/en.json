@@ -37,6 +37,8 @@
     }
   },
   "stepper": {
+    "title": "Complete your profile",
+
     "profileTypeStep": "You are ?",
     "mailPhoneStep": "To find you",
     "passwordStep": "Safety first",

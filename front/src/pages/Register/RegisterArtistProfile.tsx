@@ -81,7 +81,7 @@ const RegisterArtistProfile: React.FC = () => {
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
       <Title order={2} mb={'sm'}>
-        Complétez votre profil
+        {t('stepper.title')}
       </Title>
       <StepperIcons
         icons={[
@@ -97,7 +97,7 @@ const RegisterArtistProfile: React.FC = () => {
           <IconChecks key={9} />,
         ]}
         currentStep={formStep}
-        nextStep={nextStep}
+        form={form}
       />
       <Stepper
         active={formStep}

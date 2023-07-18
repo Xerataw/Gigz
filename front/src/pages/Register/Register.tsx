@@ -110,7 +110,7 @@ const Register: React.FC = () => {
           <IconChecks key={9} />,
         ]}
         currentStep={formStep}
-        nextStep={nextStep}
+        form={form}
       />
       <Stepper active={formStep} {...stepperProps}>
         <Stepper.Step>
