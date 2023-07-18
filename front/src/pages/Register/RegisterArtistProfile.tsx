@@ -22,15 +22,15 @@ import NameStep from '../../components/Steps/NameStep';
 import PresentationPicturesStep from '../../components/Steps/PresentationPicturesStep';
 import ProfilePictureStep from '../../components/Steps/ProfilePictureStep';
 import SocialLinksStep from '../../components/Steps/SocialLinksStep';
+import StepperCompleted from '../../components/Steps/StepperCompleted';
 import StepButtons from '../../components/Steps/Utils/StepButtons';
 import StepperIcons from '../../components/Steps/Utils/StepperIcons';
+import { stepperProps } from '../../configs/steppers/globalConfig';
 import {
   artistInitialValues,
   artistValidate,
   linksArtist,
 } from '../../configs/steppers/stepperArtistConfig';
-import { stepperProps } from '../../configs/steppers/globalConfig';
-import StepperCompleted from '../../components/Steps/StepperCompleted';
 
 const RegisterArtistProfile: React.FC = () => {
   const numberOfSteps = 7;
@@ -90,11 +90,11 @@ const RegisterArtistProfile: React.FC = () => {
         icons={[
           <IconPencil key={0} />,
           <IconAlignCenter key={1} />,
-          <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
+          <IconUserCircle key={6} />,
           <IconMusic key={4} />,
           <IconBoxMultiple key={5} />,
-          <IconUserCircle key={6} />,
+          <IconExternalLink key={2} />,
 
           <IconArrowUpBar key={8} />,
           <IconChecks key={9} />,
@@ -112,17 +112,16 @@ const RegisterArtistProfile: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Step>
-          <SocialLinksStep
-            links={linksArtist}
+          <AddressCompleteStep
             form={form}
-            label={t('stepper.socialLinksStep')}
+            label={t('stepper.addressCompleteStep')}
           />
         </Stepper.Step>
 
         <Stepper.Step>
-          <AddressCompleteStep
+          <ProfilePictureStep
             form={form}
-            label={t('stepper.addressCompleteStep')}
+            label={t('stepper.presentationPicturesStep')}
           />
         </Stepper.Step>
 
@@ -138,9 +137,10 @@ const RegisterArtistProfile: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Step>
-          <ProfilePictureStep
+          <SocialLinksStep
+            links={linksArtist}
             form={form}
-            label={t('stepper.presentationPicturesStep')}
+            label={t('stepper.socialLinksStep')}
           />
         </Stepper.Step>
 

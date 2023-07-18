@@ -92,12 +92,12 @@ const RegisterHostProfile: React.FC = () => {
         icons={[
           <IconPencil key={0} />,
           <IconAlignCenter key={1} />,
-          <IconExternalLink key={2} />,
           <IconMapPin key={3} />,
           <IconMusic key={4} />,
-          <IconRulerMeasure key={7} />,
-          <IconBoxMultiple key={5} />,
           <IconUserCircle key={6} />,
+          <IconBoxMultiple key={5} />,
+          <IconRulerMeasure key={7} />,
+          <IconExternalLink key={2} />,
 
           <IconArrowUpBar key={5} />,
           <IconChecks key={6} />,
@@ -115,17 +115,16 @@ const RegisterHostProfile: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Step>
-          <SocialLinksStep
-            links={linksHost}
+          <AddressCompleteStep
             form={form}
-            label={t('stepper.socialLinksStep')}
+            label={t('stepper.addressCompleteStep')}
           />
         </Stepper.Step>
 
         <Stepper.Step>
-          <AddressCompleteStep
+          <ProfilePictureStep
             form={form}
-            label={t('stepper.addressCompleteStep')}
+            label={t('stepper.presentationPicturesStep')}
           />
         </Stepper.Step>
 
@@ -138,14 +137,15 @@ const RegisterHostProfile: React.FC = () => {
         </Stepper.Step>
 
         <Stepper.Step>
-          <PresentationPicturesStep
+          <SocialLinksStep
+            links={linksHost}
             form={form}
-            label={t('stepper.presentationPicturesStep')}
+            label={t('stepper.socialLinksStep')}
           />
         </Stepper.Step>
 
         <Stepper.Step>
-          <ProfilePictureStep
+          <PresentationPicturesStep
             form={form}
             label={t('stepper.presentationPicturesStep')}
           />
