@@ -3,8 +3,8 @@ declare namespace Express {
     account: {
       id: number;
       profileType: 'artist' | 'host';
-      longitude: number | null | undefined;
-      latitude: number | null | undefined;
+      longitude: number | null;
+      latitude: number | null;
     };
   }
 }

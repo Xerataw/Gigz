@@ -33,8 +33,8 @@ const authenticate = async (
   req.account = {
     id: account.id,
     profileType: account.profile_type,
-    longitude: profile?.longitude,
-    latitude: profile?.latitude,
+    longitude: profile ? profile.longitude : null,
+    latitude: profile ? profile.latitude : null,
   };
 
   next();
