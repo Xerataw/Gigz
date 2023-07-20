@@ -33,12 +33,12 @@ export default class User {
     name?: string,
     profilePicture?: string,
     token?: string,
-    type?: EProfileType
+    profileType?: EProfileType
   ) {
     this.name = name ?? null;
     this.profilePicture = profilePicture ?? null;
     this.token = token ?? null;
-    this.profileType = type ?? null;
+    this.profileType = profileType ?? null;
   }
 
   /**
@@ -54,7 +54,7 @@ export default class User {
           localUserInfo.username,
           localUserInfo.profilePicture,
           localUserInfo.token,
-          localUserInfo.type
+          localUserInfo.profileType
         );
     }
     return this.instance;
@@ -113,10 +113,10 @@ export default class User {
   }
 
   /**
-   * Change the user instance user type (artist, host) and write the changes in local storage.
-   * @param profileType the new user type (artist, host) to set.
+   * Change the user instance profile type (artist, host) and write the changes in local storage.
+   * @param profileType the new profile type (artist, host) to set.
    */
-  @storeUser('type')
+  @storeUser('profileType')
   public setProfileType(profileType: EProfileType | null) {
     this.profileType = profileType;
   }

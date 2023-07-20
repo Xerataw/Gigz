@@ -7,7 +7,13 @@ import useDatabase from '@composables/useDatabase';
 const router = express.Router();
 
 const { database } = useDatabase();
-const { ApiMessages, sendResponse, sendError, fromDbFormat } = useUtils();
+const {
+  ApiMessages,
+  sendResponse,
+  sendError,
+  fromDbFormat,
+  calculateDistance,
+} = useUtils();
 
 const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
@@ -50,26 +56,59 @@ router.get('/', async (req, res) => {
     include: {
       capacity: true,
       account: {
-        include: {
+        select: {
           account_genre: {
-            include: {
+            select: {
               genre: true,
             },
           },
+          profile_pictures: true,
         },
       },
     },
     where: buildHostsWhereCondition(body.data),
   });
 
-  const formattedData = data.map((host) => ({
+  let formattedData = data.map((host) => ({
     id: host.id,
     name: host.name,
     address: host.address,
     city: host.city,
     genres: host.account.account_genre.map((genre) => genre.genre),
     capacity: host.capacity,
+    longitude: host.longitude,
+    latitude: host.latitude,
+    profilePicture: host.account.profile_pictures,
   }));
+
+  if (
+    typeof req.account.longitude === 'number' &&
+    typeof req.account.latitude === 'number'
+  ) {
+    formattedData = formattedData.sort((host1, host2) => {
+      return (
+        calculateDistance(
+          req.account.longitude as number,
+          host1.longitude as number,
+          req.account.latitude as number,
+          host1.latitude as number
+        ) -
+        calculateDistance(
+          req.account.longitude as number,
+          host2.longitude as number,
+          req.account.latitude as number,
+          host2.latitude as number
+        )
+      );
+    });
+  }
+
+  formattedData.map((host) => {
+    // @ts-ignore
+    delete host.longitude;
+    // @ts-ignore
+    delete host.latitude;
+  });
 
   sendResponse(res, fromDbFormat(formattedData), 200);
 });
@@ -93,6 +132,7 @@ router.get('/:id/', async (req, res) => {
           gallery: {
             select: { id: true, media: true },
           },
+          profile_pictures: true
         },
       },
     },

@@ -52,5 +52,21 @@
     "presentationPicturesStep": "À quoi ressemble votre groupe ?",
     "profilePictureStep": "À quoi vous ressemblez ?",
     "capacityStep": "Vous pouvez acceuillir combien de personne ?"
+  "profile": {
+    "banner": {
+      "emptyCity": "Quelque part dans le monde"
+    },
+    "biography": {
+      "title": "Biographie"
+    },
+    "locationMap": {
+      "title": "Localisation"
+    },
+    "musicProfiles": {
+      "title": "Musique"
+    },
+    "socials": {
+      "title": "Réseaux sociaux"
+    }
   }
 }

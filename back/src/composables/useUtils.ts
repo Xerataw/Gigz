@@ -1,5 +1,7 @@
 import { Response } from 'express';
 
+const EARTH_RADIUS = 6371;
+
 /**
  * Enumeration containing all API messages return to the front-end.
  */
@@ -122,6 +124,21 @@ const toCamelCase = (key: string): string => {
   return key.replace(/_([a-z])/g, (_, match) => match.toUpperCase());
 };
 
+const calculateDistance = (
+  lat1: number,
+  lon1: number,
+  lat2: number,
+  lon2: number
+) => {
+  return (
+    EARTH_RADIUS *
+    Math.acos(
+      Math.sin(lat1) * Math.sin(lat2) +
+        Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)
+    )
+  );
+};
+
 const useUtils = () => ({
   ApiMessages,
 
@@ -130,6 +147,7 @@ const useUtils = () => ({
   sendResponse,
   toDbFormat,
   fromDbFormat,
+  calculateDistance,
 });
 
 export default useUtils;

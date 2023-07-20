@@ -1,5 +1,6 @@
+import { useTranslation } from 'react-i18next';
+import { MapContainer, Marker, TileLayer } from 'react-leaflet';
 import ProfileSection from './ProfileSection';
-import { MapContainer, TileLayer, Marker } from 'react-leaflet';
 
 interface ILocationProps {
   longitude: number;
@@ -7,8 +8,10 @@ interface ILocationProps {
 }
 
 const LocationMap: React.FC<ILocationProps> = ({ longitude, latitude }) => {
+  const { t } = useTranslation();
+
   return (
-    <ProfileSection name="Localisation">
+    <ProfileSection name={t('profile.locationMap.title')}>
       <MapContainer
         center={{ lat: latitude, lng: longitude }}
         zoom={12}

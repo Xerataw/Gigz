@@ -1,17 +1,16 @@
-import { ActionIcon, Button, FileButton } from '@mantine/core';
+import { ActionIcon, Button, FileButton, Title } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
 import {
   deleteProfilePicture,
   patchProfilePicture,
-} from '../../api/profilePicture';
-import GigzFetcher from '../../services/GigzFetcher';
-import User from '../../store/User';
-import { IStepProps } from '../../types/IStepProps';
-import ProfilePicture from '../ProfilePicture';
-import StepTitle from './Utils/StepTitle';
+} from '../../../api/profilePicture';
+import GigzFetcher from '../../../services/GigzFetcher';
+import User from '../../../store/User';
+import ProfilePicture from '../../ProfilePicture/ProfilePicture';
+import { IStepProps } from '../AccountStep/FirstStep';
 
-const ProfilePictureStep: React.FC<IStepProps> = ({ form, label }) => {
+const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
   const [pictureLink, setPictureLink] = useState<string | undefined>(
     form.values.picture
   );
@@ -54,10 +53,14 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form, label }) => {
 
   return (
     <>
-      <StepTitle label={label} />
+      <Title mb="sm">À quoi vous ressemblez ?</Title>
 
       <div className="flex">
-        <ProfilePicture alt="profile picture" src={pictureLink} />
+        <ProfilePicture
+          alt="profile picture"
+          src={pictureLink}
+          placeholderIcon
+        />
         <div className="pl-4 flex flex-col justify-center">
           <h3 className="m-0">{username}</h3>
           <div className="flex justify-center items-center gap-2">
