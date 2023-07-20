@@ -1,7 +1,7 @@
 import { Carousel } from '@mantine/carousel';
 import { Center, Image, Loader } from '@mantine/core';
 import { useContext } from 'react';
-import { ProfileLoadingContext } from '../../pages/Profile/Profile';
+import { ProfileContext } from '../../pages/Profile/Profile';
 import GigzFetcher from '../../services/GigzFetcher';
 import EMediaType from '../../types/EMediaType';
 import IMedia from '../../types/IMedia';
@@ -12,7 +12,7 @@ interface IGalleryProps {
 }
 
 const Gallery: React.FC<IGalleryProps> = ({ mediaList, withEmbed = false }) => {
-  const profileLoading = useContext(ProfileLoadingContext);
+  const profileLoading = useContext(ProfileContext).loading;
   const slidesHeight = withEmbed ? '35.75rem' : '42.25rem';
 
   return profileLoading ? (

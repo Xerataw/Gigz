@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import { ProfileLoadingContext } from '../../pages/Profile/Profile';
+import { ProfileContext } from '../../pages/Profile/Profile';
 import {
   isBioSectionAvaiblable,
   isMapSectionAvailable,
@@ -16,7 +16,7 @@ interface IHostProfileViewProps {
 }
 
 const HostProfileView: React.FC<IHostProfileViewProps> = ({ profile }) => {
-  const profileLoading = useContext(ProfileLoadingContext);
+  const profileLoading = useContext(ProfileContext).loading;
 
   const getProfileSections = (profile: IHostProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];

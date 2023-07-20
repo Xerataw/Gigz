@@ -1,9 +1,13 @@
 import { Badge, Skeleton } from '@mantine/core';
 import { IconMapPin } from '@tabler/icons-react';
+import { useContext, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { useLocation } from 'react-router';
 import GigzFetcher from '../../services/GigzFetcher';
 import IGenre from '../../types/IGenre';
+import EditButton from '../EditButton';
 import ProfilePicture from '../ProfilePicture';
+import { ProfileContext } from '../../pages/Profile/Profile';
 
 interface IProfileBannerProps {
   username: string;
@@ -12,6 +16,7 @@ interface IProfileBannerProps {
   city?: string;
   genres: IGenre[];
   withDrawer?: boolean;
+  drawerOpened?: boolean;
 }
 
 const loadingGenres: IGenre[] = [
@@ -27,14 +32,26 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   city,
   genres,
   withDrawer = false,
+  drawerOpened = false,
 }) => {
   const { t } = useTranslation();
+  const canEdit = useLocation().pathname.includes('/auth/profile');
+  let editMode = useContext(ProfileContext).editMode;
   const genresToDisplay = loading ? loadingGenres : genres;
 
   return (
     <div className="bg-white pl-3 pr-3 rounded-tl-md rounded-tr-md">
       {withDrawer && (
         <span className="w-[15%] ml-[42.5%] inline-block h-1.5 bg-gray-700 rounded-md"></span>
+      )}
+      {!loading && canEdit && (
+        <div className="relative">
+          <EditButton
+            onClick={() => {editMode = !editMode}}
+            disabled={!drawerOpened}
+            className="absolute -top-3 right-0"
+          />
+        </div>
       )}
       <div className="flex flex-row flex-nowrap items-center pt-3 pb-3">
         <Skeleton visible={loading} w="5.5rem" radius="md">

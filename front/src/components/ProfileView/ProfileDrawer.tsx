@@ -6,7 +6,7 @@ import ProfileBanner from './ProfileBanner';
 import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
-import { ProfileLoadingContext } from '../../pages/Profile/Profile';
+import { ProfileContext } from '../../pages/Profile/Profile';
 
 interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;
@@ -17,7 +17,7 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
   profile,
   children,
 }) => {
-  const profileLoading = useContext(ProfileLoadingContext);
+  const profileLoading = useContext(ProfileContext).loading;
   const [drawerOpened, setDrawerOpened] = useState<boolean>(false);
   const toggleDrawer = () => setDrawerOpened(!drawerOpened);
 
@@ -66,6 +66,7 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
             city={profileLoading ? 'loading city name' : profile.city}
             genres={profileLoading ? [] : profile.genres}
             withDrawer={true}
+            drawerOpened={drawerOpened}
           />
         </div>
         <ScrollArea

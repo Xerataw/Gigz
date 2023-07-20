@@ -1,4 +1,4 @@
-import { createContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
 import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
@@ -11,11 +11,13 @@ import IHostProfile from '../../types/IHostProfile';
 import IMedia from '../../types/IMedia';
 import Layout from '../Layout/Layout';
 
-export const ProfileLoadingContext = createContext<boolean>(true);
 
 const Profile: React.FC = () => {
   const history = useHistory();
-  const [profileLoading, setProfileLoading] = useState<boolean>(true);
+  const [profileContext, setProfileContext] = useState<IProfileContextContent>({
+    loading: true,
+    editMode: false,
+  });
   const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
 
@@ -57,21 +59,23 @@ const Profile: React.FC = () => {
       .then((user) => {
         if (user.getToken() === null) redirectToLogin();
         getProfile(user.getProfileType() as EProfileType).then((profile) => {
-          console.log(profile);
           setProfileType(user.getProfileType() as EProfileType);
           setProfile(
             buildProfile(profile.data, user.getProfilePicture() as string)
           );
-          setProfileLoading(false);
+          setProfileContext({
+            loading: false,
+            editMode: profileContext.editMode,
+          });
         });
       })
       .catch(() => redirectToLogin());
   }, [history]);
 
   return (
-    <ProfileLoadingContext.Provider value={profileLoading}>
+    <ProfileContext.Provider value={profileContext}>      
       <Layout navBarShadow={false}>{displayProfileView()}</Layout>
-    </ProfileLoadingContext.Provider>
+    </ProfileContext.Provider>
   );
 };
 
