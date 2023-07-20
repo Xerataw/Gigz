@@ -1,6 +1,6 @@
 import { Textarea } from '@mantine/core';
-import { IStepProps } from '../../../types/IStepProps';
 import StepTitle from './Utils/StepTitle';
+import { IStepProps } from '../../types/IStepProps';
 
 const DescriptionStep: React.FC<IStepProps> = ({ form, label }) => {
   return (

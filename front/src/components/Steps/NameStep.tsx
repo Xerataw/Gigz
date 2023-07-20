@@ -1,6 +1,6 @@
 import { TextInput } from '@mantine/core';
-import { IStepProps } from '../../../types/IStepProps';
 import StepTitle from './Utils/StepTitle';
+import { IStepProps } from '../../types/IStepProps';
 
 const NameStep: React.FC<IStepProps> = ({ form, label }) => {
   return (
