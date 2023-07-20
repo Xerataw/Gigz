@@ -14,18 +14,16 @@ export default class MapTiler {
   private static API_KEY = envVars.VITE_MAPTILER_API_KEY;
 
   static getAutocomplete = (
+    type: string,
     searchLocation: string,
     handleSearchResult: (searchItems: IAddressSearchItem[]) => void
   ) => {
     if (searchLocation.length > 0) {
       axios
         .get(
-          `https://api.maptiler.com/geocoding/${searchLocation}.json?key=${this.API_KEY}`
+          `https://api.maptiler.com/geocoding/${searchLocation}.json?key=${this.API_KEY}&country=fr&types=${type}`
         )
         .then((res) => res.data.features)
-        .then((res) =>
-          res.filter((item: any) => item.place_type[0] === 'address')
-        )
         .then((res) =>
           res.map((item: any) => ({
             latitude: item.geometry.coordinates[1],

@@ -104,7 +104,7 @@ const RegisterArtistProfile: React.FC = () => {
           form={form}
         />
       </div>
-      <ScrollArea className="mt-28 mb-20 w-full">
+      <ScrollArea className="mt-28 mb-20 w-full h-full">
         <Stepper active={formStep} {...stepperProps}>
           <Stepper.Step>
             <NameStep form={form} label={t('stepper.nameStep')} />
@@ -117,6 +117,7 @@ const RegisterArtistProfile: React.FC = () => {
           <Stepper.Step>
             <AddressCompleteStep
               form={form}
+              type="municipality"
               label={t('stepper.addressCompleteStep')}
             />
           </Stepper.Step>

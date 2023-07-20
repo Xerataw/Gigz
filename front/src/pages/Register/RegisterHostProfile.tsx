@@ -117,6 +117,7 @@ const RegisterHostProfile: React.FC = () => {
         <Stepper.Step>
           <AddressCompleteStep
             form={form}
+            type="address"
             label={t('stepper.addressCompleteStep')}
           />
         </Stepper.Step>

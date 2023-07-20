@@ -5,7 +5,15 @@ import MapTiler, { IAddressSearchItem } from '../../services/MapTilerFetcher';
 import { IStepProps } from '../../types/IStepProps';
 import StepTitle from './Utils/StepTitle';
 
-const AddressCompleteStep: React.FC<IStepProps> = ({ form, label }) => {
+interface IAddressCompleteStepProps extends IStepProps {
+  type: string;
+}
+
+const AddressCompleteStep: React.FC<IAddressCompleteStepProps> = ({
+  form,
+  label,
+  type,
+}) => {
   const [searchValue, setSearchValue] = useState<string>();
   const [searchItems, setSearchItems] = useState<IAddressSearchItem[]>([]);
   const [debounced] = useDebouncedValue(form.values.address, 1000);
@@ -21,7 +29,7 @@ const AddressCompleteStep: React.FC<IStepProps> = ({ form, label }) => {
 
   useEffect(() => {
     if (searchValue !== undefined && searchValue.length > 0) {
-      MapTiler.getAutocomplete(searchValue, setSearchItems);
+      MapTiler.getAutocomplete(type, searchValue, setSearchItems);
     }
   }, [debounced]);
 
@@ -43,6 +51,7 @@ const AddressCompleteStep: React.FC<IStepProps> = ({ form, label }) => {
       <Autocomplete
         autoFocus
         label="Votre adresse"
+        dropdownPosition="bottom"
         placeholder="15 rue des marronniers, 46330 Saint-Cirq-Lapopie"
         data={searchItems}
         {...form.getInputProps('address')}

@@ -98,7 +98,7 @@ export const artistValidate = (
     case 2:
       return {
         address:
-          values.address.value.length === 0 || values.address.value.length > 5
+          values.address.value.length === 0 || values.address.value.length > 1
             ? null
             : 'Veuillez entrer une adressse valide',
       };
