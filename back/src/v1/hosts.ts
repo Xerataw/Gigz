@@ -78,7 +78,7 @@ router.get('/', async (req, res) => {
     capacity: host.capacity,
     longitude: host.longitude,
     latitude: host.latitude,
-    profilePicture: host.account.profile_pictures?.media || null,
+    profilePicture: host.account.profile_pictures,
   }));
 
   if (
@@ -132,6 +132,7 @@ router.get('/:id/', async (req, res) => {
           gallery: {
             select: { id: true, media: true },
           },
+          profile_pictures: true
         },
       },
     },

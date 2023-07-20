@@ -78,7 +78,7 @@ router.get('/', async (req, res) => {
     genres: artist.account.account_genre.map((genre) => genre.genre),
     longitude: artist.longitude,
     latitude: artist.latitude,
-    profilePicture: artist.account.profile_pictures?.media || null,
+    profilePicture: artist.account.profile_pictures
   }));
 
   if (
@@ -132,6 +132,7 @@ router.get('/:id/', async (req, res) => {
           gallery: {
             select: { id: true, media: true },
           },
+          profile_pictures: true,
         },
       },
     },
