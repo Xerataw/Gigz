@@ -3,10 +3,10 @@ import { IconCheck, IconMapPin, IconPencil, IconX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import GigzFetcher from '../../services/GigzFetcher';
+import { useProfileEditMode } from '../../store/ProfileEditProvider';
 import IGenre from '../../types/IGenre';
 import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
-import { useProfileEditMode } from '../../store/ProfileEditModeProvider';
 
 interface IProfileBannerProps {
   username: string;
@@ -34,7 +34,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   drawerOpened = false,
 }) => {
   const { t } = useTranslation();
-  const { editMode, setEditMode } = useProfileEditMode();
+  const { editMode, editConfirmed } = useProfileEditMode();
   const canEdit = useLocation().pathname.includes('/auth/profile');
   const genresToDisplay = loading ? loadingGenres : genres;
 
@@ -45,12 +45,12 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
       )}
       {!loading && canEdit && (
         <div className="relative">
-          {editMode ? (
+          {editMode.editMode ? (
             <Flex className="absolute -top-3 right-0" gap="xs">
               <LightRoundButton
                 onClick={() => {
-                  console.log('profile updates validated');
-                  setEditMode(false);
+                  editConfirmed.setEditConfirmed(true);
+                  editMode.setEditMode(false);
                 }}
               >
                 <IconCheck
@@ -58,18 +58,13 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
                   className="mt-[0.075rem] mr-[0.125rem]"
                 />
               </LightRoundButton>
-              <LightRoundButton
-                onClick={() => {
-                  console.log('profile updates canceled');
-                  setEditMode(false);
-                }}
-              >
+              <LightRoundButton onClick={() => editMode.setEditMode(false)}>
                 <IconX size="1.5rem" className="mt-[0.075rem] mr-[0.125rem]" />
               </LightRoundButton>
             </Flex>
           ) : (
             <LightRoundButton
-              onClick={() => setEditMode(!editMode)}
+              onClick={() => editMode.setEditMode(!editMode.editMode)}
               disabled={!drawerOpened}
               className="absolute -top-3 right-0"
             >
