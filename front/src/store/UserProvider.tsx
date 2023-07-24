@@ -1,22 +1,35 @@
-import React, { ReactNode, createContext, useEffect, useState } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import User from './User';
+import { useInitialLoading } from './InitialLoadingProvider';
 
 interface IUserProviderProps {
   children: ReactNode;
 }
 
-export const UserContext = createContext<User | null>(null);
+const UserContext = createContext<User>({} as User);
+
+export const useUser = () => useContext(UserContext);
 
 const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
+  const setUserLoading = useInitialLoading().setUserLoading;
+  const [user, setUser] = useState<User>();
 
   useEffect(() => {
-    User.getInstance()
-      .then((user) => setUser(user))
-      .catch(() => setUser(null));
+    User.getInstance().then((user) => {
+      setUserLoading(false);
+      setUser(user);
+    });
   }, []);
 
-  return <UserContext.Provider value={user}>{children}</UserContext.Provider>;
+  return (
+    <UserContext.Provider value={user as User}>{children}</UserContext.Provider>
+  );
 };
 
 export default UserProvider;
