@@ -6,7 +6,7 @@ import { IStepProps } from '../AccountStep/FirstStep';
 
 const GenreStep: React.FC<IStepProps> = ({ form }) => {
   const genres = useContext(GenresContext);
-  const [selectedGenre, setSelectedGenre] = useState<string[]>(
+  const [selectedGenre, setSelectedGenre] = useState<number[]>(
     form.values.genres ?? []
   );
 
