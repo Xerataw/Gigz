@@ -36,7 +36,7 @@
       "success": "An email has been sent to {{email}}"
     }
   },
-  "stepper": {
+  "regsiter": {
     "title": "Complete your profile",
     "completeRegister": "Your account is being created",
     "competeProfile": "Your profile is being created",

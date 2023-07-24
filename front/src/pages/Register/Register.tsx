@@ -125,14 +125,14 @@ const Register: React.FC = () => {
           <ProfileTypeStep
             form={form}
             nextStep={nextStep}
-            label={t('stepper.profileTypeStep')}
+            label={t('register.profileTypeStep')}
           />
         </Stepper.Step>
         <Stepper.Step>
-          <MailPhoneStep form={form} label={t('stepper.mailPhoneStep')} />
+          <MailPhoneStep form={form} label={t('register.mailPhoneStep')} />
         </Stepper.Step>
         <Stepper.Step>
-          <PasswordStep form={form} label={t('stepper.passwordStep')} />
+          <PasswordStep form={form} label={t('register.passwordStep')} />
         </Stepper.Step>
 
         <Stepper.Step>
@@ -141,7 +141,7 @@ const Register: React.FC = () => {
 
         <Stepper.Completed>
           <StepperCompleted
-            label={t('stepper.completeRegister')}
+            label={t('register.completeRegister')}
             path={form.values.userType === 'artist' ? artistPath : hostPath}
           />
         </Stepper.Completed>

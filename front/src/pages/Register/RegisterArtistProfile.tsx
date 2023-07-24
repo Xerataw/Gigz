@@ -86,7 +86,7 @@ const RegisterArtistProfile: React.FC = () => {
     <div className="pt-10 border border-red-500 flex flex-col items-center relative h-full">
       <div className="absolute">
         <Title order={2} mb={'sm'}>
-          {t('stepper.title')}
+          {t('register.title')}
         </Title>
         <StepperIcons
           icons={[
@@ -108,36 +108,39 @@ const RegisterArtistProfile: React.FC = () => {
       <ScrollArea className="mt-28 mb-20 w-full h-full">
         <Stepper active={formStep} {...stepperProps}>
           <Stepper.Step>
-            <NameStep form={form} label={t('stepper.nameStep')} />
+            <NameStep form={form} label={t('register.nameStep')} />
           </Stepper.Step>
 
           <Stepper.Step>
-            <DescriptionStep form={form} label={t('stepper.descriptionStep')} />
+            <DescriptionStep
+              form={form}
+              label={t('register.descriptionStep')}
+            />
           </Stepper.Step>
 
           <Stepper.Step>
             <AddressCompleteStep
               form={form}
               type="municipality"
-              label={t('stepper.addressCompleteStep')}
+              label={t('register.addressCompleteStep')}
             />
           </Stepper.Step>
 
           <Stepper.Step>
             <ProfilePictureStep
               form={form}
-              label={t('stepper.presentationPicturesStep')}
+              label={t('register.presentationPicturesStep')}
             />
           </Stepper.Step>
 
           <Stepper.Step>
-            <GenreStep form={form} label={t('stepper.genreStep')} />
+            <GenreStep form={form} label={t('register.genreStep')} />
           </Stepper.Step>
 
           <Stepper.Step>
             <PresentationPicturesStep
               form={form}
-              label={t('stepper.presentationPicturesStep')}
+              label={t('register.presentationPicturesStep')}
             />
           </Stepper.Step>
 
@@ -145,7 +148,7 @@ const RegisterArtistProfile: React.FC = () => {
             <SocialLinksStep
               links={linksArtist}
               form={form}
-              label={t('stepper.socialLinksStep')}
+              label={t('register.socialLinksStep')}
             />
           </Stepper.Step>
 
@@ -155,7 +158,7 @@ const RegisterArtistProfile: React.FC = () => {
 
           <Stepper.Completed>
             <StepperCompleted
-              label={t('stepper.competeProfile')}
+              label={t('register.competeProfile')}
               path="auth/profile"
             />
           </Stepper.Completed>
