@@ -16,7 +16,7 @@ const ProfilePicture = ({
 }: IProfilePictureProps) => {
   return (
     <Avatar radius={radius} size={size} src={src} alt={alt ?? ''}>
-      <IconUserCircle size="3rem" />
+      <IconUserCircle size="50" />
     </Avatar>
   );
 };
