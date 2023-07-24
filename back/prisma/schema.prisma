@@ -15,6 +15,7 @@ model account {
   phone_number                                       String?              @unique(map: "phone_number") @db.VarChar(255)
   email_validated                                    Int                  @default(0) @db.TinyInt
   profile_type                                       account_profile_type
+  user_id                                            String               @db.VarChar(36)
   account_genre                                      account_genre[]
   artist                                             artist?
   conversation_conversation_creator_idToaccount      conversation[]       @relation("conversation_creator_idToaccount")
