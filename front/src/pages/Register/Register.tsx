@@ -18,7 +18,11 @@ import ProfileTypeStep from '../../components/Steps/ProfileTypeStep';
 import StepperCompleted from '../../components/Steps/StepperCompleted';
 import StepButtons from '../../components/Steps/Utils/StepButtons';
 import StepperIcons from '../../components/Steps/Utils/StepperIcons';
-import { stepperProps } from '../../configs/steppers/globalConfig';
+import {
+  artistPath,
+  hostPath,
+  stepperProps,
+} from '../../configs/steppers/globalConfig';
 import {
   registerInitialValues,
   regsiterValidate,

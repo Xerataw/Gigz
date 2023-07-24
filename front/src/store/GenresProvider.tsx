@@ -5,9 +5,9 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import getGenres from '../api/genres';
 import IGenre from '../types/IGenre';
 import { useInitialLoading } from './InitialLoadingProvider';
+import { getGenres } from '../api/genres';
 
 interface IGenresProviderProps {
   children: ReactNode;

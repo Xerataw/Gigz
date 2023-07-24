@@ -5,7 +5,7 @@ import { IStepProps } from '../../types/IStepProps';
 import MusicGenreButton from '../MusicGenreButton';
 import StepTitle from './Utils/StepTitle';
 
-const GenreStep: React.FC<IStepProps> = ({ form }) => {
+const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
   const genres = useGenres();
   const [selectedGenre, setSelectedGenre] = useState<number[]>(
     form.values.genres ?? []
