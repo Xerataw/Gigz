@@ -64,12 +64,90 @@ router.get('/', async (req, res) => {
       ],
     },
 
-    include: {
+    select: {
       latest_message: true,
+      _count: {
+        select: {
+          messages: {
+            where: {
+              seen: 0,
+            },
+          },
+        },
+      },
+
+      creator: {
+        select: {
+          id: true,
+          host: { select: { name: true } },
+          artist: { select: { name: true } },
+          profile_picture: true,
+        },
+      },
+
+      member: {
+        select: {
+          id: true,
+          host: { select: { name: true } },
+          artist: { select: { name: true } },
+          profile_picture: true,
+        },
+      },
     },
   });
 
-  sendResponse(res, fromDbFormat(conversations));
+  const formattedConversation = conversations.map((conversation) => {
+    if (conversation.creator.id === req.account.id) {
+      // @ts-ignore
+      delete conversation.creator;
+
+      // @ts-ignore
+      conversation.from = conversation.member;
+
+      // @ts-ignore
+      delete conversation.member;
+    } else {
+      // @ts-ignore
+      delete conversation.member;
+
+      // @ts-ignore
+      conversation.from = conversation.creator;
+
+      // @ts-ignore
+      delete conversation.creator;
+    }
+
+    // @ts-ignore
+    if (conversation.from.artist) {
+      // @ts-ignore
+      conversation.from.name = conversation.from.artist.name;
+
+      // @ts-ignore
+      delete conversation.from.artist;
+
+      // @ts-ignore
+      delete conversation.from.host;
+    } else {
+      // @ts-ignore
+      conversation.from.name = conversation.from.host.name;
+
+      // @ts-ignore
+      delete conversation.from.host;
+
+      // @ts-ignore
+      delete conversation.from.artist;
+    }
+
+    // @ts-ignore
+    conversation.unread = conversation._count.messages;
+
+    // @ts-ignore
+    delete conversation._count;
+
+    return conversation;
+  });
+
+  sendResponse(res, fromDbFormat(formattedConversation));
 });
 
 const ConversationParamsSchema = z.object({

@@ -1,191 +1,191 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+    provider = "mysql"
+    url      = env("DATABASE_URL")
 }
 
 model account {
-  id                                                 Int                  @id @default(autoincrement())
-  email                                              String               @unique(map: "Account_email_key") @db.VarChar(255)
-  password                                           String               @db.VarChar(255)
-  creation_date                                      DateTime             @default(now()) @db.DateTime(0)
-  phone_number                                       String?              @unique(map: "phone_number") @db.VarChar(255)
-  email_validated                                    Int                  @default(0) @db.TinyInt
-  profile_type                                       account_profile_type
-  account_genre                                      account_genre[]
-  artist                                             artist?
-  conversation_conversation_creator_idToaccount      conversation[]       @relation("conversation_creator_idToaccount")
-  conversation_conversation_member_idToaccount       conversation[]       @relation("conversation_member_idToaccount")
-  gallery                                            gallery[]
-  host                                               host?
-  liked_account_liked_account_liker_accountToaccount liked_account[]      @relation("liked_account_liker_accountToaccount")
-  liked_account_liked_account_liked_accountToaccount liked_account[]      @relation("liked_account_liked_accountToaccount")
-  message_message_sender_idToaccount                 message[]            @relation("message_sender_idToaccount")
-  message_message_recipient_idToaccount              message[]            @relation("message_recipient_idToaccount")
-  profile_pictures                                   profile_pictures?
-  settings                                           settings[]
+    id                                                 Int                  @id @default(autoincrement())
+    email                                              String               @unique(map: "Account_email_key") @db.VarChar(255)
+    password                                           String               @db.VarChar(255)
+    creation_date                                      DateTime             @default(now()) @db.DateTime(0)
+    phone_number                                       String?              @unique(map: "phone_number") @db.VarChar(255)
+    email_validated                                    Int                  @default(0) @db.TinyInt
+    profile_type                                       account_profile_type
+    account_genre                                      account_genre[]
+    artist                                             artist?
+    conversation_conversation_creator_idToaccount      conversation[]       @relation("conversation_creator_idToaccount")
+    conversation_conversation_member_idToaccount       conversation[]       @relation("conversation_member_idToaccount")
+    gallery                                            gallery[]
+    host                                               host?
+    liked_account_liked_account_liker_accountToaccount liked_account[]      @relation("liked_account_liker_accountToaccount")
+    liked_account_liked_account_liked_accountToaccount liked_account[]      @relation("liked_account_liked_accountToaccount")
+    message_message_sender_idToaccount                 message[]            @relation("message_sender_idToaccount")
+    message_message_recipient_idToaccount              message[]            @relation("message_recipient_idToaccount")
+    profile_picture                                    profile_pictures?
+    settings                                           settings[]
 }
 
 model account_genre {
-  id         Int     @id @default(autoincrement())
-  account_id Int
-  genre_id   Int
-  account    account @relation(fields: [account_id], references: [id], onDelete: Cascade, map: "account_genre_ibfk_3")
-  genre      genre   @relation(fields: [genre_id], references: [id], onDelete: Cascade, map: "account_genre_ibfk_4")
+    id         Int     @id @default(autoincrement())
+    account_id Int
+    genre_id   Int
+    account    account @relation(fields: [account_id], references: [id], onDelete: Cascade, map: "account_genre_ibfk_3")
+    genre      genre   @relation(fields: [genre_id], references: [id], onDelete: Cascade, map: "account_genre_ibfk_4")
 
-  @@unique([account_id, genre_id], map: "account_id_genre_id")
-  @@index([genre_id], map: "genre_id")
+    @@unique([account_id, genre_id], map: "account_id_genre_id")
+    @@index([genre_id], map: "genre_id")
 }
 
 model artist {
-  id               Int     @id @default(autoincrement())
-  name             String? @db.VarChar(255)
-  description      String? @db.LongText
-  spotify_link     String? @db.VarChar(255)
-  instagram_link   String? @db.VarChar(255)
-  facebook_link    String? @db.VarChar(255)
-  soundcloud_link  String? @db.VarChar(255)
-  youtube_link     String? @db.VarChar(255)
-  apple_music_link String? @db.VarChar(255)
-  website_link     String? @db.VarChar(255)
-  deezer_link      String? @db.VarChar(255)
-  account_id       Int     @unique(map: "account_id")
-  music_link       String? @db.VarChar(255)
-  city             String? @db.VarChar(255)
-  latitude         Float?  @db.Float
-  longitude        Float?  @db.Float
-  account          account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "artist_ibfk_2")
+    id               Int     @id @default(autoincrement())
+    name             String? @db.VarChar(255)
+    description      String? @db.LongText
+    spotify_link     String? @db.VarChar(255)
+    instagram_link   String? @db.VarChar(255)
+    facebook_link    String? @db.VarChar(255)
+    soundcloud_link  String? @db.VarChar(255)
+    youtube_link     String? @db.VarChar(255)
+    apple_music_link String? @db.VarChar(255)
+    website_link     String? @db.VarChar(255)
+    deezer_link      String? @db.VarChar(255)
+    account_id       Int     @unique(map: "account_id")
+    music_link       String? @db.VarChar(255)
+    city             String? @db.VarChar(255)
+    latitude         Float?  @db.Float
+    longitude        Float?  @db.Float
+    account          account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "artist_ibfk_2")
 
-  @@index([account_id], map: "artist_ibfk_2")
+    @@index([account_id], map: "artist_ibfk_2")
 }
 
 model capacity {
-  id       Int    @id @default(autoincrement())
-  max      Int    @db.UnsignedInt
-  color    String @db.VarChar(7)
-  bg_color String @db.VarChar(7)
-  host     host[]
+    id       Int    @id @default(autoincrement())
+    max      Int    @db.UnsignedInt
+    color    String @db.VarChar(7)
+    bg_color String @db.VarChar(7)
+    host     host[]
 }
 
 model genre {
-  id            Int             @id @default(autoincrement())
-  name          String          @db.VarChar(255)
-  account_genre account_genre[]
+    id            Int             @id @default(autoincrement())
+    name          String          @db.VarChar(255)
+    account_genre account_genre[]
 }
 
 model host {
-  id             Int        @id @default(autoincrement())
-  name           String?    @db.VarChar(255)
-  description    String?    @db.LongText
-  website_link   String?    @db.VarChar(255)
-  facebook_link  String?    @db.VarChar(255)
-  instagram_link String?    @db.VarChar(255)
-  capacity_id    Int?
-  host_type_id   Int?
-  address        String?    @db.VarChar(255)
-  account_id     Int        @unique(map: "account_id")
-  city           String?    @db.VarChar(255)
-  latitude       Float?     @db.Float
-  longitude      Float?     @db.Float
-  capacity       capacity?  @relation(fields: [capacity_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_1")
-  host_type      host_type? @relation(fields: [host_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_2")
-  account        account    @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_4")
+    id             Int        @id @default(autoincrement())
+    name           String?    @db.VarChar(255)
+    description    String?    @db.LongText
+    website_link   String?    @db.VarChar(255)
+    facebook_link  String?    @db.VarChar(255)
+    instagram_link String?    @db.VarChar(255)
+    capacity_id    Int?
+    host_type_id   Int?
+    address        String?    @db.VarChar(255)
+    account_id     Int        @unique(map: "account_id")
+    city           String?    @db.VarChar(255)
+    latitude       Float?     @db.Float
+    longitude      Float?     @db.Float
+    capacity       capacity?  @relation(fields: [capacity_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_1")
+    host_type      host_type? @relation(fields: [host_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_2")
+    account        account    @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_4")
 
-  @@index([capacity_id], map: "capacity_id")
-  @@index([host_type_id], map: "host_type_id")
-  @@index([account_id], map: "host_ibfk_4")
+    @@index([capacity_id], map: "capacity_id")
+    @@index([host_type_id], map: "host_type_id")
+    @@index([account_id], map: "host_ibfk_4")
 }
 
 model host_type {
-  id       Int    @id @default(autoincrement())
-  name     String @db.VarChar(255)
-  color    String @db.VarChar(7)
-  bg_color String @db.VarChar(7)
-  host     host[]
+    id       Int    @id @default(autoincrement())
+    name     String @db.VarChar(255)
+    color    String @db.VarChar(7)
+    bg_color String @db.VarChar(7)
+    host     host[]
 }
 
 model liked_account {
-  id                                           Int     @id @default(autoincrement())
-  liker_account                                Int
-  liked_account                                Int
-  account_liked_account_liker_accountToaccount account @relation("liked_account_liker_accountToaccount", fields: [liker_account], references: [id], onDelete: Cascade, map: "liked_account_ibfk_1")
-  account_liked_account_liked_accountToaccount account @relation("liked_account_liked_accountToaccount", fields: [liked_account], references: [id], onDelete: Cascade, map: "liked_account_ibfk_2")
+    id                                           Int     @id @default(autoincrement())
+    liker_account                                Int
+    liked_account                                Int
+    account_liked_account_liker_accountToaccount account @relation("liked_account_liker_accountToaccount", fields: [liker_account], references: [id], onDelete: Cascade, map: "liked_account_ibfk_1")
+    account_liked_account_liked_accountToaccount account @relation("liked_account_liked_accountToaccount", fields: [liked_account], references: [id], onDelete: Cascade, map: "liked_account_ibfk_2")
 
-  @@unique([liker_account, liked_account], map: "liker_account_liked_account")
-  @@index([liked_account], map: "liked_account")
+    @@unique([liker_account, liked_account], map: "liker_account_liked_account")
+    @@index([liked_account], map: "liked_account")
 }
 
 model settings {
-  id             Int                @id @default(autoincrement())
-  invisible_mode Int                @default(0) @db.TinyInt
-  dark_mode      settings_dark_mode @default(disabled)
-  account_id     Int
-  account        account            @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "settings_ibfk_1")
+    id             Int                @id @default(autoincrement())
+    invisible_mode Int                @default(0) @db.TinyInt
+    dark_mode      settings_dark_mode @default(disabled)
+    account_id     Int
+    account        account            @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "settings_ibfk_1")
 
-  @@index([account_id], map: "account_id")
+    @@index([account_id], map: "account_id")
 }
 
 model gallery {
-  id         Int     @id @default(autoincrement())
-  account_id Int
-  media      String  @db.VarChar(255)
-  account    account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gallery_ibfk_1")
+    id         Int     @id @default(autoincrement())
+    account_id Int
+    media      String  @db.VarChar(255)
+    account    account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gallery_ibfk_1")
 
-  @@unique([account_id, media], map: "account_id_media")
+    @@unique([account_id, media], map: "account_id_media")
 }
 
 model profile_pictures {
-  id         Int      @id @default(autoincrement())
-  account_id Int?     @unique(map: "account_id")
-  media      String   @db.VarChar(255)
-  account    account? @relation(fields: [account_id], references: [id], map: "profile_pictures_ibfk_1")
+    id         Int     @id @default(autoincrement())
+    account_id Int     @unique(map: "account_id")
+    media      String  @db.VarChar(255)
+    account    account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "profile_pictures_ibfk_1")
 }
 
 model conversation {
-  id                Int       @id @default(autoincrement())
-  creator_id        Int
-  member_id         Int
-  creation_date     DateTime? @default(now()) @db.DateTime(0)
-  latest_message_id Int?
-  creator           account   @relation("conversation_creator_idToaccount", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_1")
-  member            account   @relation("conversation_member_idToaccount", fields: [member_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_2")
-  latest_message    message?  @relation("conversation_latest_message_idTomessage", fields: [latest_message_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_3")
-  messages          message[] @relation("message_conversation_idToconversation")
+    id                Int       @id @default(autoincrement())
+    creator_id        Int
+    member_id         Int
+    creation_date     DateTime? @default(now()) @db.DateTime(0)
+    latest_message_id Int?
+    creator           account   @relation("conversation_creator_idToaccount", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_1")
+    member            account   @relation("conversation_member_idToaccount", fields: [member_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_2")
+    latest_message    message?  @relation("conversation_latest_message_idTomessage", fields: [latest_message_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_3")
+    messages          message[] @relation("message_conversation_idToconversation")
 
-  @@unique([creator_id, member_id], map: "creator_id_member_id")
-  @@index([creator_id], map: "creator_id")
-  @@index([latest_message_id], map: "latest_message_id")
-  @@index([member_id], map: "member_id")
+    @@unique([creator_id, member_id], map: "creator_id_member_id")
+    @@index([creator_id], map: "creator_id")
+    @@index([latest_message_id], map: "latest_message_id")
+    @@index([member_id], map: "member_id")
 }
 
 model message {
-  id                                                   Int            @id @default(autoincrement())
-  sender_id                                            Int
-  recipient_id                                         Int
-  conversation_id                                      Int
-  content                                              String         @db.Text
-  send_date                                            DateTime?      @default(now()) @db.DateTime(0)
-  seen                                                 Int            @default(0) @db.TinyInt
-  conversation_conversation_latest_message_idTomessage conversation[] @relation("conversation_latest_message_idTomessage")
-  account_message_sender_idToaccount                   account        @relation("message_sender_idToaccount", fields: [sender_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_1")
-  account_message_recipient_idToaccount                account        @relation("message_recipient_idToaccount", fields: [recipient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_2")
-  conversation_message_conversation_idToconversation   conversation   @relation("message_conversation_idToconversation", fields: [conversation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_3")
+    id                                                   Int            @id @default(autoincrement())
+    sender_id                                            Int
+    recipient_id                                         Int
+    conversation_id                                      Int
+    content                                              String         @db.Text
+    send_date                                            DateTime?      @default(now()) @db.DateTime(0)
+    seen                                                 Int            @default(0) @db.TinyInt
+    conversation_conversation_latest_message_idTomessage conversation[] @relation("conversation_latest_message_idTomessage")
+    account_message_sender_idToaccount                   account        @relation("message_sender_idToaccount", fields: [sender_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_1")
+    account_message_recipient_idToaccount                account        @relation("message_recipient_idToaccount", fields: [recipient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_2")
+    conversation_message_conversation_idToconversation   conversation   @relation("message_conversation_idToconversation", fields: [conversation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_3")
 
-  @@index([conversation_id], map: "conversation_id")
-  @@index([recipient_id], map: "recipient_id")
-  @@index([sender_id], map: "sender_id")
+    @@index([conversation_id], map: "conversation_id")
+    @@index([recipient_id], map: "recipient_id")
+    @@index([sender_id], map: "sender_id")
 }
 
 enum settings_dark_mode {
-  enabled
-  disabled
-  auto
+    enabled
+    disabled
+    auto
 }
 
 enum account_profile_type {
-  host
-  artist
+    host
+    artist
 }
