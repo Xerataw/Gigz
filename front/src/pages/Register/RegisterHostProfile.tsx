@@ -1,4 +1,4 @@
-import { Loader, Stepper, Title } from '@mantine/core';
+import { Loader, ScrollArea, Stepper, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
@@ -87,88 +87,95 @@ const RegisterHostProfile: React.FC = () => {
   }, [debounced]);
 
   return (
-    <div className="pt-10 border border-red-500 flex flex-col items-center">
-      <Title order={2} mb={'sm'}>
-        {t('register.title')}
-      </Title>
-      <StepperIcons
-        icons={[
-          <IconPencil key={0} />,
-          <IconAlignCenter key={1} />,
-          <IconMapPin key={3} />,
-          <IconMusic key={4} />,
-          <IconUserCircle key={6} />,
-          <IconBoxMultiple key={5} />,
-          <IconRulerMeasure key={7} />,
-          <IconExternalLink key={2} />,
+    <div className="pt-10 border border-red-500 flex flex-col items-center relative h-full">
+      <div className="absolute">
+        <Title order={2} mb={'sm'}>
+          {t('register.title')}
+        </Title>
+        <StepperIcons
+          icons={[
+            <IconPencil key={0} />,
+            <IconAlignCenter key={1} />,
+            <IconMapPin key={3} />,
+            <IconUserCircle key={6} />,
+            <IconMusic key={4} />,
+            <IconRulerMeasure key={7} />,
+            <IconExternalLink key={2} />,
+            <IconBoxMultiple key={5} />,
 
-          <IconArrowUpBar key={5} />,
-          <IconChecks key={6} />,
-        ]}
-        currentStep={formStep}
-        form={form}
-      />
-      <Stepper active={formStep} {...stepperProps}>
-        <Stepper.Step>
-          <NameStep form={form} label={t('register.nameStep')} />
-        </Stepper.Step>
+            <IconArrowUpBar key={5} />,
+            <IconChecks key={6} />,
+          ]}
+          currentStep={formStep}
+          form={form}
+        />
+      </div>
+      <ScrollArea className="mt-28 mb-20 w-full h-full">
+        <Stepper active={formStep} {...stepperProps}>
+          <Stepper.Step>
+            <NameStep form={form} label={t('register.nameStep')} />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <DescriptionStep form={form} label={t('register.descriptionStep')} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <DescriptionStep
+              form={form}
+              label={t('register.descriptionStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <AddressCompleteStep
-            form={form}
-            type="address"
-            label={t('register.addressCompleteStep')}
-          />
-        </Stepper.Step>
+          <Stepper.Step>
+            <AddressCompleteStep
+              form={form}
+              type="address"
+              label={t('register.addressCompleteStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <ProfilePictureStep
-            form={form}
-            label={t('register.presentationPicturesStep')}
-          />
-        </Stepper.Step>
+          <Stepper.Step>
+            <ProfilePictureStep
+              form={form}
+              label={t('register.presentationPicturesStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <GenreStep form={form} label={t('register.genreStep')} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <GenreStep form={form} label={t('register.genreStep')} />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <CapacityStep form={form} label={t('register.capacityStep')} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <CapacityStep form={form} label={t('register.capacityStep')} />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <SocialLinksStep
-            links={linksHost}
-            form={form}
-            label={t('register.socialLinksStep')}
-          />
-        </Stepper.Step>
+          <Stepper.Step>
+            <SocialLinksStep
+              links={linksHost}
+              form={form}
+              label={t('register.socialLinksStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <PresentationPicturesStep
-            form={form}
-            label={t('register.presentationPicturesStep')}
-          />
-        </Stepper.Step>
+          <Stepper.Step>
+            <PresentationPicturesStep
+              form={form}
+              label={t('register.presentationPicturesStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step
-          icon={<IconCircleCheck />}
-          completedIcon={<IconCircleCheckFilled />}
-        >
-          <Loader variant="bars" />
-        </Stepper.Step>
+          <Stepper.Step
+            icon={<IconCircleCheck />}
+            completedIcon={<IconCircleCheckFilled />}
+          >
+            <Loader variant="bars" />
+          </Stepper.Step>
 
-        <Stepper.Completed>
-          <StepperCompleted
-            label={t('register.competeProfile')}
-            path="auth/profile"
-          />
-        </Stepper.Completed>
-      </Stepper>
+          <Stepper.Completed>
+            <StepperCompleted
+              label={t('register.competeProfile')}
+              path="auth/profile"
+            />
+          </Stepper.Completed>
+        </Stepper>
+      </ScrollArea>
 
       <StepButtons
         formStep={formStep}

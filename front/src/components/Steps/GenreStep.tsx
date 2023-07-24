@@ -1,4 +1,4 @@
-import { SimpleGrid, Title } from '@mantine/core';
+import { SimpleGrid } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { getGenres } from '../../api/genres';
 import IGenre from '../../types/IGenre';
@@ -8,11 +8,11 @@ import StepTitle from './Utils/StepTitle';
 
 const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
   const [genres, setGenres] = useState<IGenre[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState<string[]>(
+  const [selectedGenre, setSelectedGenre] = useState<number[]>(
     form.values.genres ?? []
   );
 
-  const handleAddGenre = (id: string) => {
+  const handleAddGenre = (id: number) => {
     if (!selectedGenre.includes(id)) {
       setSelectedGenre((old) => [...old, id]);
     } else {
