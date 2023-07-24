@@ -37,7 +37,7 @@ const ProfileView: React.FC<IProfileViewProps> = ({
       <ProfileDrawer profile={profile} profileLoading={loading}>
         {children}
       </ProfileDrawer>
-    </>
+    </div>
   );
 };
 
