@@ -8,11 +8,9 @@ import {
   IconUserCircle,
   IconZoomFilled,
 } from '@tabler/icons-react';
-import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import GigzFetcher from '../services/GigzFetcher';
-import User from '../store/User';
-import { UserContext } from '../store/UserProvider';
+import { useUser } from '../store/UserProvider';
 import GigzIcon from './GigzIcon';
 
 interface IBottomNavBarProps {
@@ -20,7 +18,7 @@ interface IBottomNavBarProps {
 }
 
 const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
-  const userPP = (useContext(UserContext) as User).getProfilePicture();
+  const userPP = useUser().getProfilePicture();
 
   return (
     <div className="absolute bottom-0 w-full z-[10000]">

@@ -1,10 +1,9 @@
-import { useContext, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
 import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
 import HostProfileView from '../../components/ProfileView/HostProfileView';
-import User from '../../store/User';
-import { UserContext } from '../../store/UserProvider';
+import { useUser } from '../../store/UserProvider';
 import EMediaType from '../../types/EMediaType';
 import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
@@ -14,7 +13,7 @@ import Layout from '../Layout/Layout';
 
 const Profile: React.FC = () => {
   const history = useHistory();
-  const user = useContext(UserContext) as User;
+  const user = useUser();
   const [profileLoading, setProfileLoading] = useState<boolean>(true);
   const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();

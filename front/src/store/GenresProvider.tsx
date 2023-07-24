@@ -1,19 +1,32 @@
-import React, { ReactNode, createContext, useEffect, useState } from 'react';
-import IGenre from '../types/IGenre';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 import getGenres from '../api/genres';
+import IGenre from '../types/IGenre';
+import { useInitialLoading } from './InitialLoadingProvider';
 
 interface IGenresProviderProps {
   children: ReactNode;
 }
 
-export const GenresContext = createContext<IGenre[]>([]);
+const GenresContext = createContext<IGenre[]>([]);
+
+export const useGenres = () => useContext(GenresContext);
 
 const GenresProvider: React.FC<IGenresProviderProps> = ({ children }) => {
+  const setGenresLoading = useInitialLoading().setGenresLoading;
   const [genres, setGenres] = useState<IGenre[]>([]);
 
   useEffect(() => {
     getGenres().then((response) => {
-      if (response.data) setGenres(response.data);
+      if (response.data) {
+        setGenresLoading(false);
+        setGenres(response.data);
+      }
     });
   }, []);
 

@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Global } from '@emotion/react';
 import { ScrollArea } from '@mantine/core';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
