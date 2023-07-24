@@ -15,8 +15,8 @@ const SearchResult: React.FC<ISearchResultProps> = ({
   return (
     <div onClick={() => !loading && onClick(result)}>
       <ProfileBanner
-        username={result?.name ?? ''}
-        genres={result?.genres ?? []}
+        username={result?.name}
+        genres={result?.genres}
         city={result?.city}
         profilePicture={result?.profilePicture}
         loading={loading}

@@ -13,9 +13,9 @@ const ChatItem: React.FC<IChatItemProps> = ({
 }) => {
   const lastMessage = () => {
     return (
-      chat?.lastMessageDate?.getMonth() +
-      '/' +
       chat?.lastMessageDate?.getDate() +
+      '/' +
+      chat?.lastMessageDate?.getMonth() +
       ' - ' +
       chat?.shortLastMessage
     );
