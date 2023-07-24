@@ -1,10 +1,14 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
 
-const InitialLoadingContext = createContext({
-  setUserLoading: (loading: boolean) =>
-    console.log(`Default method: ${loading}`),
-  setGenresLoading: (loading: boolean) =>
-    console.log(`Default method: ${loading}`),
+interface IInitialLoadingContext {
+  setUserLoading: (loading: boolean) => void;
+  setGenresLoading: (loading: boolean) => void;
+  isLoading: boolean;
+}
+
+const InitialLoadingContext = createContext<IInitialLoadingContext>({
+  setUserLoading: () => undefined,
+  setGenresLoading: () => undefined,
   isLoading: true,
 });
 
