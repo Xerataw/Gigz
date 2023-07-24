@@ -11,11 +11,11 @@ import {
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import AccountCreated from '../../components/Register/AccountStep/AccountCreated';
-import User from '../../store/User';
 import FirstStep from '../../components/Register/AccountStep/FirstStep';
 import SecondStep from '../../components/Register/AccountStep/SecondStep';
 import ThirdStep from '../../components/Register/AccountStep/ThirdStep';
 import GigzFetcher from '../../services/GigzFetcher';
+import { useUser } from '../../store/UserProvider';
 
 const errorPassword = (value: string) => (
   <div>
@@ -29,11 +29,8 @@ const errorPassword = (value: string) => (
   </div>
 );
 
-const artistPath = '/register/artist';
-const hostPath = '/register/host';
-
 const Register: React.FC = () => {
-  const [user, setUser] = useState<User>();
+  const user = useUser();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     initialValues: {
@@ -76,10 +73,6 @@ const Register: React.FC = () => {
 
   const [debounced] = useDebouncedValue(form.values, 1000);
 
-  useEffect(() => {
-    User.getInstance().then((userRes) => setUser(userRes));
-  }, []);
-
   const sendRegisterForm = () => {
     GigzFetcher.post<{ [key: string]: string }>(
       'register',
@@ -94,7 +87,10 @@ const Register: React.FC = () => {
     ).then((res) => {
       if (res.ok === true) {
         if (res.data?.token !== undefined) {
-          user?.setToken(res.data.token);
+          user.setName('');
+          user.setProfilePicture(null);
+          user.setProfileType(null);
+          user.setToken(res.data.token);
           setFormStep((old) => old + 1);
         }
       } else {

@@ -1,29 +1,22 @@
 import { SimpleGrid, Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import fetchGenres from '../../../api/genres';
-import IGenre from '../../../types/IGenre';
+import { useGenres } from '../../../store/GenresProvider';
 import MusicGenreButton from '../../MusicGenreButton';
 import { IStepProps } from '../AccountStep/FirstStep';
 
 const GenreStep: React.FC<IStepProps> = ({ form }) => {
-  const [genres, setGenres] = useState<IGenre[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState<string[]>(
+  const genres = useGenres();
+  const [selectedGenre, setSelectedGenre] = useState<number[]>(
     form.values.genres ?? []
   );
 
-  const handleAddGenre = (id: string) => {
+  const handleAddGenre = (id: number) => {
     if (!selectedGenre.includes(id)) {
       setSelectedGenre((old) => [...old, id]);
     } else {
       setSelectedGenre((old) => old.filter((idGenre) => idGenre != id));
     }
   };
-
-  useEffect(() => {
-    fetchGenres()
-      .then((res) => res.data ?? [])
-      .then((res) => setGenres(res));
-  }, []);
 
   useEffect(() => {
     form.values.genres = selectedGenre;

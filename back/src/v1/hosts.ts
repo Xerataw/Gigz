@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
               genre: true,
             },
           },
-          profile_pictures: true,
+          profile_picture: true,
         },
       },
     },
@@ -78,7 +78,7 @@ router.get('/', async (req, res) => {
     capacity: host.capacity,
     longitude: host.longitude,
     latitude: host.latitude,
-    profilePicture: host.account.profile_pictures,
+    profilePicture: host.account.profile_picture,
   }));
 
   if (
@@ -132,7 +132,7 @@ router.get('/:id/', async (req, res) => {
           gallery: {
             select: { id: true, media: true },
           },
-          profile_pictures: true
+          profile_picture: true,
         },
       },
     },

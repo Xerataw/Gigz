@@ -1,4 +1,4 @@
-import { ReactNode, useContext, useState } from 'react';
+import { ReactNode, useState } from 'react';
 import { Global } from '@emotion/react';
 import { ScrollArea } from '@mantine/core';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
@@ -6,18 +6,18 @@ import ProfileBanner from './ProfileBanner';
 import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
-import { ProfileLoadingContext } from '../../pages/Profile/Profile';
 
 interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;
+  profileLoading: boolean;
   children: ReactNode;
 }
 
 const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
   profile,
+  profileLoading,
   children,
 }) => {
-  const profileLoading = useContext(ProfileLoadingContext);
   const [drawerOpened, setDrawerOpened] = useState<boolean>(false);
   const toggleDrawer = () => setDrawerOpened(!drawerOpened);
 
