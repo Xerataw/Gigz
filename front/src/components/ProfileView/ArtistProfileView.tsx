@@ -1,4 +1,3 @@
-import { useContext } from 'react';
 import {
   isBioSectionAvaiblable,
   isMusicSectionAvailable,
@@ -9,15 +8,16 @@ import Biography from './ProfileSections/Biography';
 import MusicProfiles from './ProfileSections/MusicProfiles';
 import Socials from './ProfileSections/Socials';
 import ProfileView from './ProfileView';
-import { ProfileContext } from '../../pages/Profile/Profile';
 
 interface IArtistProfileViewProps {
   profile: IArtistProfile;
+  loading: boolean;
 }
 
-const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({ profile }) => {
-  const profileLoading = useContext(ProfileContext).loading;
-
+const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({
+  profile,
+  loading,
+}) => {
   const getProfileSections = (profile: IArtistProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];
     isBioSectionAvaiblable(profile.description) &&
@@ -49,8 +49,8 @@ const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({ profile }) => {
   };
 
   return (
-    <ProfileView profile={profile}>
-      {profileLoading ? (
+    <ProfileView profile={profile} loading={loading}>
+      {loading ? (
         <Biography loading={true} content={''} />
       ) : (
         getProfileSections(profile).map((section) => section)

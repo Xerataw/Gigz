@@ -1,11 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
-import { useTranslation } from 'react-i18next';
-import { useForm } from '@mantine/form';
-import { useDebouncedValue } from '@mantine/hooks';
-import login from '../../api/login';
-import User from '../../store/User';
-import { HttpStatusCode } from 'axios';
 import {
   Anchor,
   Box,
@@ -16,10 +8,19 @@ import {
   PasswordInput,
   TextInput,
 } from '@mantine/core';
+import { useForm } from '@mantine/form';
+import { useDebouncedValue } from '@mantine/hooks';
+import { HttpStatusCode } from 'axios';
+import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
+import { useHistory } from 'react-router-dom';
+import login from '../../api/login';
+import { useUser } from '../../store/UserProvider';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const user = useUser();
 
   const [incompleteOrInvalidForm, setIncompleteOrInvalidForm] = useState(true);
   const [formSubmited, setFormSubmited] = useState(false);
@@ -93,12 +94,10 @@ const Login: React.FC = () => {
     login(data.email, data.password)
       .then((res) => {
         if (res.ok) {
-          User.getInstance().then((user) => {
-            user.setToken(res.data.token);
-            user.setProfileType(res.data.profileType);
-            user.setProfilePicture(res.data.profilePicture);
-            onSuccess();
-          });
+          user.setToken(res.data.token);
+          user.setProfileType(res.data.profileType);
+          user.setProfilePicture(res.data.profilePicture);
+          onSuccess();
         }
         setFormSubmited(false);
       })

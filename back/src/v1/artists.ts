@@ -7,7 +7,13 @@ import useDatabase from '@composables/useDatabase';
 const router = express.Router();
 
 const { database } = useDatabase();
-const { ApiMessages, sendResponse, sendError, fromDbFormat } = useUtils();
+const {
+  ApiMessages,
+  sendResponse,
+  sendError,
+  fromDbFormat,
+  calculateDistance,
+} = useUtils();
 
 const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
@@ -19,6 +25,14 @@ const buildArtistsWhereCondition = (query: {
   genres?: string;
 }) => {
   return {
+    AND: {
+      longitude: {
+        not: null,
+      },
+      latitude: {
+        not: null,
+      },
+    },
     name: {
       contains: query.name ? query.name : undefined,
     },
@@ -44,24 +58,57 @@ router.get('/', async (req, res) => {
   const data = await database.artist.findMany({
     include: {
       account: {
-        include: {
+        select: {
           account_genre: {
             include: {
               genre: true,
             },
           },
+          profile_picture: true,
         },
       },
     },
     where: buildArtistsWhereCondition(body.data),
   });
 
-  const formattedData = data.map((artist) => ({
+  let formattedData = data.map((artist) => ({
     id: artist.id,
     name: artist.name,
     city: artist.city,
     genres: artist.account.account_genre.map((genre) => genre.genre),
+    longitude: artist.longitude,
+    latitude: artist.latitude,
+    profilePicture: artist.account.profile_picture,
   }));
+
+  if (
+    typeof req.account.longitude === 'number' &&
+    typeof req.account.latitude === 'number'
+  ) {
+    formattedData = formattedData.sort((artist1, artist2) => {
+      return (
+        calculateDistance(
+          req.account.longitude as number,
+          artist1.longitude as number,
+          req.account.latitude as number,
+          artist1.latitude as number
+        ) -
+        calculateDistance(
+          req.account.longitude as number,
+          artist2.longitude as number,
+          req.account.latitude as number,
+          artist2.latitude as number
+        )
+      );
+    });
+  }
+
+  formattedData.map((artist) => {
+    // @ts-ignore
+    delete artist.longitude;
+    // @ts-ignore
+    delete artist.latitude;
+  });
 
   sendResponse(res, formattedData);
 });
@@ -85,6 +132,7 @@ router.get('/:id/', async (req, res) => {
           gallery: {
             select: { id: true, media: true },
           },
+          profile_picture: true,
         },
       },
     },

@@ -9,16 +9,21 @@ import { ProfileContext } from '../../pages/Profile/Profile';
 
 interface IProfileViewProps {
   profile: IArtistProfile | IHostProfile;
+  loading: boolean;
   children: ReactNode;
 }
 
-const ProfileView: React.FC<IProfileViewProps> = ({ profile, children }) => {
+const ProfileView: React.FC<IProfileViewProps> = ({
+  profile,
+  loading,
+  children,
+}) => {
   const hasMusicEmbed =
     profile &&
     'musicLink' in profile &&
     typeof profile.musicLink === 'string' &&
     profile.musicLink.length > 0;
-  
+
   const edit = useContext(ProfileContext).editMode;
 
   return (
@@ -26,9 +31,12 @@ const ProfileView: React.FC<IProfileViewProps> = ({ profile, children }) => {
       <p>test: {edit.toString()}</p>
       <Gallery
         mediaList={profile && profile.gallery}
+        loading={loading}
         withEmbed={hasMusicEmbed}
       />
-      <ProfileDrawer profile={profile}>{children}</ProfileDrawer>
+      <ProfileDrawer profile={profile} profileLoading={loading}>
+        {children}
+      </ProfileDrawer>
     </>
   );
 };

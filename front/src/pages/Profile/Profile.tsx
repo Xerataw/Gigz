@@ -3,7 +3,7 @@ import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
 import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
 import HostProfileView from '../../components/ProfileView/HostProfileView';
-import User from '../../store/User';
+import { useUser } from '../../store/UserProvider';
 import EMediaType from '../../types/EMediaType';
 import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
@@ -11,19 +11,12 @@ import IHostProfile from '../../types/IHostProfile';
 import IMedia from '../../types/IMedia';
 import Layout from '../Layout/Layout';
 
-
 const Profile: React.FC = () => {
   const history = useHistory();
-  const [profileContext, setProfileContext] = useState<IProfileContextContent>({
-    loading: true,
-    editMode: false,
-  });
+  const user = useUser();
+  const [profileLoading, setProfileLoading] = useState<boolean>(true);
   const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
-
-  const redirectToLogin = () => {
-    history.push('/login');
-  };
 
   const buildProfile = (
     baseProfile: any,
@@ -47,36 +40,30 @@ const Profile: React.FC = () => {
 
   const displayProfileView = (): JSX.Element => {
     return profileType === EProfileType.ARTIST ? (
-      <ArtistProfileView profile={profile as IArtistProfile} />
+      <ArtistProfileView
+        profile={profile as IArtistProfile}
+        loading={profileLoading}
+      />
     ) : (
-      <HostProfileView profile={profile as IHostProfile} />
+      <HostProfileView
+        profile={profile as IHostProfile}
+        loading={profileLoading}
+      />
     );
   };
 
   // Get the stored user information and query the profile
   useEffect(() => {
-    User.getInstance()
-      .then((user) => {
-        if (user.getToken() === null) redirectToLogin();
-        getProfile(user.getProfileType() as EProfileType).then((profile) => {
-          setProfileType(user.getProfileType() as EProfileType);
-          setProfile(
-            buildProfile(profile.data, user.getProfilePicture() as string)
-          );
-          setProfileContext({
-            loading: false,
-            editMode: profileContext.editMode,
-          });
-        });
-      })
-      .catch(() => redirectToLogin());
+    getProfile(user.getProfileType() as EProfileType).then((profile) => {
+      setProfileType(user.getProfileType() as EProfileType);
+      setProfile(
+        buildProfile(profile.data, user.getProfilePicture() as string)
+      );
+      setProfileLoading(false);
+    });
   }, [history]);
 
-  return (
-    <ProfileContext.Provider value={profileContext}>      
-      <Layout navBarShadow={false}>{displayProfileView()}</Layout>
-    </ProfileContext.Provider>
-  );
+  return <Layout navBarShadow={false}>{displayProfileView()}</Layout>;
 };
 
 export default Profile;

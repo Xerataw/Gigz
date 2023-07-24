@@ -15,16 +15,21 @@ import Register from './pages/Register/Register';
 import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
 import Search from './pages/Search/Search';
 
-import './index.css';
-import NestedRoute from './components/NestedRoute';
 import ForgotPassword from './components/ForgotPassword';
+import Loading from './components/Loading';
+import NestedRoute from './components/NestedRoute';
+import './index.css';
+import { useInitialLoading } from './store/InitialLoadingProvider';
 
 setupIonicReact();
 
 const App: React.FC = () => {
-  const defaultRoute = '/';
+  const contextLoading = useInitialLoading().isLoading;
+  const DEFAULT_ROUTE = '/';
 
-  return (
+  return contextLoading ? (
+    <Loading />
+  ) : (
     <div className="bg-white">
       <Container size={'xs'} px={0}>
         <div className="bg-white relative h-screen">
@@ -37,7 +42,7 @@ const App: React.FC = () => {
               <NestedRoute
                 condition={true}
                 path="/register"
-                redirectNoMatch={defaultRoute}
+                redirectNoMatch={DEFAULT_ROUTE}
               >
                 <Route exact path="/">
                   <Register />
@@ -53,7 +58,7 @@ const App: React.FC = () => {
               <NestedRoute
                 condition={true}
                 path="/login"
-                redirectNoMatch={defaultRoute}
+                redirectNoMatch={DEFAULT_ROUTE}
               >
                 <Route exact path="/">
                   <LoginPage />
@@ -65,7 +70,7 @@ const App: React.FC = () => {
 
               <NestedRoute
                 path="/auth"
-                redirectNoMatch={defaultRoute}
+                redirectNoMatch={DEFAULT_ROUTE}
                 condition={true}
               >
                 <Route path="/liked">
@@ -86,7 +91,7 @@ const App: React.FC = () => {
               </NestedRoute>
 
               <Route path="/*" exact>
-                <Redirect to={defaultRoute} />
+                <Redirect to={DEFAULT_ROUTE} />
               </Route>
             </Switch>
           </Router>

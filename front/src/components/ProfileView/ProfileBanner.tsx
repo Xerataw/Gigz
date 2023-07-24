@@ -20,9 +20,9 @@ interface IProfileBannerProps {
 }
 
 const loadingGenres: IGenre[] = [
-  { id: '1', name: 'loading' },
-  { id: '2', name: 'loading' },
-  { id: '3', name: 'loading' },
+  { id: 1, name: 'loading' },
+  { id: 2, name: 'loading' },
+  { id: 3, name: 'loading' },
 ];
 
 const ProfileBanner: React.FC<IProfileBannerProps> = ({
@@ -47,7 +47,9 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
       {!loading && canEdit && (
         <div className="relative">
           <EditButton
-            onClick={() => {editMode = !editMode}}
+            onClick={() => {
+              editMode = !editMode;
+            }}
             disabled={!drawerOpened}
             className="absolute -top-3 right-0"
           />
@@ -83,7 +85,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             </p>
           </Skeleton>
           <ul className="flex flex-row flew-wrap p-0 m-0">
-            {genresToDisplay.map((genre) => (
+            {genresToDisplay?.map((genre) => (
               <li key={genre.id} className="mr-1">
                 <Skeleton
                   h={loading ? '1.5rem' : 'inherit'}
