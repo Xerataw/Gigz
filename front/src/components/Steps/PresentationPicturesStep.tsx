@@ -11,14 +11,15 @@ import {
 } from '@mantine/core';
 import { IconPlus, IconTrash } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import StepTitle from './Utils/StepTitle';
+import { IStepProps } from '../../types/IStepProps';
 import {
   IGalleryPhoto,
   deletePhotoGallery,
   postPhotoGallery,
-} from '../../../api/gallery';
-import { IStepProps } from '../AccountStep/FirstStep';
+} from '../../api/gallery';
 
-const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
+const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
   const maxFile = 5;
   const [pictures, setPictures] = useState<IGalleryPhoto[]>(
     form.values.gallery
@@ -55,7 +56,7 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
 
   return (
     <>
-      <Title mb="sm">À quoi ressemble votre groupe ?</Title>
+      <StepTitle label={label} />
 
       <Grid justify="center">
         {pictures.map((image, index) => (

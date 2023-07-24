@@ -6,16 +6,20 @@ import {
   IconArrowUpBar,
   IconBoxMultiple,
   IconChecks,
+  IconCircleCheck,
+  IconCircleCheckFilled,
   IconExternalLink,
   IconMapPin,
   IconMusic,
   IconPencil,
+  IconRulerMeasure,
   IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { patchArtistProfile } from '../../api/profile';
+import { patchHostProfile } from '../../api/profile';
 import AddressCompleteStep from '../../components/Steps/AddressCompleteStep';
+import CapacityStep from '../../components/Steps/CapacityStep';
 import DescriptionStep from '../../components/Steps/DescriptionStep';
 import GenreStep from '../../components/Steps/GenreStep';
 import NameStep from '../../components/Steps/NameStep';
@@ -27,31 +31,31 @@ import StepButtons from '../../components/Steps/Utils/StepButtons';
 import StepperIcons from '../../components/Steps/Utils/StepperIcons';
 import { stepperProps } from '../../configs/steppers/globalConfig';
 import {
-  artistInitialValues,
-  artistValidate,
-  getArtistValuesReq,
-  linksArtist,
-} from '../../configs/steppers/stepperArtistConfig';
+  getHostValuesReq,
+  hostInitialValues,
+  hostValidate,
+  linksHost,
+} from '../../configs/steppers/stepperHostConfig';
 
-const RegisterArtistProfile: React.FC = () => {
-  const NUMBER_OF_STEPS = 7;
+const RegisterHostProfile: React.FC = () => {
+  const NUMBER_OF_STEPS = 8;
 
   const { t } = useTranslation();
+
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
-    initialValues: artistInitialValues,
-    validate: (values) => artistValidate(values, formStep),
+    initialValues: hostInitialValues,
+    validate: (values) => hostValidate(values, formStep),
   });
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   const nextStep = () => {
     if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
-
-      patchArtistProfile(getArtistValuesReq(form.values)).then(() => {
-        setFormStep((old) => old + 1);
-      });
+      patchHostProfile(getHostValuesReq(form.values)).then(() =>
+        setFormStep((old) => old + 1)
+      );
     } else {
       setFormStep((current) => {
         if (form.validate().hasErrors) {
@@ -95,11 +99,12 @@ const RegisterArtistProfile: React.FC = () => {
             <IconMapPin key={3} />,
             <IconUserCircle key={6} />,
             <IconMusic key={4} />,
-            <IconBoxMultiple key={5} />,
+            <IconRulerMeasure key={7} />,
             <IconExternalLink key={2} />,
+            <IconBoxMultiple key={5} />,
 
-            <IconArrowUpBar key={8} />,
-            <IconChecks key={9} />,
+            <IconArrowUpBar key={5} />,
+            <IconChecks key={6} />,
           ]}
           currentStep={formStep}
           form={form}
@@ -121,7 +126,7 @@ const RegisterArtistProfile: React.FC = () => {
           <Stepper.Step>
             <AddressCompleteStep
               form={form}
-              type="municipality"
+              type="address"
               label={t('register.addressCompleteStep')}
             />
           </Stepper.Step>
@@ -138,21 +143,28 @@ const RegisterArtistProfile: React.FC = () => {
           </Stepper.Step>
 
           <Stepper.Step>
-            <PresentationPicturesStep
-              form={form}
-              label={t('register.presentationPicturesStep')}
-            />
+            <CapacityStep form={form} label={t('register.capacityStep')} />
           </Stepper.Step>
 
           <Stepper.Step>
             <SocialLinksStep
-              links={linksArtist}
+              links={linksHost}
               form={form}
               label={t('register.socialLinksStep')}
             />
           </Stepper.Step>
 
           <Stepper.Step>
+            <PresentationPicturesStep
+              form={form}
+              label={t('register.presentationPicturesStep')}
+            />
+          </Stepper.Step>
+
+          <Stepper.Step
+            icon={<IconCircleCheck />}
+            completedIcon={<IconCircleCheckFilled />}
+          >
             <Loader variant="bars" />
           </Stepper.Step>
 
@@ -165,16 +177,14 @@ const RegisterArtistProfile: React.FC = () => {
         </Stepper>
       </ScrollArea>
 
-      <div className="absolute bottom-3">
-        <StepButtons
-          formStep={formStep}
-          numberOfSteps={NUMBER_OF_STEPS}
-          nextStep={nextStep}
-          prevStep={prevStep}
-        />
-      </div>
+      <StepButtons
+        formStep={formStep}
+        nextStep={nextStep}
+        numberOfSteps={NUMBER_OF_STEPS}
+        prevStep={prevStep}
+      />
     </div>
   );
 };
 
-export default RegisterArtistProfile;
+export default RegisterHostProfile;

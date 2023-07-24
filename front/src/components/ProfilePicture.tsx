@@ -8,12 +8,12 @@ interface IProfilePictureProps {
   alt: string | null | undefined;
 }
 
-const ProfilePicture = ({
+const ProfilePicture : React.FC<IProfilePictureProps> = ({
   src,
   radius = 'xl',
   size = 'xl',
   alt,
-}: IProfilePictureProps) => {
+}) => {
   return (
     <Avatar radius={radius} size={size} src={src} alt={alt ?? ''}>
       <IconUserCircle size="50" />

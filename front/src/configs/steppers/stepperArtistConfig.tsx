@@ -1,20 +1,38 @@
-import { LinkUtils } from '../services/LinkUtils';
+import {
+  IconBrandApple,
+  IconBrandDeezer,
+  IconBrandFacebookFilled,
+  IconBrandInstagram,
+  IconBrandSoundcloud,
+  IconBrandSpotify,
+  IconBrandYoutube,
+  IconWorldWww,
+} from '@tabler/icons-react';
+import { LinkUtils } from '../../services/LinkUtils';
+import IArtistProfile from '../../types/IArtistProfile';
+
 export const artistInitialValues = {
   name: '',
   description: '',
-  spotifyLink: '',
+
+  websiteLink: '',
   instagramLink: '',
   facebookLink: '',
-  soundcloudLink: '',
   youtubeLink: '',
-  appleMusicLink: '',
-  websiteLink: '',
+
+  spotifyLink: '',
   deezerLink: '',
+  appleMusicLink: '',
+  soundcloudLink: '',
+
   address: {
     value: '',
+    city: '',
+    cityCode: '',
     longitude: 0,
     latitude: 0,
   },
+
   genres: [],
   gallery: [],
   picture: '',
@@ -40,7 +58,7 @@ export const artistValidate = (
       };
 
     // links are all optional
-    case 2:
+    case 6:
       return {
         spotifyLink: LinkUtils.validateLink(
           values.spotifyLink,
@@ -83,21 +101,78 @@ export const artistValidate = (
           'de site web valide'
         ),
       };
-    case 3:
+    case 2:
       return {
         address:
-          values.address.value.length === 0 || values.address.value.length > 5
+          values.address.value.length === 0 || values.address.value.length > 1
             ? null
             : 'Veuillez entrer une adressse valide',
-      };
-
-    case 4:
-      //can have genres but optionnal
-      return {
-        genres: null,
       };
 
     default:
       return {};
   }
+};
+
+export const linksArtist = [
+  {
+    label: 'Spotify',
+    placeholder: 'https://open.spotify.com/...',
+    value: 'spotifyLink',
+    color: 'green',
+    icon: <IconBrandSpotify />,
+  },
+  {
+    label: 'Soundcloud',
+    placeholder: 'https://soundcloud.com/...',
+    value: 'soundcloudLink',
+    color: 'orange',
+    icon: <IconBrandSoundcloud />,
+  },
+  {
+    label: 'AppleMusic',
+    placeholder: 'https://music.apple.com/...',
+    value: 'appleMusicLink',
+    color: 'gray',
+    icon: <IconBrandApple />,
+  },
+  {
+    label: 'Deezer',
+    placeholder: 'https://www.deezer.com/...',
+    value: 'deezerLink',
+    color: 'dark',
+    icon: <IconBrandDeezer />,
+  },
+  {
+    label: 'Instagram',
+    placeholder: 'https://www.instagram.com/...',
+    value: 'instagramLink',
+    color: 'pink',
+    icon: <IconBrandInstagram />,
+  },
+  {
+    label: 'Facebook',
+    placeholder: 'https://www.facebook.com/...',
+    value: 'facebookLink',
+    color: 'indigo',
+    icon: <IconBrandFacebookFilled />,
+  },
+  {
+    label: 'Youtube',
+    placeholder: 'https://www.youtube.com/channel/...',
+    value: 'youtubeLink',
+    color: 'red',
+    icon: <IconBrandYoutube />,
+  },
+  {
+    label: 'Site',
+    placeholder: 'https://www.mysite.com/...',
+    value: 'websiteLink',
+    color: 'blue',
+    icon: <IconWorldWww />,
+  },
+];
+
+export const getArtistValuesReq = (values: any): IArtistProfile => {
+  return { ...values, ...values.address, address: values.address.value };
 };

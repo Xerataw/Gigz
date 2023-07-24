@@ -1,11 +1,14 @@
 import { ActionIcon, Center } from '@mantine/core';
+import { UseFormReturnType } from '@mantine/form';
 import { IconArrowRightBar } from '@tabler/icons-react';
 import React from 'react';
+import { useHistory } from 'react-router';
 
 interface IStepperIconsProps {
   icons: React.JSX.Element[];
   currentStep: number;
-  nextStep: () => void;
+  form: UseFormReturnType<any>;
+  hasSkip?: boolean;
 }
 
 const getClass = (currentStep: number, index: number): string => {
@@ -23,18 +26,25 @@ const getClass = (currentStep: number, index: number): string => {
 const StepperIcons: React.FC<IStepperIconsProps> = ({
   icons,
   currentStep,
-  nextStep,
+  form,
+  hasSkip = true,
 }) => {
+  const history = useHistory();
+
   return (
     <div className="flex relative w-full justify-center">
-      {currentStep < 5 && (
-        <div className="absolute right-0 h-full flex items-center">
+      {currentStep < 5 && hasSkip && (
+        <div className="absolute right-0 right-[-20px] h-full flex items-center">
           <ActionIcon
             color="primary"
             radius="xl"
             size="lg"
             variant="filled"
-            onClick={nextStep}
+            onClick={() => {
+              if (form.validate().hasErrors === false) {
+                history.push('/auth/profile');
+              }
+            }}
           >
             <IconArrowRightBar />
           </ActionIcon>

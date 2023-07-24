@@ -1,15 +1,13 @@
-import { ActionIcon, Button, FileButton, Title } from '@mantine/core';
+import { ActionIcon, Button, FileButton } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
-import {
-  deleteProfilePicture,
-  patchProfilePicture,
-} from '../../../api/profilePicture';
-import GigzFetcher from '../../../services/GigzFetcher';
-import ProfilePicture from '../../ProfilePicture';
-import { IStepProps } from '../AccountStep/FirstStep';
+import { deleteProfilePicture, patchProfilePicture } from '../../api/profilePicture';
+import GigzFetcher from '../../services/GigzFetcher';
+import { IStepProps } from '../../types/IStepProps';
+import ProfilePicture from '../ProfilePicture';
+import StepTitle from './Utils/StepTitle';
 
-const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
+const ProfilePictureStep: React.FC<IStepProps> = ({ form, label }) => {
   const [pictureLink, setPictureLink] = useState<string | undefined>(
     form.values.picture
   );
@@ -35,7 +33,7 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
 
   return (
     <>
-      <Title mb="sm">À quoi vous ressemblez ?</Title>
+      <StepTitle label={label} />
 
       <div className="flex">
         <ProfilePicture alt="profile picture" src={pictureLink} />

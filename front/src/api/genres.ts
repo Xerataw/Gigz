@@ -6,4 +6,8 @@ export const getGenres = async (): Promise<IGigzResponse<IGenre[]>> => {
   return GigzFetcher.get('genres');
 };
 
-export default getGenres;
+export const postGenre = async (
+  genreId: number
+): Promise<IGigzResponse<IGenre>> => {
+  return GigzFetcher.post<IGenre>('me/genres', { genreId });
+};

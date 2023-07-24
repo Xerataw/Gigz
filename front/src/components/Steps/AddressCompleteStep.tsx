@@ -1,12 +1,19 @@
-import { Autocomplete, Title } from '@mantine/core';
+import { Autocomplete } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
-import MapTiler, {
-  IAddressSearchItem,
-} from '../../../services/MapTilerFetcher';
-import { IStepProps } from '../AccountStep/FirstStep';
+import MapTiler, { IAddressSearchItem } from '../../services/MapTilerFetcher';
+import { IStepProps } from '../../types/IStepProps';
+import StepTitle from './Utils/StepTitle';
 
-const AddressCompleteStep: React.FC<IStepProps> = ({ form }) => {
+interface IAddressCompleteStepProps extends IStepProps {
+  type: string;
+}
+
+const AddressCompleteStep: React.FC<IAddressCompleteStepProps> = ({
+  form,
+  label,
+  type,
+}) => {
   const [searchValue, setSearchValue] = useState<string>();
   const [searchItems, setSearchItems] = useState<IAddressSearchItem[]>([]);
   const [debounced] = useDebouncedValue(form.values.address, 1000);
@@ -22,25 +29,29 @@ const AddressCompleteStep: React.FC<IStepProps> = ({ form }) => {
 
   useEffect(() => {
     if (searchValue !== undefined && searchValue.length > 0) {
-      MapTiler.getAutocomplete(searchValue, setSearchItems);
+      MapTiler.getAutocomplete(type, searchValue, setSearchItems);
     }
   }, [debounced]);
 
   const getAddressResult = (address: string) => {
+    //get address object from the one choosen by the user
     const addressItem = searchItems.find((item) => item.value === address);
 
     form.setFieldValue('address.longitude', addressItem?.longitude ?? 0);
     form.setFieldValue('address.latitude', addressItem?.latitude ?? 0);
+    form.setFieldValue('address.city', addressItem?.city ?? 0);
+    form.setFieldValue('address.code', addressItem?.code ?? 0);
     setSearchValue(address);
   };
 
   return (
     <>
-      <Title>Où êtes-vous présent ?</Title>
+      <StepTitle label={label} />
 
       <Autocomplete
         autoFocus
         label="Votre adresse"
+        dropdownPosition="bottom"
         placeholder="15 rue des marronniers, 46330 Saint-Cirq-Lapopie"
         data={searchItems}
         {...form.getInputProps('address')}

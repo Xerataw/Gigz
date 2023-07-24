@@ -20,6 +20,7 @@ import Loading from './components/Loading';
 import NestedRoute from './components/NestedRoute';
 import './index.css';
 import { useInitialLoading } from './store/InitialLoadingProvider';
+import RegisterHostProfile from './pages/Register/RegisterHostProfile';
 
 setupIonicReact();
 
@@ -48,7 +49,7 @@ const App: React.FC = () => {
                   <Register />
                 </Route>
                 <Route exact path="/host">
-                  <div>HOST REGISTER PROFILE</div>
+                  <RegisterHostProfile />
                 </Route>
                 <Route exact path="/artist">
                   <RegisterArtistProfile />

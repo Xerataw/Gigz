@@ -4,22 +4,20 @@ import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 
 interface IAccountCreatedProps {
-  userType: 'artist' | 'host';
+  label: string;
+  path: string;
 }
 
-const AccountCreated: React.FC<IAccountCreatedProps> = ({ userType }) => {
+const StepperCompleted: React.FC<IAccountCreatedProps> = ({ label, path }) => {
   const [time, setTime] = useState<number>(0);
   const history = useHistory();
-
-  const artistPath = '/register/artist';
-  const hostPath = '/register/host';
 
   useEffect(() => {
     if (time >= 100) {
       setTime(100);
 
       setTimeout(() => {
-        history.push(userType === 'artist' ? artistPath : hostPath);
+        history.push(path);
       }, 200);
     }
   }, [time]);
@@ -40,7 +38,7 @@ const AccountCreated: React.FC<IAccountCreatedProps> = ({ userType }) => {
   return (
     <div className="flex justify-center flex-col items-center mt-10">
       <Text size="lg" align="center">
-        Votre compte est en cours de création
+        {label}
       </Text>
       <RingProgress
         sections={[{ value: time, color: 'primary' }]}
@@ -64,4 +62,4 @@ const AccountCreated: React.FC<IAccountCreatedProps> = ({ userType }) => {
   );
 };
 
-export default AccountCreated;
+export default StepperCompleted;
