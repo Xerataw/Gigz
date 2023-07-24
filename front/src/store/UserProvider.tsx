@@ -28,7 +28,7 @@ const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
   }, []);
 
   return (
-    user && <UserContext.Provider value={user}>{children}</UserContext.Provider>
+    <UserContext.Provider value={user as User}>{children}</UserContext.Provider>
   );
 };
 
