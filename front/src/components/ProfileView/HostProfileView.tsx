@@ -1,6 +1,3 @@
-import { useContext } from 'react';
-import { useTranslation } from 'react-i18next';
-import { ProfileLoadingContext } from '../../pages/Profile/Profile';
 import {
   isBioSectionAvaiblable,
   isMapSectionAvailable,
@@ -8,20 +5,20 @@ import {
 } from '../../services/sectionAvailability';
 import IHostProfile from '../../types/IHostProfile';
 import Biography from './ProfileSections/Biography';
+import LocationChip from './ProfileSections/LocationChip';
 import LocationMap from './ProfileSections/LocationMap';
-import ProfileSection from './ProfileSections/ProfileSection';
 import Socials from './ProfileSections/Socials';
 import ProfileView from './ProfileView';
-import LocationChip from './ProfileSections/LocationChip';
 
 interface IHostProfileViewProps {
   profile: IHostProfile;
+  loading: boolean;
 }
 
-const HostProfileView: React.FC<IHostProfileViewProps> = ({ profile }) => {
-  const { t } = useTranslation();
-  const profileLoading = useContext(ProfileLoadingContext);
-
+const HostProfileView: React.FC<IHostProfileViewProps> = ({
+  profile,
+  loading,
+}) => {
   const getProfileSections = (profile: IHostProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];
     isBioSectionAvaiblable(profile.description) &&
@@ -52,8 +49,8 @@ const HostProfileView: React.FC<IHostProfileViewProps> = ({ profile }) => {
   };
 
   return (
-    <ProfileView profile={profile}>
-      {profileLoading ? (
+    <ProfileView profile={profile} loading={loading}>
+      {loading ? (
         <Biography loading={true} content={''} />
       ) : (
         getProfileSections(profile).map((section) => section)
