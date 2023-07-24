@@ -7,11 +7,7 @@ interface ISearchResultProps {
   onClick: (profile: IResult) => void;
 }
 
-const SearchResult: React.FC<ISearchResultProps> = ({
-  result,
-  loading,
-  onClick,
-}) => {
+const Result: React.FC<ISearchResultProps> = ({ result, loading, onClick }) => {
   return (
     <div onClick={() => !loading && onClick(result)}>
       <ProfileBanner
@@ -25,4 +21,4 @@ const SearchResult: React.FC<ISearchResultProps> = ({
   );
 };
 
-export default SearchResult;
+export default Result;

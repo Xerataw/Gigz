@@ -2,27 +2,19 @@ import { ScrollArea, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getResults } from '../../../api/search';
+import EProfileType from '../../../types/EProfileType';
 import IResult from '../../../types/IResult';
 import ResultProfileDrawer from './ResultProfileDrawer';
-import SearchResult from './SearchResult';
-import EProfileType from '../../../types/EProfileType';
+import Result from './Result';
 
-const SerachResultList: React.FC = () => {
+interface IResultListProps {
+  results: IResult[];
+  loading: boolean;
+}
+
+const ResultList: React.FC<IResultListProps> = ({ results, loading }) => {
   const { t } = useTranslation();
-
-  const loadingData = new Array(20)
-    .fill({})
-    .map((val, index) => ({ id: index } as IResult));
-  const [loading, setLoading] = useState(true);
-  const [results, setResults] = useState<IResult[]>(loadingData);
   const [selectedResult, setSelectedResult] = useState<IResult>();
-
-  useEffect(() => {
-    getResults().then((res) => {
-      setResults(res?.data ?? []);
-      setLoading(false);
-    });
-  }, []);
 
   const selectResult = (profile: IResult) => {
     setSelectedResult(profile);
@@ -36,7 +28,7 @@ const SerachResultList: React.FC = () => {
     <div>
       <ScrollArea className="h-[40rem]">
         {results.map((result) => (
-          <SearchResult
+          <Result
             key={result.id}
             result={result}
             onClick={selectResult}
@@ -57,4 +49,4 @@ const SerachResultList: React.FC = () => {
   );
 };
 
-export default SerachResultList;
+export default ResultList;

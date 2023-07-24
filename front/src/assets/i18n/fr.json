@@ -54,6 +54,7 @@
     }
   },
   "search": {
+    "placeholder": "Rechercher un profil",
     "list": {
       "endOfProfiles": "Vous avez regardé tous les profiles"
     }
