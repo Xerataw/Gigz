@@ -27,7 +27,7 @@ const ResultProfileDrawer: React.FC<IResultProfileDrawerProps> = ({
 
   return (
     <Drawer opened={resultProfile !== null} position="right" onClose={onClose}>
-      <HostProfileView profile={profile!} />
+      <HostProfileView profile={profile!} loading={false} />
     </Drawer>
   );
 };
