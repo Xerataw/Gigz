@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useTranslation } from 'react-i18next';
 import { useForm } from '@mantine/form';
@@ -16,10 +16,12 @@ import {
   PasswordInput,
   TextInput,
 } from '@mantine/core';
+import { UserContext } from '../../store/UserProvider';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
   const history = useHistory();
+  const user = useContext(UserContext) as User;
 
   const [incompleteOrInvalidForm, setIncompleteOrInvalidForm] = useState(true);
   const [formSubmited, setFormSubmited] = useState(false);
@@ -93,12 +95,10 @@ const Login: React.FC = () => {
     login(data.email, data.password)
       .then((res) => {
         if (res.ok) {
-          User.getInstance().then((user) => {
-            user.setToken(res.data.token);
-            user.setProfileType(res.data.profileType);
-            user.setProfilePicture(res.data.profilePicture);
-            onSuccess();
-          });
+          user.setToken(res.data.token);
+          user.setProfileType(res.data.profileType);
+          user.setProfilePicture(res.data.profilePicture);
+          onSuccess();
         }
         setFormSubmited(false);
       })

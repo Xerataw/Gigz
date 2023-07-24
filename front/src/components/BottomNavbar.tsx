@@ -1,6 +1,3 @@
-import { useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
-
 import { Avatar, Overlay } from '@mantine/core';
 import {
   IconHeart,
@@ -11,9 +8,11 @@ import {
   IconUserCircle,
   IconZoomFilled,
 } from '@tabler/icons-react';
+import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import GigzFetcher from '../services/GigzFetcher';
 import User from '../store/User';
+import { UserContext } from '../store/UserProvider';
 import GigzIcon from './GigzIcon';
 
 interface IBottomNavBarProps {
@@ -21,21 +20,7 @@ interface IBottomNavBarProps {
 }
 
 const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
-  const history = useHistory();
-  const [userPP, setUserPP] = useState<string | null>(null);
-
-  const redirectToLogin = () => {
-    history.push('/login');
-  };
-
-  useEffect(() => {
-    User.getInstance()
-      .then((user) => {
-        if (user.getToken() === null) redirectToLogin();
-        setUserPP(user.getProfilePicture());
-      })
-      .catch(() => redirectToLogin());
-  }, []);
+  const userPP = (useContext(UserContext) as User).getProfilePicture();
 
   return (
     <div className="absolute bottom-0 w-full z-[10000]">
