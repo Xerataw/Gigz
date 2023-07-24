@@ -9,18 +9,15 @@ interface IProfileEditContext {
     editConfirmed: boolean;
     setEditConfirmed: (editConfirmed: boolean) => void;
   };
+  editedName: {
+    editedName: string;
+    setEditedName: (editedName: string) => void;
+  };
 }
 
-const ProfileEditContext = createContext<IProfileEditContext>({
-  editMode: {
-    editMode: false,
-    setEditMode: () => undefined,
-  },
-  editConfirmed: {
-    editConfirmed: false,
-    setEditConfirmed: () => undefined,
-  },
-});
+const ProfileEditContext = createContext<IProfileEditContext>(
+  {} as IProfileEditContext
+);
 
 export const useProfileEditMode = () => useContext(ProfileEditContext);
 
@@ -31,8 +28,12 @@ interface IProfileEditProviderProps {
 const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   children,
 }) => {
+  // Edit mode management
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editConfirmed, setEditConfirmed] = useState<boolean>(false);
+
+  // Values to edit
+  const [editedName, setEditedName] = useState<string>('');
 
   // TODO: Send patch request to backend
   useEffect(() => {
@@ -51,6 +52,10 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         editConfirmed: {
           editConfirmed,
           setEditConfirmed,
+        },
+        editedName: {
+          editedName,
+          setEditedName,
         },
       }}
     >
