@@ -1,11 +1,10 @@
-import { ReactNode, useContext } from 'react';
+import { ReactNode } from 'react';
 import {
   default as IArtistProfile,
   default as IHostProfile,
 } from '../../types/IArtistProfile';
 import Gallery from './Gallery';
 import ProfileDrawer from './ProfileDrawer';
-import { ProfileContext } from '../../pages/Profile/Profile';
 
 interface IProfileViewProps {
   profile: IArtistProfile | IHostProfile;
@@ -24,11 +23,8 @@ const ProfileView: React.FC<IProfileViewProps> = ({
     typeof profile.musicLink === 'string' &&
     profile.musicLink.length > 0;
 
-  const edit = useContext(ProfileContext).editMode;
-
   return (
     <>
-      <p>test: {edit.toString()}</p>
       <Gallery
         mediaList={profile && profile.gallery}
         loading={loading}

@@ -1,13 +1,12 @@
-import { Badge, Skeleton } from '@mantine/core';
-import { IconMapPin } from '@tabler/icons-react';
-import { useContext, useState } from 'react';
+import { Badge, Flex, Skeleton } from '@mantine/core';
+import { IconCheck, IconMapPin, IconPencil, IconX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import GigzFetcher from '../../services/GigzFetcher';
 import IGenre from '../../types/IGenre';
-import EditButton from '../EditButton';
+import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
-import { ProfileContext } from '../../pages/Profile/Profile';
+import { useProfileEditMode } from '../../store/ProfileEditModeProvider';
 
 interface IProfileBannerProps {
   username: string;
@@ -35,8 +34,8 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   drawerOpened = false,
 }) => {
   const { t } = useTranslation();
+  const { editMode, setEditMode } = useProfileEditMode();
   const canEdit = useLocation().pathname.includes('/auth/profile');
-  let editMode = useContext(ProfileContext).editMode;
   const genresToDisplay = loading ? loadingGenres : genres;
 
   return (
@@ -46,19 +45,45 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
       )}
       {!loading && canEdit && (
         <div className="relative">
-          <EditButton
-            onClick={() => {
-              editMode = !editMode;
-            }}
-            disabled={!drawerOpened}
-            className="absolute -top-3 right-0"
-          />
+          {editMode ? (
+            <Flex className="absolute -top-3 right-0" gap="xs">
+              <LightRoundButton
+                onClick={() => {
+                  console.log('profile updates validated');
+                  setEditMode(false);
+                }}
+              >
+                <IconCheck
+                  size="1.5rem"
+                  className="mt-[0.075rem] mr-[0.125rem]"
+                />
+              </LightRoundButton>
+              <LightRoundButton
+                onClick={() => {
+                  console.log('profile updates canceled');
+                  setEditMode(false);
+                }}
+              >
+                <IconX size="1.5rem" className="mt-[0.075rem] mr-[0.125rem]" />
+              </LightRoundButton>
+            </Flex>
+          ) : (
+            <LightRoundButton
+              onClick={() => setEditMode(!editMode)}
+              disabled={!drawerOpened}
+              className="absolute -top-3 right-0"
+            >
+              <IconPencil size="1.5rem" />
+            </LightRoundButton>
+          )}
         </div>
       )}
       <div className="flex flex-row flex-nowrap items-center pt-3 pb-3">
         <Skeleton visible={loading} w="5.5rem" radius="md">
           <ProfilePicture
-            src={profilePicture && GigzFetcher.getImageUri(profilePicture)}
+            src={
+              loading ? null : GigzFetcher.getImageUri(profilePicture as string)
+            }
             radius="xl"
             size="xl"
             alt={username}

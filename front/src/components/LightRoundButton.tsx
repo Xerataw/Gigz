@@ -1,14 +1,16 @@
 import { ActionIcon } from '@mantine/core';
-import { IconPencil } from '@tabler/icons-react';
+import { TablerIconsProps } from '@tabler/icons-react';
 import { MouseEventHandler } from 'react';
 
 interface IEditButtonProps {
+  children: React.ReactNode;
   onClick?: MouseEventHandler<HTMLButtonElement>;
   disabled?: boolean;
   className?: string;
 }
 
-const EditButton: React.FC<IEditButtonProps> = ({
+const LightRoundButton: React.FC<IEditButtonProps> = ({
+  children,
   onClick,
   disabled = false,
   className,
@@ -24,9 +26,9 @@ const EditButton: React.FC<IEditButtonProps> = ({
       onClick={onClick}
       disabled={disabled}
     >
-      <IconPencil size="1.5rem" />
+      {children}
     </ActionIcon>
   );
 };
 
-export default EditButton;
+export default LightRoundButton;
