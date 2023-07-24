@@ -12,10 +12,10 @@ import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
 import register from '../../api/register';
-import StepperCompleted from '../../components/Steps/StepperCompleted';
 import MailPhoneStep from '../../components/Steps/MailPhoneStep';
 import PasswordStep from '../../components/Steps/PasswordStep';
 import ProfileTypeStep from '../../components/Steps/ProfileTypeStep';
+import StepperCompleted from '../../components/Steps/StepperCompleted';
 import StepButtons from '../../components/Steps/Utils/StepButtons';
 import StepperIcons from '../../components/Steps/Utils/StepperIcons';
 import { stepperProps } from '../../configs/steppers/globalConfig';
@@ -23,16 +23,13 @@ import {
   registerInitialValues,
   regsiterValidate,
 } from '../../configs/steppers/stepperRegisterConfig';
-import User from '../../store/User';
-
-const artistPath = '/register/artist';
-const hostPath = '/register/host';
+import { useUser } from '../../store/UserProvider';
 
 const Register: React.FC = () => {
   const NUMBER_OF_STEP = 3;
 
   const { t } = useTranslation();
-  const [user, setUser] = useState<User>();
+  const user = useUser();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
@@ -41,15 +38,12 @@ const Register: React.FC = () => {
   });
   const [debounced] = useDebouncedValue(form.values, 1000);
 
-  useEffect(() => {
-    User.getInstance().then((userRes) => setUser(userRes));
-  }, []);
-
   const sendRegisterForm = () => {
     register(form.values).then((res) => {
       if (res.ok === true) {
         if (res.data?.token !== undefined) {
           user?.setToken(res.data.token);
+          setFormStep((old) => old + 1);
         }
       } else {
         setFormStep(1);

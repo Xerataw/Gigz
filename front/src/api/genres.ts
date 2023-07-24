@@ -3,7 +3,7 @@ import IGenre from '../types/IGenre';
 import IGigzResponse from '../types/IGigzResponse';
 
 export const getGenres = async (): Promise<IGigzResponse<IGenre[]>> => {
-  return GigzFetcher.get<IGenre[]>('genres');
+  return GigzFetcher.get('genres');
 };
 
 export const postGenre = async (

@@ -5,7 +5,9 @@
   "scripts": {
     "setup": "make setup",
     "lint": "make lint",
-    "format": "make format"
+    "format": "make format",
+    "dev": "cd front && npm run dev",
+    "back": "cd back && npm run dev"
   },
   "author": "Gigz Team <alexandre.sparton@epitech.eu>",
   "license": "ISC",
