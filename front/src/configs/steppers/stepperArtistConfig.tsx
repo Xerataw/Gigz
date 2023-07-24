@@ -9,24 +9,30 @@ import {
   IconWorldWww,
 } from '@tabler/icons-react';
 import { LinkUtils } from '../../services/LinkUtils';
+import IArtistProfile from '../../types/IArtistProfile';
+
 export const artistInitialValues = {
   name: '',
   description: '',
-  spotifyLink: '',
+
+  websiteLink: '',
   instagramLink: '',
   facebookLink: '',
-  soundcloudLink: '',
   youtubeLink: '',
-  appleMusicLink: '',
-  websiteLink: '',
+
+  spotifyLink: '',
   deezerLink: '',
+  appleMusicLink: '',
+  soundcloudLink: '',
+
   address: {
     value: '',
     city: '',
-    code: '',
+    cityCode: '',
     longitude: 0,
     latitude: 0,
   },
+
   genres: [],
   gallery: [],
   picture: '',
@@ -166,3 +172,7 @@ export const linksArtist = [
     icon: <IconWorldWww />,
   },
 ];
+
+export const getArtistValuesReq = (values: any): IArtistProfile => {
+  return { ...values, ...values.address, address: values.address.value };
+};

@@ -29,7 +29,7 @@ const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({ profile }) => {
         <MusicProfiles
           key="music"
           spotifyLink={profile.spotifyLink}
-          soundCloudLink={profile.soundCloudLink}
+          soundCloudLink={profile.soundcloudLink}
           deezerLink={profile.deezerLink}
           youtubeLink={profile.youtubeLink}
           appleMusicLink={profile.appleMusicLink}

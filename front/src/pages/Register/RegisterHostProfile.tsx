@@ -31,13 +31,14 @@ import StepButtons from '../../components/Steps/Utils/StepButtons';
 import StepperIcons from '../../components/Steps/Utils/StepperIcons';
 import { stepperProps } from '../../configs/steppers/globalConfig';
 import {
+  getHostValuesReq,
   hostInitialValues,
   hostValidate,
   linksHost,
 } from '../../configs/steppers/stepperHostConfig';
 
 const RegisterHostProfile: React.FC = () => {
-  const numberOfSteps = 8;
+  const NUMBER_OF_STEPS = 8;
 
   const { t } = useTranslation();
 
@@ -50,15 +51,17 @@ const RegisterHostProfile: React.FC = () => {
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   const nextStep = () => {
-    if (formStep === numberOfSteps - 1) {
+    if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
-      patchHostProfile(form.values).then(() => setFormStep((old) => old + 1));
+      patchHostProfile(getHostValuesReq(form.values)).then(() =>
+        setFormStep((old) => old + 1)
+      );
     } else {
       setFormStep((current) => {
         if (form.validate().hasErrors) {
           return current;
         }
-        return current < numberOfSteps - 1 ? current + 1 : current;
+        return current < NUMBER_OF_STEPS - 1 ? current + 1 : current;
       });
     }
   };
@@ -170,7 +173,7 @@ const RegisterHostProfile: React.FC = () => {
       <StepButtons
         formStep={formStep}
         nextStep={nextStep}
-        numberOfSteps={numberOfSteps}
+        numberOfSteps={NUMBER_OF_STEPS}
         prevStep={prevStep}
       />
     </div>

@@ -57,7 +57,6 @@ const Profile: React.FC = () => {
       .then((user) => {
         if (user.getToken() === null) redirectToLogin();
         getProfile(user.getProfileType() as EProfileType).then((profile) => {
-          console.log(profile);
           setProfileType(user.getProfileType() as EProfileType);
           setProfile(
             buildProfile(profile.data, user.getProfilePicture() as string)

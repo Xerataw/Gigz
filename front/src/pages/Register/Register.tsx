@@ -29,7 +29,7 @@ const artistPath = '/register/artist';
 const hostPath = '/register/host';
 
 const Register: React.FC = () => {
-  const numberOfSteps = 3;
+  const NUMBER_OF_STEP = 3;
 
   const { t } = useTranslation();
   const [user, setUser] = useState<User>();
@@ -69,7 +69,7 @@ const Register: React.FC = () => {
   };
 
   const nextStep = () => {
-    if (formStep === numberOfSteps - 1) {
+    if (formStep === NUMBER_OF_STEP - 1) {
       setFormStep((old) => old + 1);
       sendRegisterForm();
       setFormStep((old) => old + 1);
@@ -78,7 +78,7 @@ const Register: React.FC = () => {
         if (form.validate().hasErrors) {
           return current;
         }
-        return current < numberOfSteps - 1 ? current + 1 : current;
+        return current < NUMBER_OF_STEP - 1 ? current + 1 : current;
       });
     }
   };

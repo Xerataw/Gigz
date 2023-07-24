@@ -5,26 +5,30 @@ import {
   IconWorldWww,
 } from '@tabler/icons-react';
 import { LinkUtils } from '../../services/LinkUtils';
+import IHostProfile from '../../types/IHostProfile';
 
 export const hostInitialValues = {
   name: '',
   description: '',
 
+  websiteLink: '',
   instagramLink: '',
   facebookLink: '',
   youtubeLink: '',
-  websiteLink: '',
 
   address: {
     value: '',
     city: '',
-    code: '',
+    cityCode: '',
     longitude: 0,
     latitude: 0,
   },
+
+  capacity: 0,
+
+  picture: '',
   genres: [],
   gallery: [],
-  picture: '',
 };
 
 export const hostValidate = (
@@ -113,3 +117,7 @@ export const linksHost = [
     icon: <IconWorldWww />,
   },
 ];
+
+export const getHostValuesReq = (values: any): IHostProfile => {
+  return { ...values, ...values.address, address: values.address.value };
+};

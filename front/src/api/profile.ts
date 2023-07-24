@@ -5,73 +5,25 @@ import IGigzResponse from '../types/IGigzResponse';
 import IHostProfile from '../types/IHostProfile';
 import { postGenre } from './genres';
 
-export const patchArtistProfile = (values: any) => {
-  const {
-    name,
-    description,
-    spotifyLink,
-    instagramLink,
-    facebookLink,
-    soundcloudLink,
-    youtubeLink,
-    appleMusicLink,
-    websiteLink,
-    deezerLink,
-    genres,
-    address,
-  } = values;
-
+export const patchArtistProfile = (artistValues: IArtistProfile) => {
   const genreReq: Promise<IGigzResponse<IGenre>>[] = [];
 
-  genres.forEach((genreId: number) => {
-    genreReq.push(postGenre(genreId));
+  artistValues.genres.forEach((genre: IGenre) => {
+    genreReq.push(postGenre(genre.id));
   });
 
   Promise.all(genreReq);
 
-  return GigzFetcher.patch<IArtistProfile>('me/artist', {
-    name,
-    description,
-    spotifyLink,
-    instagramLink,
-    facebookLink,
-    soundcloudLink,
-    youtubeLink,
-    appleMusicLink,
-    websiteLink,
-    deezerLink,
-    latitude: address.latitude,
-    longitude: address.longitude,
-  });
+  return GigzFetcher.patch<IArtistProfile>('me/artist', artistValues);
 };
 
-export const patchHostProfile = (values: any) => {
-  const {
-    name,
-    description,
-    instagramLink,
-    facebookLink,
-    youtubeLink,
-    websiteLink,
-    genres,
-    address,
-  } = values;
-
+export const patchHostProfile = (hostValues: IHostProfile) => {
   const genreReq: Promise<IGigzResponse<IGenre>>[] = [];
 
-  genres.forEach((genreId: number) => {
-    genreReq.push(postGenre(genreId));
+  hostValues.genres.forEach((genre: IGenre) => {
+    genreReq.push(postGenre(genre.id));
   });
 
   Promise.all(genreReq);
-  return GigzFetcher.patch<IHostProfile>('me/host', {
-    name,
-    description,
-    instagramLink,
-    facebookLink,
-    youtubeLink,
-    websiteLink,
-    latitude: address.latitude,
-    longitude: address.longitude,
-  });
+  return GigzFetcher.patch<IHostProfile>('me/host', hostValues);
 };

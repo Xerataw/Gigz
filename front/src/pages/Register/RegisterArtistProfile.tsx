@@ -29,11 +29,12 @@ import { stepperProps } from '../../configs/steppers/globalConfig';
 import {
   artistInitialValues,
   artistValidate,
+  getArtistValuesReq,
   linksArtist,
 } from '../../configs/steppers/stepperArtistConfig';
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 7;
+  const NUMBER_OF_STEPS = 7;
 
   const { t } = useTranslation();
   const [formStep, setFormStep] = useState<number>(0);
@@ -45,10 +46,10 @@ const RegisterArtistProfile: React.FC = () => {
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   const nextStep = () => {
-    if (formStep === numberOfSteps - 1) {
+    if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
 
-      patchArtistProfile(form.values).then(() => {
+      patchArtistProfile(getArtistValuesReq(form.values)).then(() => {
         setFormStep((old) => old + 1);
       });
     } else {
@@ -56,7 +57,7 @@ const RegisterArtistProfile: React.FC = () => {
         if (form.validate().hasErrors) {
           return current;
         }
-        return current < numberOfSteps - 1 ? current + 1 : current;
+        return current < NUMBER_OF_STEPS - 1 ? current + 1 : current;
       });
     }
   };
@@ -164,7 +165,7 @@ const RegisterArtistProfile: React.FC = () => {
       <div className="absolute bottom-3">
         <StepButtons
           formStep={formStep}
-          numberOfSteps={numberOfSteps}
+          numberOfSteps={NUMBER_OF_STEPS}
           nextStep={nextStep}
           prevStep={prevStep}
         />
