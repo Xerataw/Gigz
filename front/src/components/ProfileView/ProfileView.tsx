@@ -5,6 +5,9 @@ import {
 } from '../../types/IArtistProfile';
 import Gallery from './Gallery';
 import ProfileDrawer from './ProfileDrawer';
+import { ActionIcon, Button, Group } from '@mantine/core';
+import { IconSection, IconSettings } from '@tabler/icons-react';
+import Settings from '../Settings/Settings';
 
 interface IProfileViewProps {
   profile: IArtistProfile | IHostProfile;
@@ -19,13 +22,14 @@ const ProfileView: React.FC<IProfileViewProps> = ({ profile, children }) => {
     profile.musicLink.length > 0;
 
   return (
-    <>
+    <div className="relative">
+      <Settings />
       <Gallery
         mediaList={profile && profile.gallery}
         withEmbed={hasMusicEmbed}
       />
       <ProfileDrawer profile={profile}>{children}</ProfileDrawer>
-    </>
+    </div>
   );
 };
 
