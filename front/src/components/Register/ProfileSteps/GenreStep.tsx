@@ -7,11 +7,11 @@ import { IStepProps } from '../AccountStep/FirstStep';
 
 const GenreStep: React.FC<IStepProps> = ({ form }) => {
   const [genres, setGenres] = useState<IGenre[]>([]);
-  const [selectedGenre, setSelectedGenre] = useState<string[]>(
+  const [selectedGenre, setSelectedGenre] = useState<number[]>(
     form.values.genres ?? []
   );
 
-  const handleAddGenre = (id: string) => {
+  const handleAddGenre = (id: number) => {
     if (!selectedGenre.includes(id)) {
       setSelectedGenre((old) => [...old, id]);
     } else {

@@ -52,5 +52,10 @@
     "socials": {
       "title": "Social media"
     }
+  },
+  "search": {
+    "list": {
+      "endOfProfiles": "You have seen everything..."
+    }
   }
 }

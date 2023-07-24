@@ -52,5 +52,10 @@
     "socials": {
       "title": "Réseaux sociaux"
     }
+  },
+  "search": {
+    "list": {
+      "endOfProfiles": "Vous avez regardé tous les profiles"
+    }
   }
 }
