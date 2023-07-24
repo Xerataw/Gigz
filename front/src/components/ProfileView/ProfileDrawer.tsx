@@ -56,11 +56,11 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
           }`}
         >
           <ProfileBanner
-            username={profile && profile.name}
+            username={profile?.name}
             loading={profileLoading}
-            profilePicture={profile && profile.profilePicture}
-            city={profile && profile.city}
-            genres={profile && profile.genres}
+            profilePicture={profile?.profilePicture}
+            city={profile?.city}
+            genres={profile?.genres}
             withDrawer={true}
             drawerOpened={drawerOpened}
           />
