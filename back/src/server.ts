@@ -57,7 +57,7 @@ app.use(function (
 const io = new Server(httpServer, {});
 
 io.on('connection', (socket) => {
-  // ...
+  console.log(socket + ' Connected !');
 });
 
 httpServer.listen(PORT, () => console.log(`🚀 API listening on port ${PORT}`));

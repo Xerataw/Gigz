@@ -49,7 +49,7 @@ router.post('/', async (req, res) => {
     },
   });
 
-  sendResponse(res, conversation);
+  sendResponse(res, fromDbFormat(conversation));
 });
 
 router.get('/', async (req, res) => {
@@ -69,7 +69,7 @@ router.get('/', async (req, res) => {
     },
   });
 
-  sendResponse(res, conversations);
+  sendResponse(res, fromDbFormat(conversations));
 });
 
 const ConversationParamsSchema = z.object({
@@ -132,7 +132,7 @@ router.get('/:id/', async (req, res) => {
   // @ts-ignore
   delete conversation._count;
 
-  sendResponse(res, conversation);
+  sendResponse(res, fromDbFormat(conversation));
 });
 
 export default router;
