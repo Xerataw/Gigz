@@ -66,7 +66,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             </p>
           </Skeleton>
           <ul className="flex flex-row flew-wrap p-0 m-0">
-            {genresToDisplay.map((genre) => (
+            {genresToDisplay?.map((genre) => (
               <li key={genre.id} className="mr-1">
                 <Skeleton
                   h={loading ? '1.5rem' : 'inherit'}

@@ -5,6 +5,7 @@ import { getResults } from '../../../api/search';
 import IResult from '../../../types/IResult';
 import ResultProfileDrawer from './ResultProfileDrawer';
 import SearchResult from './SearchResult';
+import EProfileType from '../../../types/EProfileType';
 
 const SerachResultList: React.FC = () => {
   const { t } = useTranslation();
@@ -46,8 +47,10 @@ const SerachResultList: React.FC = () => {
           <Text c="dimmed">{t('search.list.endOfProfiles')}</Text>
         </div>
       </ScrollArea>
+      {/* TODO: handle different filter (artist or host) */}
       <ResultProfileDrawer
         resultProfile={selectedResult ?? null}
+        profileType={EProfileType.HOST}
         onClose={onModalClose}
       />
     </div>

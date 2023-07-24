@@ -13,11 +13,11 @@ const ChatItem: React.FC<IChatItemProps> = ({
 }) => {
   const lastMessage = () => {
     return (
-      chat?.lastMessageDate?.getDate() +
+      new Date(chat?.latestMessage?.sendDate ?? '')?.getDate() +
       '/' +
-      chat?.lastMessageDate?.getMonth() +
+      new Date(chat?.latestMessage?.sendDate ?? '')?.getMonth() +
       ' - ' +
-      chat?.shortLastMessage
+      chat?.latestMessage?.content
     );
   };
 
@@ -36,7 +36,7 @@ const ChatItem: React.FC<IChatItemProps> = ({
             src={chat?.profilePicture}
             radius={20}
             size={64}
-            alt={chat?.from}
+            alt={chat?.from.name}
           />
         </Indicator>
       </Skeleton>
@@ -44,7 +44,7 @@ const ChatItem: React.FC<IChatItemProps> = ({
         <Skeleton visible={loading} mb={loading ? 4 : 0}>
           <Text fw={chat?.unread === 0 ? 500 : 700}>
             {/* We need this never displayed 'UwU' text to show two loading skeletons */}
-            {chat?.from ? chat?.from : 'UwU'}
+            {chat?.from.name ? chat?.from.name : 'UwU'}
           </Text>
         </Skeleton>
         <Skeleton visible={loading}>

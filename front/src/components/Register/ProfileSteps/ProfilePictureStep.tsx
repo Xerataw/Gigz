@@ -6,7 +6,6 @@ import {
   patchProfilePicture,
 } from '../../../api/profilePicture';
 import GigzFetcher from '../../../services/GigzFetcher';
-import User from '../../../store/User';
 import ProfilePicture from '../../ProfilePicture';
 import { IStepProps } from '../AccountStep/FirstStep';
 
@@ -14,9 +13,7 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
   const [pictureLink, setPictureLink] = useState<string | undefined>(
     form.values.picture
   );
-  const [username, setUsername] = useState<string>(
-    form.values.name.length > 0 ? form.values.name : '@username'
-  );
+  const username = form.values.name.length > 0 ? form.values.name : '@username';
   const resetRef = useRef<() => void>(null);
 
   const clearFile = () => {
@@ -35,21 +32,6 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form }) => {
   useEffect(() => {
     form.values.picture = pictureLink;
   }, [pictureLink]);
-
-  useEffect(() => {
-    User.getInstance().then((user) => {
-      const userName = user.getName();
-      const userProfilePicture = user.getProfilePicture();
-
-      if (userName !== null) {
-        setUsername(userName);
-      }
-
-      if (userProfilePicture !== null) {
-        setPictureLink(GigzFetcher.getImageUri(userProfilePicture));
-      }
-    });
-  }, []);
 
   return (
     <>

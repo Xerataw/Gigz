@@ -11,10 +11,15 @@ import Settings from '../Settings/Settings';
 
 interface IProfileViewProps {
   profile: IArtistProfile | IHostProfile;
+  loading: boolean;
   children: ReactNode;
 }
 
-const ProfileView: React.FC<IProfileViewProps> = ({ profile, children }) => {
+const ProfileView: React.FC<IProfileViewProps> = ({
+  profile,
+  loading,
+  children,
+}) => {
   const hasMusicEmbed =
     profile &&
     'musicLink' in profile &&
@@ -26,10 +31,13 @@ const ProfileView: React.FC<IProfileViewProps> = ({ profile, children }) => {
       <Settings />
       <Gallery
         mediaList={profile && profile.gallery}
+        loading={loading}
         withEmbed={hasMusicEmbed}
       />
-      <ProfileDrawer profile={profile}>{children}</ProfileDrawer>
-    </div>
+      <ProfileDrawer profile={profile} profileLoading={loading}>
+        {children}
+      </ProfileDrawer>
+    </>
   );
 };
 
