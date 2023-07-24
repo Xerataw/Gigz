@@ -7,17 +7,16 @@ import {
   Grid,
   Image,
   Text,
-  Title,
 } from '@mantine/core';
 import { IconPlus, IconTrash } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
-import StepTitle from './Utils/StepTitle';
-import { IStepProps } from '../../types/IStepProps';
 import {
   IGalleryPhoto,
   deletePhotoGallery,
   postPhotoGallery,
-} from '../../api/gallery';
+} from '../../api/user';
+import { IStepProps } from '../../types/IStepProps';
+import StepTitle from './Utils/StepTitle';
 
 const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
   const maxFile = 5;
