@@ -1,7 +1,7 @@
 {
   "_type": "export",
   "__export_format": 4,
-  "__export_date": "2023-07-18T14:47:27.614Z",
+  "__export_date": "2023-07-18T15:05:45.518Z",
   "__export_source": "insomnia.desktop.app:v2023.2.2",
   "resources": [
     {
@@ -254,6 +254,33 @@
         "prefix": "Bearer"
       },
       "metaSortKey": -1689337453271.125,
+      "isPrivate": false,
+      "settingStoreCookies": true,
+      "settingSendCookies": true,
+      "settingDisableRenderRequestBody": false,
+      "settingEncodeUrl": true,
+      "settingRebuildPath": true,
+      "settingFollowRedirects": "global",
+      "_type": "request"
+    },
+    {
+      "_id": "req_ca26eb8c5b2241f1a39413780ca10615",
+      "parentId": "fld_dd826b04fb9c40838bc3bb29a8e43fd3",
+      "modified": 1689692150352,
+      "created": 1689692147959,
+      "url": "{{ _.url }}/v1/me/conversations/1",
+      "name": "GET BY ID",
+      "description": "",
+      "method": "GET",
+      "body": {},
+      "parameters": [],
+      "headers": [],
+      "authentication": {
+        "type": "bearer",
+        "token": "{{ _.token }}",
+        "prefix": "Bearer"
+      },
+      "metaSortKey": -1689208306478.1875,
       "isPrivate": false,
       "settingStoreCookies": true,
       "settingSendCookies": true,

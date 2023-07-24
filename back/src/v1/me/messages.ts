@@ -27,7 +27,7 @@ router.post('/', async (req, res) => {
 
   if (!conversation) {
     console.error(`Error: conversation ${body.data.conversationId} not found`);
-    return sendError(res, ApiMessages.NotFound);
+    return sendError(res, ApiMessages.NotFound, 404);
   }
 
   if (
