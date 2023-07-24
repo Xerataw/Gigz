@@ -1,10 +1,11 @@
 import { Container } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { getChats } from '../../api/chat';
+import IChat from '../../types/IChat';
 import ChatItem from './ChatItem/ChatItem';
 
 const ChatList: React.FC = () => {
-  const [chatList, setChatList] = useState(new Array(20).fill({}));
+  const [chatList, setChatList] = useState<IChat[]>(new Array(20).fill({}));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const ChatList: React.FC = () => {
     ));
   };
 
+  // TODO Render something else if conversation list is empty
   return (
     <Container size={'xs'} px={0} pt={20}>
       {renderChatList()}
