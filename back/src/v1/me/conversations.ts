@@ -147,8 +147,6 @@ router.get('/', async (req, res) => {
     return conversation;
   });
 
-  console.log(formattedConversation);
-
   sendResponse(res, fromDbFormat(formattedConversation));
 });
 
