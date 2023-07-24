@@ -1,9 +1,12 @@
+import SerachResultList from '../../components/Search/Result/SearchResultList';
+import SearchBar from '../../components/Search/SearchBar';
 import Layout from '../Layout/Layout';
 
 const Search: React.FC = () => {
   return (
     <Layout>
-      <div>Search</div>
+      <SearchBar />
+      <SerachResultList />
     </Layout>
   );
 };

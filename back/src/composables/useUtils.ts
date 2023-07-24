@@ -84,7 +84,7 @@ const transformBody = (
     return body.map((item) => transformBody(item, transform));
   }
 
-  if (typeof body === 'object' && body !== null) {
+  if (typeof body === 'object' && body !== null && !(body instanceof Date)) {
     const convertedBody: any = Array.isArray(body) ? [] : {};
 
     for (const key in body) {

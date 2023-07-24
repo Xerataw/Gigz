@@ -8,6 +8,8 @@ See installation steps on the [frontend README](https://github.com/Xerataw/Gigz/
 
 1. Go to `/front` directory
 2. Run command `npm install` or `yarn install`
+3. Run `npm run dev` to start the front end
+   1. If the above command fails telling you ionic was not found do `npm install -g @ionic/cli` and try again
 
 ## Test the app on your phone or emulator 📱
 

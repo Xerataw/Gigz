@@ -10,7 +10,7 @@ const GenreStep: React.FC<IStepProps> = ({ form }) => {
     form.values.genres ?? []
   );
 
-  const handleAddGenre = (id: string) => {
+  const handleAddGenre = (id: number) => {
     if (!selectedGenre.includes(id)) {
       setSelectedGenre((old) => [...old, id]);
     } else {
