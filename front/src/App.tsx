@@ -21,6 +21,7 @@ import NestedRoute from './components/NestedRoute';
 import './index.css';
 import { useInitialLoading } from './store/InitialLoadingProvider';
 import RegisterHostProfile from './pages/Register/RegisterHostProfile';
+import ProfileEditProvider from './store/ProfileEditProvider';
 
 setupIonicReact();
 
@@ -87,7 +88,9 @@ const App: React.FC = () => {
                 </Route>
 
                 <Route path="/profile">
-                  <Profile />
+                  <ProfileEditProvider>
+                    <Profile />
+                  </ProfileEditProvider>
                 </Route>
               </NestedRoute>
 

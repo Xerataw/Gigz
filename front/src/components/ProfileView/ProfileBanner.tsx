@@ -3,10 +3,11 @@ import { IconCheck, IconMapPin, IconPencil, IconX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import GigzFetcher from '../../services/GigzFetcher';
-import { useProfileEditMode } from '../../store/ProfileEditProvider';
+import { useProfileEdit } from '../../store/ProfileEditProvider';
 import IGenre from '../../types/IGenre';
 import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
+import BannerName from './bannerFields/BannerName';
 
 interface IProfileBannerProps {
   username: string;
@@ -34,7 +35,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   drawerOpened = false,
 }) => {
   const { t } = useTranslation();
-  const { editMode, editConfirmed } = useProfileEditMode();
+  const { editMode, editConfirmed } = useProfileEdit();
   const canEdit = useLocation().pathname.includes('/auth/profile');
   const genresToDisplay = loading ? loadingGenres : genres;
 
@@ -91,7 +92,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             mb={loading ? '0.25rem' : 'inherit'}
             className="flex flex-row flex-nowrap items-center"
           >
-            <h3 className="pr-2">{username}</h3>
+            <BannerName name={username} />
           </Skeleton>
           <Skeleton
             visible={loading}
