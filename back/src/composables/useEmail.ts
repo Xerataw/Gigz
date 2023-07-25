@@ -29,8 +29,12 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendMail = async (email: MailOptions) => {
-  const info = await transporter.sendMail(email);
-  console.log('Messange sent: ', info);
+  transporter.sendMail(email, (err, info) => {
+    if (err) {
+      console.log('Error when sending email: ', err);
+    }
+    transporter.close();
+  });
 };
 
 const useEmail = () => ({
