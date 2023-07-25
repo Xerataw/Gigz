@@ -7,11 +7,13 @@ import useDatabase from '@composables/useDatabase';
 import useUtils from '@composables/useUtils';
 import useHash from '@composables/useHash';
 import useToken from '@composables/useToken';
+import useEmail from '@composables/useEmail';
 
 const { database, findAccountByEmail } = useDatabase();
 const { ApiMessages, sendResponse, sendError } = useUtils();
 const { hash } = useHash();
 const { generateToken } = useToken();
+const { sendMail } = useEmail();
 
 const router = express.Router();
 
@@ -52,6 +54,7 @@ router.post('/', async (req, res) => {
     })
     .then((newAccount) => {
       createBlankProfile(body.data.profileType, newAccount.id);
+      sendConfirmationEmail(body.data.email);
       sendResponse(
         res,
         {
@@ -112,6 +115,14 @@ const createBlankProfile = async (profileType: string, id: number) => {
       },
     });
   }
+};
+
+const sendConfirmationEmail = (email: string) => {
+  sendMail({
+    to: email,
+    subject: 'Confirmation de création de compte Gigz',
+    text: 'Hello ! Confirm your account by clincking on this link: ',
+  });
 };
 
 export default router;
