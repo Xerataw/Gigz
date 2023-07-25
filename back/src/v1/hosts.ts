@@ -57,11 +57,6 @@ router.get('/', async (req, res) => {
       capacity: true,
       account: {
         select: {
-          account_genre: {
-            select: {
-              genre: true,
-            },
-          },
           profile_picture: true,
         },
       },
@@ -69,12 +64,19 @@ router.get('/', async (req, res) => {
     where: buildHostsWhereCondition(body.data),
   });
 
+  const genres = await database.account_genre.findMany({
+    where: { account_id: req.account.id },
+    include: { genre: true },
+  });
+
+  const formattedGenres = genres.map((genre) => genre.genre);
+
   let formattedData = data.map((host) => ({
     id: host.id,
     name: host.name,
     address: host.address,
     city: host.city,
-    genres: host.account.account_genre.map((genre) => genre.genre),
+    genres: formattedGenres,
     capacity: host.capacity,
     longitude: host.longitude,
     latitude: host.latitude,
@@ -110,7 +112,7 @@ router.get('/', async (req, res) => {
     delete host.latitude;
   });
 
-  sendResponse(res, fromDbFormat(formattedData), 200);
+  sendResponse(res, formattedData, 200);
 });
 
 const GetHostByIdParams = z.object({
