@@ -138,6 +138,13 @@ router.get('/:id/', async (req, res) => {
     },
   });
 
+  const genres = await database.account_genre.findMany({
+    where: { account_id: req.account.id },
+    include: { genre: true },
+  });
+
+  const formattedGenres = genres.map((genre) => genre.genre);
+
   if (!artist) {
     return sendError(res, ApiMessages.NotFound, 404);
   }
@@ -147,6 +154,9 @@ router.get('/:id/', async (req, res) => {
 
   // @ts-ignore
   delete artist.account;
+
+  // @ts-ignore
+  artist.genres = formattedGenres;
 
   sendResponse(res, fromDbFormat(artist));
 });
