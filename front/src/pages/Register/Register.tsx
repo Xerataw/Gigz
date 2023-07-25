@@ -49,6 +49,8 @@ const Register: React.FC = () => {
     register(form.values).then((res) => {
       if (res.ok === true) {
         if (res.data) {
+          user.setName('');
+          user.setProfilePicture(null);
           user.setToken(res.data.token);
           setFormStep((old) => old + 1);
         }
