@@ -20,6 +20,7 @@ import Loading from './components/Loading';
 import NestedRoute from './components/NestedRoute';
 import './index.css';
 import RegisterHostProfile from './pages/Register/RegisterHostProfile';
+import ProfileEditProvider from './store/ProfileEditProvider';
 import { useInitialLoading } from './store/InitialLoadingProvider';
 
 setupIonicReact();
@@ -86,7 +87,9 @@ const App: React.FC = () => {
               </Route>
 
               <Route path="/profile">
-                <Profile />
+                <ProfileEditProvider>
+                  <Profile />
+                </ProfileEditProvider>
               </Route>
             </NestedRoute>
 
