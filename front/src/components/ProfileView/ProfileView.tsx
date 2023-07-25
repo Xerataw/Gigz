@@ -3,11 +3,9 @@ import {
   default as IArtistProfile,
   default as IHostProfile,
 } from '../../types/IArtistProfile';
+import Settings from '../Settings/Settings';
 import Gallery from './Gallery';
 import ProfileDrawer from './ProfileDrawer';
-import { ActionIcon, Button, Group } from '@mantine/core';
-import { IconSection, IconSettings } from '@tabler/icons-react';
-import Settings from '../Settings/Settings';
 
 interface IProfileViewProps {
   profile: IArtistProfile | IHostProfile;

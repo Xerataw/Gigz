@@ -1,13 +1,16 @@
-import { Drawer, Group } from '@mantine/core';
+import { Button, Divider, Drawer, Group, Title } from '@mantine/core';
 import { IconSettings } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { LinkUtils } from '../../services/LinkUtils';
 import LightRoundButton from '../LightRoundButton';
+import Language from './Language';
 
 const Settings: React.FC = () => {
   const history = useHistory();
   const [open, setOpen] = useState<boolean>(false);
+  const { t } = useTranslation();
 
   useEffect(() => {
     if (window.location.pathname.includes('/settings')) setOpen(true);
@@ -29,12 +32,25 @@ const Settings: React.FC = () => {
       <Drawer
         opened={open}
         onClose={handleCloseDrawer}
-        title="Settings"
         position="right"
-        className="z-[1201] bg-red-500 relative"
+        className="z-[12001] bg-red-500 relative h-full"
+        title={<p className="text-2xl">{t('settings.title')}</p>}
       >
-        {/* Drawer content */}
+        <Language />
+        <Title order={3}>Changer mes informations</Title>
+        <Title order={5}>Mot de passe</Title>
+        <Title order={5}>Email</Title>
+        <Title order={5}>Numéro</Title>
+        <Divider m={15} />
+
+        <div className="absolute left-0 bottom-0 w-full p-4">
+          <Group position="center">
+            <Button>Se déconnecter</Button>
+            <Button>Supprimer mon compte</Button>
+          </Group>
+        </div>
       </Drawer>
+
       <div className="absolute z-50 p-3 right-0">
         <Group>
           <LightRoundButton onClick={handleOpenDrawer}>

@@ -5,7 +5,8 @@ import React, {
   useEffect,
   useState,
 } from 'react';
-import User from './User';
+import { useTranslation } from 'react-i18next';
+import User from '../types/User';
 import { useInitialLoading } from './InitialLoadingProvider';
 
 interface IUserProviderProps {
@@ -19,9 +20,11 @@ export const useUser = () => useContext(UserContext);
 const UserProvider: React.FC<IUserProviderProps> = ({ children }) => {
   const setUserLoading = useInitialLoading().setUserLoading;
   const [user, setUser] = useState<User>();
+  const { i18n } = useTranslation();
 
   useEffect(() => {
     User.getInstance().then((user) => {
+      i18n.changeLanguage(user.getLanguage());
       setUserLoading(false);
       setUser(user);
     });
