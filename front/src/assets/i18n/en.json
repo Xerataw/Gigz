@@ -57,5 +57,11 @@
     "list": {
       "endOfProfiles": "You have seen everything..."
     }
+  },
+  "settings": {
+    "title": "Settings",
+    "language": {
+      "title": "Languages"
+    }
   }
 }

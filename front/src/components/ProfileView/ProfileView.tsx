@@ -3,11 +3,9 @@ import {
   default as IArtistProfile,
   default as IHostProfile,
 } from '../../types/IArtistProfile';
+import Parameters from '../Settings/Settings';
 import Gallery from './Gallery';
 import ProfileDrawer from './ProfileDrawer';
-import { ActionIcon, Button, Group } from '@mantine/core';
-import { IconSection, IconSettings } from '@tabler/icons-react';
-import Settings from '../Settings/Settings';
 
 interface IProfileViewProps {
   profile: IArtistProfile | IHostProfile;
@@ -28,7 +26,7 @@ const ProfileView: React.FC<IProfileViewProps> = ({
 
   return (
     <div className="relative">
-      <Settings />
+      <Parameters />
       <Gallery
         mediaList={profile && profile.gallery}
         loading={loading}
@@ -37,7 +35,7 @@ const ProfileView: React.FC<IProfileViewProps> = ({
       <ProfileDrawer profile={profile} profileLoading={loading}>
         {children}
       </ProfileDrawer>
-    </>
+    </div>
   );
 };
 
