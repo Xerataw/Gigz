@@ -19,6 +19,8 @@ const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
   capacityId: z.coerce.number().optional(),
   genres: z.string().min(1).optional(),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
 });
 
 const buildHostsWhereCondition = (query: {
@@ -27,6 +29,14 @@ const buildHostsWhereCondition = (query: {
   genres?: string;
 }) => {
   return {
+    AND: {
+      longitude: {
+        not: null,
+      },
+      latitude: {
+        not: null,
+      },
+    },
     name: {
       contains: query.name ? query.name : undefined,
     },
@@ -87,19 +97,26 @@ router.get('/', async (req, res) => {
     typeof req.account.longitude === 'number' &&
     typeof req.account.latitude === 'number'
   ) {
+    const searchLongitude = body.data.longitude
+      ? body.data.longitude
+      : req.account.longitude;
+    const searchLatitude = body.data.latitude
+      ? body.data.latitude
+      : req.account.latitude;
+
     formattedData = formattedData.sort((host1, host2) => {
       return (
         calculateDistance(
-          req.account.longitude as number,
-          host1.longitude as number,
-          req.account.latitude as number,
-          host1.latitude as number
+          searchLatitude,
+          searchLongitude,
+          host1.latitude as number,
+          host1.longitude as number
         ) -
         calculateDistance(
-          req.account.longitude as number,
-          host2.longitude as number,
-          req.account.latitude as number,
-          host2.latitude as number
+          searchLatitude,
+          searchLongitude,
+          host2.latitude as number,
+          host2.longitude as number
         )
       );
     });
