@@ -130,13 +130,25 @@ const calculateDistance = (
   lat2: number,
   lon2: number
 ) => {
-  return (
-    EARTH_RADIUS *
-    Math.acos(
-      Math.sin(lat1) * Math.sin(lat2) +
-        Math.cos(lat1) * Math.cos(lat2) * Math.cos(lon2 - lon1)
-    )
-  );
+  const dLat = degreesToRadians(lat2 - lat1);
+  const dLon = degreesToRadians(lon2 - lon1);
+  const lat1Rad = degreesToRadians(lat1);
+  const lat2Rad = degreesToRadians(lat2);
+
+  const a =
+    Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+    Math.sin(dLon / 2) *
+      Math.sin(dLon / 2) *
+      Math.cos(lat1Rad) *
+      Math.cos(lat2Rad);
+  const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+
+  const distance = EARTH_RADIUS * c;
+  return distance;
+};
+
+const degreesToRadians = (degrees: number) => {
+  return (degrees * Math.PI) / 180;
 };
 
 const useUtils = () => ({

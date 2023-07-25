@@ -18,6 +18,8 @@ const {
 const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
   genres: z.string().min(1).optional(),
+  longitude: z.coerce.number().optional(),
+  latitude: z.coerce.number().optional(),
 });
 
 const buildArtistsWhereCondition = (query: {
@@ -85,19 +87,28 @@ router.get('/', async (req, res) => {
     typeof req.account.longitude === 'number' &&
     typeof req.account.latitude === 'number'
   ) {
+    const searchLongitude = body.data.longitude
+      ? body.data.longitude
+      : req.account.longitude;
+    const searchLatitude = body.data.latitude
+      ? body.data.latitude
+      : req.account.latitude;
+
+    console.log(searchLatitude + ' ' + searchLongitude);
+
     formattedData = formattedData.sort((artist1, artist2) => {
       return (
         calculateDistance(
-          req.account.longitude as number,
-          artist1.longitude as number,
-          req.account.latitude as number,
-          artist1.latitude as number
+          searchLatitude,
+          searchLongitude,
+          artist1.latitude as number,
+          artist1.longitude as number
         ) -
         calculateDistance(
-          req.account.longitude as number,
-          artist2.longitude as number,
-          req.account.latitude as number,
-          artist2.latitude as number
+          searchLatitude,
+          searchLongitude,
+          artist2.latitude as number,
+          artist2.longitude as number
         )
       );
     });
