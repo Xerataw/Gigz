@@ -1,27 +1,13 @@
 import IonicStorageAccessor from '../services/IonicStorageAccessor';
-import EProfileType from '../types/EProfileType';
-
-/**
- * This decorator is used to store the user in the local storage on change.
- */
-const storeUser = (argument: string) => {
-  return (target: any, key: string, descriptor: any) => {
-    const originalMethod = descriptor.value;
-
-    descriptor.value = function (...args: any[]) {
-      this[argument] = args[0];
-      IonicStorageAccessor.set('user', this);
-      return originalMethod.apply(target, args);
-    };
-
-    return descriptor;
-  };
-};
+import ELanguage from './ELanguage';
+import EProfileType from './EProfileType';
+import { LanguageSettings } from './Settings';
+import { storeUser } from './utils/storeUser';
 
 /**
  * Singleton to use throughout the front to get global data about the user.
  */
-export default class User {
+export default class User extends LanguageSettings {
   private static instance: User;
 
   private name: string | null;
@@ -33,8 +19,10 @@ export default class User {
     name?: string,
     profilePicture?: string,
     token?: string,
-    profileType?: EProfileType
+    profileType?: EProfileType,
+    language?: ELanguage
   ) {
+    super(language);
     this.name = name ?? null;
     this.profilePicture = profilePicture ?? null;
     this.token = token ?? null;
@@ -51,10 +39,11 @@ export default class User {
       if (!localUserInfo) this.instance = new User();
       else
         this.instance = new User(
-          localUserInfo.username,
+          localUserInfo.name,
           localUserInfo.profilePicture,
           localUserInfo.token,
-          localUserInfo.profileType
+          localUserInfo.profileType,
+          localUserInfo.language
         );
     }
     return this.instance;

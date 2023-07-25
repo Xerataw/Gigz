@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import register from '../../api/register';
+import { register } from '../../api/auth';
 import MailPhoneStep from '../../components/Steps/MailPhoneStep';
 import PasswordStep from '../../components/Steps/PasswordStep';
 import ProfileTypeStep from '../../components/Steps/ProfileTypeStep';
@@ -28,6 +28,7 @@ import {
   regsiterValidate,
 } from '../../configs/steppers/stepperRegisterConfig';
 import { useUser } from '../../store/UserProvider';
+import EProfileType from '../../types/EProfileType';
 
 const Register: React.FC = () => {
   const NUMBER_OF_STEP = 3;
@@ -43,10 +44,13 @@ const Register: React.FC = () => {
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   const sendRegisterForm = () => {
+    user.setProfileType(form.values.userType as EProfileType);
     register(form.values).then((res) => {
       if (res.ok === true) {
-        if (res.data?.token !== undefined) {
-          user?.setToken(res.data.token);
+        if (res.data) {
+          user.setName('');
+          user.setProfilePicture(null);
+          user.setToken(res.data.token);
           setFormStep((old) => old + 1);
         }
       } else {

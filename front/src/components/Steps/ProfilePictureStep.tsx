@@ -1,13 +1,15 @@
 import { ActionIcon, Button, FileButton } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
-import { deleteProfilePicture, patchProfilePicture } from '../../api/profilePicture';
+import { deleteProfilePicture, patchProfilePicture } from '../../api/user';
 import GigzFetcher from '../../services/GigzFetcher';
+import { useUser } from '../../store/UserProvider';
 import { IStepProps } from '../../types/IStepProps';
 import ProfilePicture from '../ProfilePicture';
 import StepTitle from './Utils/StepTitle';
 
 const ProfilePictureStep: React.FC<IStepProps> = ({ form, label }) => {
+  const user = useUser();
   const [pictureLink, setPictureLink] = useState<string | undefined>(
     form.values.picture
   );
@@ -23,7 +25,10 @@ const ProfilePictureStep: React.FC<IStepProps> = ({ form, label }) => {
 
   const handleChangeFile = (file: File) => {
     patchProfilePicture(file)
-      .then((res) => GigzFetcher.getImageUri(res.data?.media ?? ''))
+      .then((res) => {
+        user.setProfilePicture(res.data?.media ?? '');
+        return GigzFetcher.getImageUri(res.data?.media ?? '');
+      })
       .then((pictureLink: string) => setPictureLink(pictureLink));
   };
 

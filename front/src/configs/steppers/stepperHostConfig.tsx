@@ -24,7 +24,7 @@ export const hostInitialValues = {
     latitude: 0,
   },
 
-  capacity: 0,
+  capacityId: 0,
 
   picture: '',
   genres: [],

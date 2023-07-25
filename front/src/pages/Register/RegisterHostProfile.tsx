@@ -17,7 +17,7 @@ import {
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { patchHostProfile } from '../../api/profile';
+import { patchHostProfile } from '../../api/user';
 import AddressCompleteStep from '../../components/Steps/AddressCompleteStep';
 import CapacityStep from '../../components/Steps/CapacityStep';
 import DescriptionStep from '../../components/Steps/DescriptionStep';
@@ -53,9 +53,9 @@ const RegisterHostProfile: React.FC = () => {
   const nextStep = () => {
     if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
-      patchHostProfile(getHostValuesReq(form.values)).then(() =>
-        setFormStep((old) => old + 1)
-      );
+      patchHostProfile(getHostValuesReq(form.values)).then((res) => {
+        setFormStep((old) => old + 1);
+      });
     } else {
       setFormStep((current) => {
         if (form.validate().hasErrors) {

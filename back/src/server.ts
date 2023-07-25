@@ -57,7 +57,16 @@ app.use(function (
 const io = new Server(httpServer, {});
 
 io.on('connection', (socket) => {
-  console.log(socket + ' Connected !');
+  const userId = socket.handshake.auth.userId;
+
+  if (!userId) {
+    console.log('No userId for this user ! ', socket);
+    return;
+  }
+
+  socket.join(socket.handshake.auth.userId);
 });
 
 httpServer.listen(PORT, () => console.log(`🚀 API listening on port ${PORT}`));
+
+export default io;

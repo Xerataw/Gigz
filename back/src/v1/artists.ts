@@ -59,11 +59,6 @@ router.get('/', async (req, res) => {
     include: {
       account: {
         select: {
-          account_genre: {
-            include: {
-              genre: true,
-            },
-          },
           profile_picture: true,
         },
       },
@@ -71,11 +66,18 @@ router.get('/', async (req, res) => {
     where: buildArtistsWhereCondition(body.data),
   });
 
+  const genres = await database.account_genre.findMany({
+    where: { account_id: req.account.id },
+    include: { genre: true },
+  });
+
+  const formattedGenres = genres.map((genre) => genre.genre);
+
   let formattedData = data.map((artist) => ({
     id: artist.id,
     name: artist.name,
     city: artist.city,
-    genres: artist.account.account_genre.map((genre) => genre.genre),
+    genres: formattedGenres,
     longitude: artist.longitude,
     latitude: artist.latitude,
     profilePicture: artist.account.profile_picture,
@@ -138,6 +140,13 @@ router.get('/:id/', async (req, res) => {
     },
   });
 
+  const genres = await database.account_genre.findMany({
+    where: { account_id: req.account.id },
+    include: { genre: true },
+  });
+
+  const formattedGenres = genres.map((genre) => genre.genre);
+
   if (!artist) {
     return sendError(res, ApiMessages.NotFound, 404);
   }
@@ -147,6 +156,9 @@ router.get('/:id/', async (req, res) => {
 
   // @ts-ignore
   delete artist.account;
+
+  // @ts-ignore
+  artist.genres = formattedGenres;
 
   sendResponse(res, fromDbFormat(artist));
 });
