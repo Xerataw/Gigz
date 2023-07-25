@@ -14,6 +14,7 @@ model account {
     creation_date                                      DateTime             @default(now()) @db.DateTime(0)
     phone_number                                       String?              @unique(map: "phone_number") @db.VarChar(255)
     email_validated                                    Int                  @default(0) @db.TinyInt
+    user_id                                            String               @db.VarChar(36)
     profile_type                                       account_profile_type
     account_genre                                      account_genre[]
     artist                                             artist?

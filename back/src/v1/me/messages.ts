@@ -1,12 +1,13 @@
 import express from 'express';
 import { z } from 'zod';
+import io from '@/server';
 
 import useDatabase from '@composables/useDatabase';
 import useUtils from '@composables/useUtils';
 
 const router = express.Router();
 const { database } = useDatabase();
-const { sendResponse, sendError, ApiMessages } = useUtils();
+const { sendResponse, sendError, ApiMessages, fromDbFormat } = useUtils();
 
 const PostBodySchema = z.object({
   conversationId: z.coerce.number(),
@@ -61,7 +62,36 @@ router.post('/', async (req, res) => {
     data: { latest_message_id: message.id },
   });
 
-  sendResponse(res, message);
+  const userIds = await findUsersIds(
+    conversation.creator_id,
+    conversation.member_id
+  );
+
+  userIds.forEach((user) => {
+    io.to(user.user_id).emit('private-message', {
+      message,
+    });
+  });
+
+  sendResponse(res, fromDbFormat(message));
 });
+
+const findUsersIds = async (creatorId: number, memberId: number) => {
+  return await database.account.findMany({
+    select: {
+      user_id: true,
+    },
+    where: {
+      OR: [
+        {
+          id: creatorId,
+        },
+        {
+          id: memberId,
+        },
+      ],
+    },
+  });
+};
 
 export default router;
