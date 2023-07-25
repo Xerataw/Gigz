@@ -8,8 +8,8 @@ interface ILayoutProps {
 
 const Layout: React.FC<ILayoutProps> = ({ children, navBarShadow = true }) => {
   return (
-    <Container px={0} className="max-h-screen overflow-hidden">
-      {children}
+    <Container px={0} className="max-h-screen overflow-hidden flex flex-col">
+      <div className="flex flex-col flex-grow">{children}</div>
       <BottomNavbar isShadow={navBarShadow} />
     </Container>
   );

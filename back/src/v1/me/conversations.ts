@@ -65,6 +65,7 @@ router.get('/', async (req, res) => {
     },
 
     select: {
+      id: true,
       latest_message: true,
       _count: {
         select: {
@@ -142,6 +143,10 @@ router.get('/', async (req, res) => {
     conversation.unread = conversation._count.messages;
 
     // @ts-ignore
+    conversation.from.profilePicture =
+      conversation.from.profile_picture?.media ?? null;
+
+    // @ts-ignore
     delete conversation._count;
 
     return conversation;
@@ -183,7 +188,7 @@ router.get('/:id/', async (req, res) => {
 
       messages: {
         orderBy: {
-          send_date: 'desc',
+          send_date: 'asc',
         },
 
         take: query.data.take,

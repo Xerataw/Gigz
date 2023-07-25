@@ -46,6 +46,9 @@ services:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: gigz
 
+    ports:
+      - 3333:3306
+
     volumes:
       - database-data:/var/lib/mysql
       - ./scripts:/gigz-scripts
