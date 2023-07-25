@@ -47,7 +47,7 @@ const ChatList: React.FC = () => {
               <div className="flex flex-col justify-center items-center gap-2 relative -left-[11px]">
                 <Avatar
                   src={GigzFetcher.getImageUri(
-                    selectedChat?.from?.profilePicture?.media ?? ''
+                    selectedChat?.from?.profilePicture ?? ''
                   )}
                   alt="it's me"
                 />

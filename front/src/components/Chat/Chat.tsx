@@ -1,5 +1,4 @@
 import IChat from '../../types/chat/IChat';
-import IChatDetails from '../../types/chat/IChatDetails';
 
 import { useEffect, useRef, useState } from 'react';
 import { getChatById } from '../../api/chat';
@@ -7,14 +6,14 @@ import { ScrollArea, Text } from '@mantine/core';
 import IMessage from '../../types/chat/IMessage';
 
 interface IChatProps {
-  chat: IChat | null;
+  chat?: IChat;
 }
 
 const Chat: React.FC<IChatProps> = ({ chat }) => {
   const [page, setPage] = useState(1);
   const [loading, setLoading] = useState(true);
 
-  const [keepFetching, setKeepFetching] = useState(true);
+  const [conversationEndReached, setConversationEndReached] = useState(true);
 
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
@@ -33,11 +32,11 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
       return;
     }
 
-    if (keepFetching && scrollPosition.y === 0) {
+    if (conversationEndReached && scrollPosition.y === 0) {
       setPage((old) => old + 1);
       getChatById(chat.id, page).then((res) => {
         if (res.data?.messages.length === 0) {
-          setKeepFetching(false);
+          setConversationEndReached(false);
           return;
         }
 

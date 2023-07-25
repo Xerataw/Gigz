@@ -143,6 +143,10 @@ router.get('/', async (req, res) => {
     conversation.unread = conversation._count.messages;
 
     // @ts-ignore
+    conversation.from.profilePicture =
+      conversation.from.profile_picture?.media ?? null;
+
+    // @ts-ignore
     delete conversation._count;
 
     return conversation;
