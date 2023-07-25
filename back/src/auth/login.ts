@@ -42,7 +42,7 @@ router.post('/', async (req, res) => {
     username: profile?.name || null,
 
     profileType: account.profile_type,
-    profilePicture: account.profile_pictures?.media || null,
+    profilePicture: account.profile_picture?.media || null,
     userId: account.user_id,
   });
 });
