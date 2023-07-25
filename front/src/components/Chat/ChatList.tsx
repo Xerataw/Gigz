@@ -13,7 +13,7 @@ const ChatList: React.FC = () => {
   const [loading, setLoading] = useState(true);
 
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedChat, setSelectedChat] = useState<IChat | null>(null);
+  const [selectedChat, setSelectedChat] = useState<IChat>();
 
   useEffect(() => {
     getChats().then((res) => {
