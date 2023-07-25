@@ -32,13 +32,11 @@ import {
   getArtistValuesReq,
   linksArtist,
 } from '../../configs/steppers/stepperArtistConfig';
-import { useUser } from '../../store/UserProvider';
 
 const RegisterArtistProfile: React.FC = () => {
   const NUMBER_OF_STEPS = 7;
 
   const { t } = useTranslation();
-  const user = useUser();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,

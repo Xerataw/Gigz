@@ -36,13 +36,11 @@ import {
   hostValidate,
   linksHost,
 } from '../../configs/steppers/stepperHostConfig';
-import { useUser } from '../../store/UserProvider';
 
 const RegisterHostProfile: React.FC = () => {
   const NUMBER_OF_STEPS = 8;
 
   const { t } = useTranslation();
-  const user = useUser();
 
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
@@ -56,7 +54,6 @@ const RegisterHostProfile: React.FC = () => {
     if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
       patchHostProfile(getHostValuesReq(form.values)).then((res) => {
-        if (res.data) user.setName(res.data.name);
         setFormStep((old) => old + 1);
       });
     } else {
