@@ -55,6 +55,7 @@ router.get('/', async (req, res) => {
   const host = await database.host.findUnique({
     where: { account_id: req.account.id },
     include: {
+      capacity: true,
       account: {
         include: {
           gallery: {
@@ -64,13 +65,6 @@ router.get('/', async (req, res) => {
       },
     },
   });
-
-  const genres = await database.account_genre.findMany({
-    where: { account_id: req.account.id },
-    include: { genre: true },
-  });
-
-  const formattedGenres = genres.map((genre) => genre.genre);
 
   if (!host) {
     return sendError(res, ApiMessages.NotFound, 404);
