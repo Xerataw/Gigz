@@ -1,6 +1,7 @@
 import express from 'express';
 import { z } from 'zod';
 import validator from 'validator';
+import { v4 as uuidv4 } from 'uuid';
 
 import useDatabase from '@composables/useDatabase';
 import useUtils from '@composables/useUtils';
@@ -46,6 +47,7 @@ router.post('/', async (req, res) => {
         password: await hash(body.data.password),
         phone_number: body.data.phoneNumber,
         profile_type: body.data.profileType,
+        user_id: uuidv4(),
       },
     })
     .then((newAccount) => {
@@ -54,6 +56,7 @@ router.post('/', async (req, res) => {
         res,
         {
           token: generateToken({ id: newAccount.id, email: newAccount.email }),
+          userId: newAccount.user_id,
         },
         201
       );

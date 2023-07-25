@@ -43,6 +43,7 @@ router.post('/', async (req, res) => {
 
     profileType: account.profile_type,
     profilePicture: account.profile_picture?.media || null,
+    userId: account.user_id,
   });
 });
 
