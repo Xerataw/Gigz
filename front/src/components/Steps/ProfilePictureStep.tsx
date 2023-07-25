@@ -1,10 +1,7 @@
 import { ActionIcon, Button, FileButton } from '@mantine/core';
 import { IconTrash } from '@tabler/icons-react';
 import { useEffect, useRef, useState } from 'react';
-import {
-  deleteProfilePicture,
-  patchProfilePicture,
-} from '../../api/profilePicture';
+import { deleteProfilePicture, patchProfilePicture } from '../../api/user';
 import GigzFetcher from '../../services/GigzFetcher';
 import { useUser } from '../../store/UserProvider';
 import { IStepProps } from '../../types/IStepProps';

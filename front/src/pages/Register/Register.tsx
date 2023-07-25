@@ -11,7 +11,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import register from '../../api/register';
+import { register } from '../../api/auth';
 import MailPhoneStep from '../../components/Steps/MailPhoneStep';
 import PasswordStep from '../../components/Steps/PasswordStep';
 import ProfileTypeStep from '../../components/Steps/ProfileTypeStep';

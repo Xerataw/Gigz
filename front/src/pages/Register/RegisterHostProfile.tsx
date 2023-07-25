@@ -17,7 +17,7 @@ import {
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { patchHostProfile } from '../../api/profile';
+import { patchHostProfile } from '../../api/user';
 import AddressCompleteStep from '../../components/Steps/AddressCompleteStep';
 import CapacityStep from '../../components/Steps/CapacityStep';
 import DescriptionStep from '../../components/Steps/DescriptionStep';
