@@ -1,5 +1,4 @@
 import { ActionIcon } from '@mantine/core';
-import { TablerIconsProps } from '@tabler/icons-react';
 import { MouseEventHandler } from 'react';
 
 interface IEditButtonProps {
