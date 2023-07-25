@@ -53,9 +53,9 @@ const RegisterHostProfile: React.FC = () => {
   const nextStep = () => {
     if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
-      patchHostProfile(getHostValuesReq(form.values)).then(() =>
-        setFormStep((old) => old + 1)
-      );
+      patchHostProfile(getHostValuesReq(form.values)).then((res) => {
+        setFormStep((old) => old + 1);
+      });
     } else {
       setFormStep((current) => {
         if (form.validate().hasErrors) {
