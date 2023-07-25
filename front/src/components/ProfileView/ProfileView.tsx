@@ -3,7 +3,7 @@ import {
   default as IArtistProfile,
   default as IHostProfile,
 } from '../../types/IArtistProfile';
-import Parameters from '../Settings/Settings';
+import Settings from '../Settings/Settings';
 import Gallery from './Gallery';
 import ProfileDrawer from './ProfileDrawer';
 
@@ -26,7 +26,7 @@ const ProfileView: React.FC<IProfileViewProps> = ({
 
   return (
     <div className="relative">
-      <Parameters />
+      <Settings />
       <Gallery
         mediaList={profile && profile.gallery}
         loading={loading}
