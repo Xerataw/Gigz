@@ -39,7 +39,7 @@ export default class User extends LanguageSettings {
       if (!localUserInfo) this.instance = new User();
       else
         this.instance = new User(
-          localUserInfo.username,
+          localUserInfo.name,
           localUserInfo.profilePicture,
           localUserInfo.token,
           localUserInfo.profileType,

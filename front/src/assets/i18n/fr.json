@@ -36,6 +36,23 @@
       "success": "Un mail a était envoyé à {{email}}"
     }
   },
+  "register": {
+    "title": "Complétez votre profil",
+    "completeRegister": "Votre compte est en cours de création",
+    "competeProfile": "Votre profil est en cours de création",
+
+    "profileTypeStep": "Vous êtes ?",
+    "mailPhoneStep": "Pour vous retrouver",
+    "passwordStep": "La sécurité",
+    "nameStep": "Votre nom est ?",
+    "descriptionStep": "Qui êtes vous ?",
+    "socialLinksStep": "Où êtes vous présent ?",
+    "addressCompleteStep": "Où êtes vous présent ?",
+    "genreStep": "Vous êtes plutôt ?",
+    "presentationPicturesStep": "À quoi ressemble votre groupe ?",
+    "profilePictureStep": "À quoi vous ressemblez ?",
+    "capacityStep": "Vous pouvez acceuillir combien de personne ?"
+  },
   "profile": {
     "banner": {
       "emptyCity": "Quelque part dans le monde"

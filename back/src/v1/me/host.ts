@@ -22,8 +22,8 @@ const HostBodySchema = z.object({
   // Address
   address: z.string().optional(),
   city: z.string().optional(),
-  latitude: z.coerce.number(),
-  longitude: z.coerce.number(),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
 
   capacityId: z.coerce.number().optional(),
   hostTypeId: z.coerce.number().optional(),
@@ -55,6 +55,7 @@ router.get('/', async (req, res) => {
   const host = await database.host.findUnique({
     where: { account_id: req.account.id },
     include: {
+      capacity: true,
       account: {
         include: {
           gallery: {
@@ -64,13 +65,6 @@ router.get('/', async (req, res) => {
       },
     },
   });
-
-  const genres = await database.account_genre.findMany({
-    where: { account_id: req.account.id },
-    include: { genre: true },
-  });
-
-  const formattedGenres = genres.map((genre) => genre.genre);
 
   if (!host) {
     return sendError(res, ApiMessages.NotFound, 404);

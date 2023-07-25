@@ -1,21 +1,13 @@
-import {
-  ActionIcon,
-  Button,
-  Divider,
-  Drawer,
-  Group,
-  Title,
-} from '@mantine/core';
+import { Button, Divider, Drawer, Group, Title } from '@mantine/core';
 import { IconSettings } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { LinkUtils } from '../../services/LinkUtils';
+import LightRoundButton from '../LightRoundButton';
 import Language from './Language';
 
-interface ISettingsProps {}
-
-const Parameters: React.FC<ISettingsProps> = ({}) => {
+const Settings: React.FC = () => {
   const history = useHistory();
   const [open, setOpen] = useState<boolean>(false);
   const { t } = useTranslation();
@@ -61,19 +53,13 @@ const Parameters: React.FC<ISettingsProps> = ({}) => {
 
       <div className="absolute z-50 p-3 right-0">
         <Group>
-          <ActionIcon
-            size="3rem"
-            variant="outline"
-            radius="xl"
-            className="bg-white"
-            onClick={handleOpenDrawer}
-          >
-            <IconSettings />
-          </ActionIcon>
+          <LightRoundButton onClick={handleOpenDrawer}>
+            <IconSettings className="mr-[0.09rem] mt-[0.05rem]" />
+          </LightRoundButton>
         </Group>
       </div>
     </>
   );
 };
 
-export default Parameters;
+export default Settings;

@@ -4,38 +4,33 @@ const envVars = import.meta.env;
 
 export interface IAddressSearchItem {
   value: string;
-  address: string;
   longitude: number;
   latitude: number;
-  key: string;
+  code: number;
+  city: string;
 }
 
 export default class MapTiler {
   private static API_KEY = envVars.VITE_MAPTILER_API_KEY;
 
   static getAutocomplete = (
+    type: string,
     searchLocation: string,
     handleSearchResult: (searchItems: IAddressSearchItem[]) => void
   ) => {
     if (searchLocation.length > 0) {
       axios
         .get(
-          `https://api.maptiler.com/geocoding/${searchLocation}.json?key=${this.API_KEY}`
+          `https://api.maptiler.com/geocoding/${searchLocation}.json?key=${this.API_KEY}&country=fr&types=${type}`
         )
         .then((res) => res.data.features)
-        .then((res) =>
-          res.filter((item: any) => item.place_type[0] === 'address')
-        )
         .then((res) =>
           res.map((item: any) => ({
             latitude: item.geometry.coordinates[1],
             longitude: item.geometry.coordinates[0],
-            address: item.place_name,
             value: item.place_name,
-            key:
-              String(Number(item.geometry.coordinates[1])) +
-              ' ' +
-              String(Number(item.geometry.coordinates[1])),
+            city: res[0].context[2].text,
+            code: res[0].context[0].text,
           }))
         )
         .then((res: IAddressSearchItem[]) => {

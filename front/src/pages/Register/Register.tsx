@@ -1,95 +1,55 @@
-import { Button, Group, Loader, Stepper, Text } from '@mantine/core';
+import { Loader, Stepper, Text } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
-  IconCircleCheck,
-  IconCircleCheckFilled,
+  IconArrowUpBar,
+  IconChecks,
   IconDisc,
   IconInfoCircle,
   IconShieldLock,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
+import { useTranslation } from 'react-i18next';
 import { Link } from 'react-router-dom';
-import AccountCreated from '../../components/Register/AccountStep/AccountCreated';
-import FirstStep from '../../components/Register/AccountStep/FirstStep';
-import SecondStep from '../../components/Register/AccountStep/SecondStep';
-import ThirdStep from '../../components/Register/AccountStep/ThirdStep';
-import GigzFetcher from '../../services/GigzFetcher';
+import { register } from '../../api/auth';
+import MailPhoneStep from '../../components/Steps/MailPhoneStep';
+import PasswordStep from '../../components/Steps/PasswordStep';
+import ProfileTypeStep from '../../components/Steps/ProfileTypeStep';
+import StepperCompleted from '../../components/Steps/StepperCompleted';
+import StepButtons from '../../components/Steps/Utils/StepButtons';
+import StepperIcons from '../../components/Steps/Utils/StepperIcons';
+import {
+  artistPath,
+  hostPath,
+  stepperProps,
+} from '../../configs/steppers/globalConfig';
+import {
+  registerInitialValues,
+  regsiterValidate,
+} from '../../configs/steppers/stepperRegisterConfig';
 import { useUser } from '../../store/UserProvider';
-
-const errorPassword = (value: string) => (
-  <div>
-    Votre mot de passe est invalide :
-    <ul>
-      {/.*\d/.test(value) === false && <li>Il manque un nombre</li>}
-      {/.*[a-z]/.test(value) === false && <li>Il manque une minuscule</li>}
-      {/.*[A-Z]/.test(value) === false && <li>Il manque une majuscule</li>}
-      {/.{8}/.test(value) === false && <li>Il faut 8 charactères minimum</li>}
-    </ul>
-  </div>
-);
+import EProfileType from '../../types/EProfileType';
 
 const Register: React.FC = () => {
+  const NUMBER_OF_STEP = 3;
+
+  const { t } = useTranslation();
   const user = useUser();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
-    initialValues: {
-      email: '',
-      phone: '',
-      password: '',
-      confirmPassword: '',
-      userType: '',
-    },
-    validate: (values) => {
-      switch (formStep) {
-        case 0:
-          return {};
-
-        case 1:
-          return {
-            email: /^\S+@\S+$/.test(values.email) ? null : 'Email Invalide',
-            phone: /^[^0]\d{8}$/.test(values.phone) ? null : 'Numéro invalide',
-          };
-
-        case 2:
-          return {
-            password:
-              /^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/.test(
-                values.password
-              )
-                ? null
-                : errorPassword(values.password),
-            confirmPassword:
-              values.confirmPassword === values.password
-                ? null
-                : 'Les mots de passe ne correspondent pas',
-          };
-
-        default:
-          return {};
-      }
-    },
+    validateInputOnBlur: true,
+    initialValues: registerInitialValues,
+    validate: (values) => regsiterValidate(values, formStep),
   });
-
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   const sendRegisterForm = () => {
-    GigzFetcher.post<{ [key: string]: string }>(
-      'register',
-      {
-        email: form.values.email,
-        password: form.values.password,
-        profileType: form.values.userType,
-        phoneNumber: '+33' + form.values.phone,
-      },
-      {},
-      false
-    ).then((res) => {
+    user.setProfileType(form.values.userType as EProfileType);
+    register(form.values).then((res) => {
       if (res.ok === true) {
-        if (res.data?.token !== undefined) {
+        if (res.data) {
           user.setName('');
           user.setProfilePicture(null);
-          user.setProfileType(null);
           user.setToken(res.data.token);
           setFormStep((old) => old + 1);
         }
@@ -111,14 +71,17 @@ const Register: React.FC = () => {
   };
 
   const nextStep = () => {
-    if (form.validate().hasErrors === false) {
+    if (formStep === NUMBER_OF_STEP - 1) {
+      setFormStep((old) => old + 1);
+      sendRegisterForm();
+      setFormStep((old) => old + 1);
+    } else {
       setFormStep((current) => {
-        return current < 4 ? current + 1 : current;
+        if (form.validate().hasErrors) {
+          return current;
+        }
+        return current < NUMBER_OF_STEP - 1 ? current + 1 : current;
       });
-      if (formStep === 2) {
-        sendRegisterForm();
-        setFormStep((old) => old + 1);
-      }
     }
   };
 
@@ -146,41 +109,54 @@ const Register: React.FC = () => {
 
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center">
-      <Stepper active={formStep} orientation="horizontal" p="xl" w={'100%'}>
-        <Stepper.Step icon={<IconDisc />}>
-          <FirstStep form={form} nextStep={() => nextStep()} />
+      <StepperIcons
+        icons={[
+          <IconDisc key={0} />,
+          <IconInfoCircle key={1} />,
+          <IconShieldLock key={2} />,
+
+          <IconArrowUpBar key={8} />,
+          <IconChecks key={9} />,
+        ]}
+        currentStep={formStep}
+        form={form}
+        hasSkip={false}
+      />
+      <Stepper active={formStep} {...stepperProps}>
+        <Stepper.Step>
+          <ProfileTypeStep
+            form={form}
+            nextStep={nextStep}
+            label={t('register.profileTypeStep')}
+          />
         </Stepper.Step>
-        <Stepper.Step icon={<IconInfoCircle />}>
-          <SecondStep form={form} nextStep={() => nextStep()} />
+        <Stepper.Step>
+          <MailPhoneStep form={form} label={t('register.mailPhoneStep')} />
         </Stepper.Step>
-        <Stepper.Step icon={<IconShieldLock />}>
-          <ThirdStep form={form} nextStep={() => nextStep()} />
+        <Stepper.Step>
+          <PasswordStep form={form} label={t('register.passwordStep')} />
         </Stepper.Step>
 
-        <Stepper.Step
-          icon={<IconCircleCheck />}
-          completedIcon={<IconCircleCheckFilled />}
-        >
+        <Stepper.Step>
           <Loader variant="bars" />
         </Stepper.Step>
 
         <Stepper.Completed>
-          <AccountCreated
-            userType={form.values.userType as 'artist' | 'host'}
+          <StepperCompleted
+            label={t('register.completeRegister')}
+            path={form.values.userType === 'artist' ? artistPath : hostPath}
           />
         </Stepper.Completed>
       </Stepper>
 
-      <Group position="right" mt="xl">
-        {formStep > 0 && formStep < 3 && (
-          <Button variant="default" onClick={prevStep}>
-            Retour
-          </Button>
-        )}
-        {formStep > 0 && formStep < 3 && (
-          <Button onClick={nextStep}>Prochaine étape</Button>
-        )}
-      </Group>
+      <StepButtons
+        formStep={formStep}
+        nextStep={nextStep}
+        numberOfSteps={3}
+        prevStep={prevStep}
+        nextDisabled={form.values.userType === ''}
+      />
+
       {formStep < 3 && (
         <div className="text-center mt-10">
           Vous avez déjà un compte ?

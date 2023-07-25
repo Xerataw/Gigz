@@ -127,6 +127,7 @@ router.get('/:id/', async (req, res) => {
   const host = await database.host.findUnique({
     where: { id: params.data.id },
     include: {
+      capacity: true,
       account: {
         include: {
           gallery: {

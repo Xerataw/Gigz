@@ -1,26 +1,23 @@
-import { SegmentedControl, Text, Title } from '@mantine/core';
+import { SegmentedControl, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { ICapacities, getCapacities } from '../../../api/capacities';
-import { IStepProps } from '../AccountStep/FirstStep';
+import { getCapacities } from '../../api/capacities';
+import ICapacity from '../../types/ICapacity';
+import { IStepProps } from '../../types/IStepProps';
+import StepTitle from './Utils/StepTitle';
 
-const CapacityStep: React.FC<IStepProps> = ({ form }) => {
-  const [capacities, setCapacities] = useState<ICapacities[]>([]);
-  const [capacity, setCapacity] = useState<ICapacities>();
+const CapacityStep: React.FC<IStepProps> = ({ form, label }) => {
+  const [capacities, setCapacities] = useState<ICapacity[]>([]);
+  const [capacity, setCapacity] = useState<ICapacity>();
 
   const handleChangeCapacity = (
     id: string,
-    capacitiesToSearchIn?: ICapacities[]
+    capacitiesToSearchIn?: ICapacity[]
   ) => {
     const idNum = Number.parseInt(id);
     const _capacities = capacitiesToSearchIn ?? capacities;
     setCapacity(_capacities.find((cp) => cp.id === idNum));
   };
 
-  /**
-   * temporary array to get color
-   */
-  //                        50      100     250       500      25
-  // const colors = ['', 'cyan', 'lime', 'yellow', 'orange', 'blue'];
   const colors = [
     '',
     'primary.3',
@@ -40,7 +37,7 @@ const CapacityStep: React.FC<IStepProps> = ({ form }) => {
 
   useEffect(() => {
     if (capacity) {
-      form.values.capacity = capacity.id.toString();
+      form.values.capacityId = capacity.id;
     }
   }, [capacity]);
 
@@ -53,7 +50,7 @@ const CapacityStep: React.FC<IStepProps> = ({ form }) => {
 
   return (
     <>
-      <Title mb="sm">Vous pouvez acceuillir combien de personne ?</Title>
+      <StepTitle label={label} />
       <Text m="sm" color="dimmed" align="center">
         Nombre de personne maxium que vous pouvez acceuillir dans votre
         établissement

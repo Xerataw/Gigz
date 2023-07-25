@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
 import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
 import HostProfileView from '../../components/ProfileView/HostProfileView';
+import ProfileEditProvider from '../../store/ProfileEditProvider';
 import { useUser } from '../../store/UserProvider';
 import EMediaType from '../../types/EMediaType';
 import EProfileType from '../../types/EProfileType';
@@ -63,7 +64,11 @@ const Profile: React.FC = () => {
     });
   }, [history]);
 
-  return <Layout navBarShadow={false}>{displayProfileView()}</Layout>;
+  return (
+    <ProfileEditProvider>
+      <Layout navBarShadow={false}>{displayProfileView()}</Layout>
+    </ProfileEditProvider>
+  );
 };
 
 export default Profile;
