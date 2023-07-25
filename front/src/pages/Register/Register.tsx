@@ -44,7 +44,6 @@ const Register: React.FC = () => {
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   const sendRegisterForm = () => {
-    console.log(form.values);
     user.setProfileType(form.values.userType as EProfileType);
     register(form.values).then((res) => {
       if (res.ok === true) {

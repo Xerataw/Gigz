@@ -51,7 +51,6 @@ const RegisterArtistProfile: React.FC = () => {
     if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
       user.setName(form.values.name);
-      user.setProfilePicture(form.values.picture);
       patchArtistProfile(getArtistValuesReq(form.values)).then(() => {
         setFormStep((old) => old + 1);
       });
