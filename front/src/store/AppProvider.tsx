@@ -1,6 +1,10 @@
-import { MantineProvider } from '@mantine/core';
+import {
+  ColorScheme,
+  ColorSchemeProvider,
+  MantineProvider,
+} from '@mantine/core';
 import { THEME_ID, ThemeProvider } from '@mui/material';
-import { ReactNode } from 'react';
+import { ReactNode, useState } from 'react';
 import mantineThemeConfig from '../configs/mantineTheme.config';
 import muiThemeConfig from '../configs/muiTheme.config';
 import InitialLoadingProvider from './InitialLoadingProvider';
@@ -11,18 +15,27 @@ interface IAppProviderProps {
 }
 
 const AppProvider: React.FC<IAppProviderProps> = ({ children }) => {
+  const [colorScheme, setColorScheme] = useState<ColorScheme>('light');
+  const toggleColorScheme = (value?: ColorScheme) =>
+    setColorScheme(value || (colorScheme === 'dark' ? 'light' : 'dark'));
+
   return (
-    <MantineProvider
-      withGlobalStyles
-      withNormalizeCSS
-      theme={mantineThemeConfig}
+    <ColorSchemeProvider
+      colorScheme={colorScheme}
+      toggleColorScheme={toggleColorScheme}
     >
-      <ThemeProvider theme={{ [THEME_ID]: muiThemeConfig }}>
-        <InitialLoadingProvider>
-          <UserProvider>{children}</UserProvider>
-        </InitialLoadingProvider>
-      </ThemeProvider>
-    </MantineProvider>
+      <MantineProvider
+        withGlobalStyles
+        withNormalizeCSS
+        theme={{ ...mantineThemeConfig, colorScheme }}
+      >
+        <ThemeProvider theme={{ [THEME_ID]: muiThemeConfig }}>
+          <InitialLoadingProvider>
+            <UserProvider>{children}</UserProvider>
+          </InitialLoadingProvider>
+        </ThemeProvider>
+      </MantineProvider>
+    </ColorSchemeProvider>
   );
 };
 

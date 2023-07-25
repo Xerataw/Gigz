@@ -5,6 +5,7 @@ export default interface IChat {
   from: {
     id: number;
     name: string;
+    profilePicture: string | null;
   };
   latestMessage: {
     content: string;

@@ -79,6 +79,11 @@
     "title": "Settings",
     "language": {
       "title": "Languages"
+    },
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark"
     }
   }
 }
