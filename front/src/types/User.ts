@@ -18,6 +18,7 @@ export default class User {
   // Settings
   private language: ELanguage;
   private theme: ETheme;
+  private invisibleMode: boolean;
 
   private constructor(
     name?: string,
@@ -26,7 +27,8 @@ export default class User {
     profileType?: EProfileType,
 
     language?: ELanguage,
-    theme?: ETheme
+    theme?: ETheme,
+    invisibleMode?: boolean
   ) {
     this.name = name ?? null;
     this.profilePicture = profilePicture ?? null;
@@ -36,6 +38,7 @@ export default class User {
     // Settings
     this.language = language ?? ELanguage.FR;
     this.theme = theme ?? ETheme.LIGHT;
+    this.invisibleMode = invisibleMode ?? false;
   }
 
   /**
@@ -53,7 +56,8 @@ export default class User {
           localUserInfo.token,
           localUserInfo.profileType,
           localUserInfo.language,
-          localUserInfo.theme
+          localUserInfo.theme,
+          localUserInfo.invisibleMode
         );
     }
     return this.instance;
@@ -147,5 +151,15 @@ export default class User {
 
   public getTheme(): ETheme {
     return this.theme;
+  }
+
+  // INVISIBLE MODE
+  @storeUser('invisibleMode')
+  public setInvisibleMode(invisibleMode: boolean) {
+    this.invisibleMode = invisibleMode;
+  }
+
+  public getInvisibleMode(): boolean {
+    return this.invisibleMode;
   }
 }
