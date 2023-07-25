@@ -189,7 +189,9 @@ export default class GigzFetcher {
     if (Object.keys(params).length > 0) {
       const strParams: Record<string, string> = {};
       for (const [key, value] of Object.entries(params)) {
-        strParams[key] = value.toString();
+        if (value?.length > 0) {
+          strParams[key] = value.toString();
+        }
       }
       return '?' + new URLSearchParams(strParams).toString();
     }

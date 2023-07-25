@@ -6,6 +6,8 @@ import IResult from '../../types/IResult';
 import Layout from '../Layout/Layout';
 import { getResults } from '../../api/search';
 import IGenre from '../../types/IGenre';
+import IFilter from '../../types/IFilter';
+import EProfileType from '../../types/EProfileType';
 
 const Search: React.FC = () => {
   const loadingData = new Array(20)
@@ -14,12 +16,14 @@ const Search: React.FC = () => {
 
   const [results, setResults] = useState(loadingData);
   const [loading, setLoading] = useState(true);
+  const [profileType, setProfileType] = useState(EProfileType.HOST);
 
   const form = useForm({
     initialValues: {
       name: '',
-      capacityId: '',
+      capacity: 0,
       genres: [] as IGenre[],
+      type: EProfileType.HOST,
     },
   });
 
@@ -29,17 +33,25 @@ const Search: React.FC = () => {
 
   const getProfilesWithFilter = () => {
     setLoading(true);
-    // TODO working on this
-    // getResults(form.values).then((res) => {
-    //   setResults(res?.data ?? []);
-    //   setLoading(false);
-    // });
+    getResults(form.values as IFilter).then((res) => {
+      setResults(res?.data ?? []);
+      setLoading(false);
+    });
+  };
+
+  const onSubmit = (values: any) => {
+    getProfilesWithFilter();
+    setProfileType(values.type);
   };
 
   return (
     <Layout>
-      <SearchBar form={form} />
-      <ResultList results={results} loading={loading} />
+      <SearchBar form={form} onSubmit={onSubmit} />
+      <ResultList
+        profileType={profileType}
+        results={results}
+        loading={loading}
+      />
     </Layout>
   );
 };

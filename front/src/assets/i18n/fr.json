@@ -55,6 +55,10 @@
   },
   "search": {
     "placeholder": "Rechercher un profil",
+    "artist": "Artiste",
+    "genre": "Rechercher un genre",
+    "host": "Hôte",
+    "sumbit": "Rechercher",
     "list": {
       "endOfProfiles": "Vous avez regardé tous les profiles"
     }

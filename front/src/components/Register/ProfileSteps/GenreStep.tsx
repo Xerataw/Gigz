@@ -1,11 +1,9 @@
-import { SimpleGrid, Title } from '@mantine/core';
+import { Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { useGenres } from '../../../store/GenresProvider';
-import MusicGenreButton from '../../MusicGenreButton';
+import GenreSelectionList from '../../GenreSelectionList';
 import { IStepProps } from '../AccountStep/FirstStep';
 
 const GenreStep: React.FC<IStepProps> = ({ form }) => {
-  const genres = useGenres();
   const [selectedGenre, setSelectedGenre] = useState<number[]>(
     form.values.genres ?? []
   );
@@ -25,22 +23,10 @@ const GenreStep: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
       <Title>Vous êtes plutôt ?</Title>
-      <SimpleGrid
-        cols={3}
-        spacing="lg"
-        breakpoints={[{ maxWidth: 'xs', cols: 2, spacing: 'sm' }]}
-      >
-        {genres.map((genre) => (
-          <MusicGenreButton
-            key={genre.id}
-            onClick={() => {
-              handleAddGenre(genre.id);
-            }}
-            isSelected={selectedGenre.includes(genre.id)}
-            label={genre.name ?? 'No Label Set'}
-          />
-        ))}
-      </SimpleGrid>
+      <GenreSelectionList
+        selectedGenre={selectedGenre}
+        handleAddGenre={handleAddGenre}
+      />
     </>
   );
 };

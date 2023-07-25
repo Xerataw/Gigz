@@ -54,6 +54,11 @@
     }
   },
   "search": {
+    "placeholder": "Search Artist",
+    "artist": "Artist",
+    "genre": "Search for a genre",
+    "host": "Host",
+    "sumbit": "Search",
     "list": {
       "endOfProfiles": "You have seen everything..."
     }

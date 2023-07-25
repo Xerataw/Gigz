@@ -10,9 +10,14 @@ import Result from './Result';
 interface IResultListProps {
   results: IResult[];
   loading: boolean;
+  profileType: EProfileType;
 }
 
-const ResultList: React.FC<IResultListProps> = ({ results, loading }) => {
+const ResultList: React.FC<IResultListProps> = ({
+  results,
+  loading,
+  profileType,
+}) => {
   const { t } = useTranslation();
   const [selectedResult, setSelectedResult] = useState<IResult>();
 
@@ -26,7 +31,7 @@ const ResultList: React.FC<IResultListProps> = ({ results, loading }) => {
 
   return (
     <div>
-      <ScrollArea className="h-[40rem]">
+      <ScrollArea className="h-[40rem] mb-52">
         {results.map((result) => (
           <Result
             key={result.id}
@@ -35,14 +40,13 @@ const ResultList: React.FC<IResultListProps> = ({ results, loading }) => {
             loading={loading}
           />
         ))}
-        <div className="flex justify-center pb-20 pt-5">
+        <div className="flex justify-center pt-5 mb-40">
           <Text c="dimmed">{t('search.list.endOfProfiles')}</Text>
         </div>
       </ScrollArea>
-      {/* TODO: handle different filter (artist or host) */}
       <ResultProfileDrawer
         resultProfile={selectedResult ?? null}
-        profileType={EProfileType.HOST}
+        profileType={profileType}
         onClose={onModalClose}
       />
     </div>

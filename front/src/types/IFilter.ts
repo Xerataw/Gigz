@@ -1,7 +1,9 @@
+import EProfileType from './EProfileType';
 import IGenre from './IGenre';
 
 export default interface IFilter {
   name: string;
   genres: IGenre[];
-  capacityId: number;
+  capacity: number;
+  type?: EProfileType;
 }

@@ -7,7 +7,7 @@ import IResult from '../types/IResult';
 
 export const getResults = (filters: IFilter) => {
   return new Promise<IGigzResponse<IResult[]>>((resolve, reject) => {
-    GigzFetcher.get<IResult[]>('/hosts', filters)
+    GigzFetcher.get<IResult[]>(`/${filters.type}s`, { ...filters, type: null })
       .then((response) => {
         setTimeout(() => {
           resolve(response);

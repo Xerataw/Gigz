@@ -1,16 +1,20 @@
 import {
   Accordion,
-  RangeSlider,
+  Button,
+  Container,
   TextInput,
   createStyles,
   rem,
-  Container,
 } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
+import CapacityRange from './Filters/CapacityRange';
+import GenreSelector from './Filters/GenreSelector';
+import ProfileType from './Filters/ProfileType';
 
 interface ISearchBarProps {
   form: any;
+  onSubmit: (values: any) => void;
 }
 
 const useStyles = createStyles((theme) => ({
@@ -51,41 +55,45 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const SearchBar: React.FC<ISearchBarProps> = ({ form }) => {
+const SearchBar: React.FC<ISearchBarProps> = ({ form, onSubmit }) => {
   const { t } = useTranslation();
   const { classes } = useStyles();
 
   return (
     <Container className="w-90 flex justify-center flex-col mt-4">
-      <Accordion
-        mx="auto"
-        variant="filled"
-        defaultValue="customization"
-        classNames={classes}
-        className={classes.root}
-      >
-        <Accordion.Item value="customization" className="pb-4">
-          <Accordion.Control>
-            <TextInput
-              placeholder={t('search.placeholder')}
-              radius="lg"
-              size="xl"
-              icon={<IconSearch size="2rem" />}
-            />
-          </Accordion.Control>
-          <Accordion.Panel>
-            <RangeSlider
-              step={1}
-              marks={[
-                { value: 25, label: '250' },
-                { value: 50, label: '500' },
-                { value: 75, label: '750' },
-              ]}
-              label={(value) => `${value * 10} people`}
-            />
-          </Accordion.Panel>
-        </Accordion.Item>
-      </Accordion>
+      <form onSubmit={form.onSubmit((values: any) => onSubmit(values))}>
+        <Accordion
+          mx="auto"
+          variant="filled"
+          defaultValue="customization"
+          classNames={classes}
+          className={classes.root}
+        >
+          <Accordion.Item value="customization" className="pb-4">
+            <Accordion.Control>
+              <TextInput
+                name="name"
+                form={form}
+                placeholder={t('search.placeholder')}
+                radius="lg"
+                size="md"
+                icon={<IconSearch size="1.5rem" />}
+                {...form.getInputProps('name')}
+              />
+            </Accordion.Control>
+            <Accordion.Panel>
+              <div className="flex flex-col">
+                <CapacityRange />
+                <GenreSelector form={form} />
+                <ProfileType form={form} />
+                <Button type="submit" className="mt-2">
+                  {t('search.sumbit')}
+                </Button>
+              </div>
+            </Accordion.Panel>
+          </Accordion.Item>
+        </Accordion>
+      </form>
     </Container>
   );
 };
