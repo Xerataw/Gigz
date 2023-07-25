@@ -1,6 +1,7 @@
 import { Drawer } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { getProfileByIdAndType } from '../../../api/search';
+import { buildProfile } from '../../../services/apiTypesHelper';
 import EProfileType from '../../../types/EProfileType';
 import IHostProfile from '../../../types/IHostProfile';
 import IResult from '../../../types/IResult';
@@ -27,7 +28,7 @@ const ResultProfileDrawer: React.FC<IResultProfileDrawerProps> = ({
         resultProfile!.id,
         EProfileType.HOST === profileType
       ).then((res) => {
-        setProfile(res?.data);
+        setProfile(buildProfile(res?.data as IHostProfile) as IHostProfile);
         setLoading(false);
       });
     }
