@@ -28,6 +28,7 @@ import {
   regsiterValidate,
 } from '../../configs/steppers/stepperRegisterConfig';
 import { useUser } from '../../store/UserProvider';
+import EProfileType from '../../types/EProfileType';
 
 const Register: React.FC = () => {
   const NUMBER_OF_STEP = 3;
@@ -43,10 +44,12 @@ const Register: React.FC = () => {
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   const sendRegisterForm = () => {
+    console.log(form.values);
+    user.setProfileType(form.values.userType as EProfileType);
     register(form.values).then((res) => {
       if (res.ok === true) {
-        if (res.data?.token !== undefined) {
-          user?.setToken(res.data.token);
+        if (res.data) {
+          user.setToken(res.data.token);
           setFormStep((old) => old + 1);
         }
       } else {

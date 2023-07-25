@@ -1,27 +1,36 @@
 import { SimpleGrid } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { useGenres } from '../../store/GenresProvider';
+import { getGenres } from '../../api/genres';
+import IGenre from '../../types/IGenre';
 import { IStepProps } from '../../types/IStepProps';
 import MusicGenreButton from '../MusicGenreButton';
 import StepTitle from './Utils/StepTitle';
 
 const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
-  const genres = useGenres();
-  const [selectedGenre, setSelectedGenre] = useState<number[]>(
+  const [genres, setGenres] = useState<IGenre[]>([]);
+  const [selectedGenres, setSelectedGenres] = useState<IGenre[]>(
     form.values.genres ?? []
   );
 
-  const handleAddGenre = (id: number) => {
-    if (!selectedGenre.includes(id)) {
-      setSelectedGenre((old) => [...old, id]);
+  const handleAddGenre = (addedGenre: IGenre) => {
+    if (!selectedGenres.includes(addedGenre)) {
+      setSelectedGenres((old) => [...old, addedGenre]);
     } else {
-      setSelectedGenre((old) => old.filter((idGenre) => idGenre != id));
+      setSelectedGenres((old) =>
+        old.filter((idGenre) => idGenre != addedGenre)
+      );
     }
   };
 
   useEffect(() => {
-    form.values.genres = selectedGenre;
-  }, [selectedGenre]);
+    form.values.genres = selectedGenres;
+  }, [selectedGenres]);
+
+  useEffect(() => {
+    getGenres().then((res) => {
+      if (res.data) setGenres(res.data);
+    });
+  }, []);
 
   return (
     <>
@@ -35,9 +44,9 @@ const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
           <MusicGenreButton
             key={genre.id}
             onClick={() => {
-              handleAddGenre(genre.id);
+              handleAddGenre(genre);
             }}
-            isSelected={selectedGenre.includes(genre.id)}
+            isSelected={selectedGenres.includes(genre)}
             label={genre.name ?? 'No Label Set'}
           />
         ))}

@@ -3,9 +3,8 @@ import { THEME_ID, ThemeProvider } from '@mui/material';
 import { ReactNode } from 'react';
 import mantineThemeConfig from '../configs/mantineTheme.config';
 import muiThemeConfig from '../configs/muiTheme.config';
-import GenresProvider from './GenresProvider';
-import UserProvider from './UserProvider';
 import InitialLoadingProvider from './InitialLoadingProvider';
+import UserProvider from './UserProvider';
 
 interface IAppProviderProps {
   children: ReactNode;
@@ -20,9 +19,7 @@ const AppProvider: React.FC<IAppProviderProps> = ({ children }) => {
     >
       <ThemeProvider theme={{ [THEME_ID]: muiThemeConfig }}>
         <InitialLoadingProvider>
-          <UserProvider>
-            <GenresProvider>{children}</GenresProvider>
-          </UserProvider>
+          <UserProvider>{children}</UserProvider>
         </InitialLoadingProvider>
       </ThemeProvider>
     </MantineProvider>

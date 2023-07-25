@@ -32,11 +32,13 @@ import {
   getArtistValuesReq,
   linksArtist,
 } from '../../configs/steppers/stepperArtistConfig';
+import { useUser } from '../../store/UserProvider';
 
 const RegisterArtistProfile: React.FC = () => {
   const NUMBER_OF_STEPS = 7;
 
   const { t } = useTranslation();
+  const user = useUser();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
@@ -48,7 +50,8 @@ const RegisterArtistProfile: React.FC = () => {
   const nextStep = () => {
     if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
-
+      user.setName(form.values.name);
+      user.setProfilePicture(form.values.picture);
       patchArtistProfile(getArtistValuesReq(form.values)).then(() => {
         setFormStep((old) => old + 1);
       });

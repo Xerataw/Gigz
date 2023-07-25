@@ -9,12 +9,9 @@ export const patchProfilePicture = async (file: File) => {
 
   formData.append('profile-picture', file);
 
-  return GigzFetcher.patch<IProfilePicture>(
-    'me/profile-picture',
-    formData,
-    { 'Content-Type': 'multipart/form-data' },
-    true
-  );
+  return GigzFetcher.patch<IProfilePicture>('me/profile-picture', formData, {
+    'Content-Type': 'multipart/form-data',
+  });
 };
 
 export const deleteProfilePicture = async () => {
