@@ -1,9 +1,17 @@
-import { Badge, Flex, Skeleton } from '@mantine/core';
-import { IconCheck, IconMapPin, IconPencil, IconX } from '@tabler/icons-react';
+import { Badge, Flex, Skeleton, Text } from '@mantine/core';
+import {
+  IconCheck,
+  IconMapPin,
+  IconPencil,
+  IconSeparator,
+  IconUsersGroup,
+  IconX,
+} from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import GigzFetcher from '../../services/GigzFetcher';
 import { useProfileEditMode } from '../../store/ProfileEditProvider';
+import ICapacity from '../../types/ICapacity';
 import IGenre from '../../types/IGenre';
 import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
@@ -14,14 +22,15 @@ interface IProfileBannerProps {
   profilePicture?: string;
   city?: string;
   genres: IGenre[];
+  capacity?: ICapacity;
   withDrawer?: boolean;
   drawerOpened?: boolean;
 }
 
 const loadingGenres: IGenre[] = [
-  { id: 1, name: 'loading' },
-  { id: 2, name: 'loading' },
-  { id: 3, name: 'loading' },
+  { id: 1, name: 'hip-hop' },
+  { id: 2, name: 'jazz' },
+  { id: 3, name: 'metal' },
 ];
 
 const ProfileBanner: React.FC<IProfileBannerProps> = ({
@@ -30,13 +39,18 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   profilePicture,
   city,
   genres,
+  capacity,
   withDrawer = false,
   drawerOpened = false,
 }) => {
   const { t } = useTranslation();
   const { editMode, editConfirmed } = useProfileEditMode();
   const canEdit = useLocation().pathname.includes('/auth/profile');
-  const genresToDisplay = loading ? loadingGenres : genres;
+  let genresToDisplay = loading ? loadingGenres : genres;
+  genresToDisplay =
+    genresToDisplay.length > 2
+      ? [genresToDisplay[0], genresToDisplay[1]]
+      : genresToDisplay;
 
   return (
     <div className="bg-white pl-3 pr-3 rounded-tl-md rounded-tr-md">
@@ -91,7 +105,12 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             mb={loading ? '0.25rem' : 'inherit'}
             className="flex flex-row flex-nowrap items-center"
           >
-            <h3 className="pr-2">{username}</h3>
+            <Text
+              truncate
+              className="font-bold text-xl pr-2 h-[1.8rem] w-5/6 text-ellipsis"
+            >
+              {username}
+            </Text>
           </Skeleton>
           <Skeleton
             visible={loading}
@@ -116,6 +135,23 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
                 </Skeleton>
               </li>
             ))}
+            {capacity && !loading && (
+              <>
+                <IconSeparator className="mr-2" />
+                <li>
+                  <Badge
+                    variant="filled"
+                    bg={capacity.bgColor}
+                    px={8}
+                    rightSection={
+                      <IconUsersGroup size="1rem" className="mt-[0.3rem]" />
+                    }
+                  >
+                    {capacity.max}
+                  </Badge>
+                </li>
+              </>
+            )}
           </ul>
         </div>
       </div>
