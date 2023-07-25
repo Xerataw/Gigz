@@ -6,6 +6,7 @@ import { useHistory } from 'react-router';
 import { LinkUtils } from '../../services/LinkUtils';
 import LightRoundButton from '../LightRoundButton';
 import Language from './Language';
+import Theme from './Theme';
 
 const Settings: React.FC = () => {
   const history = useHistory();
@@ -37,6 +38,8 @@ const Settings: React.FC = () => {
         title={<p className="text-2xl">{t('settings.title')}</p>}
       >
         <Language />
+        <Theme />
+
         <Title order={3}>Changer mes informations</Title>
         <Title order={5}>Mot de passe</Title>
         <Title order={5}>Email</Title>
