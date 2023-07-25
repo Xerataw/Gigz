@@ -22,8 +22,8 @@ const HostBodySchema = z.object({
   // Address
   address: z.string().optional(),
   city: z.string().optional(),
-  latitude: z.coerce.number(),
-  longitude: z.coerce.number(),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
 
   capacityId: z.coerce.number().optional(),
   hostTypeId: z.coerce.number().optional(),
