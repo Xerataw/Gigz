@@ -22,7 +22,7 @@ const InitialLoadingProvider: React.FC<IInitialLoadingProviderProps> = ({
   children,
 }) => {
   const [userLoading, setUserLoading] = useState(true);
-  const [genresLoading, setGenresLoading] = useState(true);
+  const [genresLoading, setGenresLoading] = useState(false);
 
   const contextLoading = () => userLoading || genresLoading;
 

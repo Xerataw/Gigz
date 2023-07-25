@@ -65,6 +65,7 @@ router.get('/', async (req, res) => {
     },
 
     select: {
+      id: true,
       latest_message: true,
       _count: {
         select: {
@@ -183,7 +184,7 @@ router.get('/:id/', async (req, res) => {
 
       messages: {
         orderBy: {
-          send_date: 'desc',
+          send_date: 'asc',
         },
 
         take: query.data.take,

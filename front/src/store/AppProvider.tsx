@@ -20,9 +20,7 @@ const AppProvider: React.FC<IAppProviderProps> = ({ children }) => {
     >
       <ThemeProvider theme={{ [THEME_ID]: muiThemeConfig }}>
         <InitialLoadingProvider>
-          <UserProvider>
-            <GenresProvider>{children}</GenresProvider>
-          </UserProvider>
+          <UserProvider>{children}</UserProvider>
         </InitialLoadingProvider>
       </ThemeProvider>
     </MantineProvider>
