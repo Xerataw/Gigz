@@ -74,5 +74,16 @@
     "list": {
       "endOfProfiles": "Vous avez regardé tous les profiles"
     }
+  },
+  "settings": {
+    "title": "Paramètres",
+    "language": {
+      "title": "Langues"
+    },
+    "theme": {
+      "title": "Thème",
+      "light": "Clair",
+      "dark": "Sombre"
+    }
   }
 }

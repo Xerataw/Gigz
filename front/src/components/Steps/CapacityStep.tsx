@@ -1,27 +1,23 @@
 import { SegmentedControl, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { ICapacities, getCapacities } from '../../api/capacities';
+import { getCapacities } from '../../api/capacities';
+import ICapacity from '../../types/ICapacity';
 import { IStepProps } from '../../types/IStepProps';
 import StepTitle from './Utils/StepTitle';
 
 const CapacityStep: React.FC<IStepProps> = ({ form, label }) => {
-  const [capacities, setCapacities] = useState<ICapacities[]>([]);
-  const [capacity, setCapacity] = useState<ICapacities>();
+  const [capacities, setCapacities] = useState<ICapacity[]>([]);
+  const [capacity, setCapacity] = useState<ICapacity>();
 
   const handleChangeCapacity = (
     id: string,
-    capacitiesToSearchIn?: ICapacities[]
+    capacitiesToSearchIn?: ICapacity[]
   ) => {
     const idNum = Number.parseInt(id);
     const _capacities = capacitiesToSearchIn ?? capacities;
     setCapacity(_capacities.find((cp) => cp.id === idNum));
   };
 
-  /**
-   * temporary array to get color
-   */
-  //                        50      100     250       500      25
-  // const colors = ['', 'cyan', 'lime', 'yellow', 'orange', 'blue'];
   const colors = [
     '',
     'primary.3',
@@ -41,7 +37,7 @@ const CapacityStep: React.FC<IStepProps> = ({ form, label }) => {
 
   useEffect(() => {
     if (capacity) {
-      form.values.capacity = capacity.id.toString();
+      form.values.capacityId = capacity.id;
     }
   }, [capacity]);
 

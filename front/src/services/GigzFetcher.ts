@@ -1,6 +1,6 @@
 import axios, { AxiosError, AxiosResponse, HttpStatusCode } from 'axios';
 import IGigzResponse from '../types/IGigzResponse';
-import User from '../store/User';
+import User from '../types/User';
 
 const envVars = import.meta.env;
 
@@ -75,9 +75,13 @@ export default class GigzFetcher {
 
     try {
       // Make request
-      const axiosResponse = await axios.post(finalUri, params, {
-        headers: finalHeaders,
-      });
+      const axiosResponse = await axios.post(
+        finalUri,
+        this.getCleanedBody(params),
+        {
+          headers: finalHeaders,
+        }
+      );
 
       // Return custom response
       return this.formatResponse(axiosResponse);
@@ -101,14 +105,18 @@ export default class GigzFetcher {
     isAuth = true
   ): Promise<IGigzResponse<T>> {
     // Build request
-    const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
+    const finalUri = this.buildURL(this.API_URL, uri, {}, isAuth);
     const finalHeaders = await this.getFinalHeaders(headers, isAuth);
 
     try {
       // Make request
-      const axiosResponse = await axios.patch(finalUri, params, {
-        headers: finalHeaders,
-      });
+      const axiosResponse = await axios.patch(
+        finalUri,
+        this.getCleanedBody(params),
+        {
+          headers: finalHeaders,
+        }
+      );
 
       // Return custom response
       return this.formatResponse(axiosResponse);
@@ -132,14 +140,18 @@ export default class GigzFetcher {
     isAuth = true
   ): Promise<IGigzResponse<T>> {
     // Build request
-    const finalUri = this.buildURL(this.API_URL, uri, params, isAuth);
+    const finalUri = this.buildURL(this.API_URL, uri, {}, isAuth);
     const finalHeaders = await this.getFinalHeaders(headers, isAuth);
 
     try {
       // Make request
-      const axiosResponse = await axios.put(finalUri, params, {
-        headers: finalHeaders,
-      });
+      const axiosResponse = await axios.put(
+        finalUri,
+        this.getCleanedBody(params),
+        {
+          headers: finalHeaders,
+        }
+      );
 
       // Return custom response
       return this.formatResponse(axiosResponse);
@@ -300,5 +312,15 @@ export default class GigzFetcher {
       code: axiosResponse.status,
       data: axiosResponse.data.data,
     };
+  }
+
+  private static getCleanedBody(body: object | FormData): object {
+    if (body instanceof FormData) return body;
+    const cleanedBody: any = {};
+    for (const [key, value] of Object.entries(body)) {
+      if (typeof value === 'string' && value.length === 0) continue;
+      cleanedBody[key] = value;
+    }
+    return cleanedBody;
   }
 }

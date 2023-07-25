@@ -1,22 +1,8 @@
 import IonicStorageAccessor from '../services/IonicStorageAccessor';
-import EProfileType from '../types/EProfileType';
-
-/**
- * This decorator is used to store the user in the local storage on change.
- */
-const storeUser = (argument: string) => {
-  return (target: any, key: string, descriptor: any) => {
-    const originalMethod = descriptor.value;
-
-    descriptor.value = function (...args: any[]) {
-      this[argument] = args[0];
-      IonicStorageAccessor.set('user', this);
-      return originalMethod.apply(target, args);
-    };
-
-    return descriptor;
-  };
-};
+import ELanguage from './ELanguage';
+import EProfileType from './EProfileType';
+import ETheme from './ETheme';
+import { storeUser } from './utils/storeUser';
 
 /**
  * Singleton to use throughout the front to get global data about the user.
@@ -29,16 +15,27 @@ export default class User {
   private token: string | null;
   private profileType: EProfileType | null;
 
+  // Settings
+  private language: ELanguage;
+  private theme: ETheme;
+
   private constructor(
     name?: string,
     profilePicture?: string,
     token?: string,
-    profileType?: EProfileType
+    profileType?: EProfileType,
+
+    language?: ELanguage,
+    theme?: ETheme
   ) {
     this.name = name ?? null;
     this.profilePicture = profilePicture ?? null;
     this.token = token ?? null;
     this.profileType = profileType ?? null;
+
+    // Settings
+    this.language = language ?? ELanguage.FR;
+    this.theme = theme ?? ETheme.LIGHT;
   }
 
   /**
@@ -51,10 +48,12 @@ export default class User {
       if (!localUserInfo) this.instance = new User();
       else
         this.instance = new User(
-          localUserInfo.username,
+          localUserInfo.name,
           localUserInfo.profilePicture,
           localUserInfo.token,
-          localUserInfo.profileType
+          localUserInfo.profileType,
+          localUserInfo.language,
+          localUserInfo.theme
         );
     }
     return this.instance;
@@ -126,5 +125,27 @@ export default class User {
    */
   public getProfileType(): EProfileType | null {
     return this.profileType;
+  }
+
+  // Settings
+
+  // LANGUAGE
+  @storeUser('language')
+  public setLanguage(language: ELanguage) {
+    this.language = language;
+  }
+
+  public getLanguage(): ELanguage {
+    return this.language;
+  }
+
+  // THEME
+  @storeUser('theme')
+  public setTheme(theme: ETheme) {
+    this.theme = theme;
+  }
+
+  public getTheme(): ETheme {
+    return this.theme;
   }
 }

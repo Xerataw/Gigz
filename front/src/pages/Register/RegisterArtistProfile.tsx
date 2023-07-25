@@ -14,7 +14,7 @@ import {
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { patchArtistProfile } from '../../api/profile';
+import { patchArtistProfile } from '../../api/user';
 import AddressCompleteStep from '../../components/Steps/AddressCompleteStep';
 import DescriptionStep from '../../components/Steps/DescriptionStep';
 import GenreStep from '../../components/Steps/GenreStep';
@@ -48,7 +48,6 @@ const RegisterArtistProfile: React.FC = () => {
   const nextStep = () => {
     if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
-
       patchArtistProfile(getArtistValuesReq(form.values)).then(() => {
         setFormStep((old) => old + 1);
       });

@@ -2,13 +2,11 @@ import React, { ReactNode, createContext, useContext, useState } from 'react';
 
 interface IInitialLoadingContext {
   setUserLoading: (loading: boolean) => void;
-  setGenresLoading: (loading: boolean) => void;
   isLoading: boolean;
 }
 
 const InitialLoadingContext = createContext<IInitialLoadingContext>({
   setUserLoading: () => undefined,
-  setGenresLoading: () => undefined,
   isLoading: true,
 });
 
@@ -22,15 +20,13 @@ const InitialLoadingProvider: React.FC<IInitialLoadingProviderProps> = ({
   children,
 }) => {
   const [userLoading, setUserLoading] = useState(true);
-  const [genresLoading, setGenresLoading] = useState(false);
 
-  const contextLoading = () => userLoading || genresLoading;
+  const contextLoading = () => userLoading;
 
   return (
     <InitialLoadingContext.Provider
       value={{
         setUserLoading,
-        setGenresLoading,
         isLoading: contextLoading(),
       }}
     >
