@@ -124,7 +124,7 @@ const sendConfirmationEmail = async (email: string, uuid: string) => {
   if (process.env.NODE_ENV === 'production') {
     htmlToSend = htmlToSend.replace('$$LINK$$', 'http://<ipProd>/api/auth/validateEmail/' + uuid); //TODO REMPLIR PAR l'IP de PROD
   } else {
-    htmlToSend = htmlToSend.replace('$$LINK$$', 'http://localhost:3000/api/auth/validateEmail/' + uuid); //TODO REMPLIR PAR l'IP de PROD
+    htmlToSend = htmlToSend.replace('$$LINK$$', 'http://localhost:3000/api/auth/validateEmail/' + uuid);
   }
   sendMail({
     to: email,
