@@ -84,6 +84,11 @@
       "title": "Thème",
       "light": "Clair",
       "dark": "Sombre"
+    },
+    "invisible": {
+      "title": "Mode invisible",
+      "on": "Invisible",
+      "off": "Visible"
     }
   }
 }
