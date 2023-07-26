@@ -1,13 +1,21 @@
-import { Button, Divider, Drawer, Group, Title } from '@mantine/core';
+import {
+  Button,
+  Container,
+  Divider,
+  Drawer,
+  Group,
+  Title,
+} from '@mantine/core';
 import { IconSettings } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { LinkUtils } from '../../services/LinkUtils';
 import LightRoundButton from '../LightRoundButton';
-import Language from './Language';
-import Theme from './Theme';
 import InsivibleMode from './InsivibleMode';
+import Language from './Language';
+import SettingsButton from './SettingsButton';
+import Theme from './Theme';
 
 const Settings: React.FC = () => {
   const history = useHistory();
@@ -38,15 +46,19 @@ const Settings: React.FC = () => {
         className="z-[12001] bg-red-500 relative h-full"
         title={<p className="text-2xl">{t('settings.title')}</p>}
       >
-        <Language />
-        <Theme />
-        <InsivibleMode />
+        <Container>
+          <Language />
+          <Theme />
+          <InsivibleMode />
 
-        <Title order={3}>Changer mes informations</Title>
-        <Title order={5}>Mot de passe</Title>
-        <Title order={5}>Email</Title>
-        <Title order={5}>Numéro</Title>
-        <Divider m={15} />
+          <Title order={3}>{t('settings.userAccount')}</Title>
+          <div className="flex flex-col gap-3 ">
+            <SettingsButton label={t('settings.email.button')} />
+            <SettingsButton label={t('settings.password.button')} />
+            <SettingsButton label={t('settings.phone.button')} />
+          </div>
+          <Divider m={15} />
+        </Container>
 
         <div className="absolute left-0 bottom-0 w-full p-4">
           <Group position="center">

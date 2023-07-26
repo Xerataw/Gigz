@@ -89,6 +89,16 @@
       "title": "Mode invisible",
       "on": "Invisible",
       "off": "Visible"
+    },
+    "userAccount": "Changez vos informations",
+    "email": {
+      "button": "Email"
+    },
+    "password": {
+      "button": "Mot de passe"
+    },
+    "phone": {
+      "button": "Numéro de téléphone"
     }
   }
 }
