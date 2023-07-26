@@ -29,7 +29,7 @@ const transporter = nodemailer.createTransport({
 });
 
 const sendMail = async (email: MailOptions) => {
-  transporter.sendMail(email, (err, info) => {
+  transporter.sendMail(email, (err) => {
     if (err) {
       console.log('Error when sending email: ', err);
     }

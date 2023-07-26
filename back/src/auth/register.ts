@@ -2,6 +2,8 @@ import express from 'express';
 import { z } from 'zod';
 import validator from 'validator';
 import { v4 as uuidv4 } from 'uuid';
+import { readFile } from 'fs/promises';
+import path from 'path';
 
 import useDatabase from '@composables/useDatabase';
 import useUtils from '@composables/useUtils';
@@ -54,7 +56,7 @@ router.post('/', async (req, res) => {
     })
     .then((newAccount) => {
       createBlankProfile(body.data.profileType, newAccount.id);
-      sendConfirmationEmail(body.data.email);
+      sendConfirmationEmail(newAccount.email, newAccount.user_id);
       sendResponse(
         res,
         {
@@ -117,11 +119,17 @@ const createBlankProfile = async (profileType: string, id: number) => {
   }
 };
 
-const sendConfirmationEmail = (email: string) => {
+const sendConfirmationEmail = async (email: string, uuid: string) => {
+  let htmlToSend = await readFile(path.join(__dirname, '../../public', 'serverError.html'), 'utf8');
+  if (process.env.NODE_ENV === 'production') {
+    htmlToSend = htmlToSend.replace('$$LINK$$', 'http://<ipProd>/api/auth/validateEMail/' + uuid); //TODO REMPLIR PAR l'IP de PROD
+  } else {
+    htmlToSend = htmlToSend.replace('$$LINK$$', 'http://localhost:3000/api/auth/validateEMail/' + uuid); //TODO REMPLIR PAR l'IP de PROD
+  }
   sendMail({
     to: email,
-    subject: 'Confirmation de création de compte Gigz',
-    text: 'Hello ! Confirm your account by clincking on this link: ',
+    subject: 'Confirmez votre email sur Gigz !',
+    html: htmlToSend,
   });
 };
 

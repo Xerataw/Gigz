@@ -8,6 +8,8 @@ import useDatabase from '@composables/useDatabase';
 const { sendError, ApiMessages } = useUtils();
 const { database } = useDatabase();
 
+const pathToPublic = '../../public';
+
 const router = express.Router();
 
 const UuidParamsSchema = z.object({
@@ -32,7 +34,7 @@ router.get('/:uuid/', async (req, res) => {
   }
 
   if (user.email_validated === 1) {
-    res.sendFile(path.join(__dirname, '../public', 'emailAlreadyValidated.html'));
+    res.sendFile(path.join(__dirname, pathToPublic, 'emailAlreadyValidated.html'));
   }
 
   database.account.update({
@@ -41,10 +43,10 @@ router.get('/:uuid/', async (req, res) => {
       email_validated: 1
     }
   }).then(() => {
-    res.sendFile(path.join(__dirname, '../public', 'emailValidated.html'));
+    res.sendFile(path.join(__dirname, pathToPublic, 'emailValidated.html'));
   }).catch(err => {
     console.log('Error: can\'t validate the email', err);
-    res.sendFile(path.join(__dirname, '../public', 'serverError.html'));
+    res.sendFile(path.join(__dirname, pathToPublic, 'serverError.html'));
   })
 });
 
