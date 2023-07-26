@@ -120,7 +120,7 @@ const createBlankProfile = async (profileType: string, id: number) => {
 };
 
 const sendConfirmationEmail = async (email: string, uuid: string) => {
-  let htmlToSend = await readFile(path.join(__dirname, '../../public', 'serverError.html'), 'utf8');
+  let htmlToSend = await readFile(path.join(__dirname, '../../public', 'emailConfirmationTemplate.html'), 'utf8');
   if (process.env.NODE_ENV === 'production') {
     htmlToSend = htmlToSend.replace('$$LINK$$', 'http://<ipProd>/api/auth/validateEMail/' + uuid); //TODO REMPLIR PAR l'IP de PROD
   } else {
