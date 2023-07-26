@@ -4,7 +4,7 @@ import multer from 'multer';
 import useUtils from '@composables/useUtils';
 import useDatabase from '@composables/useDatabase';
 import { unlink } from 'fs';
-import pictureRateLimiter from '@/middlewares/rateLimiter';
+import rateLimiter from '@/middlewares/rateLimiter';
 
 const router = express.Router();
 const upload = multer({ dest: 'static/' });
@@ -14,7 +14,7 @@ const { ApiMessages, sendResponse, sendError } = useUtils();
 
 router.patch(
   '/',
-  pictureRateLimiter,
+  rateLimiter,
   upload.single('profile-picture'),
   async (req, res) => {
     if (req.file === undefined) return sendError(res, ApiMessages.BadRequest);
@@ -46,7 +46,7 @@ router.patch(
   }
 );
 
-router.delete('/', pictureRateLimiter, async (req, res) => {
+router.delete('/', rateLimiter, async (req, res) => {
   let profile_picture = await database.profile_pictures.findUnique({
     where: { account_id: req.account.id },
   });
