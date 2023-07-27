@@ -30,11 +30,11 @@ router.get('/:uuid/', async (req, res) => {
 
   if (!user) {
     console.log('Error: uuid is not found');
-    return sendError(res, ApiMessages.NotFound, 404);
+    return res.sendFile(path.join(__dirname, pathToPublic, 'emailAlreadyValidated.html'));
   }
 
   if (user.email_validated === 1) {
-    res.sendFile(path.join(__dirname, pathToPublic, 'emailAlreadyValidated.html'));
+    return res.sendFile(path.join(__dirname, pathToPublic, 'emailAlreadyValidated.html'));
   }
 
   database.account.update({
@@ -43,10 +43,10 @@ router.get('/:uuid/', async (req, res) => {
       email_validated: 1
     }
   }).then(() => {
-    res.sendFile(path.join(__dirname, pathToPublic, 'emailValidated.html'));
+    return res.sendFile(path.join(__dirname, pathToPublic, 'emailValidated.html'));
   }).catch(err => {
     console.log('Error: can\'t validate the email', err);
-    res.sendFile(path.join(__dirname, pathToPublic, 'serverError.html'));
+    return res.sendFile(path.join(__dirname, pathToPublic, 'serverError.html'));
   })
 });
 
