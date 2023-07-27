@@ -78,6 +78,7 @@
   "settings": {
     "title": "Paramètres",
     "save": "Sauvegarder",
+    "quit": "Quitter",
     "language": {
       "title": "Langues"
     },

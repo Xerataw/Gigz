@@ -1,6 +1,10 @@
 import { ActionIcon, Button, Drawer, Group, Text } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
-import { IconChevronRight } from '@tabler/icons-react';
+import {
+  IconArrowBackUpDouble,
+  IconChevronRight,
+  IconDeviceFloppy,
+} from '@tabler/icons-react';
 import { ReactNode, useEffect } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
@@ -70,6 +74,14 @@ const SettingsDrawer: React.FC<ISettingsDrawerProps> = ({
         <div className="absolute left-0 bottom-0 w-full p-4">
           <Group position="center">
             <Button
+              onClick={handleCloseDrawer}
+              variant="outline"
+              leftIcon={<IconArrowBackUpDouble />}
+            >
+              {t('settings.quit')}
+            </Button>
+            <Button
+              leftIcon={<IconDeviceFloppy />}
               disabled={disabledSave}
               onClick={() => {
                 if (save()) {
