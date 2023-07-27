@@ -4,6 +4,7 @@ import path from 'path';
 
 import useUtils from '@composables/useUtils';
 import useDatabase from '@composables/useDatabase';
+import rateLimiter from '@/middlewares/rateLimiter';
 
 const { sendError, ApiMessages } = useUtils();
 const { database } = useDatabase();
@@ -16,21 +17,21 @@ const UuidParamsSchema = z.object({
   uuid: z.string().uuid(),
 });
 
-router.get('/:uuid/', async (req, res) => {
+router.get('/:uuid/', rateLimiter, async (req, res) => {
   const params = UuidParamsSchema.safeParse(req.params);
 
   if (!params.success) {
     console.log('Error: invalid param');
-    return sendError(res, ApiMessages.BadRequest);
+    return res.sendFile(path.join(__dirname, pathToPublic, 'notFound.html'));
   }
 
   const user = await database.account.findUnique({
-    where: { user_id: params.data.uuid }
+    where: { user_id: params.data.uuid },
   });
 
   if (!user) {
     console.log('Error: uuid is not found');
-    return res.sendFile(path.join(__dirname, pathToPublic, 'emailAlreadyValidated.html'));
+    return res.sendFile(path.join(__dirname, pathToPublic, 'notFound.html'));
   }
 
   if (user.email_validated === 1) {

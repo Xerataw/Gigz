@@ -12,7 +12,7 @@ import useToken from '@composables/useToken';
 import useEmail from '@composables/useEmail';
 
 const { database, findAccountByEmail } = useDatabase();
-const { ApiMessages, sendResponse, sendError } = useUtils();
+const { ApiMessages, sendResponse, sendError, getEnv } = useUtils();
 const { hash } = useHash();
 const { generateToken } = useToken();
 const { sendMail } = useEmail();
@@ -120,11 +120,20 @@ const createBlankProfile = async (profileType: string, id: number) => {
 };
 
 const sendConfirmationEmail = async (email: string, uuid: string) => {
-  let htmlToSend = await readFile(path.join(__dirname, '../../public', 'emailConfirmationTemplate.html'), 'utf8');
+  let htmlToSend = await readFile(
+    path.join(__dirname, '../../public', 'emailConfirmationTemplate.html'),
+    'utf8'
+  );
   if (process.env.NODE_ENV === 'production') {
-    htmlToSend = htmlToSend.replace('$$LINK$$', 'http://<ipProd>/api/auth/validateEmail/' + uuid); //TODO REMPLIR PAR l'IP de PROD
+    htmlToSend = htmlToSend.replace(
+      '$$LINK$$',
+      'http://' + getEnv('IP_PORT_PROD') + '/api/auth/validateEmail/' + uuid
+    );
   } else {
-    htmlToSend = htmlToSend.replace('$$LINK$$', 'http://localhost:3000/api/auth/validateEmail/' + uuid);
+    htmlToSend = htmlToSend.replace(
+      '$$LINK$$',
+      'http://localhost:3000/api/auth/validateEmail/' + uuid
+    );
   }
   sendMail({
     to: email,
