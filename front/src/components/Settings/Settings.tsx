@@ -17,6 +17,7 @@ import InsivibleMode from './InsivibleMode';
 import Language from './Language';
 import Password from './Password';
 import Theme from './Theme';
+import Phone from './Phone';
 
 const Settings: React.FC = () => {
   const history = useHistory();
@@ -56,6 +57,7 @@ const Settings: React.FC = () => {
           <div className="flex flex-col gap-3 ">
             <Email />
             <Password />
+            <Phone />
           </div>
           <Divider m={15} />
         </Container>

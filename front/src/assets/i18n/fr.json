@@ -107,7 +107,11 @@
       "confirmation": "Confirmation"
     },
     "phone": {
-      "button": "Numéro de téléphone"
+      "button": "Numéro de téléphone",
+      "title": "Changez votre numéro",
+      "input": "Numéro de téléphone",
+      "placeholder": "632569245",
+      "error": "Votre numéro n'est pas valide"
     }
   },
   "password": {
