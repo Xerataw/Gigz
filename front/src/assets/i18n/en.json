@@ -89,6 +89,11 @@
       "title": "Invisible mode",
       "on": "Invisible",
       "off": "Visible"
+    },
+    "logout": "Logout",
+    "deleteAccount": {
+      "delete": "Delete my account",
+      "confirmation": "Are you sure ?"
     }
   }
 }

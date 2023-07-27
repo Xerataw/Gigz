@@ -89,6 +89,11 @@
       "title": "Mode invisible",
       "on": "Invisible",
       "off": "Visible"
+    },
+    "logout": "Déconnecter",
+    "deleteAccount": {
+      "delete": "Supprimer mon compte",
+      "confirmation": "Êtes-vous sûr ? ?"
     }
   }
 }
