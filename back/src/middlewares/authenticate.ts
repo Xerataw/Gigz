@@ -29,7 +29,7 @@ const authenticate = async (
   }
 
   if(account.email_validated === 0){
-    return sendError(response, ApiMessages.EMAIL_NOT_VALIDATED, 401);
+    return sendError(response, ApiMessages.EmailNotValidated, 401);
   }
 
   req.account = {
