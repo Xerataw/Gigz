@@ -13,7 +13,7 @@ enum ApiMessages {
   MissingToken = 'MISSING_TOKEN',
   WrongToken = 'WRONG_TOKEN',
   WrongCredentials = 'WRONG_CREDENTIALS',
-  EmailNotValidated= 'EMAIL_NOT_VALIDATED',
+  EmailNotValidated = 'EMAIL_NOT_VALIDATED',
 
   BadRequest = 'BAD_REQUEST',
 
@@ -139,9 +139,9 @@ const calculateDistance = (
   const a =
     Math.sin(dLat / 2) * Math.sin(dLat / 2) +
     Math.sin(dLon / 2) *
-      Math.sin(dLon / 2) *
-      Math.cos(lat1Rad) *
-      Math.cos(lat2Rad);
+    Math.sin(dLon / 2) *
+    Math.cos(lat1Rad) *
+    Math.cos(lat2Rad);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   const distance = EARTH_RADIUS * c;
