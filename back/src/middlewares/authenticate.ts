@@ -1,8 +1,8 @@
-import { NextFunction, Request, Response } from 'express';
+import { NextFunction, Request, Response, response } from 'express';
 import useDatabase from '../composables/useDatabase';
 import useUtils from '../composables/useUtils';
 
-const { ApiMessages } = useUtils();
+const { ApiMessages, sendError } = useUtils();
 const { findAccountByToken } = useDatabase();
 
 const authenticate = async (
@@ -24,11 +24,13 @@ const authenticate = async (
 
   const profile = account?.artist || account?.host;
 
-  if (!account)
-    return res.status(401).json({
-      success: false,
-      message: ApiMessages.WrongToken,
-    });
+  if (!account) {
+    return sendError(response, ApiMessages.WrongToken, 401);
+  }
+
+  if(account.email_validated === 0){
+    return sendError(response, ApiMessages.EMAIL_NOT_VALIDATED, 401);
+  }
 
   req.account = {
     id: account.id,
