@@ -12,9 +12,10 @@ import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { LinkUtils } from '../../services/LinkUtils';
 import LightRoundButton from '../LightRoundButton';
+import Email from './Email';
 import InsivibleMode from './InsivibleMode';
 import Language from './Language';
-import SettingsButton from './SettingsButton';
+import Password from './Password';
 import Theme from './Theme';
 
 const Settings: React.FC = () => {
@@ -43,7 +44,7 @@ const Settings: React.FC = () => {
         opened={open}
         onClose={handleCloseDrawer}
         position="right"
-        className="z-[12001] bg-red-500 relative h-full"
+        className="z-[12001] relative h-full"
         title={<p className="text-2xl">{t('settings.title')}</p>}
       >
         <Container>
@@ -53,9 +54,8 @@ const Settings: React.FC = () => {
 
           <Title order={3}>{t('settings.userAccount')}</Title>
           <div className="flex flex-col gap-3 ">
-            <SettingsButton label={t('settings.email.button')} />
-            <SettingsButton label={t('settings.password.button')} />
-            <SettingsButton label={t('settings.phone.button')} />
+            <Email />
+            <Password />
           </div>
           <Divider m={15} />
         </Container>

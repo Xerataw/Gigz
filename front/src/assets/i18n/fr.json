@@ -77,6 +77,7 @@
   },
   "settings": {
     "title": "Paramètres",
+    "save": "Sauvegarder",
     "language": {
       "title": "Langues"
     },
@@ -92,13 +93,30 @@
     },
     "userAccount": "Changez vos informations",
     "email": {
-      "button": "Email"
+      "button": "Email",
+      "title": "Changez votre email",
+      "input": "Email",
+      "placeholder": "john@gigz.music",
+      "error": "Votre email n'est pas valide"
     },
     "password": {
-      "button": "Mot de passe"
+      "button": "Mot de passe",
+      "title": "Changez votre mot de passe",
+      "input": "Mot de passe",
+      "placeholder": "monSup3r_M0tDePa22e",
+      "confirmation": "Confirmation"
     },
     "phone": {
       "button": "Numéro de téléphone"
+    }
+  },
+  "password": {
+    "invalid": "Votre mot de passe n'est pas valide :",
+    "missing": {
+      "number": "Il doit inclure un nombre",
+      "lowercase": "Il doit inclure une minuscule",
+      "uppercase": "Il doit inclure une majuscule",
+      "length": "Il doit inclure au moins 8 caractères"
     }
   }
 }

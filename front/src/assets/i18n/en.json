@@ -77,6 +77,7 @@
   },
   "settings": {
     "title": "Settings",
+    "save": "Save",
     "language": {
       "title": "Languages"
     },
@@ -92,13 +93,30 @@
     },
     "userAccount": "Change your informations",
     "email": {
-      "button": "Email"
+      "button": "Email",
+      "title": "Change your email",
+      "input": "Email",
+      "placeholder": "john@gigz.music",
+      "error": "Your email is not valid"
     },
     "password": {
-      "button": "Password"
+      "button": "Password",
+      "title": "Change your password",
+      "input": "Password",
+      "placeholder": "monSup3r_M0tDePa22e",
+      "confirmation": "Confirmation"
     },
     "phone": {
       "button": "Phone"
+    }
+  },
+  "password": {
+    "invalid": "Your password is invalid :",
+    "missing": {
+      "number": "You need to include a number",
+      "lowercase": "You need to include a lowercase letter",
+      "uppercase": "You need to include a uppercase letter",
+      "length": "You need to include at least 8 characters"
     }
   }
 }
