@@ -30,12 +30,17 @@ import {
 import { useUser } from '../../store/UserProvider';
 import EProfileType from '../../types/EProfileType';
 
+import Fade from '../../components/Animations/Fade';
+
 const Register: React.FC = () => {
   const NUMBER_OF_STEP = 3;
 
   const { t } = useTranslation();
   const user = useUser();
   const [formStep, setFormStep] = useState<number>(0);
+
+  const [stepWillChange, setStepWillChange] = useState<boolean>(false);
+
   const form = useForm({
     validateInputOnBlur: true,
     initialValues: registerInitialValues,
@@ -70,6 +75,10 @@ const Register: React.FC = () => {
     });
   };
 
+  const handleNextStep = () => {
+    setStepWillChange(true);
+  };
+
   const nextStep = () => {
     if (formStep === NUMBER_OF_STEP - 1) {
       setFormStep((old) => old + 1);
@@ -83,6 +92,7 @@ const Register: React.FC = () => {
         return current < NUMBER_OF_STEP - 1 ? current + 1 : current;
       });
     }
+    setStepWillChange(false);
   };
 
   const prevStep = () =>
@@ -108,7 +118,7 @@ const Register: React.FC = () => {
   }, [debounced]);
 
   return (
-    <div className="pt-10 border border-red-500 flex flex-col items-center">
+    <div className="pt-10 flex flex-col items-center  relative h-full">
       <StepperIcons
         icons={[
           <IconDisc key={0} />,
@@ -124,17 +134,23 @@ const Register: React.FC = () => {
       />
       <Stepper active={formStep} {...stepperProps}>
         <Stepper.Step>
-          <ProfileTypeStep
-            form={form}
-            nextStep={nextStep}
-            label={t('register.profileTypeStep')}
-          />
+          <Fade isVisible={stepWillChange} afterHide={nextStep}>
+            <ProfileTypeStep
+              form={form}
+              nextStep={handleNextStep}
+              label={t('register.profileTypeStep')}
+            />
+          </Fade>
         </Stepper.Step>
         <Stepper.Step>
-          <MailPhoneStep form={form} label={t('register.mailPhoneStep')} />
+          <Fade isVisible={stepWillChange} afterHide={nextStep}>
+            <MailPhoneStep form={form} label={t('register.mailPhoneStep')} />
+          </Fade>
         </Stepper.Step>
         <Stepper.Step>
-          <PasswordStep form={form} label={t('register.passwordStep')} />
+          <Fade isVisible={stepWillChange} afterHide={nextStep}>
+            <PasswordStep form={form} label={t('register.passwordStep')} />
+          </Fade>
         </Stepper.Step>
 
         <Stepper.Step>
@@ -149,22 +165,24 @@ const Register: React.FC = () => {
         </Stepper.Completed>
       </Stepper>
 
-      <StepButtons
-        formStep={formStep}
-        nextStep={nextStep}
-        numberOfSteps={3}
-        prevStep={prevStep}
-        nextDisabled={form.values.userType === ''}
-      />
+      <div className="absolute bottom-1">
+        <StepButtons
+          formStep={formStep}
+          nextStep={handleNextStep}
+          numberOfSteps={3}
+          prevStep={prevStep}
+          nextDisabled={form.values.userType === ''}
+        />
 
-      {formStep < 3 && (
-        <div className="text-center mt-10">
-          Vous avez déjà un compte ?
-          <Link to="auth/login" className="font-semibold no-underline">
-            <Text color="primary">Se connecter</Text>
-          </Link>
-        </div>
-      )}
+        {formStep < 3 && (
+          <div className="text-center mt-10">
+            Vous avez déjà un compte ?
+            <Link to="auth/login" className="font-semibold no-underline">
+              <Text color="primary">Se connecter</Text>
+            </Link>
+          </div>
+        )}
+      </div>
     </div>
   );
 };

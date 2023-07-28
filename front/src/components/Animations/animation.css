@@ -1,0 +1,40 @@
+@keyframes fade-appear {
+  0% {
+    opacity: 0;
+    transform: translateX(-100px);
+  }
+  40% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+}
+
+@keyframes fade-disappear {
+  0% {
+    opacity: 1;
+    transform: translateX(0px);
+  }
+  60% {
+    opacity: 0.2;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(+100px);
+  }
+}
+
+.fade.gigz-visible {
+  animation-name: fade-appear;
+  animation-duration: 300ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+}
+.fade.gigz-hidden {
+  animation-name: fade-disappear;
+  animation-duration: 300ms;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-out;
+}
