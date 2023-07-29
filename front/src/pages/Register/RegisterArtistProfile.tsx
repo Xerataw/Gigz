@@ -190,7 +190,7 @@ const RegisterArtistProfile: React.FC = () => {
         <StepButtons
           formStep={formStep}
           numberOfSteps={NUMBER_OF_STEPS}
-          nextStep={nextStep}
+          nextStep={handleNextStep}
           prevStep={prevStep}
         />
       </div>

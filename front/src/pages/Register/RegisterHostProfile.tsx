@@ -88,6 +88,9 @@ const RegisterHostProfile: React.FC = () => {
         if (debounced.address.value?.length > 0)
           form.validateField('address.value');
         break;
+      case 6:
+        form.validate();
+        break;
 
       default:
         break;
@@ -95,7 +98,7 @@ const RegisterHostProfile: React.FC = () => {
   }, [debounced]);
 
   return (
-    <div className="pt-10 border border-red-500 flex flex-col items-center relative h-full">
+    <div className="pt-10 flex flex-col items-center relative h-full">
       <div className="absolute">
         <Title order={2} mb={'sm'}>
           {t('register.title')}
@@ -120,12 +123,14 @@ const RegisterHostProfile: React.FC = () => {
       </div>
       <ScrollArea className="mt-28 mb-20 w-full h-full">
         <Stepper active={formStep} {...stepperProps}>
+          {/* STEP 0 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
               <NameStep form={form} label={t('register.nameStep')} />
             </Fade>
           </Stepper.Step>
 
+          {/* STEP 1 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
               <DescriptionStep
@@ -135,6 +140,7 @@ const RegisterHostProfile: React.FC = () => {
             </Fade>
           </Stepper.Step>
 
+          {/* STEP 2 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
               <AddressCompleteStep
@@ -145,6 +151,7 @@ const RegisterHostProfile: React.FC = () => {
             </Fade>
           </Stepper.Step>
 
+          {/* STEP 3 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
               <ProfilePictureStep
@@ -154,18 +161,21 @@ const RegisterHostProfile: React.FC = () => {
             </Fade>
           </Stepper.Step>
 
+          {/* STEP 4 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
               <GenreStep form={form} label={t('register.genreStep')} />
             </Fade>
           </Stepper.Step>
 
+          {/* STEP 5 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
               <CapacityStep form={form} label={t('register.capacityStep')} />
             </Fade>
           </Stepper.Step>
 
+          {/* STEP 6 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
               <SocialLinksStep
@@ -176,6 +186,7 @@ const RegisterHostProfile: React.FC = () => {
             </Fade>
           </Stepper.Step>
 
+          {/* STEP 7 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
               <PresentationPicturesStep
