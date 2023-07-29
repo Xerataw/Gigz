@@ -76,7 +76,7 @@ const Register: React.FC = () => {
   };
 
   const handleNextStep = () => {
-    setStepWillChange(true);
+    if (form.validate().hasErrors === false) setStepWillChange(true);
   };
 
   const nextStep = () => {
