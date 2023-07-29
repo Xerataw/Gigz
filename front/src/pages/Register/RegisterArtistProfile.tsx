@@ -15,6 +15,7 @@ import {
 import React, { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { patchArtistProfile } from '../../api/user';
+import Fade from '../../components/Animations/Fade';
 import AddressCompleteStep from '../../components/Steps/AddressCompleteStep';
 import DescriptionStep from '../../components/Steps/DescriptionStep';
 import GenreStep from '../../components/Steps/GenreStep';
@@ -38,6 +39,8 @@ const RegisterArtistProfile: React.FC = () => {
 
   const { t } = useTranslation();
   const [formStep, setFormStep] = useState<number>(0);
+  const [stepWillChange, setStepWillChange] = useState<boolean>(false);
+
   const form = useForm({
     validateInputOnBlur: true,
     initialValues: artistInitialValues,
@@ -59,6 +62,11 @@ const RegisterArtistProfile: React.FC = () => {
         return current < NUMBER_OF_STEPS - 1 ? current + 1 : current;
       });
     }
+    setStepWillChange(false);
+  };
+
+  const handleNextStep = () => {
+    if (form.validate().hasErrors === false) setStepWillChange(true);
   };
 
   const prevStep = () =>
@@ -107,48 +115,62 @@ const RegisterArtistProfile: React.FC = () => {
       <ScrollArea className="mt-28 mb-20 w-full h-full">
         <Stepper active={formStep} {...stepperProps}>
           <Stepper.Step>
-            <NameStep form={form} label={t('register.nameStep')} />
+            <Fade isVisible={stepWillChange} afterHide={nextStep}>
+              <NameStep form={form} label={t('register.nameStep')} />
+            </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
-            <DescriptionStep
-              form={form}
-              label={t('register.descriptionStep')}
-            />
+            <Fade isVisible={stepWillChange} afterHide={nextStep}>
+              <DescriptionStep
+                form={form}
+                label={t('register.descriptionStep')}
+              />
+            </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
-            <AddressCompleteStep
-              form={form}
-              type="municipality"
-              label={t('register.addressCompleteStep')}
-            />
+            <Fade isVisible={stepWillChange} afterHide={nextStep}>
+              <AddressCompleteStep
+                form={form}
+                type="municipality"
+                label={t('register.addressCompleteStep')}
+              />
+            </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
-            <ProfilePictureStep
-              form={form}
-              label={t('register.presentationPicturesStep')}
-            />
+            <Fade isVisible={stepWillChange} afterHide={nextStep}>
+              <ProfilePictureStep
+                form={form}
+                label={t('register.presentationPicturesStep')}
+              />
+            </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
-            <GenreStep form={form} label={t('register.genreStep')} />
+            <Fade isVisible={stepWillChange} afterHide={nextStep}>
+              <GenreStep form={form} label={t('register.genreStep')} />
+            </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
-            <PresentationPicturesStep
-              form={form}
-              label={t('register.presentationPicturesStep')}
-            />
+            <Fade isVisible={stepWillChange} afterHide={nextStep}>
+              <PresentationPicturesStep
+                form={form}
+                label={t('register.presentationPicturesStep')}
+              />
+            </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
-            <SocialLinksStep
-              links={linksArtist}
-              form={form}
-              label={t('register.socialLinksStep')}
-            />
+            <Fade isVisible={stepWillChange} afterHide={nextStep}>
+              <SocialLinksStep
+                links={linksArtist}
+                form={form}
+                label={t('register.socialLinksStep')}
+              />
+            </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
