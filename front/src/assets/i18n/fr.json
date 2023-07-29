@@ -41,7 +41,13 @@
     "completeRegister": "Votre compte est en cours de création",
     "competeProfile": "Votre profil est en cours de création",
 
-    "profileTypeStep": "Vous êtes ?",
+    "profileTypeStep": {
+      "label": "Vous êtes ?",
+      "artist": "Un artist",
+      "artistTooltip": "Chanteur, Groupe, Musicien, Formation",
+      "host": "Un host",
+      "hostTooltip": "Bar, Pub, Restaurant, Salle de Concert"
+    },
     "mailPhoneStep": "Pour vous retrouver",
     "passwordStep": "La sécurité",
     "nameStep": "Votre nom est ?",

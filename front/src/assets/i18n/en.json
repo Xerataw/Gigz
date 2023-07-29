@@ -36,12 +36,18 @@
       "success": "An email has been sent to {{email}}"
     }
   },
-  "regsiter": {
+  "register": {
     "title": "Complete your profile",
     "completeRegister": "Your account is being created",
     "competeProfile": "Your profile is being created",
 
-    "profileTypeStep": "You are ?",
+    "profileTypeStep": {
+      "label": "You are ?",
+      "artist": "An artist",
+      "artistTooltip": "Singer, Band, Musician",
+      "host": "A host",
+      "hostTooltip": "Bar, Pub, Restaurant, Concert Hall"
+    },
     "mailPhoneStep": "To find you",
     "passwordStep": "Safety first",
     "nameStep": "Your name is ?",

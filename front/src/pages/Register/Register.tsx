@@ -127,7 +127,7 @@ const Register: React.FC = () => {
           <ProfileTypeStep
             form={form}
             nextStep={nextStep}
-            label={t('register.profileTypeStep')}
+            label={t('register.profileTypeStep.label')}
           />
         </Stepper.Step>
         <Stepper.Step>
