@@ -107,14 +107,11 @@ const RegisterArtistProfile: React.FC = () => {
       <ScrollArea className="mt-28 mb-20 w-full h-full">
         <Stepper active={formStep} {...stepperProps}>
           <Stepper.Step>
-            <NameStep form={form} label={t('register.nameStep')} />
+            <NameStep form={form} />
           </Stepper.Step>
 
           <Stepper.Step>
-            <DescriptionStep
-              form={form}
-              label={t('register.descriptionStep')}
-            />
+            <DescriptionStep form={form} />
           </Stepper.Step>
 
           <Stepper.Step>

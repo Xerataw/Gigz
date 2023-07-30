@@ -1,3 +1,4 @@
+import DevTools from './components/DevTools/DevTools';
 import { setupIonicReact } from '@ionic/react';
 import { Container } from '@mantine/core';
 import React from 'react';
@@ -15,7 +16,6 @@ import Register from './pages/Register/Register';
 import RegisterArtistProfile from './pages/Register/RegisterArtistProfile';
 import Search from './pages/Search/Search';
 
-import DevTools from './components/DevTools/DevTools';
 import ForgotPassword from './components/ForgotPassword';
 import Loading from './components/Loading';
 import NestedRoute from './components/NestedRoute';
@@ -23,8 +23,6 @@ import './index.css';
 import RegisterHostProfile from './pages/Register/RegisterHostProfile';
 import ProfileEditProvider from './store/ProfileEditProvider';
 import { useInitialLoading } from './store/InitialLoadingProvider';
-
-const envVars = import.meta.env;
 
 setupIonicReact();
 
@@ -102,7 +100,6 @@ const App: React.FC = () => {
           </Switch>
         </Router>
       </div>
-      {envVars.VITE_ENV === 'DEV' && <DevTools />}
     </Container>
   );
 };
