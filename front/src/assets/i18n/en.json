@@ -64,6 +64,18 @@
       "passwordConfirmation": "Password Confirmation",
       "passwordConfirmationHelper": "Repeat your password here"
     },
+    "errors": {
+      "emailInvalid": "Email not valid. It must include an @, and must end with a domain name",
+      "phoneInvalid": "Phone not valid. It must start with 6 or 7, and have 8 more digits",
+      "password": {
+        "invalid": "Password is invalid",
+        "length": "Needs at least 8 characters",
+        "number": "Needs a number",
+        "upper": "Needs uppercase character",
+        "lower": "Needs lowercase character",
+        "dontmatch": "Passwords don't match"
+      }
+    },
     "nameStep": "Your name is ?",
     "descriptionStep": "Who are you ?",
     "socialLinksStep": "Where can we find you ?",

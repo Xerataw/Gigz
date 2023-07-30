@@ -46,7 +46,7 @@ const Helper: React.FC<IHelperProps> & HelperSubComponents = ({
   return (
     <Tooltip
       label={label}
-      events={{ hover: true, focus: true, touch: true }}
+      events={{ hover: true, focus: false, touch: true }}
       multiline
       position={getLabelPosition(labelDirection)}
     >

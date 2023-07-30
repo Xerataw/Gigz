@@ -1,3 +1,5 @@
+import { t } from 'i18next';
+
 export const registerInitialValues = {
   email: '',
   phone: '',
@@ -8,12 +10,20 @@ export const registerInitialValues = {
 
 const errorPassword = (value: string) => (
   <div>
-    Votre mot de passe est invalide :
+    {t('register.errors.password.invalid')}
     <ul>
-      {/.*\d/.test(value) === false && <li>Il manque un nombre</li>}
-      {/.*[a-z]/.test(value) === false && <li>Il manque une minuscule</li>}
-      {/.*[A-Z]/.test(value) === false && <li>Il manque une majuscule</li>}
-      {/.{8}/.test(value) === false && <li>Il faut 8 charactères minimum</li>}
+      {/.*\d/.test(value) === false && (
+        <li>{t('register.errors.password.number')}</li>
+      )}
+      {/.*[a-z]/.test(value) === false && (
+        <li>{t('register.errors.password.upper')}</li>
+      )}
+      {/.*[A-Z]/.test(value) === false && (
+        <li>{t('register.errors.password.lower')}</li>
+      )}
+      {/.{8}/.test(value) === false && (
+        <li>{t('register.errors.password.length')}</li>
+      )}
     </ul>
   </div>
 );
@@ -29,10 +39,12 @@ export const regsiterValidate = (
 
       case 1:
         return {
-          email: /^\S+@\S+$/.test(values.email) ? null : 'Email Invalide',
+          email: /^\S+@\S+$/.test(values.email)
+            ? null
+            : t('register.errors.emailInvalid'),
           phone: /^[^01234589]\d{8}$/.test(values.phone)
             ? null
-            : 'Numéro invalide',
+            : t('register.errors.phoneInvalid'),
         };
 
       case 2:
@@ -45,7 +57,7 @@ export const regsiterValidate = (
           confirmPassword:
             values.confirmPassword === values.password
               ? null
-              : 'Les mots de passe ne correspondent pas',
+              : t('register.errors.password.dontmatch'),
         };
 
       default:

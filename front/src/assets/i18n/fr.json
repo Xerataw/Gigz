@@ -64,6 +64,19 @@
       "passwordConfirmation": "Confirmation du mot de passe",
       "passwordConfirmationHelper": "Répétez votre mot de passe"
     },
+
+    "errors": {
+      "emailInvalid": "Email invalide. Elle doit inclure un @, et finit avec un nom de domaine",
+      "phoneInvalid": "Numéro invalide. Il doit commencer par un 6 ou un 7, et avoir 8 autres chiffres",
+      "password": {
+        "invalid": "Mot de passe invalide",
+        "length": "Il faut 8 caractères minimum",
+        "number": "Il manque un nombre",
+        "upper": "Il manque une majuscule",
+        "lower": "Il manque une miniscule",
+        "dontmatch": "Les mots de passe ne sont pas les mêmes"
+      }
+    },
     "nameStep": "Votre nom est ?",
     "descriptionStep": "Qui êtes vous ?",
     "socialLinksStep": "Où êtes vous présent ?",
