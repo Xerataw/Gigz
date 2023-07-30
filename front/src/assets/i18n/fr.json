@@ -53,9 +53,15 @@
       "email": "Email",
       "emailHelper": "Un email pour communiquer avec vous",
       "phone": "Numéro de Téléphone",
-      "phoneHelper": "Nn numéro pour que les personnes intéressés puissent vous appeler si vous les y autorisez"
+      "phoneHelper": "Un numéro pour que les personnes intéressés puissent vous appeler si vous les y autorisez"
     },
-    "passwordStep": "La sécurité",
+    "passwordStep": {
+      "label": "La sécurité",
+      "password": "Mot de passe",
+      "passwordHelper": "Un mot de passe fort qui vous protégera",
+      "passwordConfirmation": "Confirmation du mot de passe",
+      "passwordConfirmationHelper": "Répétez votre mot de passe"
+    },
     "nameStep": "Votre nom est ?",
     "descriptionStep": "Qui êtes vous ?",
     "socialLinksStep": "Où êtes vous présent ?",

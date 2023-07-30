@@ -1,9 +1,9 @@
 import { ActionIcon, Tooltip } from '@mantine/core';
 import { IconQuestionMark } from '@tabler/icons-react';
-import { ReactNode, useEffect, useRef, useState } from 'react';
+import { ReactNode } from 'react';
 
 export interface IHelperProps {
-  label: string;
+  label: string | ReactNode;
   labelDirection?: 'left' | 'right';
 }
 
@@ -43,36 +43,14 @@ const Helper: React.FC<IHelperProps> & HelperSubComponents = ({
   label,
   labelDirection = 'top-end',
 }) => {
-  const [open, setOpen] = useState<boolean>(false);
-  const timeoutID = useRef<NodeJS.Timeout>();
-
-  useEffect(() => {
-    if (open === true) {
-      timeoutID.current = setTimeout(() => {
-        setOpen(false);
-      }, 5000);
-    } else {
-      clearTimeout(timeoutID.current);
-    }
-  }, [open]);
-
   return (
     <Tooltip
       label={label}
-      opened={open}
+      events={{ hover: true, focus: true, touch: true }}
       multiline
       position={getLabelPosition(labelDirection)}
     >
-      <ActionIcon
-        size="sm"
-        radius="xl"
-        variant="outline"
-        onClick={(e) => {
-          e.stopPropagation();
-
-          setOpen((o) => !o);
-        }}
-      >
+      <ActionIcon size="sm" radius="xl" variant="outline">
         <IconQuestionMark size="1.625rem" />
       </ActionIcon>
     </Tooltip>
