@@ -76,8 +76,17 @@
         "dontmatch": "Passwords don't match"
       }
     },
-    "nameStep": "Your name is ?",
-    "descriptionStep": "Who are you ?",
+    "nameStep": {
+      "label": "What is your name ?",
+      "name": "Name",
+      "nameHelper": "Your stage name, hosts will be able to see it"
+    },
+    "descriptionStep": {
+      "label": "Who are you ?",
+      "placeholder": "The members of the group 'Antarctic Lemur' merge their passion for alternative rock and electro-pop to create a unique musical experience. 'Antarctic Lemur' offers a bewitching atmosphere where energy and sensitivity mingle.",
+      "description": "Description",
+      "descriptionHelper": "Describe yourself in some words to informe hosts who you are"
+    },
     "socialLinksStep": "Where can we find you ?",
     "addressCompleteStep": "Where do you perform ?",
     "genreStep": "You are quite ?",

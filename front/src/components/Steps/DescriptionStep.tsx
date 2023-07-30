@@ -1,15 +1,21 @@
 import { Textarea } from '@mantine/core';
 import StepTitle from './Utils/StepTitle';
 import { IStepProps } from '../../types/IStepProps';
+import { t } from 'i18next';
+import Helper from '../Tooltip/Helper';
 
-const DescriptionStep: React.FC<IStepProps> = ({ form, label }) => {
+const DescriptionStep: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
-      <StepTitle label={label} />
+      <StepTitle label={t('register.descriptionStep.label')} />
       <Textarea
         autoFocus
-        placeholder="Les membres du groupe 'Antarctic Lemur' fusionnent leur passion pour le rock alternatif et l'électro-pop pour créer une expérience musicale unique. 'Antarctic Lemur' offre une atmosphère envoûtante où se mêlent énergie et sensibilité."
-        label="Description"
+        placeholder={t('register.descriptionStep.placeholder')}
+        label={
+          <Helper.Label label={t('register.descriptionStep.descriptionHelper')}>
+            {t('register.descriptionStep.description')}
+          </Helper.Label>
+        }
         autosize
         minRows={4}
         {...form.getInputProps('description')}
