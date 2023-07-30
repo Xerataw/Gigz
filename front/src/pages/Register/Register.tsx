@@ -155,9 +155,9 @@ const Register: React.FC = () => {
 
       {formStep < 3 && (
         <div className="text-center mt-10">
-          Vous avez déjà un compte ?
+          {t('register.alreadyAccount')}
           <Link to="auth/login" className="font-semibold no-underline">
-            <Text color="primary">Se connecter</Text>
+            <Text color="primary">{t('register.toLogin')}</Text>
           </Link>
         </div>
       )}

@@ -40,6 +40,8 @@
     "title": "Complétez votre profil",
     "completeRegister": "Votre compte est en cours de création",
     "competeProfile": "Votre profil est en cours de création",
+    "alreadyAccount": "Vous avez déjà un compte ?",
+    "toLogin": "Se connecter",
 
     "profileTypeStep": {
       "label": "Vous êtes ?",

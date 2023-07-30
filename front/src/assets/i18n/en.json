@@ -40,6 +40,8 @@
     "title": "Complete your profile",
     "completeRegister": "Your account is being created",
     "competeProfile": "Your profile is being created",
+    "alreadyAccount": "Already an account ?",
+    "toLogin": "Go to login",
 
     "profileTypeStep": {
       "label": "You are ?",
