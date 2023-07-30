@@ -124,17 +124,13 @@ const Register: React.FC = () => {
       />
       <Stepper active={formStep} {...stepperProps}>
         <Stepper.Step>
-          <ProfileTypeStep
-            form={form}
-            nextStep={nextStep}
-            label={t('register.profileTypeStep.label')}
-          />
+          <ProfileTypeStep form={form} nextStep={nextStep} />
         </Stepper.Step>
         <Stepper.Step>
-          <MailPhoneStep form={form} label={t('register.mailPhoneStep')} />
+          <MailPhoneStep form={form} />
         </Stepper.Step>
         <Stepper.Step>
-          <PasswordStep form={form} label={t('register.passwordStep')} />
+          <PasswordStep form={form} />
         </Stepper.Step>
 
         <Stepper.Step>

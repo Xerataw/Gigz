@@ -43,12 +43,18 @@
 
     "profileTypeStep": {
       "label": "Vous êtes ?",
-      "artist": "Un artist",
+      "artist": "Un artiste",
       "artistTooltip": "Chanteur, Groupe, Musicien, Formation",
-      "host": "Un host",
+      "host": "Un hôte",
       "hostTooltip": "Bar, Pub, Restaurant, Salle de Concert"
     },
-    "mailPhoneStep": "Pour vous retrouver",
+    "mailPhoneStep": {
+      "label": "Pour vous retrouver",
+      "email": "Email",
+      "emailHelper": "Un email pour communiquer avec vous",
+      "phone": "Numéro de Téléphone",
+      "phoneHelper": "Nn numéro pour que les personnes intéressés puissent vous appeler si vous les y autorisez"
+    },
     "passwordStep": "La sécurité",
     "nameStep": "Votre nom est ?",
     "descriptionStep": "Qui êtes vous ?",

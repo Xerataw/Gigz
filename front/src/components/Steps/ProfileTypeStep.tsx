@@ -1,10 +1,10 @@
 import { Button, Container } from '@mantine/core';
 import { t } from 'i18next';
 import { IStepProps } from '../../types/IStepProps';
-import TooltipMenu from '../TooltipMenu';
+import Helper from '../Tooltip/Helper';
 import StepTitle from './Utils/StepTitle';
 
-const ProfileTypeStep: React.FC<IStepProps> = ({ form, label, nextStep }) => {
+const ProfileTypeStep: React.FC<IStepProps> = ({ form, nextStep }) => {
   const handleClick = (type: string) => {
     form.setValues((values) => ({
       ...values,
@@ -17,7 +17,7 @@ const ProfileTypeStep: React.FC<IStepProps> = ({ form, label, nextStep }) => {
 
   return (
     <>
-      <StepTitle label={label} />
+      <StepTitle label={t('register.profileTypeStep.label')} />
       <Button.Group orientation="vertical">
         <Container className="w-full relative" p="xl">
           <Button
@@ -29,7 +29,7 @@ const ProfileTypeStep: React.FC<IStepProps> = ({ form, label, nextStep }) => {
             {t('register.profileTypeStep.artist')}
           </Button>
           <div className="absolute p-10 top-0 right-0">
-            <TooltipMenu label={t('register.profileTypeStep.artistTooltip')} />
+            <Helper label={t('register.profileTypeStep.artistTooltip')} />
           </div>
         </Container>
 
@@ -43,7 +43,7 @@ const ProfileTypeStep: React.FC<IStepProps> = ({ form, label, nextStep }) => {
             {t('register.profileTypeStep.host')}
           </Button>
           <div className="absolute p-10 top-0 right-0">
-            <TooltipMenu label={t('register.profileTypeStep.hostTooltip')} />
+            <Helper label={t('register.profileTypeStep.hostTooltip')} />
           </div>
         </Container>
       </Button.Group>

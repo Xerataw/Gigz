@@ -1,11 +1,12 @@
 import { PasswordInput } from '@mantine/core';
+import { t } from 'i18next';
 import { IStepProps } from '../../types/IStepProps';
 import StepTitle from './Utils/StepTitle';
 
-const PasswordStep: React.FC<IStepProps> = ({ form, label }) => {
+const PasswordStep: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
-      <StepTitle label={label} />
+      <StepTitle label={t('register.passwordStep')} />
       <PasswordInput
         withAsterisk
         mt="sm"
