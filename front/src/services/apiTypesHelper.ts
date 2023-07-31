@@ -4,14 +4,14 @@ import IHostProfile from '../types/IHostProfile';
 import IMedia from '../types/IMedia';
 
 export function buildProfile(
-  baseProfile: any,
+  baseProfile: IArtistProfile | IHostProfile,
   profilePicture?: string
 ): IArtistProfile | IHostProfile {
   const finalGallery: IMedia[] = [];
   for (const galleryItem of baseProfile.gallery) {
     finalGallery.push({
       id: galleryItem.id,
-      source: galleryItem.media,
+      media: galleryItem.media,
       type: EMediaType.IMAGE,
     });
   }

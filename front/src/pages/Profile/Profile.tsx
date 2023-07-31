@@ -36,8 +36,12 @@ const Profile: React.FC = () => {
   useEffect(() => {
     getProfile(user.getProfileType() as EProfileType).then((profile) => {
       setProfileType(user.getProfileType() as EProfileType);
+      console.log(profile.data);
       setProfile(
-        buildProfile(profile.data, user.getProfilePicture() as string)
+        buildProfile(
+          profile.data as IArtistProfile | IHostProfile,
+          user.getProfilePicture() as string
+        )
       );
       setProfileLoading(false);
     });
