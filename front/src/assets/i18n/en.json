@@ -92,6 +92,11 @@
       "on": "Invisible",
       "off": "Visible"
     },
+    "logout": "Logout",
+    "deleteAccount": {
+      "delete": "Delete my account",
+      "confirmation": "Are you sure ?"
+    },
     "userAccount": "Change your information",
     "email": {
       "button": "Email",

@@ -11,10 +11,13 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router';
 import { LinkUtils } from '../../services/LinkUtils';
+  
 import LightRoundButton from '../LightRoundButton';
-import Email from './Email';
+import DeleteAccount from './DeleteAccount';
 import InsivibleMode from './InsivibleMode';
 import Language from './Language';
+import Logout from './Logout';
+import Email from './Email';
 import Password from './Password';
 import Theme from './Theme';
 import Phone from './Phone';
@@ -63,9 +66,9 @@ const Settings: React.FC = () => {
         </Container>
 
         <div className="absolute left-0 bottom-0 w-full p-4">
-          <Group position="center">
-            <Button>Se déconnecter</Button>
-            <Button>Supprimer mon compte</Button>
+          <Group position="center" className="flex-col">
+            <Logout />
+            <DeleteAccount />
           </Group>
         </div>
       </Drawer>
