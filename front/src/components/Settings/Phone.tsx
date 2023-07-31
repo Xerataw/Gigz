@@ -4,9 +4,7 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import SettingsDrawer from './SettingsDrawer';
 
-interface IPhoneProps {}
-
-const Phone: React.FC<IPhoneProps> = ({}) => {
+const Phone: React.FC = () => {
   const { t } = useTranslation();
   const [value, setValue] = useDebouncedState<string>('', 1000);
   const [error, setError] = useState<string | boolean>();

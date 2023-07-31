@@ -6,6 +6,7 @@ import {
 import Settings from '../Settings/Settings';
 import Gallery from './Gallery';
 import ProfileDrawer from './ProfileDrawer';
+import { useLocation } from 'react-router';
 
 interface IProfileViewProps {
   profile: IArtistProfile | IHostProfile;
@@ -24,9 +25,11 @@ const ProfileView: React.FC<IProfileViewProps> = ({
     typeof profile.musicLink === 'string' &&
     profile.musicLink.length > 0;
 
+  const canEdit = useLocation().pathname.includes('/auth/profile');
+
   return (
     <div className="relative">
-      <Settings />
+      {canEdit && <Settings />}
       <Gallery
         mediaList={profile && profile.gallery}
         loading={loading}

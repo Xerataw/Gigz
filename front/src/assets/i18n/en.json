@@ -36,7 +36,7 @@
       "success": "An email has been sent to {{email}}"
     }
   },
-  "regsiter": {
+  "register": {
     "title": "Complete your profile",
     "completeRegister": "Your account is being created",
     "competeProfile": "Your profile is being created",
@@ -71,8 +71,14 @@
     }
   },
   "search": {
+    "placeholder": "Search Artist",
+    "artist": "Artist",
+    "genre": "Search for a genre",
+    "host": "Host",
+    "sumbit": "Search",
     "list": {
-      "endOfProfiles": "You have seen everything..."
+      "endOfProfiles": "You have seen everything...",
+      "noResult": "No result found for your search"
     }
   },
   "settings": {

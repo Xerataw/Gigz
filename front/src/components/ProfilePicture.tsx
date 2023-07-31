@@ -8,7 +8,7 @@ interface IProfilePictureProps {
   alt: string | null | undefined;
 }
 
-const ProfilePicture : React.FC<IProfilePictureProps> = ({
+const ProfilePicture: React.FC<IProfilePictureProps> = ({
   src,
   radius = 'xl',
   size = 'xl',
