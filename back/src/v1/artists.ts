@@ -96,8 +96,6 @@ router.get('/', async (req, res) => {
       ? body.data.latitude
       : req.account.latitude;
 
-    console.log(searchLatitude + ' ' + searchLongitude);
-
     formattedData = formattedData.sort((artist1, artist2) => {
       return (
         calculateDistance(
