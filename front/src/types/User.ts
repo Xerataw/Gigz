@@ -1,13 +1,13 @@
 import IonicStorageAccessor from '../services/IonicStorageAccessor';
 import ELanguage from './ELanguage';
 import EProfileType from './EProfileType';
-import { LanguageSettings } from './Settings';
+import ETheme from './ETheme';
 import { storeUser } from './utils/storeUser';
 
 /**
  * Singleton to use throughout the front to get global data about the user.
  */
-export default class User extends LanguageSettings {
+export default class User {
   private static instance: User;
 
   private name: string | null;
@@ -15,18 +15,30 @@ export default class User extends LanguageSettings {
   private token: string | null;
   private profileType: EProfileType | null;
 
+  // Settings
+  private language: ELanguage;
+  private theme: ETheme;
+  private invisibleMode: boolean;
+
   private constructor(
     name?: string,
     profilePicture?: string,
     token?: string,
     profileType?: EProfileType,
-    language?: ELanguage
+
+    language?: ELanguage,
+    theme?: ETheme,
+    invisibleMode?: boolean
   ) {
-    super(language);
     this.name = name ?? null;
     this.profilePicture = profilePicture ?? null;
     this.token = token ?? null;
     this.profileType = profileType ?? null;
+
+    // Settings
+    this.language = language ?? ELanguage.FR;
+    this.theme = theme ?? ETheme.LIGHT;
+    this.invisibleMode = invisibleMode ?? false;
   }
 
   /**
@@ -43,7 +55,9 @@ export default class User extends LanguageSettings {
           localUserInfo.profilePicture,
           localUserInfo.token,
           localUserInfo.profileType,
-          localUserInfo.language
+          localUserInfo.language,
+          localUserInfo.theme,
+          localUserInfo.invisibleMode
         );
     }
     return this.instance;
@@ -115,5 +129,37 @@ export default class User extends LanguageSettings {
    */
   public getProfileType(): EProfileType | null {
     return this.profileType;
+  }
+
+  // Settings
+
+  // LANGUAGE
+  @storeUser('language')
+  public setLanguage(language: ELanguage) {
+    this.language = language;
+  }
+
+  public getLanguage(): ELanguage {
+    return this.language;
+  }
+
+  // THEME
+  @storeUser('theme')
+  public setTheme(theme: ETheme) {
+    this.theme = theme;
+  }
+
+  public getTheme(): ETheme {
+    return this.theme;
+  }
+
+  // INVISIBLE MODE
+  @storeUser('invisibleMode')
+  public setInvisibleMode(invisibleMode: boolean) {
+    this.invisibleMode = invisibleMode;
+  }
+
+  public getInvisibleMode(): boolean {
+    return this.invisibleMode;
   }
 }

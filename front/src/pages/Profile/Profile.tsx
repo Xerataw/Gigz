@@ -3,7 +3,9 @@ import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
 import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
 import HostProfileView from '../../components/ProfileView/HostProfileView';
-import ProfileEditProvider from '../../store/ProfileEditProvider';
+import ProfileEditProvider, {
+  useProfileEdit,
+} from '../../store/ProfileEditProvider';
 import { useUser } from '../../store/UserProvider';
 import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
@@ -14,6 +16,7 @@ import { buildProfile } from '../../services/apiTypesHelper';
 const Profile: React.FC = () => {
   const history = useHistory();
   const user = useUser();
+  const { editConfirmed } = useProfileEdit();
   const [profileLoading, setProfileLoading] = useState<boolean>(true);
   const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
@@ -32,8 +35,7 @@ const Profile: React.FC = () => {
     );
   };
 
-  // Get the stored user information and query the profile
-  useEffect(() => {
+  const fetchProfile = () => {
     getProfile(user.getProfileType() as EProfileType).then((profile) => {
       setProfileType(user.getProfileType() as EProfileType);
       setProfile(
@@ -44,13 +46,31 @@ const Profile: React.FC = () => {
       );
       setProfileLoading(false);
     });
-  }, [history]);
+  };
 
-  return (
-    <ProfileEditProvider>
-      <Layout navBarShadow={false}>{displayProfileView()}</Layout>
-    </ProfileEditProvider>
-  );
+  const adjustUpdatedProfile = () => {
+    setProfile(
+      buildProfile(
+        {
+          ...editConfirmed.updatedProfile,
+          gallery: profile?.gallery,
+          genres: profile?.genres,
+        },
+        user.getProfilePicture() as string
+      )
+    );
+  };
+
+  // Get the stored user information and query the profile
+  useEffect(() => {
+    if (editConfirmed.editConfirmed) {
+      adjustUpdatedProfile();
+    } else {
+      fetchProfile();
+    }
+  }, [history, editConfirmed.editConfirmed]);
+
+  return <Layout navBarShadow={false}>{displayProfileView()}</Layout>;
 };
 
 export default Profile;

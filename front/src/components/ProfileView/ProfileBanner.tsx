@@ -10,11 +10,12 @@ import {
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import GigzFetcher from '../../services/GigzFetcher';
-import { useProfileEditMode } from '../../store/ProfileEditProvider';
+import { useProfileEdit } from '../../store/ProfileEditProvider';
 import ICapacity from '../../types/ICapacity';
 import IGenre from '../../types/IGenre';
 import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
+import BannerName from './bannerFields/BannerName';
 
 interface IProfileBannerProps {
   username: string;
@@ -44,7 +45,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   drawerOpened = false,
 }) => {
   const { t } = useTranslation();
-  const { editMode, editConfirmed } = useProfileEditMode();
+  const { editMode, editConfirmed } = useProfileEdit();
   const canEdit = useLocation().pathname.includes('/auth/profile');
   const genresToDisplay = loading ? loadingGenres : genres.slice(0, 2);
 
@@ -101,12 +102,16 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             mb={loading ? '0.25rem' : 'inherit'}
             className="flex flex-row flex-nowrap items-center"
           >
-            <Text
-              truncate
-              className="font-bold text-xl pr-2 h-[1.8rem] w-5/6 text-ellipsis"
-            >
-              {username}
-            </Text>
+            {canEdit ? (
+              <BannerName name={username} />
+            ) : (
+              <Text
+                truncate
+                className="font-bold text-xl pr-2 h-[1.8rem] w-5/6 text-ellipsis"
+              >
+                {username}
+              </Text>
+            )}
           </Skeleton>
           <Skeleton
             visible={loading}

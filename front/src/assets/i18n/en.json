@@ -79,6 +79,16 @@
     "title": "Settings",
     "language": {
       "title": "Languages"
+    },
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark"
+    },
+    "invisible": {
+      "title": "Invisible mode",
+      "on": "Invisible",
+      "off": "Visible"
     }
   }
 }

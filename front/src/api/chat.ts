@@ -1,6 +1,12 @@
-import IChat from '../types/IChat';
+import IChat from '../types/chat/IChat';
+import IChatDetails from '../types/chat/IChatDetails';
+
 import GigzFetcher from '../services/GigzFetcher';
 
 export const getChats = async () => {
   return GigzFetcher.get<IChat[]>('me/conversations');
+};
+
+export const getChatById = async (id: number, page: number) => {
+  return GigzFetcher.get<IChatDetails>(`me/conversations/${id}`, { page });
 };

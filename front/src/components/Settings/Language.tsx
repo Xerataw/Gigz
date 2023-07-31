@@ -3,9 +3,7 @@ import { useTranslation } from 'react-i18next';
 import { useUser } from '../../store/UserProvider';
 import { fromStringToELanguage } from '../../types/ELanguage';
 
-interface ILanguageProps {}
-
-const Language: React.FC<ILanguageProps> = () => {
+const Language: React.FC = () => {
   const user = useUser();
   const { t, i18n } = useTranslation();
 
