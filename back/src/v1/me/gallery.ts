@@ -6,7 +6,7 @@ import { z } from 'zod';
 import useUtils from '@composables/useUtils';
 import useDatabase from '@composables/useDatabase';
 import { unlink } from 'fs';
-import pictureRateLimiter from '@/middlewares/rateLimiter';
+import rateLimiter from '@/middlewares/rateLimiter';
 
 const router = express.Router();
 const upload = multer({ dest: 'static/' });
@@ -16,36 +16,31 @@ const { ApiMessages, sendResponse, sendError, fromDbFormat } = useUtils();
 
 const selectGallery = { id: true, media: true };
 
-router.post(
-  '/',
-  pictureRateLimiter,
-  upload.array('media'),
-  async (req, res) => {
-    if (req.files === undefined) return sendError(res, ApiMessages.BadRequest);
+router.post('/', rateLimiter, upload.array('media'), async (req, res) => {
+  if (req.files === undefined) return sendError(res, ApiMessages.BadRequest);
 
-    // @ts-ignore
-    const files: { media: string; account_id: number }[] = req.files.map(
-      (file: any) => ({ media: file.filename, account_id: req.account.id })
-    );
+  // @ts-ignore
+  const files: { media: string; account_id: number }[] = req.files.map(
+    (file: any) => ({ media: file.filename, account_id: req.account.id })
+  );
 
-    const medium = await database.$transaction(
-      files.map((file) =>
-        database.gallery.create({
-          data: file,
-          select: { id: true, media: true },
-        })
-      )
-    );
+  const medium = await database.$transaction(
+    files.map((file) =>
+      database.gallery.create({
+        data: file,
+        select: { id: true, media: true },
+      })
+    )
+  );
 
-    sendResponse(res, fromDbFormat(medium));
-  }
-);
+  sendResponse(res, fromDbFormat(medium));
+});
 
 const DeleteGallerySchema = z.object({
   id: z.coerce.number(),
 });
 
-router.delete('/:id/', pictureRateLimiter, async (req, res) => {
+router.delete('/:id/', rateLimiter, async (req, res) => {
   const params = DeleteGallerySchema.safeParse(req.params);
   if (!params.success) return sendError(res, ApiMessages.BadRequest);
 
