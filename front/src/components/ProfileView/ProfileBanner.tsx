@@ -46,11 +46,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   const { t } = useTranslation();
   const { editMode, editConfirmed } = useProfileEditMode();
   const canEdit = useLocation().pathname.includes('/auth/profile');
-  let genresToDisplay = loading ? loadingGenres : genres;
-  genresToDisplay =
-    genresToDisplay.length > 2
-      ? [genresToDisplay[0], genresToDisplay[1]]
-      : genresToDisplay;
+  const genresToDisplay = loading ? loadingGenres : genres.slice(0, 2);
 
   return (
     <div className="bg-white pl-3 pr-3 rounded-tl-md rounded-tr-md">
