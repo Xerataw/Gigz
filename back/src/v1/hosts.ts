@@ -68,25 +68,23 @@ router.get('/', async (req, res) => {
       account: {
         select: {
           profile_picture: true,
+          account_genre: {
+            select: {
+              genre: true,
+            },
+          },
         },
       },
     },
     where: buildHostsWhereCondition(body.data),
   });
 
-  const genres = await database.account_genre.findMany({
-    where: { account_id: req.account.id },
-    include: { genre: true },
-  });
-
-  const formattedGenres = genres.map((genre) => genre.genre);
-
   let formattedData = data.map((host) => ({
     id: host.id,
     name: host.name,
     address: host.address,
     city: host.city,
-    genres: formattedGenres,
+    genres: host.account.account_genre.map((genre) => genre.genre),
     capacity: host.capacity,
     longitude: host.longitude,
     latitude: host.latitude,
