@@ -36,6 +36,23 @@
       "success": "An email has been sent to {{email}}"
     }
   },
+  "regsiter": {
+    "title": "Complete your profile",
+    "completeRegister": "Your account is being created",
+    "competeProfile": "Your profile is being created",
+
+    "profileTypeStep": "You are ?",
+    "mailPhoneStep": "To find you",
+    "passwordStep": "Safety first",
+    "nameStep": "Your name is ?",
+    "descriptionStep": "Who are you ?",
+    "socialLinksStep": "Where can we find you ?",
+    "addressCompleteStep": "Where do you perform ?",
+    "genreStep": "You are quite ?",
+    "presentationPicturesStep": "What does your group look like ?",
+    "profilePictureStep": "What does you look like ?",
+    "capacityStep": "How many people can you accommodate ?"
+  },
   "profile": {
     "banner": {
       "emptyCity": "Somewhere in the world"
@@ -62,6 +79,17 @@
     "list": {
       "endOfProfiles": "You have seen everything...",
       "noResult": "No result found for your search"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "language": {
+      "title": "Languages"
+    },
+    "theme": {
+      "title": "Theme",
+      "light": "Light",
+      "dark": "Dark"
     }
   }
 }

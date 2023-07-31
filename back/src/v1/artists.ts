@@ -18,6 +18,8 @@ const {
 const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
   genres: z.string().min(1).optional(),
+  longitude: z.coerce.number().optional(),
+  latitude: z.coerce.number().optional(),
 });
 
 const buildArtistsWhereCondition = (query: {
@@ -59,11 +61,6 @@ router.get('/', async (req, res) => {
     include: {
       account: {
         select: {
-          account_genre: {
-            include: {
-              genre: true,
-            },
-          },
           profile_picture: true,
         },
       },
@@ -71,11 +68,18 @@ router.get('/', async (req, res) => {
     where: buildArtistsWhereCondition(body.data),
   });
 
+  const genres = await database.account_genre.findMany({
+    where: { account_id: req.account.id },
+    include: { genre: true },
+  });
+
+  const formattedGenres = genres.map((genre) => genre.genre);
+
   let formattedData = data.map((artist) => ({
     id: artist.id,
     name: artist.name,
     city: artist.city,
-    genres: artist.account.account_genre.map((genre) => genre.genre),
+    genres: formattedGenres,
     longitude: artist.longitude,
     latitude: artist.latitude,
     profilePicture: artist.account.profile_picture,
@@ -85,19 +89,28 @@ router.get('/', async (req, res) => {
     typeof req.account.longitude === 'number' &&
     typeof req.account.latitude === 'number'
   ) {
+    const searchLongitude = body.data.longitude
+      ? body.data.longitude
+      : req.account.longitude;
+    const searchLatitude = body.data.latitude
+      ? body.data.latitude
+      : req.account.latitude;
+
+    console.log(searchLatitude + ' ' + searchLongitude);
+
     formattedData = formattedData.sort((artist1, artist2) => {
       return (
         calculateDistance(
-          req.account.longitude as number,
-          artist1.longitude as number,
-          req.account.latitude as number,
-          artist1.latitude as number
+          searchLatitude,
+          searchLongitude,
+          artist1.latitude as number,
+          artist1.longitude as number
         ) -
         calculateDistance(
-          req.account.longitude as number,
-          artist2.longitude as number,
-          req.account.latitude as number,
-          artist2.latitude as number
+          searchLatitude,
+          searchLongitude,
+          artist2.latitude as number,
+          artist2.longitude as number
         )
       );
     });
@@ -138,6 +151,13 @@ router.get('/:id/', async (req, res) => {
     },
   });
 
+  const genres = await database.account_genre.findMany({
+    where: { account_id: req.account.id },
+    include: { genre: true },
+  });
+
+  const formattedGenres = genres.map((genre) => genre.genre);
+
   if (!artist) {
     return sendError(res, ApiMessages.NotFound, 404);
   }
@@ -147,6 +167,9 @@ router.get('/:id/', async (req, res) => {
 
   // @ts-ignore
   delete artist.account;
+
+  // @ts-ignore
+  artist.genres = formattedGenres;
 
   sendResponse(res, fromDbFormat(artist));
 });

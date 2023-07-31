@@ -19,6 +19,8 @@ const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
   capacityId: z.coerce.number().optional(),
   genres: z.string().min(1).optional(),
+  latitude: z.coerce.number().optional(),
+  longitude: z.coerce.number().optional(),
 });
 
 const buildHostsWhereCondition = (query: {
@@ -27,6 +29,14 @@ const buildHostsWhereCondition = (query: {
   genres?: string;
 }) => {
   return {
+    AND: {
+      longitude: {
+        not: null,
+      },
+      latitude: {
+        not: null,
+      },
+    },
     name: {
       contains: query.name ? query.name : undefined,
     },
@@ -57,11 +67,6 @@ router.get('/', async (req, res) => {
       capacity: true,
       account: {
         select: {
-          account_genre: {
-            select: {
-              genre: true,
-            },
-          },
           profile_picture: true,
         },
       },
@@ -69,12 +74,19 @@ router.get('/', async (req, res) => {
     where: buildHostsWhereCondition(body.data),
   });
 
+  const genres = await database.account_genre.findMany({
+    where: { account_id: req.account.id },
+    include: { genre: true },
+  });
+
+  const formattedGenres = genres.map((genre) => genre.genre);
+
   let formattedData = data.map((host) => ({
     id: host.id,
     name: host.name,
     address: host.address,
     city: host.city,
-    genres: host.account.account_genre.map((genre) => genre.genre),
+    genres: formattedGenres,
     capacity: host.capacity,
     longitude: host.longitude,
     latitude: host.latitude,
@@ -85,19 +97,26 @@ router.get('/', async (req, res) => {
     typeof req.account.longitude === 'number' &&
     typeof req.account.latitude === 'number'
   ) {
+    const searchLongitude = body.data.longitude
+      ? body.data.longitude
+      : req.account.longitude;
+    const searchLatitude = body.data.latitude
+      ? body.data.latitude
+      : req.account.latitude;
+
     formattedData = formattedData.sort((host1, host2) => {
       return (
         calculateDistance(
-          req.account.longitude as number,
-          host1.longitude as number,
-          req.account.latitude as number,
-          host1.latitude as number
+          searchLatitude,
+          searchLongitude,
+          host1.latitude as number,
+          host1.longitude as number
         ) -
         calculateDistance(
-          req.account.longitude as number,
-          host2.longitude as number,
-          req.account.latitude as number,
-          host2.latitude as number
+          searchLatitude,
+          searchLongitude,
+          host2.latitude as number,
+          host2.longitude as number
         )
       );
     });
@@ -110,7 +129,7 @@ router.get('/', async (req, res) => {
     delete host.latitude;
   });
 
-  sendResponse(res, fromDbFormat(formattedData), 200);
+  sendResponse(res, formattedData, 200);
 });
 
 const GetHostByIdParams = z.object({
@@ -127,6 +146,7 @@ router.get('/:id/', async (req, res) => {
   const host = await database.host.findUnique({
     where: { id: params.data.id },
     include: {
+      capacity: true,
       account: {
         include: {
           gallery: {
@@ -138,6 +158,13 @@ router.get('/:id/', async (req, res) => {
     },
   });
 
+  const genres = await database.account_genre.findMany({
+    where: { account_id: req.account.id },
+    include: { genre: true },
+  });
+
+  const formattedGenres = genres.map((genre) => genre.genre);
+
   if (!host) {
     return sendError(res, ApiMessages.NotFound, 404);
   }
@@ -147,6 +174,9 @@ router.get('/:id/', async (req, res) => {
 
   // @ts-ignore
   delete host.account;
+
+  // @ts-ignore
+  host.genre = formattedGenres;
 
   sendResponse(res, fromDbFormat(host));
 });

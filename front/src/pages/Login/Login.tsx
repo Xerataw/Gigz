@@ -14,7 +14,7 @@ import { HttpStatusCode } from 'axios';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useHistory } from 'react-router-dom';
-import login from '../../api/login';
+import { login } from '../../api/auth';
 import { useUser } from '../../store/UserProvider';
 
 const Login: React.FC = () => {
@@ -94,6 +94,7 @@ const Login: React.FC = () => {
     login(data.email, data.password)
       .then((res) => {
         if (res.ok) {
+          user.setName(res.data.username);
           user.setToken(res.data.token);
           user.setProfileType(res.data.profileType);
           user.setProfilePicture(res.data.profilePicture);

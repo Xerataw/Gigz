@@ -1,10 +1,8 @@
-import { ActionIcon, Group, Loader, Stepper, Title } from '@mantine/core';
+import { Loader, ScrollArea, Stepper, Title } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import {
   IconAlignCenter,
-  IconArrowLeft,
-  IconArrowRight,
   IconArrowUpBar,
   IconBoxMultiple,
   IconChecks,
@@ -12,27 +10,33 @@ import {
   IconMapPin,
   IconMusic,
   IconPencil,
-  IconRulerMeasure,
   IconUserCircle,
 } from '@tabler/icons-react';
 import React, { useEffect, useState } from 'react';
-import AddressCompleteStep from '../../components/Register/ProfileSteps/AddressCompleteStep';
-import CapacityStep from '../../components/Register/ProfileSteps/CapacityStep';
-import DescriptionStep from '../../components/Register/ProfileSteps/DescriptionStep';
-import GenreStep from '../../components/Register/ProfileSteps/GenreStep';
-import NameStep from '../../components/Register/ProfileSteps/NameStep';
-import PresentationPicturesStep from '../../components/Register/ProfileSteps/PresentationPicturesStep';
-import ProfilePictureStep from '../../components/Register/ProfileSteps/ProfilePictureStep';
-import SocialLinksStep from '../../components/Register/ProfileSteps/SocialLinksStep';
-import StepperIcons from '../../components/Register/StepperIcons';
+import { useTranslation } from 'react-i18next';
+import { patchArtistProfile } from '../../api/user';
+import AddressCompleteStep from '../../components/Steps/AddressCompleteStep';
+import DescriptionStep from '../../components/Steps/DescriptionStep';
+import GenreStep from '../../components/Steps/GenreStep';
+import NameStep from '../../components/Steps/NameStep';
+import PresentationPicturesStep from '../../components/Steps/PresentationPicturesStep';
+import ProfilePictureStep from '../../components/Steps/ProfilePictureStep';
+import SocialLinksStep from '../../components/Steps/SocialLinksStep';
+import StepperCompleted from '../../components/Steps/StepperCompleted';
+import StepButtons from '../../components/Steps/Utils/StepButtons';
+import StepperIcons from '../../components/Steps/Utils/StepperIcons';
+import { stepperProps } from '../../configs/steppers/globalConfig';
 import {
   artistInitialValues,
   artistValidate,
-} from '../../configs/profileFormArtistConfig';
+  getArtistValuesReq,
+  linksArtist,
+} from '../../configs/steppers/stepperArtistConfig';
 
 const RegisterArtistProfile: React.FC = () => {
-  const numberOfSteps = 8;
+  const NUMBER_OF_STEPS = 7;
 
+  const { t } = useTranslation();
   const [formStep, setFormStep] = useState<number>(0);
   const form = useForm({
     validateInputOnBlur: true,
@@ -42,19 +46,17 @@ const RegisterArtistProfile: React.FC = () => {
   const [debounced] = useDebouncedValue(form.values, 1000);
 
   const nextStep = () => {
-    if (formStep === numberOfSteps - 1) {
+    if (formStep === NUMBER_OF_STEPS - 1) {
       setFormStep((old) => old + 1);
-
-      // simulate request
-      setTimeout(() => {
+      patchArtistProfile(getArtistValuesReq(form.values)).then(() => {
         setFormStep((old) => old + 1);
-      }, 1000);
+      });
     } else {
       setFormStep((current) => {
         if (form.validate().hasErrors) {
           return current;
         }
-        return current < numberOfSteps - 1 ? current + 1 : current;
+        return current < NUMBER_OF_STEPS - 1 ? current + 1 : current;
       });
     }
   };
@@ -74,108 +76,102 @@ const RegisterArtistProfile: React.FC = () => {
           form.validateField('address.value');
         break;
 
-      case 1:
-      case 2:
+      default:
         break;
     }
   }, [debounced]);
 
   return (
-    <div className="pt-10 border border-red-500 flex flex-col items-center">
-      <Title order={2} mb={'sm'}>
-        Complétez votre profil
-      </Title>
-      <StepperIcons
-        icons={[
-          <IconPencil key={0} />,
-          <IconAlignCenter key={1} />,
-          <IconExternalLink key={2} />,
-          <IconMapPin key={3} />,
-          <IconMusic key={4} />,
-          <IconRulerMeasure key={7} />,
-          <IconBoxMultiple key={5} />,
-          <IconUserCircle key={6} />,
+    <div className="pt-10 border border-red-500 flex flex-col items-center relative h-full">
+      <div className="absolute">
+        <Title order={2} mb={'sm'}>
+          {t('register.title')}
+        </Title>
+        <StepperIcons
+          icons={[
+            <IconPencil key={0} />,
+            <IconAlignCenter key={1} />,
+            <IconMapPin key={3} />,
+            <IconUserCircle key={6} />,
+            <IconMusic key={4} />,
+            <IconBoxMultiple key={5} />,
+            <IconExternalLink key={2} />,
 
-          <IconArrowUpBar key={8} />,
-          <IconChecks key={9} />,
-        ]}
-        currentStep={formStep}
-        nextStep={nextStep}
-      />
-      <Stepper
-        active={formStep}
-        p="xl"
-        w={'100%'}
-        styles={{
-          stepIcon: {
-            display: 'none',
-            borderWidth: 4,
-          },
+            <IconArrowUpBar key={8} />,
+            <IconChecks key={9} />,
+          ]}
+          currentStep={formStep}
+          form={form}
+        />
+      </div>
+      <ScrollArea className="mt-28 mb-20 w-full h-full">
+        <Stepper active={formStep} {...stepperProps}>
+          <Stepper.Step>
+            <NameStep form={form} label={t('register.nameStep')} />
+          </Stepper.Step>
 
-          separator: {
-            display: 'none',
-          },
-        }}
-      >
-        <Stepper.Step>
-          <NameStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <DescriptionStep
+              form={form}
+              label={t('register.descriptionStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <DescriptionStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <AddressCompleteStep
+              form={form}
+              type="municipality"
+              label={t('register.addressCompleteStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <SocialLinksStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <ProfilePictureStep
+              form={form}
+              label={t('register.presentationPicturesStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <AddressCompleteStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <GenreStep form={form} label={t('register.genreStep')} />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <GenreStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <PresentationPicturesStep
+              form={form}
+              label={t('register.presentationPicturesStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <CapacityStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <SocialLinksStep
+              links={linksArtist}
+              form={form}
+              label={t('register.socialLinksStep')}
+            />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <PresentationPicturesStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step>
+          <Stepper.Step>
+            <Loader variant="bars" />
+          </Stepper.Step>
 
-        <Stepper.Step>
-          <ProfilePictureStep form={form} nextStep={() => nextStep()} />
-        </Stepper.Step>
+          <Stepper.Completed>
+            <StepperCompleted
+              label={t('register.competeProfile')}
+              path="auth/profile"
+            />
+          </Stepper.Completed>
+        </Stepper>
+      </ScrollArea>
 
-        <Stepper.Step>
-          <Loader variant="bars" />
-        </Stepper.Step>
-
-        <Stepper.Completed>
-          <div>this form is completed</div>
-          <div>redirect to home</div>
-        </Stepper.Completed>
-      </Stepper>
-
-      <Group position="right" mt="xl">
-        {formStep > 0 && formStep < numberOfSteps && (
-          <ActionIcon variant="default" onClick={prevStep} size="lg">
-            <IconArrowLeft />
-          </ActionIcon>
-        )}
-        {formStep < numberOfSteps && (
-          <ActionIcon
-            variant="filled"
-            color="primary"
-            onClick={nextStep}
-            size="xl"
-          >
-            <IconArrowRight />
-          </ActionIcon>
-        )}
-      </Group>
+      <div className="absolute bottom-3">
+        <StepButtons
+          formStep={formStep}
+          numberOfSteps={NUMBER_OF_STEPS}
+          nextStep={nextStep}
+          prevStep={prevStep}
+        />
+      </div>
     </div>
   );
 };

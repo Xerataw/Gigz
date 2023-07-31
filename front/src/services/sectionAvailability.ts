@@ -23,11 +23,9 @@ export const isMusicSectionAvailable = (profile: IArtistProfile): boolean => {
     (typeof profile.deezerLink === 'string' && profile.deezerLink.length > 0) ||
     (typeof profile.spotifyLink === 'string' &&
       profile.spotifyLink.length > 0) ||
-    (typeof profile.soundCloudLink === 'string' &&
-      profile.soundCloudLink.length > 0) ||
-    (typeof profile.youtubeLink === 'string' &&
-      profile.youtubeLink.length > 0) ||
-    (typeof profile.musicLink === 'string' && profile.musicLink.length > 0)
+    (typeof profile.soundcloudLink === 'string' &&
+      profile.soundcloudLink.length > 0) ||
+    (typeof profile.youtubeLink === 'string' && profile.youtubeLink.length > 0)
   );
 };
 

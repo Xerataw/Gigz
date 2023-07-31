@@ -3,6 +3,7 @@ import {
   default as IArtistProfile,
   default as IHostProfile,
 } from '../../types/IArtistProfile';
+import Settings from '../Settings/Settings';
 import Gallery from './Gallery';
 import ProfileDrawer from './ProfileDrawer';
 
@@ -24,7 +25,8 @@ const ProfileView: React.FC<IProfileViewProps> = ({
     profile.musicLink.length > 0;
 
   return (
-    <>
+    <div className="relative">
+      <Settings />
       <Gallery
         mediaList={profile && profile.gallery}
         loading={loading}
@@ -33,7 +35,7 @@ const ProfileView: React.FC<IProfileViewProps> = ({
       <ProfileDrawer profile={profile} profileLoading={loading}>
         {children}
       </ProfileDrawer>
-    </>
+    </div>
   );
 };
 
