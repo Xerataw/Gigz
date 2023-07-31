@@ -7,6 +7,7 @@ import { LinkUtils } from '../../services/LinkUtils';
 import LightRoundButton from '../LightRoundButton';
 import Language from './Language';
 import Theme from './Theme';
+import InsivibleMode from './InsivibleMode';
 
 const Settings: React.FC = () => {
   const history = useHistory();
@@ -39,6 +40,7 @@ const Settings: React.FC = () => {
       >
         <Language />
         <Theme />
+        <InsivibleMode />
 
         <Title order={3}>Changer mes informations</Title>
         <Title order={5}>Mot de passe</Title>
