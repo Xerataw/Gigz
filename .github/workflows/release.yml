@@ -19,6 +19,7 @@ jobs:
           port: ${{ secrets.PORT }}
           source: 'back/src/, back/prisma/, back/Dockerfile, back/package.json, back/package-lock.json, back/tsconfig.json, back/scripts/, back/types/, back/static/, back/public/'
           target: .
+
       - name: Build the docker image and Deploy it
         uses: appleboy/ssh-action@master
         with:
@@ -30,4 +31,4 @@ jobs:
             cd back/ 
             docker compose build api
             docker compose up api -d
-            docker compose exec api yarn prisma migrate dev
+            docker compose exec api yarn prisma migrate deploy
