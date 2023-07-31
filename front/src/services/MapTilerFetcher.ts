@@ -34,6 +34,7 @@ export default class MapTiler {
           }))
         )
         .then((res: IAddressSearchItem[]) => {
+          console.log(res);
           handleSearchResult(res);
         });
     }

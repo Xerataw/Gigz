@@ -34,6 +34,7 @@ const Search: React.FC = () => {
   const getProfilesWithFilter = () => {
     setLoading(true);
     getResults(form.values as IFilter).then((res) => {
+      console.log(res);
       setResults(res?.data ?? []);
       setLoading(false);
     });

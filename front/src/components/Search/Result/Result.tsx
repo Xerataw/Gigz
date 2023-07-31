@@ -14,7 +14,7 @@ const Result: React.FC<ISearchResultProps> = ({ result, loading, onClick }) => {
         username={result?.name}
         genres={result?.genres}
         city={result?.city}
-        profilePicture={result?.profilePicture}
+        profilePicture={result?.profilePicture?.media}
         loading={loading}
       />
     </div>
