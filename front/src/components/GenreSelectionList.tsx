@@ -1,8 +1,8 @@
 import { SimpleGrid } from '@mantine/core';
-import MusicGenreButton from './MusicGenreButton';
-import IGenre from '../types/IGenre';
 import { useEffect, useState } from 'react';
 import { getGenres } from '../api/genres';
+import IGenre from '../types/IGenre';
+import MusicGenreButton from './MusicGenreButton';
 
 interface IGenreSelectionListProps {
   selectedGenre: number[];
@@ -15,20 +15,21 @@ const GenreSelectionList: React.FC<IGenreSelectionListProps> = ({
   handleAddGenre,
   filter,
 }) => {
-  let _genres = [] as IGenre[];
-  const [genres, setGenres] = useState<IGenre[]>([]);
+  const [allGenres, setAllGenres] = useState<IGenre[]>([]);
+  const [genres, setGenres] = useState(allGenres);
 
   useEffect(() => {
     getGenres().then((res) => {
-      _genres = res?.data ?? [];
-      setGenres(_genres);
+      setAllGenres(res?.data ?? []);
+      setGenres(res?.data ?? []);
     });
   }, []);
 
   const filterGenres = (filter: string) => {
-    const filteredGenres = _genres.filter((genre: IGenre) => {
-      return genre.name?.toLowerCase().includes(filter?.toLowerCase());
+    const filteredGenres = allGenres.filter((genre: IGenre) => {
+      return genre.name?.toLowerCase().includes(filter?.trim().toLowerCase());
     });
+    console.log(filteredGenres);
     setGenres(filteredGenres);
   };
 
