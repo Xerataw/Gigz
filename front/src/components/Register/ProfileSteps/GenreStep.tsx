@@ -1,7 +1,7 @@
 import { Title } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import GenreSelectionList from '../../GenreSelectionList';
-import { IStepProps } from '../AccountStep/FirstStep';
+import { IStepProps } from '../../../types/IStepProps';
 
 const GenreStep: React.FC<IStepProps> = ({ form }) => {
   const [selectedGenre, setSelectedGenre] = useState<number[]>(

@@ -1,10 +1,8 @@
 import { Box, Center, SegmentedControl } from '@mantine/core';
-import getGenres from '../../../api/genres';
-import React, { useEffect, useState } from 'react';
-import IGenre from '../../../types/IGenre';
 import { IconBuilding, IconMusic } from '@tabler/icons-react';
-import EProfileType from '../../../types/EProfileType';
+import React from 'react';
 import { useTranslation } from 'react-i18next';
+import EProfileType from '../../../types/EProfileType';
 
 interface IProfileTypeProps {
   form: any;

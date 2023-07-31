@@ -1,9 +1,10 @@
 import { RangeSlider } from '@mantine/core';
-import { ICapacities, getCapacities } from '../../../api/capacities';
+import { getCapacities } from '../../../api/capacities';
 import React, { useEffect, useState } from 'react';
+import ICapacity from '../../../types/ICapacity';
 
 const CapacityRange: React.FC = () => {
-  const [capacities, setCapacities] = useState([] as ICapacities[]);
+  const [capacities, setCapacities] = useState([] as ICapacity[]);
 
   useEffect(() => {
     getCapacities().then((res) => {
