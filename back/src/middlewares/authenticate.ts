@@ -1,4 +1,4 @@
-import { NextFunction, Request, Response, response } from 'express';
+import { NextFunction, Request, Response } from 'express';
 import useDatabase from '../composables/useDatabase';
 import useUtils from '../composables/useUtils';
 
@@ -25,11 +25,11 @@ const authenticate = async (
   const profile = account?.artist || account?.host;
 
   if (!account) {
-    return sendError(response, ApiMessages.WrongToken, 401);
+    return sendError(res, ApiMessages.WrongToken, 401);
   }
 
-  if(account.email_validated === 0){
-    return sendError(response, ApiMessages.EmailNotValidated, 401);
+  if (account.email_validated === 0) {
+    return sendError(res, ApiMessages.EmailNotValidated, 401);
   }
 
   req.account = {
