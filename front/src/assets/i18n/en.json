@@ -87,8 +87,15 @@
       "description": "Description",
       "descriptionHelper": "Describe yourself in some words to informe hosts who you are"
     },
+    "addressCompleteStep": {
+      "artist": {
+        "label": "In which city are you present?",
+        "address": "City",
+        "addressHelper": "Major city where you perform yourself",
+        "placeholder": "69000 Lyon"
+      }
+    },
     "socialLinksStep": "Where can we find you ?",
-    "addressCompleteStep": "Where do you perform ?",
     "genreStep": "You are quite ?",
     "presentationPicturesStep": "What does your group look like ?",
     "profilePictureStep": "What does you look like ?",

@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import MapTiler, { IAddressSearchItem } from '../../services/MapTilerFetcher';
 import { IStepProps } from '../../types/IStepProps';
 import StepTitle from './Utils/StepTitle';
+import { t } from 'i18next';
+import Helper from '../Tooltip/Helper';
 
 interface IAddressCompleteStepProps extends IStepProps {
   type: string;
@@ -11,7 +13,6 @@ interface IAddressCompleteStepProps extends IStepProps {
 
 const AddressCompleteStep: React.FC<IAddressCompleteStepProps> = ({
   form,
-  label,
   type,
 }) => {
   const [searchValue, setSearchValue] = useState<string>();
@@ -46,13 +47,19 @@ const AddressCompleteStep: React.FC<IAddressCompleteStepProps> = ({
 
   return (
     <>
-      <StepTitle label={label} />
+      <StepTitle label={t('register.addressCompleteStep.artist.label')} />
 
       <Autocomplete
         autoFocus
-        label="Votre adresse"
+        label={
+          <Helper.Label
+            label={t('register.addressCompleteStep.artist.addressHelper')}
+          >
+            {t('register.addressCompleteStep.artist.address')}
+          </Helper.Label>
+        }
         dropdownPosition="bottom"
-        placeholder="15 rue des marronniers, 46330 Saint-Cirq-Lapopie"
+        placeholder={t('register.addressCompleteStep.artist.placeholder')}
         data={searchItems}
         {...form.getInputProps('address')}
         filter={() => true} //whitout this autocomplete take only items' value which start with search value

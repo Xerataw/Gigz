@@ -64,7 +64,6 @@
       "passwordConfirmation": "Confirmation du mot de passe",
       "passwordConfirmationHelper": "Répétez votre mot de passe"
     },
-
     "errors": {
       "emailInvalid": "Email invalide. Elle doit inclure un @, et finit avec un nom de domaine",
       "phoneInvalid": "Numéro invalide. Il doit commencer par un 6 ou un 7, et avoir 8 autres chiffres",
@@ -88,8 +87,15 @@
       "description": "Description",
       "descriptionHelper": "Décrivez-vous en quelques mots pour informer les hôtes de qui vous êtes"
     },
+    "addressCompleteStep": {
+      "artist": {
+        "label": "Dans quelle ville êtes-vous présent ?",
+        "address": "Ville",
+        "addressHelper": "La ville principale où vous vous produisez",
+        "placeholder": "69000 Lyon"
+      }
+    },
     "socialLinksStep": "Où êtes vous présent ?",
-    "addressCompleteStep": "Où êtes vous présent ?",
     "genreStep": "Vous êtes plutôt ?",
     "presentationPicturesStep": "À quoi ressemble votre groupe ?",
     "profilePictureStep": "À quoi vous ressemblez ?",

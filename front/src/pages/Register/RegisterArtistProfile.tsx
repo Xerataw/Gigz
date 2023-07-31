@@ -115,11 +115,7 @@ const RegisterArtistProfile: React.FC = () => {
           </Stepper.Step>
 
           <Stepper.Step>
-            <AddressCompleteStep
-              form={form}
-              type="municipality"
-              label={t('register.addressCompleteStep')}
-            />
+            <AddressCompleteStep form={form} type="municipality" />
           </Stepper.Step>
 
           <Stepper.Step>
