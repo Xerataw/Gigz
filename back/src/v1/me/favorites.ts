@@ -37,15 +37,15 @@ router.post('/', async (req, res) => {
   sendResponse(res, fromDbFormat(data), 201);
 });
 
-router.delete('/', async (req, res) => {
-  const body = favoriteBodySchema.safeParse(req.body);
+router.delete('/:id', async (req, res) => {
+  const params = favoriteBodySchema.safeParse(req.params);
 
-  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+  if (!params.success) return sendError(res, ApiMessages.BadRequest);
 
   const favorite = await database.liked_account.findUnique({
     where: {
       liker_account_liked_account: {
-        liked_account: body.data.id,
+        liked_account: params.data.id,
         liker_account: req.account.id,
       },
     },
@@ -56,7 +56,7 @@ router.delete('/', async (req, res) => {
   const data = await database.liked_account.delete({
     where: {
       liker_account_liked_account: {
-        liked_account: body.data.id,
+        liked_account: params.data.id,
         liker_account: req.account.id,
       },
     },
