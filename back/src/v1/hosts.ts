@@ -79,6 +79,10 @@ router.get('/', async (req, res) => {
     where: buildHostsWhereCondition(body.data),
   });
 
+  const likeAccounts = await database.liked_account.findMany({
+    where: { liker_account: req.account.id },
+  });
+
   let formattedData = data.map((host) => ({
     id: host.id,
     name: host.name,
@@ -89,6 +93,11 @@ router.get('/', async (req, res) => {
     longitude: host.longitude,
     latitude: host.latitude,
     profilePicture: host.account.profile_picture,
+    likedAccount: likeAccounts.find(
+      (account) => account.liked_account === host.account_id
+    )
+      ? true
+      : false,
   }));
 
   if (

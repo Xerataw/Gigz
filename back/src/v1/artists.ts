@@ -73,6 +73,10 @@ router.get('/', async (req, res) => {
     where: buildArtistsWhereCondition(body.data),
   });
 
+  const likeAccounts = await database.liked_account.findMany({
+    where: { liker_account: req.account.id },
+  });
+
   let formattedData = data.map((artist) => ({
     id: artist.id,
     name: artist.name,
@@ -81,6 +85,11 @@ router.get('/', async (req, res) => {
     longitude: artist.longitude,
     latitude: artist.latitude,
     profilePicture: artist.account.profile_picture,
+    likedAccount: likeAccounts.find(
+      (account) => account.liked_account === artist.account_id
+    )
+      ? true
+      : false,
   }));
 
   if (
