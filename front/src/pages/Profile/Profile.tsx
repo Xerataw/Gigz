@@ -12,6 +12,8 @@ import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
 import Layout from '../Layout/Layout';
 import { buildProfile } from '../../services/apiTypesHelper';
+import IMedia from '../../types/IMedia';
+import IGenre from '../../types/IGenre';
 
 const Profile: React.FC = () => {
   const history = useHistory();
@@ -53,8 +55,8 @@ const Profile: React.FC = () => {
       buildProfile(
         {
           ...editConfirmed.updatedProfile,
-          gallery: profile?.gallery,
-          genres: profile?.genres,
+          gallery: profile?.gallery as IMedia[],
+          genres: profile?.genres as IGenre[],
         },
         user.getProfilePicture() as string
       )
