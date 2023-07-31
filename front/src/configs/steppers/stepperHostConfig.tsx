@@ -51,7 +51,7 @@ export const hostValidate = (
       };
 
     // links are all optional
-    case 7:
+    case 6:
       return {
         instagramLink: LinkUtils.validateLink(
           values.instagramLink,

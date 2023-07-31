@@ -7,12 +7,13 @@ import ProfileEditProvider, {
   useProfileEdit,
 } from '../../store/ProfileEditProvider';
 import { useUser } from '../../store/UserProvider';
-import EMediaType from '../../types/EMediaType';
 import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
-import IMedia from '../../types/IMedia';
 import Layout from '../Layout/Layout';
+import { buildProfile } from '../../services/apiTypesHelper';
+import IMedia from '../../types/IMedia';
+import IGenre from '../../types/IGenre';
 
 const Profile: React.FC = () => {
   const history = useHistory();
@@ -21,26 +22,6 @@ const Profile: React.FC = () => {
   const [profileLoading, setProfileLoading] = useState<boolean>(true);
   const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
-
-  const buildProfile = (
-    baseProfile: any,
-    profilePicture?: string
-  ): IArtistProfile | IHostProfile => {
-    const finalGallery: IMedia[] = [];
-    for (const galleryItem of baseProfile.gallery) {
-      finalGallery.push({
-        id: galleryItem.id,
-        source: galleryItem.media,
-        type: EMediaType.IMAGE,
-      });
-    }
-    return {
-      ...baseProfile,
-      gallery: finalGallery.sort((media1, media2) => media1.id - media2.id),
-      genres: baseProfile.genres ? baseProfile.genres : [],
-      profilePicture,
-    };
-  };
 
   const displayProfileView = (): JSX.Element => {
     return profileType === EProfileType.ARTIST ? (
@@ -60,7 +41,10 @@ const Profile: React.FC = () => {
     getProfile(user.getProfileType() as EProfileType).then((profile) => {
       setProfileType(user.getProfileType() as EProfileType);
       setProfile(
-        buildProfile(profile.data, user.getProfilePicture() as string)
+        buildProfile(
+          profile.data as IArtistProfile | IHostProfile,
+          user.getProfilePicture() as string
+        )
       );
       setProfileLoading(false);
     });
@@ -71,8 +55,8 @@ const Profile: React.FC = () => {
       buildProfile(
         {
           ...editConfirmed.updatedProfile,
-          gallery: profile?.gallery,
-          genres: profile?.genres,
+          gallery: profile?.gallery as IMedia[],
+          genres: profile?.genres as IGenre[],
         },
         user.getProfilePicture() as string
       )

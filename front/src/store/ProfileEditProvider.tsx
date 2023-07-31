@@ -60,10 +60,10 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
     if (editConfirmed) {
       const valuesToUpdate = buildProfile();
       userType === EProfileType.ARTIST
-        ? patchArtistProfile(valuesToUpdate).then((res) => {
+        ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) => {
             setUpdatedProfile(res.data as IArtistProfile);
           })
-        : patchHostProfile(valuesToUpdate).then((res) =>
+        : patchHostProfile(valuesToUpdate as IHostProfile).then((res) =>
             setUpdatedProfile(res.data as IHostProfile)
           );
       setEditConfirmed(false);

@@ -2,16 +2,20 @@ import express from 'express';
 import { z } from 'zod';
 import validator from 'validator';
 import { v4 as uuidv4 } from 'uuid';
+import { readFile } from 'fs/promises';
+import path from 'path';
 
 import useDatabase from '@composables/useDatabase';
 import useUtils from '@composables/useUtils';
 import useHash from '@composables/useHash';
 import useToken from '@composables/useToken';
+import useEmail from '@composables/useEmail';
 
 const { database, findAccountByEmail } = useDatabase();
-const { ApiMessages, sendResponse, sendError } = useUtils();
+const { ApiMessages, sendResponse, sendError, getEnv } = useUtils();
 const { hash } = useHash();
 const { generateToken } = useToken();
+const { sendMail } = useEmail();
 
 const router = express.Router();
 
@@ -52,6 +56,7 @@ router.post('/', async (req, res) => {
     })
     .then((newAccount) => {
       createBlankProfile(body.data.profileType, newAccount.id);
+      sendConfirmationEmail(newAccount.email, newAccount.user_id);
       sendResponse(
         res,
         {
@@ -112,6 +117,29 @@ const createBlankProfile = async (profileType: string, id: number) => {
       },
     });
   }
+};
+
+const sendConfirmationEmail = async (email: string, uuid: string) => {
+  let htmlToSend = await readFile(
+    path.join(__dirname, '../../public', 'emailConfirmationTemplate.html'),
+    'utf8'
+  );
+  if (process.env.NODE_ENV === 'production') {
+    htmlToSend = htmlToSend.replace(
+      '$$LINK$$',
+      'http://' + getEnv('IP_PORT_PROD') + '/api/auth/validateEmail/' + uuid
+    );
+  } else {
+    htmlToSend = htmlToSend.replace(
+      '$$LINK$$',
+      'http://localhost:3000/api/auth/validateEmail/' + uuid
+    );
+  }
+  sendMail({
+    to: email,
+    subject: 'Confirmez votre email sur Gigz !',
+    html: htmlToSend,
+  });
 };
 
 export default router;
