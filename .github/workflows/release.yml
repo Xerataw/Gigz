@@ -32,4 +32,4 @@ jobs:
           cd back/ 
           docker compose build api
           docker compose up api -d
-          docker compose exec api yarn prisma migrate dev
+          docker compose exec api yarn prisma migrate deploy
