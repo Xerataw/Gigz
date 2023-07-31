@@ -39,7 +39,6 @@ const Profile: React.FC = () => {
 
   const fetchProfile = () => {
     getProfile(user.getProfileType() as EProfileType).then((profile) => {
-      console.log(profile);
       setProfileType(user.getProfileType() as EProfileType);
       setProfile(
         buildProfile(
