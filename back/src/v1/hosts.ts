@@ -79,7 +79,7 @@ router.get('/', async (req, res) => {
     where: buildHostsWhereCondition(body.data),
   });
 
-  const likeAccounts = await database.liked_account.findMany({
+  const likedAccounts = await database.liked_account.findMany({
     where: { liker_account: req.account.id },
   });
 
@@ -93,7 +93,7 @@ router.get('/', async (req, res) => {
     longitude: host.longitude,
     latitude: host.latitude,
     profilePicture: host.account.profile_picture,
-    likedAccount: likeAccounts.find(
+    likedAccount: likedAccounts.find(
       (account) => account.liked_account === host.account_id
     )
       ? true
@@ -165,6 +165,10 @@ router.get('/:id/', async (req, res) => {
     },
   });
 
+  const likedAccounts = await database.liked_account.findMany({
+    where: { liker_account: req.account.id },
+  });
+
   const genres = await database.account_genre.findMany({
     where: { account_id: req.account.id },
     include: { genre: true },
@@ -184,6 +188,13 @@ router.get('/:id/', async (req, res) => {
 
   // @ts-ignore
   host.genre = formattedGenres;
+
+  // @ts-ignore
+  host.likedAccount = likedAccounts.find(
+    (account) => account.liked_account === host.account_id
+  )
+    ? true
+    : false;
 
   sendResponse(res, fromDbFormat(host));
 });
