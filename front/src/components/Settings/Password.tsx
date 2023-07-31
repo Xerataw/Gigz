@@ -5,9 +5,7 @@ import { useTranslation } from 'react-i18next';
 import { PasswordUtils } from '../../services/PasswordUtils';
 import SettingsDrawer from './SettingsDrawer';
 
-interface IPasswordProps {}
-
-const Password: React.FC<IPasswordProps> = () => {
+const Password: React.FC = () => {
   const { t } = useTranslation();
   const [value, setValue] = useDebouncedState<string>('', 1000);
   const [error, setError] = useState<any | boolean>();
