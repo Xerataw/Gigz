@@ -1,5 +1,6 @@
 import {
   Accordion,
+  Box,
   Button,
   Container,
   TextInput,
@@ -65,12 +66,11 @@ const SearchBar: React.FC<ISearchBarProps> = ({ form, onSubmit }) => {
         <Accordion
           mx="auto"
           variant="filled"
-          defaultValue="customization"
           classNames={classes}
           className={classes.root}
         >
-          <Accordion.Item value="customization" className="pb-4">
-            <Accordion.Control>
+          <Accordion.Item value="search-accordion" className="pb-4">
+            <Box className="p-2 flex ">
               <TextInput
                 name="name"
                 form={form}
@@ -79,8 +79,10 @@ const SearchBar: React.FC<ISearchBarProps> = ({ form, onSubmit }) => {
                 size="md"
                 icon={<IconSearch size="1.5rem" />}
                 {...form.getInputProps('name')}
+                className="w-full pl-2"
               />
-            </Accordion.Control>
+              <Accordion.Control className="w-11 pr-1" />
+            </Box>
             <Accordion.Panel>
               <div className="flex flex-col">
                 <CapacityRange />

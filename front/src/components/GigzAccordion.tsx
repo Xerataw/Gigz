@@ -55,11 +55,10 @@ const GigzAccordion: React.FC<IGigzAccordionProps> = ({
     <Accordion
       mx="auto"
       variant="filled"
-      defaultValue="customization"
       classNames={classes}
       className={[classes.root, className ?? ''].join(' ')}
     >
-      <Accordion.Item value="customization">
+      <Accordion.Item value="gigz-accordion">
         <Accordion.Control>{header}</Accordion.Control>
         <Accordion.Panel>{children}</Accordion.Panel>
       </Accordion.Item>

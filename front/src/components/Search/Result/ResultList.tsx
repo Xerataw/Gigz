@@ -41,7 +41,11 @@ const ResultList: React.FC<IResultListProps> = ({
           />
         ))}
         <div className="flex justify-center pt-5 mb-40">
-          <Text c="dimmed">{t('search.list.endOfProfiles')}</Text>
+          {results?.length > 0 ? (
+            <Text c="dimmed">{t('search.list.endOfProfiles')}</Text>
+          ) : (
+            <Text c="dimmed">{t('search.list.noResult')}</Text>
+          )}
         </div>
       </ScrollArea>
       <ResultProfileDrawer

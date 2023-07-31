@@ -24,7 +24,7 @@ const GenreSelector: React.FC<IGenreSelectorProps> = ({ form }) => {
       setSelectedGenre((old: number[]) => [...old, id]);
     } else {
       setSelectedGenre((old: number[]) =>
-        old.filter((idGenre) => idGenre != id)
+        old.filter((idGenre) => idGenre !== id)
       );
     }
   };

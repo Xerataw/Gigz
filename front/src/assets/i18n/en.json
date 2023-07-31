@@ -60,7 +60,8 @@
     "host": "Host",
     "sumbit": "Search",
     "list": {
-      "endOfProfiles": "You have seen everything..."
+      "endOfProfiles": "You have seen everything...",
+      "noResult": "No result found for your search"
     }
   }
 }
