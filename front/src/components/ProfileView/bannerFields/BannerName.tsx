@@ -41,7 +41,12 @@ const BannerName: React.FC<IBannerNameProps> = ({ name }) => {
       }}
     />
   ) : (
-    <Text className="pr-2 font-bold text-lg">{name}</Text>
+    <Text
+      truncate
+      className="font-bold text-xl pr-2 h-[1.8rem] w-5/6 text-ellipsis"
+    >
+      {name}
+    </Text>
   );
 };
 

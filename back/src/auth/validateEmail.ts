@@ -35,20 +35,29 @@ router.get('/:uuid/', rateLimiter, async (req, res) => {
   }
 
   if (user.email_validated === 1) {
-    return res.sendFile(path.join(__dirname, pathToPublic, 'emailAlreadyValidated.html'));
+    return res.sendFile(
+      path.join(__dirname, pathToPublic, 'emailAlreadyValidated.html')
+    );
   }
 
-  database.account.update({
-    where: { user_id: user.user_id },
-    data: {
-      email_validated: 1
-    }
-  }).then(() => {
-    return res.sendFile(path.join(__dirname, pathToPublic, 'emailValidated.html'));
-  }).catch(err => {
-    console.log('Error: can\'t validate the email', err);
-    return res.sendFile(path.join(__dirname, pathToPublic, 'serverError.html'));
-  })
+  database.account
+    .update({
+      where: { user_id: user.user_id },
+      data: {
+        email_validated: 1,
+      },
+    })
+    .then(() => {
+      return res.sendFile(
+        path.join(__dirname, pathToPublic, 'emailValidated.html')
+      );
+    })
+    .catch((err) => {
+      console.log("Error: can't validate the email", err);
+      return res.sendFile(
+        path.join(__dirname, pathToPublic, 'serverError.html')
+      );
+    });
 });
 
 export default router;

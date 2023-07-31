@@ -61,6 +61,7 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
             profilePicture={profile?.profilePicture}
             city={profile?.city}
             genres={profile?.genres}
+            capacity={(profile as IHostProfile)?.capacity}
             withDrawer={true}
             drawerOpened={drawerOpened}
           />
