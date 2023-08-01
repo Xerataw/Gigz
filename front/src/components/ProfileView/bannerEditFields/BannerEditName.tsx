@@ -7,18 +7,18 @@ interface IBannerEditNameProps {
 }
 
 const BannerEditName: React.FC<IBannerEditNameProps> = ({ name }) => {
-  const { editMode, editedName } = useProfileEdit();
+  const { editMode, setEditedName } = useProfileEdit();
   const [currentName, setCurrentName] = useState<string>(name);
 
   function updateName(updatedName: string) {
     setCurrentName(updatedName);
-    editedName.setEditedName(updatedName);
+    setEditedName(updatedName);
   }
 
   // Reset name if canceled before
   useEffect(() => {
     setCurrentName(name);
-  }, [editMode.editMode]);
+  }, [editMode]);
 
   return (
     <TextInput

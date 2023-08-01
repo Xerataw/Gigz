@@ -16,7 +16,7 @@ import Layout from '../Layout/Layout';
 const Profile: React.FC = () => {
   const history = useHistory();
   const user = useUser();
-  const { editConfirmed } = useProfileEdit();
+  const { editConfirmed, updatedProfile } = useProfileEdit();
   const [profileLoading, setProfileLoading] = useState<boolean>(true);
   const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
@@ -54,7 +54,7 @@ const Profile: React.FC = () => {
   const adjustUpdatedProfile = () => {
     setProfile(
       buildProfile({
-        ...editConfirmed.updatedProfile,
+        ...updatedProfile,
         gallery: profile?.gallery as IMedia[],
         genres: profile?.genres as IGenre[],
       })
@@ -63,9 +63,9 @@ const Profile: React.FC = () => {
 
   // Update the profile data
   useEffect(() => {
-    if (editConfirmed.editConfirmed) adjustUpdatedProfile();
+    if (editConfirmed) adjustUpdatedProfile();
     else fetchProfile();
-  }, [history, editConfirmed.editConfirmed]);
+  }, [history, editConfirmed]);
 
   return <Layout navBarShadow={false}>{displayProfileView()}</Layout>;
 };

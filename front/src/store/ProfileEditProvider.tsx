@@ -11,23 +11,13 @@ import IHostProfile from '../types/IHostProfile';
 import { useUser } from './UserProvider';
 
 interface IProfileEditContext {
-  editMode: {
-    editMode: boolean;
-    setEditMode: (editMode: boolean) => void;
-  };
-  editConfirmed: {
-    editConfirmed: boolean;
-    setEditConfirmed: (editConfirmed: boolean) => void;
-    updatedProfile: IArtistProfile | IHostProfile;
-  };
-  editedName: {
-    editedName: string;
-    setEditedName: (editedName: string) => void;
-  };
-  editedPP: {
-    editedPP: File | null;
-    setEditedPP: (editedPP: File | null) => void;
-  };
+  editMode: boolean;
+  setEditMode: (editMode: boolean) => void;
+  editConfirmed: boolean;
+  setEditConfirmed: (editConfirmed: boolean) => void;
+  updatedProfile: IArtistProfile | IHostProfile;
+  setEditedName: (editedName: string) => void;
+  setEditedPP: (editedPP: File | null) => void;
 }
 
 const ProfileEditContext = createContext<IProfileEditContext>(
@@ -43,7 +33,6 @@ interface IProfileEditProviderProps {
 const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   children,
 }) => {
-  // Get profile type to define which update route to call
   const user = useUser();
 
   // Edit mode management
@@ -111,23 +100,13 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   return (
     <ProfileEditContext.Provider
       value={{
-        editMode: {
-          editMode,
-          setEditMode,
-        },
-        editConfirmed: {
-          editConfirmed,
-          setEditConfirmed,
-          updatedProfile,
-        },
-        editedName: {
-          editedName,
-          setEditedName,
-        },
-        editedPP: {
-          editedPP,
-          setEditedPP,
-        },
+        editMode,
+        setEditMode,
+        editConfirmed,
+        setEditConfirmed,
+        updatedProfile,
+        setEditedName,
+        setEditedPP,
       }}
     >
       {children}

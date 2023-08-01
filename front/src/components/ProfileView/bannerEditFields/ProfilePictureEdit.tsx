@@ -1,9 +1,9 @@
-import { ActionIcon, Center, FileButton, UnstyledButton } from '@mantine/core';
+import { ActionIcon, FileButton } from '@mantine/core';
+import { IconPhotoEdit, IconPhotoPlus, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
+import GigzFetcher from '../../../services/GigzFetcher';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
 import ProfilePicture from '../../ProfilePicture';
-import GigzFetcher from '../../../services/GigzFetcher';
-import { IconPhotoEdit, IconPhotoPlus, IconTrash } from '@tabler/icons-react';
 
 interface IProfilePictureEditProps {
   profilePicture: string | null;
@@ -14,7 +14,7 @@ const ProfilePictureEdit: React.FC<IProfilePictureEditProps> = ({
   profilePicture,
   name,
 }) => {
-  const setEditedPP = useProfileEdit().editedPP.setEditedPP;
+  const { setEditedPP } = useProfileEdit();
   const [currentPP, setCurrentPP] = useState<string | null>(
     profilePicture ? GigzFetcher.getImageUri(profilePicture) : null
   );
