@@ -4,15 +4,8 @@ import IArtistProfile from '../types/IArtistProfile';
 import IGenre from '../types/IGenre';
 import IGigzResponse from '../types/IGigzResponse';
 import IHostProfile from '../types/IHostProfile';
-
-interface IProfilePicture {
-  media: string;
-}
-
-export interface IGalleryPhoto {
-  media: string;
-  id: number;
-}
+import IMedia from '../types/IMedia';
+import IProfilePicture from '../types/IProfilePicture';
 
 export const getProfile = async (
   profileType: EProfileType
@@ -79,7 +72,7 @@ export const postPhotoGallery = (files: File[]) => {
 
   files.forEach((file) => formData.append('media', file));
 
-  return GigzFetcher.post<IGalleryPhoto[]>(
+  return GigzFetcher.post<IMedia[]>(
     'me/gallery',
     formData,
     { 'Content-Type': 'multipart/form-data' },
@@ -88,7 +81,7 @@ export const postPhotoGallery = (files: File[]) => {
 };
 
 export const deletePhotoGallery = (index: number) => {
-  return GigzFetcher.delete<IGalleryPhoto>('me/gallery/' + index);
+  return GigzFetcher.delete<IMedia>('me/gallery/' + index);
 };
 
 export const postGenre = async (

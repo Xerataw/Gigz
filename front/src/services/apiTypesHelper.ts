@@ -4,8 +4,7 @@ import IHostProfile from '../types/IHostProfile';
 import IMedia from '../types/IMedia';
 
 export function buildProfile(
-  baseProfile: IArtistProfile | IHostProfile,
-  profilePicture?: string
+  baseProfile: IArtistProfile | IHostProfile
 ): IArtistProfile | IHostProfile {
   const finalGallery: IMedia[] = [];
   for (const galleryItem of baseProfile.gallery) {
@@ -19,6 +18,5 @@ export function buildProfile(
     ...baseProfile,
     gallery: finalGallery.sort((media1, media2) => media1.id - media2.id),
     genres: baseProfile.genres ? baseProfile.genres : [],
-    profilePicture,
   };
 }

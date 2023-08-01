@@ -15,11 +15,77 @@ const favoriteBodySchema = z.object({
 router.get('/', async (req, res) => {
   const favorites = await database.liked_account.findMany({
     where: {
-      liker_account: req.account.id,
+      liker_account_id: req.account.id,
+    },
+
+    include: {
+      liked_account: {
+        include: {
+          host: {
+            include: {
+              capacity: {
+                select: {
+                  id: true,
+                  max: true,
+                },
+              },
+
+              host_type: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+
+          artist: true,
+
+          account_genre: {
+            include: {
+              genre: {
+                select: {
+                  id: true,
+                  name: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   });
 
-  sendResponse(res, fromDbFormat(favorites));
+  const newFavorites = favorites.map((fav) => {
+    const genres = fav.liked_account.account_genre.map((union) => ({
+      id: union.genre.id,
+      name: union.genre.name,
+    }));
+
+    if (fav.liked_account.host) {
+      // @ts-ignore
+      fav = fav.liked_account.host;
+
+      // @ts-ignore
+      fav.genres = genres;
+
+      // @ts-ignore
+      fav.profileType = 'host';
+    } else {
+      // @ts-ignore
+      fav = fav.liked_account.artist;
+
+      // @ts-ignore
+      fav.genres = genres;
+
+      // @ts-ignore
+      fav.profileType = 'artist';
+    }
+
+    return fav;
+  });
+
+  sendResponse(res, fromDbFormat(newFavorites));
 });
 
 router.post('/', async (req, res) => {
@@ -29,24 +95,24 @@ router.post('/', async (req, res) => {
 
   const data = await database.liked_account.create({
     data: {
-      liked_account: body.data.id,
-      liker_account: req.account.id,
+      liked_account_id: body.data.id,
+      liker_account_id: req.account.id,
     },
   });
 
   sendResponse(res, fromDbFormat(data), 201);
 });
 
-router.delete('/', async (req, res) => {
-  const body = favoriteBodySchema.safeParse(req.body);
+router.delete('/:id', async (req, res) => {
+  const params = favoriteBodySchema.safeParse(req.params);
 
-  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+  if (!params.success) return sendError(res, ApiMessages.BadRequest);
 
   const favorite = await database.liked_account.findUnique({
     where: {
-      liker_account_liked_account: {
-        liked_account: body.data.id,
-        liker_account: req.account.id,
+      liker_account_id_liked_account_id: {
+        liked_account_id: params.data.id,
+        liker_account_id: req.account.id,
       },
     },
   });
@@ -55,9 +121,9 @@ router.delete('/', async (req, res) => {
 
   const data = await database.liked_account.delete({
     where: {
-      liker_account_liked_account: {
-        liked_account: body.data.id,
-        liker_account: req.account.id,
+      liker_account_id_liked_account_id: {
+        liked_account_id: params.data.id,
+        liker_account_id: req.account.id,
       },
     },
   });

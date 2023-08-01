@@ -76,8 +76,17 @@
     "genre": "Rechercher un genre",
     "host": "Hôte",
     "sumbit": "Rechercher",
+    "capacity": {
+      "label": "Capacité d'accueil",
+      "amount_zero": "{{count}} personne",
+      "amount_one": "{{count}} personne",
+      "amount_other": "{{count}} personnes"
+    },
+    "like": {
+      "tooltip": "Ajouter aux favoris"
+    },
     "list": {
-      "endOfProfiles": "Vous avez regardé tous les profiles",
+      "endOfProfiles": "Vous avez regardé tous les profils",
       "noResult": "Aucun résultats pour votre recherche"
     }
   },
