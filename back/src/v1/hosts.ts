@@ -17,17 +17,20 @@ const {
 
 const searchFiltersBodySchemas = z.object({
   name: z.string().min(1).optional(),
-  capacityId: z.coerce.number().optional(),
+  capacities: z.string().optional(),
   genres: z.string().min(1).optional(),
   latitude: z.coerce.number().optional(),
   longitude: z.coerce.number().optional(),
 });
 
-const buildHostsWhereCondition = (query: {
-  name?: string;
-  capacityId?: number;
-  genres?: string;
-}) => {
+type SearchQueryType = z.infer<typeof searchFiltersBodySchemas>;
+
+const buildHostsWhereCondition = (query: SearchQueryType) => {
+  const a = query.capacities
+    ?.split(',')
+    .map((capacity) => parseInt(capacity))
+    .filter((capacity) => !isNaN(capacity));
+
   return {
     AND: {
       longitude: {
@@ -40,8 +43,11 @@ const buildHostsWhereCondition = (query: {
     name: {
       contains: query.name ? query.name : undefined,
     },
-    capacity_id: {
-      equals: query.capacityId ? query.capacityId : undefined,
+    capacity: {
+      max: {
+        gte: a?.at(0),
+        lte: a?.at(1),
+      },
     },
     account: query.genres
       ? {
@@ -61,8 +67,11 @@ router.get('/', async (req, res) => {
   const body = searchFiltersBodySchemas.safeParse(req.query);
 
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
+  const where = buildHostsWhereCondition(body.data);
 
   const data = await database.host.findMany({
+    where: where,
+
     include: {
       capacity: true,
       account: {
@@ -76,7 +85,6 @@ router.get('/', async (req, res) => {
         },
       },
     },
-    where: buildHostsWhereCondition(body.data),
   });
 
   const likedAccounts = await database.liked_account.findMany({
