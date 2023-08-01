@@ -1,4 +1,4 @@
-import { ActionIcon, FileButton } from '@mantine/core';
+import { ActionIcon, FileButton, useMantineColorScheme } from '@mantine/core';
 import { IconPhotoEdit, IconPhotoPlus, IconTrash } from '@tabler/icons-react';
 import { useState } from 'react';
 import GigzFetcher from '../../../services/GigzFetcher';
@@ -18,6 +18,9 @@ const ProfilePictureEdit: React.FC<IProfilePictureEditProps> = ({
   const [currentPP, setCurrentPP] = useState<string | null>(
     profilePicture ? GigzFetcher.getImageUri(profilePicture) : null
   );
+
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
 
   const fileToBase64 = (file: File | null): Promise<string | null> =>
     new Promise((resolve, reject) => {
@@ -51,7 +54,10 @@ const ProfilePictureEdit: React.FC<IProfilePictureEditProps> = ({
     <div className="relative">
       {currentPP !== null && (
         <ActionIcon
-          className="w-[2rem] h-[2rem] absolute -left-2 -top-2 z-[11] bg-white rounded-full p-1"
+          className={
+            'w-[2rem] h-[2rem] absolute -left-2 -top-2 z-[11] rounded-full p-1' +
+            (isDark ? ' bg-[#1A1B1E] ' : ' bg-white ')
+          }
           onClick={() => deletePP()}
         >
           <IconTrash width="100%" color="red" />
@@ -61,7 +67,10 @@ const ProfilePictureEdit: React.FC<IProfilePictureEditProps> = ({
         {(props) => (
           <ActionIcon
             {...props}
-            className="w-[2rem] h-[2rem] absolute -right-2 -top-2 z-[11] bg-white rounded-full p-1 m-0"
+            className={
+              'w-[2rem] h-[2rem] absolute -right-2 -top-2 z-[11] rounded-full p-1 m-0' +
+              (isDark ? ' bg-[#1A1B1E] ' : ' bg-white ')
+            }
           >
             {currentPP === null ? (
               <IconPhotoPlus width="100%" color="black" />

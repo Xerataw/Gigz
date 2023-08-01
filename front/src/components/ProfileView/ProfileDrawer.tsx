@@ -1,11 +1,11 @@
-import { ReactNode, useState } from 'react';
 import { Global } from '@emotion/react';
-import { ScrollArea } from '@mantine/core';
+import { ScrollArea, useMantineColorScheme } from '@mantine/core';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import ProfileBanner from './ProfileBanner';
-import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
+import { ReactNode, useState } from 'react';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
+import ProfileBanner from './ProfileBanner';
+import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 
 interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;
@@ -21,6 +21,9 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
   const [drawerOpened, setDrawerOpened] = useState<boolean>(false);
   const toggleDrawer = () => setDrawerOpened(!drawerOpened);
 
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
+
   const hasMusicEmbed =
     !profileLoading &&
     'musicLink' in profile &&
@@ -34,6 +37,7 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
           '.MuiDrawer-root > .MuiPaper-root': {
             height: `calc(75% - ${hasMusicEmbed ? '9.375' : '6.25'}rem)`,
             overflow: 'visible',
+            backgroundColor: isDark ? '#1A1B1E' : 'white',
           },
         }}
       />
@@ -68,15 +72,14 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
         </div>
         <ScrollArea
           className={
-            hasMusicEmbed
-              ? 'p-4 pt-0 pb-16 bg-white'
-              : 'p-4 pt-0 pb-16 bg-white -mt-12'
+            (isDark ? ' bg-[#1A1B1E] ' : ' bg-white ') +
+            (hasMusicEmbed ? 'p-4 pt-0 pb-16 ' : 'p-4 pt-0 pb-16  -mt-12')
           }
           style={hasMusicEmbed ? { marginTop: '-9.2rem' } : undefined}
           type="never"
         >
           {hasMusicEmbed && (
-            <div className="-mb-10 visible">
+            <div className="-mb-10 visible ">
               <MusicEmbed musicLink={profile.musicLink as string} />
             </div>
           )}
