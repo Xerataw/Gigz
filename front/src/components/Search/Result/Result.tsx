@@ -30,7 +30,7 @@ const Result: React.FC<ISearchResultProps> = ({ result, loading, onClick }) => {
       />
       <div
         hidden={loading}
-        onClick={() => likeAccount()}
+        onClick={likeAccount}
         className="pr-5 text-gigz-secondary"
       >
         {isLiked ? (
