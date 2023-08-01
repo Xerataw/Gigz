@@ -6,6 +6,7 @@ interface IResult {
   name: string;
   city: string;
   genres: IGenre[];
+  isLiked: boolean;
 }
 
 export default IResult;

@@ -76,6 +76,9 @@
     "genre": "Rechercher un genre",
     "host": "Hôte",
     "sumbit": "Rechercher",
+    "like": {
+      "tooltip": "Ajouter aux favoris"
+    },
     "list": {
       "endOfProfiles": "Vous avez regardé tous les profiles",
       "noResult": "Aucun résultats pour votre recherche"

@@ -85,7 +85,7 @@ const SearchBar: React.FC<ISearchBarProps> = ({ form, onSubmit }) => {
             </Box>
             <Accordion.Panel>
               <div className="flex flex-col">
-                <CapacityRange />
+                <CapacityRange form={form} />
                 <GenreSelector form={form} />
                 <ProfileType form={form} />
                 <Button type="submit" className="mt-2">

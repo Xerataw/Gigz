@@ -76,6 +76,9 @@
     "genre": "Search for a genre",
     "host": "Host",
     "sumbit": "Search",
+    "like": {
+      "tooltip": "Adds to your favorites"
+    },
     "list": {
       "endOfProfiles": "You have seen everything...",
       "noResult": "No result found for your search"

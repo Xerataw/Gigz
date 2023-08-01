@@ -3,12 +3,20 @@ import { getCapacities } from '../../../api/capacities';
 import React, { useEffect, useState } from 'react';
 import ICapacity from '../../../types/ICapacity';
 
-const CapacityRange: React.FC = () => {
+interface ICapacityRange {
+  form: any;
+}
+
+const CapacityRange: React.FC<ICapacityRange> = ({ form }) => {
   const [capacities, setCapacities] = useState([] as ICapacity[]);
 
   useEffect(() => {
     getCapacities().then((res) => {
       setCapacities(res?.data ?? []);
+      form.values.capacity = [
+        0,
+        Math.max(...(res?.data?.map((c) => c.max) ?? [0])),
+      ];
     });
   }, []);
 
@@ -22,7 +30,7 @@ const CapacityRange: React.FC = () => {
       label={(value) => `${value * 10} people`}
       max={Math.max(...capacities.map((capacity) => capacity.max / 10))}
       className="mb-8"
-      //{...form.getInputProps('capacityId')}
+      {...form.getInputProps('capacity')}
     />
   );
 };
