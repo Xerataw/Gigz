@@ -3,7 +3,9 @@ import {
   isMapSectionAvailable,
   isSocialsSectionAvailable,
 } from '../../services/sectionAvailability';
+import { useProfileEdit } from '../../store/ProfileEditProvider';
 import IHostProfile from '../../types/IHostProfile';
+import BiographyEdit from './EditFields/BiographyEdit';
 import Biography from './ProfileSections/Biography';
 import LocationChip from './ProfileSections/LocationChip';
 import LocationMap from './ProfileSections/LocationMap';
@@ -19,8 +21,17 @@ const HostProfileView: React.FC<IHostProfileViewProps> = ({
   profile,
   loading,
 }) => {
+  const { editMode } = useProfileEdit();
+
   const getProfileSections = (profile: IHostProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];
+    if (editMode) {
+      sections.push(
+        <BiographyEdit key="bio-edit" bio={profile?.description} />
+      );
+      return sections;
+    }
+
     isBioSectionAvaiblable(profile.description) &&
       sections.push(
         <Biography key="bio" content={profile.description as string} />

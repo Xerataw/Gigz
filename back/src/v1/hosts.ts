@@ -88,7 +88,7 @@ router.get('/', async (req, res) => {
   });
 
   const likedAccounts = await database.liked_account.findMany({
-    where: { liker_account: req.account.id },
+    where: { liker_account_id: req.account.id },
   });
 
   let formattedData = data.map((host) => ({
@@ -102,7 +102,7 @@ router.get('/', async (req, res) => {
     latitude: host.latitude,
     profilePicture: host.account.profile_picture,
     likedAccount: likedAccounts.find(
-      (account) => account.liked_account === host.account_id
+      (account) => account.liked_account_id === host.account_id
     )
       ? true
       : false,
@@ -174,7 +174,7 @@ router.get('/:id/', async (req, res) => {
   });
 
   const likedAccounts = await database.liked_account.findMany({
-    where: { liker_account: req.account.id },
+    where: { liker_account_id: req.account.id },
   });
 
   const genres = await database.account_genre.findMany({
@@ -199,7 +199,7 @@ router.get('/:id/', async (req, res) => {
 
   // @ts-ignore
   host.likedAccount = likedAccounts.find(
-    (account) => account.liked_account === host.account_id
+    (account) => account.liked_account_id === host.account_id
   )
     ? true
     : false;

@@ -110,13 +110,13 @@ model host_type {
 
 model liked_account {
   id                                           Int     @id @default(autoincrement())
-  liker_account                                Int
-  liked_account                                Int
-  account_liked_account_liker_accountToaccount account @relation("liked_account_liker_accountToaccount", fields: [liker_account], references: [id], onDelete: Cascade, map: "liked_account_ibfk_1")
-  account_liked_account_liked_accountToaccount account @relation("liked_account_liked_accountToaccount", fields: [liked_account], references: [id], onDelete: Cascade, map: "liked_account_ibfk_2")
+  liker_account_id                             Int
+  liked_account_id                             Int
+  liker_account                                account @relation("liked_account_liker_accountToaccount", fields: [liker_account_id], references: [id], onDelete: Cascade, map: "liked_account_ibfk_1")
+  liked_account                                account @relation("liked_account_liked_accountToaccount", fields: [liked_account_id], references: [id], onDelete: Cascade, map: "liked_account_ibfk_2")
 
-  @@unique([liker_account, liked_account], map: "liker_account_liked_account")
-  @@index([liked_account], map: "liked_account")
+  @@unique([liker_account_id, liked_account_id], map: "liker_account_liked_account")
+  @@index([liked_account_id], map: "liked_account")
 }
 
 model settings {

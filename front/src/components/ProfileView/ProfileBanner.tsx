@@ -123,7 +123,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             ) : (
               <Text
                 truncate
-                className="font-bold text-xl pr-2 h-[1.8rem] w-10/12 text-ellipsis"
+                className="font-bold text-xl pr-2 h-[1.8rem] max-w-[15rem] text-ellipsis"
               >
                 {username}
               </Text>

@@ -8,5 +8,7 @@ export const getChats = async () => {
 };
 
 export const getChatById = async (id: number, page: number) => {
-  return GigzFetcher.get<IChatDetails>(`me/conversations/${id}`, { page });
+  return GigzFetcher.get<IChatDetails>(`me/conversations/${id}`, {
+    page: page,
+  });
 };
