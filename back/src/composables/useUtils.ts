@@ -13,6 +13,7 @@ enum ApiMessages {
   MissingToken = 'MISSING_TOKEN',
   WrongToken = 'WRONG_TOKEN',
   WrongCredentials = 'WRONG_CREDENTIALS',
+  EmailNotValidated = 'EMAIL_NOT_VALIDATED',
 
   BadRequest = 'BAD_REQUEST',
 

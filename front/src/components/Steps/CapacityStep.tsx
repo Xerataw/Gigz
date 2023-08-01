@@ -19,19 +19,18 @@ const CapacityStep: React.FC<IStepProps> = ({ form, label }) => {
   };
 
   const colors = [
-    '',
+    'primary.2',
     'primary.3',
     'primary.4',
     'primary.5',
     'primary.6',
-    'primary.2',
   ];
 
   useEffect(() => {
     getCapacities()
       .then((res) => res.data)
       .then((res) => res?.sort((a, b) => a.max - b.max))
-      .then((res) => res?.map((cp) => ({ ...cp, color: colors[cp.id] })))
+      .then((res) => res?.map((cp, index) => ({ ...cp, color: colors[index] })))
       .then((res) => setCapacities(res ?? []));
   }, []);
 

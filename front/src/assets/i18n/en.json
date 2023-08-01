@@ -119,12 +119,20 @@
     }
   },
   "search": {
+    "placeholder": "Search Artist",
+    "artist": "Artist",
+    "genre": "Search for a genre",
+    "host": "Host",
+    "sumbit": "Search",
     "list": {
-      "endOfProfiles": "You have seen everything..."
+      "endOfProfiles": "You have seen everything...",
+      "noResult": "No result found for your search"
     }
   },
   "settings": {
     "title": "Settings",
+    "save": "Save",
+    "quit": "Quit",
     "language": {
       "title": "Languages"
     },
@@ -137,6 +145,42 @@
       "title": "Invisible mode",
       "on": "Invisible",
       "off": "Visible"
+    },
+    "logout": "Logout",
+    "deleteAccount": {
+      "delete": "Delete my account",
+      "confirmation": "Are you sure ?"
+    },
+    "userAccount": "Change your information",
+    "email": {
+      "button": "Email",
+      "title": "Change your email",
+      "input": "Email",
+      "placeholder": "john@gigz.music",
+      "error": "Your email is not valid"
+    },
+    "password": {
+      "button": "Password",
+      "title": "Change your password",
+      "input": "Password",
+      "placeholder": "my_sUp3r-S3cret_P@sswr0d",
+      "confirmation": "Confirmation"
+    },
+    "phone": {
+      "button": "Phone number",
+      "title": "Change your number",
+      "input": "Phone number",
+      "placeholder": "632569245",
+      "error": "Your number is not valide"
+    }
+  },
+  "password": {
+    "invalid": "Your password is invalid :",
+    "missing": {
+      "number": "You need to include a number",
+      "lowercase": "You need to include a lowercase letter",
+      "uppercase": "You need to include a uppercase letter",
+      "length": "You need to include at least 8 characters"
     }
   }
 }

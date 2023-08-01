@@ -28,7 +28,7 @@ const Gallery: React.FC<IGalleryProps> = ({
           media.type === EMediaType.IMAGE && (
             <Carousel.Slide key={media.id}>
               <Image
-                src={GigzFetcher.getImageUri(media.source)}
+                src={GigzFetcher.getImageUri(media.media)}
                 height={slidesHeight}
                 alt="Gallery"
               />

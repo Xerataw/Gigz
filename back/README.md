@@ -11,18 +11,21 @@ To bootstrap the application, install the dependencies using:
 `yarn install` or `npm install`
 
 You will also need a `.env` containing the variables:
+
 - `DATABASE_URL` => default to `mysql://root:root@database/gigz?connect_timeout=300`
 - `TOKEN_SALT`
 - `SALT_ROUNDS`
 
 Then execute the following command to setup the environment:
+
 - `just up`
 
 ## How to use
 
-*Tips:* to see the list of recipes, type `just -l`.
+_Tips:_ to see the list of recipes, type `just -l`.
 
 The following workflows are available:
+
 - To start the docker environment, type `just up` (add `-d` to start in detached mode). To stop it, run `just down`.
 - To see live logs of a service, run `just logs <service>` where service is one of the following: `api`, `database` (add a `-f` flag to keep the logs open).
 - To execute a command in a container, type `just exec <service> <command>`.
@@ -33,6 +36,7 @@ The following workflows are available:
 ## Interfaces
 
 The following web interfaces are available:
-- localhost:5555        -> database management
-- localhost:3000/api    -> api side of the server
+
+- localhost:5555 -> database management
+- localhost:3000/api -> api side of the server
 - localhost:3000/static -> file serving side of the server

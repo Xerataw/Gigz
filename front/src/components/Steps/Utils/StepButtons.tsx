@@ -17,7 +17,7 @@ const StepButtons: React.FC<IStepButtonsProps> = ({
   nextDisabled,
 }) => {
   return (
-    <Group position="right" mt="xl" mb="md">
+    <Group position="center" mt="xl" mb="md">
       {formStep > 0 && formStep < numberOfSteps && (
         <ActionIcon variant="default" onClick={prevStep} size="lg">
           <IconArrowLeft />

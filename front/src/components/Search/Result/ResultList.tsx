@@ -2,27 +2,24 @@ import { ScrollArea, Text } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { getResults } from '../../../api/search';
+import EProfileType from '../../../types/EProfileType';
 import IResult from '../../../types/IResult';
 import ResultProfileDrawer from './ResultProfileDrawer';
-import SearchResult from './SearchResult';
-import EProfileType from '../../../types/EProfileType';
+import Result from './Result';
 
-const SerachResultList: React.FC = () => {
+interface IResultListProps {
+  results: IResult[];
+  loading: boolean;
+  profileType: EProfileType;
+}
+
+const ResultList: React.FC<IResultListProps> = ({
+  results,
+  loading,
+  profileType,
+}) => {
   const { t } = useTranslation();
-
-  const loadingData = new Array(20)
-    .fill({})
-    .map((val, index) => ({ id: index } as IResult));
-  const [loading, setLoading] = useState(true);
-  const [results, setResults] = useState<IResult[]>(loadingData);
   const [selectedResult, setSelectedResult] = useState<IResult>();
-
-  useEffect(() => {
-    getResults().then((res) => {
-      setResults(res?.data ?? []);
-      setLoading(false);
-    });
-  }, []);
 
   const selectResult = (profile: IResult) => {
     setSelectedResult(profile);
@@ -34,27 +31,30 @@ const SerachResultList: React.FC = () => {
 
   return (
     <div>
-      <ScrollArea className="h-[40rem]">
+      <ScrollArea className="h-[40rem] mb-52">
         {results.map((result) => (
-          <SearchResult
+          <Result
             key={result.id}
             result={result}
             onClick={selectResult}
             loading={loading}
           />
         ))}
-        <div className="flex justify-center pb-20 pt-5">
-          <Text c="dimmed">{t('search.list.endOfProfiles')}</Text>
+        <div className="flex justify-center pt-5 mb-40">
+          {results?.length > 0 ? (
+            <Text c="dimmed">{t('search.list.endOfProfiles')}</Text>
+          ) : (
+            <Text c="dimmed">{t('search.list.noResult')}</Text>
+          )}
         </div>
       </ScrollArea>
-      {/* TODO: handle different filter (artist or host) */}
       <ResultProfileDrawer
         resultProfile={selectedResult ?? null}
-        profileType={EProfileType.HOST}
+        profileType={profileType}
         onClose={onModalClose}
       />
     </div>
   );
 };
 
-export default SerachResultList;
+export default ResultList;
