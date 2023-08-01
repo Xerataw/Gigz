@@ -40,7 +40,12 @@ const Search: React.FC = () => {
   const getProfilesWithFilter = () => {
     setLoading(true);
     const filters = { ...form.values };
-    filters.capacities = filters.capacities.map((c) => c * 10);
+    // Remove the capacities from the filter when we search for an artsit
+    filters.capacities =
+      filters.type === EProfileType.HOST
+        ? filters.capacities.map((c) => c * 10)
+        : [];
+
     getResults(filters as IFilter).then((res) => {
       setResults(res?.data ?? []);
       setLoading(false);
