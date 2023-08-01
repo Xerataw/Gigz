@@ -22,6 +22,7 @@ import './index.css';
 import RegisterHostProfile from './pages/Register/RegisterHostProfile';
 import ProfileEditProvider from './store/ProfileEditProvider';
 import { useInitialLoading } from './store/InitialLoadingProvider';
+import SocketProvider from './store/SocketProvider';
 
 setupIonicReact();
 
@@ -69,29 +70,31 @@ const App: React.FC = () => {
               </Route>
             </NestedRoute>
 
-            <NestedRoute
-              path="/auth"
-              redirectNoMatch={DEFAULT_ROUTE}
-              condition={true}
-            >
-              <Route path="/liked">
-                <Liked />
-              </Route>
+            <SocketProvider>
+              <NestedRoute
+                path="/auth"
+                redirectNoMatch={DEFAULT_ROUTE}
+                condition={true}
+              >
+                <Route path="/liked">
+                  <Liked />
+                </Route>
 
-              <Route path="/search">
-                <Search />
-              </Route>
+                <Route path="/search">
+                  <Search />
+                </Route>
 
-              <Route path="/conversations">
-                <Conversations />
-              </Route>
+                <Route path="/conversations">
+                  <Conversations />
+                </Route>
 
-              <Route path="/profile">
-                <ProfileEditProvider>
-                  <Profile />
-                </ProfileEditProvider>
-              </Route>
-            </NestedRoute>
+                <Route path="/profile">
+                  <ProfileEditProvider>
+                    <Profile />
+                  </ProfileEditProvider>
+                </Route>
+              </NestedRoute>
+            </SocketProvider>
 
             <Route path="/*" exact>
               <Redirect to={DEFAULT_ROUTE} />
