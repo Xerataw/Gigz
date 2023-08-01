@@ -18,6 +18,7 @@ interface IProfileEditContext {
   updatedProfile: IArtistProfile | IHostProfile;
   setEditedName: (editedName: string) => void;
   setEditedPP: (editedPP: File | null) => void;
+  setEditedBio: (editedBiography: string) => void;
 }
 
 const ProfileEditContext = createContext<IProfileEditContext>(
@@ -41,14 +42,16 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [updatedProfile, setUpdatedProfile] = useState(
     {} as IArtistProfile | IHostProfile
   );
-  const [editedPP, setEditedPP] = useState<File | null>(null);
 
   // Values to edit
   const [editedName, setEditedName] = useState<string>('');
+  const [editedPP, setEditedPP] = useState<File | null>(null);
+  const [editedBio, setEditedBio] = useState<string>('');
 
   const buildProfile = (): IArtistProfile | IHostProfile => {
     return {
       name: editedName,
+      description: editedBio,
       gallery: [],
       genres: [],
     };
@@ -107,6 +110,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         updatedProfile,
         setEditedName,
         setEditedPP,
+        setEditedBio,
       }}
     >
       {children}
