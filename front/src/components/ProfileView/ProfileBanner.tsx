@@ -16,7 +16,8 @@ import IGenre from '../../types/IGenre';
 import IProfilePicture from '../../types/IProfilePicture';
 import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
-import BannerName from './bannerFields/BannerName';
+import BannerEditName from './bannerEditFields/BannerEditName';
+import ProfilePictureEdit from './bannerEditFields/ProfilePictureEdit';
 
 interface IProfileBannerProps {
   username: string;
@@ -85,32 +86,39 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
           )}
         </div>
       )}
-      <div className="flex flex-row flex-nowrap items-center pt-3 pb-3">
+      <div className="flex flex-row flex-nowrap items-start pt-3 pb-3">
         <Skeleton visible={loading} w="5.5rem" radius="md">
-          <ProfilePicture
-            src={
-              loading
-                ? null
-                : GigzFetcher.getImageUri(profilePicture?.media as string)
-            }
-            radius="xl"
-            size="xl"
-            alt={username}
-          />
+          {editMode.editMode ? (
+            <ProfilePictureEdit
+              profilePicture={profilePicture ? profilePicture.media : null}
+              name={username}
+            />
+          ) : (
+            <ProfilePicture
+              src={
+                loading || !profilePicture
+                  ? null
+                  : GigzFetcher.getImageUri(profilePicture.media)
+              }
+              radius="xl"
+              size="xl"
+              alt={username}
+            />
+          )}
         </Skeleton>
-        <div className="ml-3">
+        <div className="ml-3 mt-1">
           <Skeleton
             visible={loading}
             h={loading ? '1.5rem' : 'inherit'}
             mb={loading ? '0.25rem' : 'inherit'}
             className="flex flex-row flex-nowrap items-center"
           >
-            {canEdit ? (
-              <BannerName name={username} />
+            {editMode.editMode ? (
+              <BannerEditName name={username} />
             ) : (
               <Text
                 truncate
-                className="font-bold text-xl pr-2 h-[1.8rem] w-5/6 text-ellipsis"
+                className="font-bold text-xl pr-2 h-[1.8rem] w-10/12 text-ellipsis"
               >
                 {username}
               </Text>

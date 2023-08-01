@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react';
 import { Text, TextInput } from '@mantine/core';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
 
-interface IBannerNameProps {
+interface IBannerEditNameProps {
   name: string;
 }
 
-const BannerName: React.FC<IBannerNameProps> = ({ name }) => {
+const BannerEditName: React.FC<IBannerEditNameProps> = ({ name }) => {
   const { editMode, editedName } = useProfileEdit();
   const [currentName, setCurrentName] = useState<string>(name);
 
@@ -20,7 +20,7 @@ const BannerName: React.FC<IBannerNameProps> = ({ name }) => {
     setCurrentName(name);
   }, [editMode.editMode]);
 
-  return editMode.editMode ? (
+  return (
     <TextInput
       value={currentName}
       variant="unstyled"
@@ -40,14 +40,7 @@ const BannerName: React.FC<IBannerNameProps> = ({ name }) => {
         },
       }}
     />
-  ) : (
-    <Text
-      truncate
-      className="font-bold text-xl pr-2 h-[1.8rem] w-11/12 text-ellipsis"
-    >
-      {name}
-    </Text>
   );
 };
 
-export default BannerName;
+export default BannerEditName;
