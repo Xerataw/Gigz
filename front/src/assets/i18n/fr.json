@@ -54,7 +54,7 @@
       "label": "Pour vous retrouver",
       "email": "Email",
       "emailHelper": "Un email pour communiquer avec vous",
-      "phone": "Numéro de Téléphone",
+      "phone": "Numéro de téléphone",
       "phoneHelper": "Un numéro pour que les personnes intéressés puissent vous appeler si vous les y autorisez"
     },
     "passwordStep": {
