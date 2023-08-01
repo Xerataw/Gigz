@@ -46,7 +46,7 @@
     "profileTypeStep": {
       "label": "Vous êtes ?",
       "artist": "Un artiste",
-      "artistTooltip": "Chanteur, Groupe, Musicien, Formation",
+      "artistTooltip": "Chanteur, Groupe, Musicien",
       "host": "Un hôte",
       "hostTooltip": "Bar, Pub, Restaurant, Salle de Concert"
     },
