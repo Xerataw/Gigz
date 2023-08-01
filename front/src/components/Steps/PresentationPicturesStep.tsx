@@ -63,7 +63,7 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
         label={t('register.presentationPicturesStep.helper')}
         labelDirection="right"
       >
-        {t('register.presentationPicturesStep.max')}
+        {t('register.presentationPicturesStep.max')} ({pictures.length}/5)
       </Helper.UnderTitle>
 
       <Grid justify="center">

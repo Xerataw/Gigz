@@ -2,6 +2,6 @@ import { UseFormReturnType } from '@mantine/form';
 
 export interface IStepProps {
   form: UseFormReturnType<any>;
-  type?: 'artist' | 'host';
+  translate?: 'artist' | 'host';
   nextStep?: () => void;
 }

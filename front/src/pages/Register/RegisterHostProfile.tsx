@@ -126,17 +126,14 @@ const RegisterHostProfile: React.FC = () => {
           {/* STEP 0 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <NameStep form={form} label={t('register.nameStep')} />
+              <NameStep form={form} translate="host" />
             </Fade>
           </Stepper.Step>
 
           {/* STEP 1 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <DescriptionStep
-                form={form}
-                label={t('register.descriptionStep')}
-              />
+              <DescriptionStep form={form} translate="host" />
             </Fade>
           </Stepper.Step>
 
@@ -146,7 +143,7 @@ const RegisterHostProfile: React.FC = () => {
               <AddressCompleteStep
                 form={form}
                 type="address"
-                label={t('register.addressCompleteStep')}
+                translate="host"
               />
             </Fade>
           </Stepper.Step>
@@ -154,45 +151,35 @@ const RegisterHostProfile: React.FC = () => {
           {/* STEP 3 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <ProfilePictureStep
-                form={form}
-                label={t('register.presentationPicturesStep')}
-              />
+              <ProfilePictureStep form={form} />
             </Fade>
           </Stepper.Step>
 
           {/* STEP 4 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <GenreStep form={form} label={t('register.genreStep')} />
+              <GenreStep form={form} />
             </Fade>
           </Stepper.Step>
 
           {/* STEP 5 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <CapacityStep form={form} label={t('register.capacityStep')} />
+              <CapacityStep form={form} />
             </Fade>
           </Stepper.Step>
 
           {/* STEP 6 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <SocialLinksStep
-                links={linksHost}
-                form={form}
-                label={t('register.socialLinksStep')}
-              />
+              <SocialLinksStep links={linksHost} form={form} />
             </Fade>
           </Stepper.Step>
 
           {/* STEP 7 */}
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <PresentationPicturesStep
-                form={form}
-                label={t('register.presentationPicturesStep')}
-              />
+              <PresentationPicturesStep form={form} />
             </Fade>
           </Stepper.Step>
 

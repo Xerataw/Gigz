@@ -79,20 +79,32 @@
     "nameStep": {
       "label": "Votre nom est ?",
       "name": "Nom",
-      "nameHelper": "Votre nom de scène, les hôtes pourront le voir"
+      "nameHelper": {
+        "artist": "Votre nom de scène, les hôtes pourront le voir",
+        "host": "Le nom de votre lieu, les artistes pourront le voir"
+      }
     },
     "descriptionStep": {
       "label": "Qui êtes-vous ?",
       "placeholder": "Les membres du groupe 'Antarctic Lemur' fusionnent leur passion pour le rock alternatif et l'électro-pop pour créer une expérience musicale unique. 'Antarctic Lemur' offre une atmosphère envoûtante où se mêlent énergie et sensibilité.",
       "description": "Description",
-      "descriptionHelper": "Décrivez-vous en quelques mots pour informer les hôtes de qui vous êtes"
+      "descriptionHelper": {
+        "artist": "Décrivez-vous en quelques mots pour informer les hôtes de qui vous êtes",
+        "host": "Décrivez-vous en quelques mots pour informer les artistes de qui vous êtes"
+      }
     },
     "addressCompleteStep": {
       "artist": {
         "label": "Dans quelle ville êtes-vous présent ?",
         "address": "Ville",
-        "addressHelper": "La ville principale où vous vous produisez",
+        "addressHelper": "La ville principale où vous êtes présent",
         "placeholder": "69000 Lyon"
+      },
+      "host": {
+        "label": "À quelle addresse êtes-vous présent ?",
+        "address": "Adresse",
+        "addressHelper": "L'adresse principale où vous vous produisez",
+        "placeholder": "15 rue des lilas, 69000 Lyon"
       }
     },
     "profilePictureStep": {
@@ -117,7 +129,11 @@
       "helper": "Tout le monde pourra voir votre ambiance, votre travail et plus"
     },
 
-    "capacityStep": "Vous pouvez acceuillir combien de personne ?"
+    "capacityStep": {
+      "label": "Vous pouvez acceuillir combien de personne ?",
+      "capacity": "Vous pouvez acceuillir combien de personnes maximum ?",
+      "helper": "Choisissez la capacité qui est supérieur à votre capacité réelle. Si vous pouvez acceuillir 30 personnes, choisissez 50 max."
+    }
   },
   "profile": {
     "banner": {

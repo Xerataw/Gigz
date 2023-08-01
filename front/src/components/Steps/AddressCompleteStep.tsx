@@ -1,11 +1,11 @@
 import { Autocomplete } from '@mantine/core';
 import { useDebouncedValue } from '@mantine/hooks';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import MapTiler, { IAddressSearchItem } from '../../services/MapTilerFetcher';
 import { IStepProps } from '../../types/IStepProps';
-import StepTitle from './Utils/StepTitle';
-import { t } from 'i18next';
 import Helper from '../Tooltip/Helper';
+import StepTitle from './Utils/StepTitle';
 
 interface IAddressCompleteStepProps extends IStepProps {
   type: string;
@@ -14,6 +14,7 @@ interface IAddressCompleteStepProps extends IStepProps {
 const AddressCompleteStep: React.FC<IAddressCompleteStepProps> = ({
   form,
   type,
+  translate,
 }) => {
   const [searchValue, setSearchValue] = useState<string>();
   const [searchItems, setSearchItems] = useState<IAddressSearchItem[]>([]);
@@ -47,19 +48,35 @@ const AddressCompleteStep: React.FC<IAddressCompleteStepProps> = ({
 
   return (
     <>
-      <StepTitle label={t('register.addressCompleteStep.artist.label')} />
+      <StepTitle
+        label={t(
+          'register.addressCompleteStep.' + (translate ?? 'artist') + '.label'
+        )}
+      />
 
       <Autocomplete
         autoFocus
         label={
           <Helper.Label
-            label={t('register.addressCompleteStep.artist.addressHelper')}
+            label={t(
+              'register.addressCompleteStep.' +
+                (translate ?? 'artist') +
+                '.addressHelper'
+            )}
           >
-            {t('register.addressCompleteStep.artist.address')}
+            {t(
+              'register.addressCompleteStep.' +
+                (translate ?? 'artist') +
+                '.address'
+            )}
           </Helper.Label>
         }
         dropdownPosition="bottom"
-        placeholder={t('register.addressCompleteStep.artist.placeholder')}
+        placeholder={t(
+          'register.addressCompleteStep.' +
+            (translate ?? 'artist') +
+            '.placeholder'
+        )}
         data={searchItems}
         {...form.getInputProps('address')}
         filter={() => true} //whitout this autocomplete take only items' value which start with search value

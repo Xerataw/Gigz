@@ -1,10 +1,10 @@
 import { Textarea } from '@mantine/core';
-import StepTitle from './Utils/StepTitle';
-import { IStepProps } from '../../types/IStepProps';
 import { t } from 'i18next';
+import { IStepProps } from '../../types/IStepProps';
 import Helper from '../Tooltip/Helper';
+import StepTitle from './Utils/StepTitle';
 
-const DescriptionStep: React.FC<IStepProps> = ({ form }) => {
+const DescriptionStep: React.FC<IStepProps> = ({ form, translate }) => {
   return (
     <>
       <StepTitle label={t('register.descriptionStep.label')} />
@@ -12,7 +12,12 @@ const DescriptionStep: React.FC<IStepProps> = ({ form }) => {
         autoFocus
         placeholder={t('register.descriptionStep.placeholder')}
         label={
-          <Helper.Label label={t('register.descriptionStep.descriptionHelper')}>
+          <Helper.Label
+            label={t(
+              'register.descriptionStep.descriptionHelper.' +
+                (translate ?? 'artist')
+            )}
+          >
             {t('register.descriptionStep.description')}
           </Helper.Label>
         }

@@ -79,13 +79,19 @@
     "nameStep": {
       "label": "What is your name ?",
       "name": "Name",
-      "nameHelper": "Your stage name, hosts will be able to see it"
+      "nameHelper": {
+        "artist": "Your stage name, hosts will be able to see it",
+        "host": "Your place name, artists will be able to see it"
+      }
     },
     "descriptionStep": {
       "label": "Who are you ?",
       "placeholder": "The members of the group 'Antarctic Lemur' merge their passion for alternative rock and electro-pop to create a unique musical experience. 'Antarctic Lemur' offers a bewitching atmosphere where energy and sensitivity mingle.",
       "description": "Description",
-      "descriptionHelper": "Describe yourself in some words to informe hosts who you are"
+      "descriptionHelper": {
+        "artist": "Describe yourself in some words to informe hosts who you are",
+        "host": "Describe yourself in some words to informe artists who you are"
+      }
     },
     "addressCompleteStep": {
       "artist": {
@@ -93,6 +99,12 @@
         "address": "City",
         "addressHelper": "Major city where you perform yourself",
         "placeholder": "69000 Lyon"
+      },
+      "host": {
+        "label": "Where are you present?",
+        "address": "Address",
+        "addressHelper": "Major address where you are",
+        "placeholder": "15 lilac street, 69000 Lyon"
       }
     },
     "profilePictureStep": {
@@ -112,11 +124,15 @@
     },
     "presentationPicturesStep": {
       "label": "Express yourself in pictures!",
-      "helper": "Everyone will be able to recognize you with this pictures",
+      "helper": "Everyone will bnameHelpere able to recognize you with this pictures",
       "add": "Add pictures",
       "max": "Add up to 5 pictures"
     },
-    "capacityStep": "How many people can you accommodate ?"
+    "capacityStep": {
+      "label": "How many people can you accommodate?",
+      "capacity": "How many people can you accommodate?",
+      "helper": "Choose the capacity which is higher than your actual capacity. If you can accommodate 30 people, choose 50 max."
+    }
   },
   "profile": {
     "banner": {

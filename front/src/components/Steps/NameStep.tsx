@@ -4,7 +4,7 @@ import { IStepProps } from '../../types/IStepProps';
 import StepTitle from './Utils/StepTitle';
 import Helper from '../Tooltip/Helper';
 
-const NameStep: React.FC<IStepProps> = ({ form }) => {
+const NameStep: React.FC<IStepProps> = ({ form, translate }) => {
   return (
     <>
       <StepTitle label={t('register.nameStep.label')} />
@@ -13,7 +13,9 @@ const NameStep: React.FC<IStepProps> = ({ form }) => {
         withAsterisk
         mt="sm"
         label={
-          <Helper.Label label={t('register.nameStep.nameHelper')}>
+          <Helper.Label
+            label={t('register.nameStep.nameHelper.' + (translate ?? 'artist'))}
+          >
             {t('register.nameStep.name')}
           </Helper.Label>
         }
