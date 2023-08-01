@@ -201,7 +201,7 @@ export default class GigzFetcher {
     if (Object.keys(params).length > 0) {
       const strParams: Record<string, string> = {};
       for (const [key, value] of Object.entries(params)) {
-        if (value?.length > 0 || parseInt(value)) {
+        if (value?.toString()?.length > 0) {
           strParams[key] = value.toString();
         }
       }
