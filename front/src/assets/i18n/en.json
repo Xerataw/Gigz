@@ -134,5 +134,9 @@
       "uppercase": "You need to include a uppercase letter",
       "length": "You need to include at least 8 characters"
     }
+  },
+  "favorites": {
+    "newSearch": "New search",
+    "none": "You don't get any favorites"
   }
 }

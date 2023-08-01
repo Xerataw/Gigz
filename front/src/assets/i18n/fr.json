@@ -134,5 +134,9 @@
       "uppercase": "Il doit inclure une majuscule",
       "length": "Il doit inclure au moins 8 caractères"
     }
+  },
+  "favorites": {
+    "newSearch": "Nouvelle recherche",
+    "none": "Vous n'avez pas encore de favoris"
   }
 }
