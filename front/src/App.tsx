@@ -1,4 +1,3 @@
-import DevTools from './components/DevTools/DevTools';
 import { setupIonicReact } from '@ionic/react';
 import { Container } from '@mantine/core';
 import React from 'react';
@@ -21,8 +20,8 @@ import Loading from './components/Loading';
 import NestedRoute from './components/NestedRoute';
 import './index.css';
 import RegisterHostProfile from './pages/Register/RegisterHostProfile';
-import ProfileEditProvider from './store/ProfileEditProvider';
 import { useInitialLoading } from './store/InitialLoadingProvider';
+import ProfileEditProvider from './store/ProfileEditProvider';
 
 setupIonicReact();
 
