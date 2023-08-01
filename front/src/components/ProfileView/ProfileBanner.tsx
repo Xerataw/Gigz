@@ -16,8 +16,8 @@ import IGenre from '../../types/IGenre';
 import IProfilePicture from '../../types/IProfilePicture';
 import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
-import BannerEditName from './bannerEditFields/BannerEditName';
-import ProfilePictureEdit from './bannerEditFields/ProfilePictureEdit';
+import NameEdit from './EditFields/NameEdit';
+import ProfilePictureEdit from './EditFields/ProfilePictureEdit';
 
 interface IProfileBannerProps {
   username: string;
@@ -119,7 +119,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             className="flex flex-row flex-nowrap items-center"
           >
             {editMode ? (
-              <BannerEditName name={username} />
+              <NameEdit name={username} />
             ) : (
               <Text
                 truncate
