@@ -55,7 +55,7 @@
       "email": "Email",
       "emailHelper": "An email to communicate with you",
       "phone": "Phone Number",
-      "phoneHelper": "A phone number to people to call you if you authorise them"
+      "phoneHelper": "A phone number for people to call you if you authorise them"
     },
     "passwordStep": {
       "label": "Safety first",
