@@ -110,7 +110,12 @@
       "links": "Fill out links you want people see",
       "helper": "Everyone will see your work, mood and more"
     },
-    "presentationPicturesStep": "What does your group look like ?",
+    "presentationPicturesStep": {
+      "label": "Express yourself in pictures!",
+      "helper": "Everyone will be able to recognize you with this pictures",
+      "add": "Add pictures",
+      "max": "Add up to 5 pictures"
+    },
     "capacityStep": "How many people can you accommodate ?"
   },
   "profile": {

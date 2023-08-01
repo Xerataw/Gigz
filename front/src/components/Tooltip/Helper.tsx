@@ -42,24 +42,20 @@ const UnderTitle: React.FC<IHelperLabelProps> = ({
 }) => {
   const child = Array.isArray(children) ? children : [children];
 
-  <div className="flex justify-center pb-2">
-    <Text c="dimmed">
-      <Helper.Label label={t('register.genreStep.helper')}>
-        {t('register.genreStep.max')}
-      </Helper.Label>
-    </Text>
-  </div>;
-
   return (
-    <span className="inline-flex align-bottom">
-      <Helper label={label} labelDirection={labelDirection} />
-      <div className="pt-[2px] pl-1">{child.map((children) => children)}</div>
-    </span>
+    <div className="flex justify-center pb-2">
+      <Text c="dimmed">
+        <Helper.Label label={label} labelDirection={labelDirection}>
+          {child}
+        </Helper.Label>
+      </Text>
+    </div>
   );
 };
 
 interface HelperSubComponents {
   Label: React.FC<IHelperLabelProps>;
+  UnderTitle: React.FC<IHelperLabelProps>;
 }
 
 const Helper: React.FC<IHelperProps> & HelperSubComponents = ({
@@ -81,5 +77,6 @@ const Helper: React.FC<IHelperProps> & HelperSubComponents = ({
 };
 
 Helper.Label = Label;
+Helper.UnderTitle = UnderTitle;
 
 export default Helper;

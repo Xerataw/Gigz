@@ -18,6 +18,7 @@ import {
 } from '../../api/user';
 import GigzFetcher from '../../services/GigzFetcher';
 import { IStepProps } from '../../types/IStepProps';
+import Helper from '../Tooltip/Helper';
 import StepTitle from './Utils/StepTitle';
 
 const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
@@ -58,6 +59,12 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
       <StepTitle label={t('register.presentationPicturesStep.label')} />
+      <Helper.UnderTitle
+        label={t('register.presentationPicturesStep.helper')}
+        labelDirection="right"
+      >
+        {t('register.presentationPicturesStep.max')}
+      </Helper.UnderTitle>
 
       <Grid justify="center">
         {pictures.map((image, index) => (
@@ -89,28 +96,26 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
               shadow="sm"
               radius="md"
               withBorder
-              className="h-[200px] py-[5px]"
+              className="h-[200px] py-[5px] flex flex-col justify-center"
             >
-              <Text align="center" mb="sm" mt="sm" weight={500}>
-                Ajouter des images
-              </Text>
-
-              <Text size="sm" color="dimmed" align="center">
-                Ajouter jusqu&apos;à 5 images ({pictures.length}/{maxFile})
-              </Text>
-              <Center mt="sm">
-                <FileButton
-                  onChange={handleAddFiles}
-                  accept="image/png,image/jpeg"
-                  multiple
-                >
-                  {(props) => (
-                    <Button {...props}>
-                      <IconPlus />
-                    </Button>
-                  )}
-                </FileButton>
-              </Center>
+              <div>
+                <Text align="center" mb="sm" weight={500}>
+                  {t('register.presentationPicturesStep.add')}
+                </Text>
+                <Center>
+                  <FileButton
+                    onChange={handleAddFiles}
+                    accept="image/png,image/jpeg"
+                    multiple
+                  >
+                    {(props) => (
+                      <Button {...props}>
+                        <IconPlus />
+                      </Button>
+                    )}
+                  </FileButton>
+                </Center>
+              </div>
             </Card>
           </Grid.Col>
         )}

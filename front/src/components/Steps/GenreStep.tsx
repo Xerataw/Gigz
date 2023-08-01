@@ -1,4 +1,4 @@
-import { SimpleGrid, Text } from '@mantine/core';
+import { SimpleGrid } from '@mantine/core';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { getGenres } from '../../api/genres';
@@ -37,13 +37,10 @@ const GenreStep: React.FC<IStepProps> = ({ form }) => {
   return (
     <>
       <StepTitle label={t('register.genreStep.label')} />
-      <div className="flex justify-center pb-2">
-        <Text c="dimmed">
-          <Helper.Label label={t('register.genreStep.helper')}>
-            {t('register.genreStep.max')}
-          </Helper.Label>
-        </Text>
-      </div>
+
+      <Helper.UnderTitle label={t('register.genreStep.helper')}>
+        {t('register.genreStep.max')}
+      </Helper.UnderTitle>
       <SimpleGrid
         cols={3}
         spacing="lg"

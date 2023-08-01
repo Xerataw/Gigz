@@ -107,15 +107,16 @@
     },
     "presentationPicturesStep": {
       "label": "Qui êtes-vous ?",
-      "placeholder": "Les membres du groupe 'Antarctic Lemur' fusionnent leur passion pour le rock alternatif et l'électro-pop pour créer une expérience musicale unique. 'Antarctic Lemur' offre une atmosphère envoûtante où se mêlent énergie et sensibilité.",
-      "description": "Description",
-      "descriptionHelper": "Décrivez-vous en quelques mots pour informer les hôtes de qui vous êtes"
+      "helper": "Tout le monde pourra vous reconnaître avec ces images",
+      "add": "Ajouter des images",
+      "max": "Vous pouvez ajouter jusqu'à 5 images"
     },
     "socialLinksStep": {
       "label": "Où êtes-vous présent ?",
       "links": "Remplissez les liens vous concernant",
       "helper": "Tout le monde pourra voir votre ambiance, votre travail et plus"
     },
+
     "capacityStep": "Vous pouvez acceuillir combien de personne ?"
   },
   "profile": {
