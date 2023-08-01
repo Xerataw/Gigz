@@ -1,24 +1,23 @@
 import { createContext, useContext, useEffect, useState } from 'react';
-import { patchArtistProfile, patchHostProfile } from '../api/user';
+import {
+  deleteProfilePicture,
+  patchArtistProfile,
+  patchHostProfile,
+  patchProfilePicture,
+} from '../api/user';
 import EProfileType from '../types/EProfileType';
 import IArtistProfile from '../types/IArtistProfile';
 import IHostProfile from '../types/IHostProfile';
 import { useUser } from './UserProvider';
 
 interface IProfileEditContext {
-  editMode: {
-    editMode: boolean;
-    setEditMode: (editMode: boolean) => void;
-  };
-  editConfirmed: {
-    editConfirmed: boolean;
-    setEditConfirmed: (editConfirmed: boolean) => void;
-    updatedProfile: IArtistProfile | IHostProfile;
-  };
-  editedName: {
-    editedName: string;
-    setEditedName: (editedName: string) => void;
-  };
+  editMode: boolean;
+  setEditMode: (editMode: boolean) => void;
+  editConfirmed: boolean;
+  setEditConfirmed: (editConfirmed: boolean) => void;
+  updatedProfile: IArtistProfile | IHostProfile;
+  setEditedName: (editedName: string) => void;
+  setEditedPP: (editedPP: File | null) => void;
 }
 
 const ProfileEditContext = createContext<IProfileEditContext>(
@@ -34,15 +33,15 @@ interface IProfileEditProviderProps {
 const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   children,
 }) => {
-  // Get profile type to define which update route to call
-  const userType = useUser().getProfileType() as EProfileType;
+  const user = useUser();
 
   // Edit mode management
   const [editMode, setEditMode] = useState<boolean>(false);
   const [editConfirmed, setEditConfirmed] = useState<boolean>(false);
-  const [updatedProfile, setUpdatedProfile] = useState<
-    IHostProfile | IArtistProfile
-  >({} as IArtistProfile | IHostProfile);
+  const [updatedProfile, setUpdatedProfile] = useState(
+    {} as IArtistProfile | IHostProfile
+  );
+  const [editedPP, setEditedPP] = useState<File | null>(null);
 
   // Values to edit
   const [editedName, setEditedName] = useState<string>('');
@@ -55,37 +54,59 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
     };
   };
 
+  const onProfileUpdated = (
+    newProfile: IArtistProfile | IHostProfile
+  ): void => {
+    if (editedPP !== null)
+      patchProfilePicture(editedPP).then((response) => {
+        user.setProfilePicture(response.data ? response.data.media : null);
+        setUpdatedProfile({
+          ...newProfile,
+          profilePicture:
+            user.getProfilePicture() !== null
+              ? { media: user.getProfilePicture() as string }
+              : undefined,
+        });
+        setEditConfirmed(false);
+      });
+    else
+      deleteProfilePicture().then(() => {
+        user.setProfilePicture(null);
+        setUpdatedProfile({
+          ...newProfile,
+          profilePicture:
+            user.getProfilePicture() !== null
+              ? { media: user.getProfilePicture() as string }
+              : undefined,
+        });
+        setEditConfirmed(false);
+      });
+  };
+
   // Send patch request if edit confirmed
   useEffect(() => {
     if (editConfirmed) {
       const valuesToUpdate = buildProfile();
-      userType === EProfileType.ARTIST
-        ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) => {
-            setUpdatedProfile(res.data as IArtistProfile);
-          })
+      (user.getProfileType() as EProfileType) === EProfileType.ARTIST
+        ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) =>
+            onProfileUpdated(res.data as IArtistProfile)
+          )
         : patchHostProfile(valuesToUpdate as IHostProfile).then((res) =>
-            setUpdatedProfile(res.data as IHostProfile)
+            onProfileUpdated(res.data as IHostProfile)
           );
-      setEditConfirmed(false);
     }
   }, [editConfirmed]);
 
   return (
     <ProfileEditContext.Provider
       value={{
-        editMode: {
-          editMode,
-          setEditMode,
-        },
-        editConfirmed: {
-          editConfirmed,
-          setEditConfirmed,
-          updatedProfile,
-        },
-        editedName: {
-          editedName,
-          setEditedName,
-        },
+        editMode,
+        setEditMode,
+        editConfirmed,
+        setEditConfirmed,
+        updatedProfile,
+        setEditedName,
+        setEditedPP,
       }}
     >
       {children}
