@@ -174,5 +174,9 @@ export const linksArtist = [
 ];
 
 export const getArtistValuesReq = (values: any): IArtistProfile => {
-  return { ...values, ...values.address, address: values.address.value };
+  return {
+    ...values,
+    ...values.address,
+    city: values.address.value.split(',')[0],
+  };
 };

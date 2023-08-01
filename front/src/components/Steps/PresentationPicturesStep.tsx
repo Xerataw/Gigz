@@ -11,21 +11,16 @@ import {
 import { IconPlus, IconTrash } from '@tabler/icons-react';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
-import {
-  IGalleryPhoto,
-  deletePhotoGallery,
-  postPhotoGallery,
-} from '../../api/user';
+import { deletePhotoGallery, postPhotoGallery } from '../../api/user';
 import GigzFetcher from '../../services/GigzFetcher';
+import IMedia from '../../types/IMedia';
 import { IStepProps } from '../../types/IStepProps';
 import Helper from '../Tooltip/Helper';
 import StepTitle from './Utils/StepTitle';
 
 const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
   const maxFile = 5;
-  const [pictures, setPictures] = useState<IGalleryPhoto[]>(
-    form.values.gallery
-  );
+  const [pictures, setPictures] = useState<IMedia[]>(form.values.gallery);
 
   const handleRemovePicture = (idToRemove: number) => {
     const indexToRemove =

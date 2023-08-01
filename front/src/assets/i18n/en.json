@@ -157,6 +157,15 @@
     "genre": "Search for a genre",
     "host": "Host",
     "sumbit": "Search",
+    "capacity": {
+      "label": "Capacity",
+      "amount_zero": "{{count}} person",
+      "amount_one": "{{count}} person",
+      "amount_other": "{{count}} people"
+    },
+    "like": {
+      "tooltip": "Adds to your favorites"
+    },
     "list": {
       "endOfProfiles": "You have seen everything...",
       "noResult": "No result found for your search"

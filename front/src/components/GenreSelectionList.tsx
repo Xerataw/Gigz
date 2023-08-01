@@ -29,7 +29,6 @@ const GenreSelectionList: React.FC<IGenreSelectionListProps> = ({
     const filteredGenres = allGenres.filter((genre: IGenre) => {
       return genre.name?.toLowerCase().includes(filter?.trim().toLowerCase());
     });
-    console.log(filteredGenres);
     setGenres(filteredGenres);
   };
 

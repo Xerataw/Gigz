@@ -62,27 +62,34 @@ router.get('/', async (req, res) => {
       account: {
         select: {
           profile_picture: true,
+          account_genre: {
+            select: {
+              genre: true,
+            },
+          },
         },
       },
     },
     where: buildArtistsWhereCondition(body.data),
   });
 
-  const genres = await database.account_genre.findMany({
-    where: { account_id: req.account.id },
-    include: { genre: true },
+  const likedAccounts = await database.liked_account.findMany({
+    where: { liker_account: req.account.id },
   });
-
-  const formattedGenres = genres.map((genre) => genre.genre);
 
   let formattedData = data.map((artist) => ({
     id: artist.id,
     name: artist.name,
     city: artist.city,
-    genres: formattedGenres,
+    genres: artist.account.account_genre.map((genre) => genre.genre),
     longitude: artist.longitude,
     latitude: artist.latitude,
     profilePicture: artist.account.profile_picture,
+    likedAccount: likedAccounts.find(
+      (account) => account.liked_account === artist.account_id
+    )
+      ? true
+      : false,
   }));
 
   if (
@@ -95,8 +102,6 @@ router.get('/', async (req, res) => {
     const searchLatitude = body.data.latitude
       ? body.data.latitude
       : req.account.latitude;
-
-    console.log(searchLatitude + ' ' + searchLongitude);
 
     formattedData = formattedData.sort((artist1, artist2) => {
       return (
@@ -151,6 +156,10 @@ router.get('/:id/', async (req, res) => {
     },
   });
 
+  const likedAccounts = await database.liked_account.findMany({
+    where: { liker_account: req.account.id },
+  });
+
   const genres = await database.account_genre.findMany({
     where: { account_id: req.account.id },
     include: { genre: true },
@@ -170,6 +179,13 @@ router.get('/:id/', async (req, res) => {
 
   // @ts-ignore
   artist.genres = formattedGenres;
+
+  // @ts-ignore
+  artist.likedAccount = likedAccounts.find(
+    (account) => account.liked_account === artist.account_id
+  )
+    ? true
+    : false;
 
   sendResponse(res, fromDbFormat(artist));
 });
