@@ -135,21 +135,17 @@ const Register: React.FC = () => {
       <Stepper active={formStep} {...stepperProps}>
         <Stepper.Step>
           <Fade isVisible={stepWillChange} afterHide={nextStep}>
-            <ProfileTypeStep
-              form={form}
-              nextStep={handleNextStep}
-              label={t('register.profileTypeStep')}
-            />
+            <ProfileTypeStep form={form} nextStep={handleNextStep} />
           </Fade>
         </Stepper.Step>
         <Stepper.Step>
           <Fade isVisible={stepWillChange} afterHide={nextStep}>
-            <MailPhoneStep form={form} label={t('register.mailPhoneStep')} />
+            <MailPhoneStep form={form} />
           </Fade>
         </Stepper.Step>
         <Stepper.Step>
           <Fade isVisible={stepWillChange} afterHide={nextStep}>
-            <PasswordStep form={form} label={t('register.passwordStep')} />
+            <PasswordStep form={form} />
           </Fade>
         </Stepper.Step>
 
@@ -173,12 +169,11 @@ const Register: React.FC = () => {
           prevStep={prevStep}
           nextDisabled={form.values.userType === ''}
         />
-
         {formStep < 3 && (
           <div className="text-center mt-10">
-            Vous avez déjà un compte ?
+            {t('register.alreadyAccount')}
             <Link to="auth/login" className="font-semibold no-underline">
-              <Text color="primary">Se connecter</Text>
+              <Text color="primary">{t('register.toLogin')}</Text>
             </Link>
           </div>
         )}

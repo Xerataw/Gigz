@@ -40,18 +40,100 @@
     "title": "Complétez votre profil",
     "completeRegister": "Votre compte est en cours de création",
     "competeProfile": "Votre profil est en cours de création",
+    "alreadyAccount": "Vous avez déjà un compte ?",
+    "toLogin": "Se connecter",
 
-    "profileTypeStep": "Vous êtes ?",
-    "mailPhoneStep": "Pour vous retrouver",
-    "passwordStep": "La sécurité",
-    "nameStep": "Votre nom est ?",
-    "descriptionStep": "Qui êtes vous ?",
-    "socialLinksStep": "Où êtes vous présent ?",
-    "addressCompleteStep": "Où êtes vous présent ?",
-    "genreStep": "Vous êtes plutôt ?",
-    "presentationPicturesStep": "À quoi ressemble votre groupe ?",
-    "profilePictureStep": "À quoi vous ressemblez ?",
-    "capacityStep": "Vous pouvez acceuillir combien de personne ?"
+    "profileTypeStep": {
+      "label": "Vous êtes ?",
+      "artist": "Un artiste",
+      "artistTooltip": "Chanteur, Groupe, Musicien",
+      "host": "Un hôte",
+      "hostTooltip": "Bar, Pub, Restaurant, Salle de Concert"
+    },
+    "mailPhoneStep": {
+      "label": "Pour vous retrouver",
+      "email": "Email",
+      "emailHelper": "Un email pour communiquer avec vous",
+      "phone": "Numéro de téléphone",
+      "phoneHelper": "Un numéro pour que les personnes intéressés puissent vous appeler si vous les y autorisez"
+    },
+    "passwordStep": {
+      "label": "La sécurité",
+      "password": "Mot de passe",
+      "passwordHelper": "Un mot de passe fort qui vous protégera",
+      "passwordConfirmation": "Confirmation du mot de passe",
+      "passwordConfirmationHelper": "Répétez votre mot de passe"
+    },
+    "errors": {
+      "emailInvalid": "Email invalide. Elle doit inclure un @, et finit avec un nom de domaine",
+      "phoneInvalid": "Numéro invalide. Il doit commencer par un 6 ou un 7, et avoir 8 autres chiffres",
+      "password": {
+        "invalid": "Mot de passe invalide",
+        "length": "Il faut 8 caractères minimum",
+        "number": "Il manque un nombre",
+        "upper": "Il manque une majuscule",
+        "lower": "Il manque une miniscule",
+        "dontmatch": "Les mots de passe ne sont pas les mêmes"
+      }
+    },
+    "nameStep": {
+      "label": "Votre nom est ?",
+      "name": "Nom",
+      "nameHelper": {
+        "artist": "Votre nom de scène, les hôtes pourront le voir",
+        "host": "Le nom de votre lieu, les artistes pourront le voir"
+      }
+    },
+    "descriptionStep": {
+      "label": "Qui êtes-vous ?",
+      "placeholder": "Les membres du groupe 'Antarctic Lemur' fusionnent leur passion pour le rock alternatif et l'électro-pop pour créer une expérience musicale unique. 'Antarctic Lemur' offre une atmosphère envoûtante où se mêlent énergie et sensibilité.",
+      "description": "Description",
+      "descriptionHelper": {
+        "artist": "Décrivez-vous en quelques mots pour informer les hôtes de qui vous êtes",
+        "host": "Décrivez-vous en quelques mots pour informer les artistes de qui vous êtes"
+      }
+    },
+    "addressCompleteStep": {
+      "artist": {
+        "label": "Dans quelle ville êtes-vous présent ?",
+        "address": "Ville",
+        "addressHelper": "La ville principale où vous êtes présent",
+        "placeholder": "69000 Lyon"
+      },
+      "host": {
+        "label": "À quelle addresse êtes-vous présent ?",
+        "address": "Adresse",
+        "addressHelper": "L'adresse principale où vous vous produisez",
+        "placeholder": "15 rue des lilas, 69000 Lyon"
+      }
+    },
+    "profilePictureStep": {
+      "label": "À quoi vous ressemblez ?",
+      "helper": "Tout le monde pourra vous reconnaître avec cette image",
+      "addPicture": "Ajouter une image de profil"
+    },
+    "genreStep": {
+      "label": "Vous êtes plutôt ?",
+      "max": "Vous pouvez choisir jusqu'à 3 genres",
+      "helper": "Quel genre de musique faîtes-vous ?"
+    },
+    "presentationPicturesStep": {
+      "label": "Qui êtes-vous ?",
+      "helper": "Tout le monde pourra vous reconnaître avec ces images",
+      "add": "Ajouter des images",
+      "max": "Vous pouvez ajouter jusqu'à 5 images"
+    },
+    "socialLinksStep": {
+      "label": "Où êtes-vous présent ?",
+      "links": "Remplissez les liens vous concernant",
+      "helper": "Tout le monde pourra voir votre ambiance, votre travail et plus"
+    },
+
+    "capacityStep": {
+      "label": "Vous pouvez acceuillir combien de personne ?",
+      "capacity": "Vous pouvez acceuillir combien de personnes maximum ?",
+      "helper": "Choisissez la capacité qui est supérieur à votre capacité réelle. Si vous pouvez acceuillir 30 personnes, choisissez 50 max."
+    }
   },
   "profile": {
     "banner": {

@@ -22,8 +22,8 @@ import NestedRoute from './components/NestedRoute';
 import './index.css';
 import RegisterHostProfile from './pages/Register/RegisterHostProfile';
 import { useInitialLoading } from './store/InitialLoadingProvider';
-import SocketProvider from './store/SocketProvider';
 import ProfileEditProvider from './store/ProfileEditProvider';
+import SocketProvider from './store/SocketProvider';
 
 const envVars = import.meta.env;
 
