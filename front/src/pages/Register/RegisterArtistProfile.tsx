@@ -134,35 +134,25 @@ const RegisterArtistProfile: React.FC = () => {
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <ProfilePictureStep
-                form={form}
-                label={t('register.presentationPicturesStep')}
-              />
+              <ProfilePictureStep form={form} />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <GenreStep form={form} label={t('register.genreStep')} />
+              <GenreStep form={form} />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <PresentationPicturesStep
-                form={form}
-                label={t('register.presentationPicturesStep')}
-              />
+              <PresentationPicturesStep form={form} />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <SocialLinksStep
-                links={linksArtist}
-                form={form}
-                label={t('register.socialLinksStep')}
-              />
+              <SocialLinksStep links={linksArtist} form={form} />
             </Fade>
           </Stepper.Step>
 

@@ -9,16 +9,18 @@ import {
   Text,
 } from '@mantine/core';
 import { IconPlus, IconTrash } from '@tabler/icons-react';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import {
   IGalleryPhoto,
   deletePhotoGallery,
   postPhotoGallery,
 } from '../../api/user';
+import GigzFetcher from '../../services/GigzFetcher';
 import { IStepProps } from '../../types/IStepProps';
 import StepTitle from './Utils/StepTitle';
 
-const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
+const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
   const maxFile = 5;
   const [pictures, setPictures] = useState<IGalleryPhoto[]>(
     form.values.gallery
@@ -55,7 +57,7 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
 
   return (
     <>
-      <StepTitle label={label} />
+      <StepTitle label={t('register.presentationPicturesStep.label')} />
 
       <Grid justify="center">
         {pictures.map((image, index) => (
@@ -67,7 +69,7 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
                 withPlaceholder
                 key={index}
                 height={200}
-                src={'http://localhost:3000/static/' + image.media}
+                src={GigzFetcher.getImageUri(image.media)}
               />
               <div className="absolute top-0 right-0">
                 <ActionIcon

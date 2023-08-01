@@ -1,12 +1,14 @@
-import { SimpleGrid } from '@mantine/core';
+import { SimpleGrid, Text } from '@mantine/core';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { getGenres } from '../../api/genres';
 import IGenre from '../../types/IGenre';
 import { IStepProps } from '../../types/IStepProps';
 import MusicGenreButton from '../MusicGenreButton';
+import Helper from '../Tooltip/Helper';
 import StepTitle from './Utils/StepTitle';
 
-const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
+const GenreStep: React.FC<IStepProps> = ({ form }) => {
   const [genres, setGenres] = useState<IGenre[]>([]);
   const [selectedGenres, setSelectedGenres] = useState<IGenre[]>(
     form.values.genres ?? []
@@ -34,7 +36,14 @@ const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
 
   return (
     <>
-      <StepTitle label={label} />
+      <StepTitle label={t('register.genreStep.label')} />
+      <div className="flex justify-center pb-2">
+        <Text c="dimmed">
+          <Helper.Label label={t('register.genreStep.helper')}>
+            {t('register.genreStep.max')}
+          </Helper.Label>
+        </Text>
+      </div>
       <SimpleGrid
         cols={3}
         spacing="lg"
@@ -46,6 +55,11 @@ const GenreStep: React.FC<IStepProps> = ({ form, label }) => {
             onClick={() => {
               handleAddGenre(genre);
             }}
+            //must be disabled if len >= 3 && selectedGenre doesn't includes it
+            disabled={
+              selectedGenres.length >= 3 &&
+              selectedGenres.find((g) => g.id === genre.id) === undefined
+            }
             isSelected={selectedGenres.includes(genre)}
             label={genre.name ?? 'No Label Set'}
           />

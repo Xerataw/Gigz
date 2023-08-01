@@ -1,4 +1,4 @@
-import { ActionIcon, Tooltip } from '@mantine/core';
+import { ActionIcon, Text, Tooltip } from '@mantine/core';
 import { IconQuestionMark } from '@tabler/icons-react';
 import { ReactNode } from 'react';
 
@@ -27,6 +27,29 @@ const Label: React.FC<IHelperLabelProps> = ({
   labelDirection,
 }) => {
   const child = Array.isArray(children) ? children : [children];
+  return (
+    <span className="inline-flex align-bottom">
+      <Helper label={label} labelDirection={labelDirection} />
+      <div className="pt-[2px] pl-1">{child.map((children) => children)}</div>
+    </span>
+  );
+};
+
+const UnderTitle: React.FC<IHelperLabelProps> = ({
+  children,
+  label,
+  labelDirection,
+}) => {
+  const child = Array.isArray(children) ? children : [children];
+
+  <div className="flex justify-center pb-2">
+    <Text c="dimmed">
+      <Helper.Label label={t('register.genreStep.helper')}>
+        {t('register.genreStep.max')}
+      </Helper.Label>
+    </Text>
+  </div>;
+
   return (
     <span className="inline-flex align-bottom">
       <Helper label={label} labelDirection={labelDirection} />

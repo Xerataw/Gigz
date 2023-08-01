@@ -95,10 +95,27 @@
         "placeholder": "69000 Lyon"
       }
     },
-    "socialLinksStep": "Où êtes vous présent ?",
-    "genreStep": "Vous êtes plutôt ?",
-    "presentationPicturesStep": "À quoi ressemble votre groupe ?",
-    "profilePictureStep": "À quoi vous ressemblez ?",
+    "profilePictureStep": {
+      "label": "À quoi vous ressemblez ?",
+      "helper": "Tout le monde pourra vous reconnaître avec cette image",
+      "addPicture": "Ajouter une image de profil"
+    },
+    "genreStep": {
+      "label": "Vous êtes plutôt ?",
+      "max": "Vous pouvez choisir jusqu'à 3 genres",
+      "helper": "Quel genre de musique faîtes-vous ?"
+    },
+    "presentationPicturesStep": {
+      "label": "Qui êtes-vous ?",
+      "placeholder": "Les membres du groupe 'Antarctic Lemur' fusionnent leur passion pour le rock alternatif et l'électro-pop pour créer une expérience musicale unique. 'Antarctic Lemur' offre une atmosphère envoûtante où se mêlent énergie et sensibilité.",
+      "description": "Description",
+      "descriptionHelper": "Décrivez-vous en quelques mots pour informer les hôtes de qui vous êtes"
+    },
+    "socialLinksStep": {
+      "label": "Où êtes-vous présent ?",
+      "links": "Remplissez les liens vous concernant",
+      "helper": "Tout le monde pourra voir votre ambiance, votre travail et plus"
+    },
     "capacityStep": "Vous pouvez acceuillir combien de personne ?"
   },
   "profile": {

@@ -95,10 +95,22 @@
         "placeholder": "69000 Lyon"
       }
     },
-    "socialLinksStep": "Where can we find you ?",
-    "genreStep": "You are quite ?",
+    "profilePictureStep": {
+      "label": "What your band looks like",
+      "helper": "Everyone will be able to recognize you with this image",
+      "addPicture": "Add a profile picture"
+    },
+    "genreStep": {
+      "label": "What are your styles ?",
+      "max": "You can select up to 3 styles",
+      "helper": "What kind of music do you make?"
+    },
+    "socialLinksStep": {
+      "label": "Where can we find you ?",
+      "links": "Fill out links you want people see",
+      "helper": "Everyone will see your work, mood and more"
+    },
     "presentationPicturesStep": "What does your group look like ?",
-    "profilePictureStep": "What does you look like ?",
     "capacityStep": "How many people can you accommodate ?"
   },
   "profile": {
