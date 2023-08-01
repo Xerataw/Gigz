@@ -1,12 +1,12 @@
+import { TextInput } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { Text, TextInput } from '@mantine/core';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
 
 interface IBannerEditNameProps {
   name: string;
 }
 
-const BannerEditName: React.FC<IBannerEditNameProps> = ({ name }) => {
+const NameEdit: React.FC<IBannerEditNameProps> = ({ name }) => {
   const { editMode, setEditedName } = useProfileEdit();
   const [currentName, setCurrentName] = useState<string>(name);
 
@@ -43,4 +43,4 @@ const BannerEditName: React.FC<IBannerEditNameProps> = ({ name }) => {
   );
 };
 
-export default BannerEditName;
+export default NameEdit;
