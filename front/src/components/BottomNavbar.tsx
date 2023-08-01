@@ -1,4 +1,4 @@
-import { Avatar, Overlay } from '@mantine/core';
+import { Avatar, Overlay, useMantineColorScheme } from '@mantine/core';
 import {
   IconHeart,
   IconHeartFilled,
@@ -19,18 +19,24 @@ interface IBottomNavBarProps {
 
 const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
   const userPP = useUser().getProfilePicture();
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
 
   return (
     <div className="absolute bottom-0 w-full z-[10000]">
       {isShadow && (
         <div className="h-24 relative">
           <Overlay
-            gradient="linear-gradient(0deg, rgba(255, 255, 255, 0.95) 0%, rgba(0, 0, 0, 0) 100%)"
+            gradient={
+              'linear-gradient(0deg, rgba(' +
+              (isDark ? '26, 27, 30,' : '255, 255, 255,') +
+              ' 0.95) 0%, rgba(0, 0, 0, 0) 100%)'
+            }
             opacity={0.85}
           ></Overlay>
         </div>
       )}
-      <ul className="bg-white flex justify-around w-full">
+      <ul className="flex justify-around w-full">
         <li>
           <Link to="/auth/liked">
             <GigzIcon
@@ -39,7 +45,7 @@ const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
               icon={{
                 icon: <IconHeart />,
                 iconFilled: <IconHeartFilled />,
-                fillColor: 'primary',
+                fillColor: 'secondary',
                 label: 'Go to liked page',
                 path: '/auth/liked',
               }}
@@ -55,7 +61,7 @@ const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
               icon={{
                 icon: <IconSearch />,
                 iconFilled: <IconZoomFilled />,
-                fillColor: 'secondary',
+                fillColor: 'primary',
                 label: 'Go to search page',
                 path: '/auth/search',
               }}

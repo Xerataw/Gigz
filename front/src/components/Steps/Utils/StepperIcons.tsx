@@ -34,7 +34,7 @@ const StepperIcons: React.FC<IStepperIconsProps> = ({
   hasSkip = true,
 }) => {
   const history = useHistory();
-  const { colorScheme, toggleColorScheme } = useMantineColorScheme();
+  const { colorScheme } = useMantineColorScheme();
   const isDark = colorScheme === 'dark';
 
   return (
