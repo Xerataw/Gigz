@@ -36,7 +36,12 @@ const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
           ></Overlay>
         </div>
       )}
-      <ul className="flex justify-around w-full">
+      <ul
+        className={
+          'flex justify-around w-full ' +
+          (isDark ? ' bg-[#1A1B1E] ' : ' bg-white ')
+        }
+      >
         <li>
           <Link to="/auth/liked">
             <GigzIcon
