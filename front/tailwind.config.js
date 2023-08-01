@@ -1,5 +1,6 @@
 const gigzColors = {
   'gigz-primary': '#FFB500',
+  'gigz-secondary': '#F50000',
 };
 /** @type {import('tailwindcss').Config} */
 export default {

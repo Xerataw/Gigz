@@ -27,6 +27,7 @@ interface IProfileBannerProps {
   capacity?: ICapacity;
   withDrawer?: boolean;
   drawerOpened?: boolean;
+  onClick?: () => void;
 }
 
 const loadingGenres: IGenre[] = [
@@ -44,6 +45,7 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   capacity,
   withDrawer = false,
   drawerOpened = false,
+  onClick,
 }) => {
   const { t } = useTranslation();
   const { editMode, editConfirmed } = useProfileEdit();
@@ -51,7 +53,10 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   const genresToDisplay = loading ? loadingGenres : genres.slice(0, 2);
 
   return (
-    <div className="bg-white pl-3 pr-3 rounded-tl-md rounded-tr-md">
+    <div
+      className="bg-white pl-3 pr-3 rounded-tl-md rounded-tr-md"
+      onClick={() => onClick && onClick()}
+    >
       {withDrawer && (
         <span className="w-[15%] ml-[42.5%] inline-block h-1.5 bg-gray-700 rounded-md"></span>
       )}
