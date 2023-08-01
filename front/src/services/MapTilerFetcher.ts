@@ -24,8 +24,8 @@ export default class MapTiler {
           `https://api.maptiler.com/geocoding/${searchLocation}.json?key=${this.API_KEY}&country=fr&types=${type}`
         )
         .then((res) => res.data.features)
-        .then((res) => {
-          return res.map((item: any) => ({
+        .then((res) =>
+          res.map((item: any) => ({
             latitude: item.geometry.coordinates[1],
             longitude: item.geometry.coordinates[0],
             value: item.place_name,
@@ -33,8 +33,8 @@ export default class MapTiler {
               contextItem.id.includes('municipality')
             ).text,
             code: item.context[0].text,
-          }));
-        })
+          }))
+        )
         .then((res: IAddressSearchItem[]) => {
           handleSearchResult(res);
         });
