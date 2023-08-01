@@ -181,7 +181,7 @@ router.get('/:id/', async (req, res) => {
   artist.genres = formattedGenres;
 
   // @ts-ignore
-  host.likedAccount = likedAccounts.find(
+  artist.likedAccount = likedAccounts.find(
     (account) => account.liked_account === artist.account_id
   )
     ? true
