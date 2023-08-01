@@ -1,5 +1,6 @@
 import IGenre from './IGenre';
 import IMedia from './IMedia';
+import IProfilePicture from './IProfilePicture';
 
 export default interface IProfile {
   name: string;
@@ -17,7 +18,7 @@ export default interface IProfile {
   longitude?: number;
   latitude?: number;
 
-  profilePicture?: string;
+  profilePicture?: IProfilePicture;
   genres: IGenre[];
   gallery: IMedia[];
 }

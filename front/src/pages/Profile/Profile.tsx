@@ -3,17 +3,15 @@ import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
 import ArtistProfileView from '../../components/ProfileView/ArtistProfileView';
 import HostProfileView from '../../components/ProfileView/HostProfileView';
-import ProfileEditProvider, {
-  useProfileEdit,
-} from '../../store/ProfileEditProvider';
+import { buildProfile } from '../../services/apiTypesHelper';
+import { useProfileEdit } from '../../store/ProfileEditProvider';
 import { useUser } from '../../store/UserProvider';
 import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
-import IHostProfile from '../../types/IHostProfile';
-import Layout from '../Layout/Layout';
-import { buildProfile } from '../../services/apiTypesHelper';
-import IMedia from '../../types/IMedia';
 import IGenre from '../../types/IGenre';
+import IHostProfile from '../../types/IHostProfile';
+import IMedia from '../../types/IMedia';
+import Layout from '../Layout/Layout';
 
 const Profile: React.FC = () => {
   const history = useHistory();
@@ -41,10 +39,9 @@ const Profile: React.FC = () => {
     getProfile(user.getProfileType() as EProfileType).then((profile) => {
       setProfileType(user.getProfileType() as EProfileType);
       setProfile(
-        buildProfile(
-          profile.data as IArtistProfile | IHostProfile,
-          user.getProfilePicture() as string
-        )
+        buildProfile(profile.data as IArtistProfile | IHostProfile, {
+          media: user.getProfilePicture() as string,
+        })
       );
       setProfileLoading(false);
     });
@@ -58,7 +55,7 @@ const Profile: React.FC = () => {
           gallery: profile?.gallery as IMedia[],
           genres: profile?.genres as IGenre[],
         },
-        user.getProfilePicture() as string
+        { media: user.getProfilePicture() as string }
       )
     );
   };

@@ -2,10 +2,11 @@ import EMediaType from '../types/EMediaType';
 import IArtistProfile from '../types/IArtistProfile';
 import IHostProfile from '../types/IHostProfile';
 import IMedia from '../types/IMedia';
+import IProfilePicture from '../types/IProfilePicture';
 
 export function buildProfile(
   baseProfile: IArtistProfile | IHostProfile,
-  profilePicture?: string
+  profilePicture?: IProfilePicture
 ): IArtistProfile | IHostProfile {
   const finalGallery: IMedia[] = [];
   for (const galleryItem of baseProfile.gallery) {

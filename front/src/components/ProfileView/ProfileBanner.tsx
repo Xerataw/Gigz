@@ -13,6 +13,7 @@ import GigzFetcher from '../../services/GigzFetcher';
 import { useProfileEdit } from '../../store/ProfileEditProvider';
 import ICapacity from '../../types/ICapacity';
 import IGenre from '../../types/IGenre';
+import IProfilePicture from '../../types/IProfilePicture';
 import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
 import BannerName from './bannerFields/BannerName';
@@ -20,7 +21,7 @@ import BannerName from './bannerFields/BannerName';
 interface IProfileBannerProps {
   username: string;
   loading: boolean;
-  profilePicture?: string;
+  profilePicture?: IProfilePicture;
   city?: string;
   genres: IGenre[];
   capacity?: ICapacity;
@@ -88,7 +89,9 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
         <Skeleton visible={loading} w="5.5rem" radius="md">
           <ProfilePicture
             src={
-              loading ? null : GigzFetcher.getImageUri(profilePicture as string)
+              loading
+                ? null
+                : GigzFetcher.getImageUri(profilePicture?.media as string)
             }
             radius="xl"
             size="xl"
