@@ -76,6 +76,7 @@
     "genre": "Rechercher un genre",
     "host": "Hôte",
     "sumbit": "Rechercher",
+    "location": "Localisation",
     "capacity": {
       "label": "Capacité d'accueil",
       "amount_zero": "{{count}} personne",
