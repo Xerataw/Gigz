@@ -51,7 +51,7 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({ label, path }) => {
                 <IconCheck size={22} />
               </ThemeIcon>
             ) : (
-              <Text color="black" weight={700} align="center" size="xl">
+              <Text weight={700} align="center" size="xl">
                 {time.toFixed(1)}%
               </Text>
             )}

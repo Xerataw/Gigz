@@ -1,11 +1,9 @@
 import {
-  Anchor,
   Box,
   Button,
-  Center,
-  Checkbox,
   Group,
   PasswordInput,
+  Text,
   TextInput,
 } from '@mantine/core';
 import { useForm } from '@mantine/form';
@@ -13,7 +11,7 @@ import { useDebouncedValue } from '@mantine/hooks';
 import { HttpStatusCode } from 'axios';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 import { login } from '../../api/auth';
 import { useUser } from '../../store/UserProvider';
 
@@ -141,18 +139,22 @@ const Login: React.FC = () => {
         />
 
         <Group position="apart" align="flex-start" pt={14}>
-          <Checkbox
-            label={t('login.rememberMe')}
-            {...form.getInputProps('remberMe', { type: 'checkbox' })}
-          />
-          <Anchor
-            color="black"
-            className="underline underline-offset-4"
+          <Text
+            component={Link}
+            to="/login/forgot-password"
             size={14}
-            onClick={() => forgotPassword()}
+            className="underline underline-offset-4"
           >
             {t('login.forgotPassword.label')}
-          </Anchor>
+          </Text>
+          <Text
+            component={Link}
+            to="register"
+            size={14}
+            className="underline underline-offset-4"
+          >
+            {t('login.register')}
+          </Text>
         </Group>
 
         <Group position="center" mt="md">
@@ -165,19 +167,6 @@ const Login: React.FC = () => {
             {t('login.submit')}
           </Button>
         </Group>
-        <Center className="mt-2">
-          <Anchor
-            color="black"
-            className="underline underline-offset-2"
-            size={14}
-            onClick={(event) => {
-              event.stopPropagation();
-              register();
-            }}
-          >
-            {t('login.register')}
-          </Anchor>
-        </Center>
       </form>
     </Box>
   );
