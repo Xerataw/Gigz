@@ -26,6 +26,11 @@ const searchFiltersBodySchemas = z.object({
 type SearchQueryType = z.infer<typeof searchFiltersBodySchemas>;
 
 const buildHostsWhereCondition = (query: SearchQueryType) => {
+  const a = query.capacities
+    ?.split(',')
+    .map((capacity) => parseInt(capacity))
+    .filter((capacity) => !isNaN(capacity));
+
   return {
     AND: {
       longitude: {
@@ -40,10 +45,8 @@ const buildHostsWhereCondition = (query: SearchQueryType) => {
     },
     capacity: {
       max: {
-        in: query.capacities
-          ?.split(',')
-          .map((capacity) => parseInt(capacity))
-          .filter((capacity) => !isNaN(capacity)),
+        gte: a?.at(0),
+        lte: a?.at(1),
       },
     },
     account: query.genres
@@ -64,7 +67,6 @@ router.get('/', async (req, res) => {
   const body = searchFiltersBodySchemas.safeParse(req.query);
 
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
-
   const where = buildHostsWhereCondition(body.data);
 
   const data = await database.host.findMany({
