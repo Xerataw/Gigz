@@ -141,7 +141,18 @@ const Login: React.FC = () => {
           {...form.getInputProps('password')}
         />
 
-        <Group position="center" mt="xl">
+        <Group position="apart" align="flex-start" pt={14}>
+          <Anchor
+            color="black"
+            className="underline underline-offset-4"
+            size={14}
+            onClick={() => forgotPassword()}
+          >
+            {t('login.forgotPassword.label')}
+          </Anchor>
+        </Group>
+
+        <Group position="center" mt="md">
           <Button
             type="submit"
             disabled={incompleteOrInvalidForm}
