@@ -142,10 +142,6 @@ const Login: React.FC = () => {
         />
 
         <Group position="apart" align="flex-start" pt={14}>
-          <Checkbox
-            label={t('login.rememberMe')}
-            {...form.getInputProps('remberMe', { type: 'checkbox' })}
-          />
           <Anchor
             color="black"
             className="underline underline-offset-4"
