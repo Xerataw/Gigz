@@ -1,26 +1,29 @@
+import { TextInput, useMantineColorScheme } from '@mantine/core';
 import { useEffect, useState } from 'react';
-import { Text, TextInput } from '@mantine/core';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
 
-interface IBannerNameProps {
+interface IBannerEditNameProps {
   name: string;
 }
 
-const BannerName: React.FC<IBannerNameProps> = ({ name }) => {
-  const { editMode, editedName } = useProfileEdit();
+const NameEdit: React.FC<IBannerEditNameProps> = ({ name }) => {
+  const { editMode, setEditedName } = useProfileEdit();
   const [currentName, setCurrentName] = useState<string>(name);
+
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
 
   function updateName(updatedName: string) {
     setCurrentName(updatedName);
-    editedName.setEditedName(updatedName);
+    setEditedName(updatedName);
   }
 
   // Reset name if canceled before
   useEffect(() => {
     setCurrentName(name);
-  }, [editMode.editMode]);
+  }, [editMode]);
 
-  return editMode.editMode ? (
+  return (
     <TextInput
       value={currentName}
       variant="unstyled"
@@ -35,19 +38,12 @@ const BannerName: React.FC<IBannerNameProps> = ({ name }) => {
           margin: 0,
           height: '1rem',
           width: '72%',
-          backgroundColor: 'rgb(241, 243, 245)',
+          backgroundColor: isDark ? ' #313338 ' : 'rgb(241, 243, 245)',
           borderRadius: '5px',
         },
       }}
     />
-  ) : (
-    <Text
-      truncate
-      className="font-bold text-xl pr-2 h-[1.8rem] w-5/6 text-ellipsis"
-    >
-      {name}
-    </Text>
   );
 };
 
-export default BannerName;
+export default NameEdit;

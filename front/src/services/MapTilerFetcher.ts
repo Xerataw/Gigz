@@ -29,8 +29,10 @@ export default class MapTiler {
             latitude: item.geometry.coordinates[1],
             longitude: item.geometry.coordinates[0],
             value: item.place_name,
-            city: res[0].context[2].text,
-            code: res[0].context[0].text,
+            city: item.context.find((contextItem: any) =>
+              contextItem.id.includes('municipality')
+            ).text,
+            code: item.context[0].text,
           }))
         )
         .then((res: IAddressSearchItem[]) => {

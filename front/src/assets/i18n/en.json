@@ -40,18 +40,99 @@
     "title": "Complete your profile",
     "completeRegister": "Your account is being created",
     "competeProfile": "Your profile is being created",
+    "alreadyAccount": "Already have an account ?",
+    "toLogin": "Go to login",
 
-    "profileTypeStep": "You are ?",
-    "mailPhoneStep": "To find you",
-    "passwordStep": "Safety first",
-    "nameStep": "Your name is ?",
-    "descriptionStep": "Who are you ?",
-    "socialLinksStep": "Where can we find you ?",
-    "addressCompleteStep": "Where do you perform ?",
-    "genreStep": "You are quite ?",
-    "presentationPicturesStep": "What does your group look like ?",
-    "profilePictureStep": "What does you look like ?",
-    "capacityStep": "How many people can you accommodate ?"
+    "profileTypeStep": {
+      "label": "You are ?",
+      "artist": "An artist",
+      "artistTooltip": "Singer, Band, Musician",
+      "host": "A host",
+      "hostTooltip": "Bar, Pub, Restaurant, Concert Hall"
+    },
+    "mailPhoneStep": {
+      "label": "To find you",
+      "email": "Email",
+      "emailHelper": "An email to communicate with you",
+      "phone": "Phone Number",
+      "phoneHelper": "A phone number for people to call you if you authorise them"
+    },
+    "passwordStep": {
+      "label": "Safety first",
+      "password": "Password",
+      "passwordHelper": "A strong password which will protect you",
+      "passwordConfirmation": "Password Confirmation",
+      "passwordConfirmationHelper": "Repeat your password here"
+    },
+    "errors": {
+      "emailInvalid": "Email not valid. It must include an @, and must end with a domain name",
+      "phoneInvalid": "Phone not valid. It must start with 6 or 7, and have 8 more digits",
+      "password": {
+        "invalid": "Password is invalid",
+        "length": "Needs at least 8 characters",
+        "number": "Needs a number",
+        "upper": "Needs uppercase character",
+        "lower": "Needs lowercase character",
+        "dontmatch": "Passwords don't match"
+      }
+    },
+    "nameStep": {
+      "label": "What is your name ?",
+      "name": "Name",
+      "nameHelper": {
+        "artist": "Your stage name, hosts will be able to see it",
+        "host": "Your place name, artists will be able to see it"
+      }
+    },
+    "descriptionStep": {
+      "label": "Who are you ?",
+      "placeholder": "The members of the group 'Antarctic Lemur' merge their passion for alternative rock and electro-pop to create a unique musical experience. 'Antarctic Lemur' offers a bewitching atmosphere where energy and sensitivity mingle.",
+      "description": "Description",
+      "descriptionHelper": {
+        "artist": "Describe yourself in some words to inform hosts who you are",
+        "host": "Describe yourself in some words to inform artists who you are"
+      }
+    },
+    "addressCompleteStep": {
+      "artist": {
+        "label": "In which city are you present?",
+        "address": "City",
+        "addressHelper": "Major city where you perform yourself",
+        "placeholder": "69000 Lyon"
+      },
+      "host": {
+        "label": "Where are you present?",
+        "address": "Address",
+        "addressHelper": "Major address where you are",
+        "placeholder": "15 lilac street, 69000 Lyon"
+      }
+    },
+    "profilePictureStep": {
+      "label": "What your band looks like",
+      "helper": "Everyone will be able to recognize you with this image",
+      "addPicture": "Add a profile picture"
+    },
+    "genreStep": {
+      "label": "What are your styles ?",
+      "max": "You can select up to 3 styles",
+      "helper": "What kind of music do you make?"
+    },
+    "socialLinksStep": {
+      "label": "Where can we find you ?",
+      "links": "Fill out links you want people to see",
+      "helper": "Everyone will see your work, mood and more"
+    },
+    "presentationPicturesStep": {
+      "label": "Express yourself in pictures!",
+      "helper": "Everyone will be able to recognize you with this pictures",
+      "add": "Add pictures",
+      "max": "Add up to 5 pictures"
+    },
+    "capacityStep": {
+      "label": "How many people can you accommodate?",
+      "capacity": "How many people can you accommodate?",
+      "helper": "Choose the capacity which is higher than your actual capacity. If you can accommodate 30 people, choose 50 max."
+    }
   },
   "profile": {
     "banner": {
@@ -76,6 +157,16 @@
     "genre": "Search for a genre",
     "host": "Host",
     "sumbit": "Search",
+    "location": "Location",
+    "capacity": {
+      "label": "Capacity",
+      "amount_zero": "{{count}} person",
+      "amount_one": "{{count}} person",
+      "amount_other": "{{count}} people"
+    },
+    "like": {
+      "tooltip": "Adds to your favorites"
+    },
     "list": {
       "endOfProfiles": "You have seen everything...",
       "noResult": "No result found for your search"

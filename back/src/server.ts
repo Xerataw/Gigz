@@ -44,7 +44,7 @@ app.use('/api/status/', (_, res) => {
 // Error handling
 app.use(function (
   err: Error,
-  req: Request,
+  _: Request,
   res: Response,
   next: NextFunction
 ): void {
@@ -54,16 +54,22 @@ app.use(function (
 });
 
 // Socket.io initialization
-const io = new Server(httpServer, {});
+const io = new Server(httpServer, {
+  cors: {
+    origin: 'http://localhost:8100',
+  },
+});
 
 io.on('connection', (socket) => {
   const userId = socket.handshake.auth.userId;
 
   if (!userId) {
-    console.log('No userId for this user ! ', socket);
+    console.log('No userId for this user !');
+    socket.disconnect();
     return;
   }
 
+  console.log(`📖 ${userId} connected`);
   socket.join(socket.handshake.auth.userId);
 });
 

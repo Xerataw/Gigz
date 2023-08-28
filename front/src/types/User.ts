@@ -14,6 +14,7 @@ export default class User {
   private profilePicture: string | null;
   private token: string | null;
   private profileType: EProfileType | null;
+  private userId: string | null;
 
   // Settings
   private language: ELanguage;
@@ -25,6 +26,7 @@ export default class User {
     profilePicture?: string,
     token?: string,
     profileType?: EProfileType,
+    userId?: string,
 
     language?: ELanguage,
     theme?: ETheme,
@@ -34,6 +36,7 @@ export default class User {
     this.profilePicture = profilePicture ?? null;
     this.token = token ?? null;
     this.profileType = profileType ?? null;
+    this.userId = userId ?? null;
 
     // Settings
     this.language = language ?? ELanguage.FR;
@@ -55,6 +58,7 @@ export default class User {
           localUserInfo.profilePicture,
           localUserInfo.token,
           localUserInfo.profileType,
+          localUserInfo.userId,
           localUserInfo.language,
           localUserInfo.theme,
           localUserInfo.invisibleMode
@@ -129,6 +133,22 @@ export default class User {
    */
   public getProfileType(): EProfileType | null {
     return this.profileType;
+  }
+
+  /**
+   * Change the user id and write the changes in local storage.
+   * @param userId the new user id to set.
+   */
+  @storeUser('userId')
+  public setUserId(userId: string | null) {
+    this.userId = userId;
+  }
+
+  /**
+   * @returns the user id stored in local storage.
+   */
+  public getUserId(): string | null {
+    return this.userId;
   }
 
   // Settings

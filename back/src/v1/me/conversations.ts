@@ -169,8 +169,13 @@ router.get('/:id/', async (req, res) => {
   const params = ConversationParamsSchema.safeParse(req.params);
   const query = ConversationQuerySchema.safeParse(req.query);
 
-  if (!params.success || !query.success) {
-    console.error('Error: invalid query or params parameters');
+  if (!params.success) {
+    console.error('🚨 invalid body parameters\n', params.error.issues);
+    return sendError(res, ApiMessages.BadRequest);
+  }
+
+  if (!query.success) {
+    console.error('🚨 invalid query parameters\n', query.error.issues);
     return sendError(res, ApiMessages.BadRequest);
   }
 

@@ -116,60 +116,43 @@ const RegisterArtistProfile: React.FC = () => {
         <Stepper active={formStep} {...stepperProps}>
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <NameStep form={form} label={t('register.nameStep')} />
+              <NameStep form={form} />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <DescriptionStep
-                form={form}
-                label={t('register.descriptionStep')}
-              />
+              <DescriptionStep form={form} />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <AddressCompleteStep
-                form={form}
-                type="municipality"
-                label={t('register.addressCompleteStep')}
-              />
+              <AddressCompleteStep form={form} type="municipality" />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <ProfilePictureStep
-                form={form}
-                label={t('register.presentationPicturesStep')}
-              />
+              <ProfilePictureStep form={form} />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <GenreStep form={form} label={t('register.genreStep')} />
+              <GenreStep form={form} />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <PresentationPicturesStep
-                form={form}
-                label={t('register.presentationPicturesStep')}
-              />
+              <PresentationPicturesStep form={form} />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <SocialLinksStep
-                links={linksArtist}
-                form={form}
-                label={t('register.socialLinksStep')}
-              />
+              <SocialLinksStep links={linksArtist} form={form} />
             </Fade>
           </Stepper.Step>
 

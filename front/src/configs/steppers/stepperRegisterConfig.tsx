@@ -1,3 +1,4 @@
+import { t } from 'i18next';
 import { PasswordUtils } from '../../services/PasswordUtils';
 
 export const registerInitialValues = {
@@ -19,10 +20,12 @@ export const regsiterValidate = (
 
       case 1:
         return {
-          email: /^\S+@\S+$/.test(values.email) ? null : 'Email Invalide',
+          email: /^\S+@\S+$/.test(values.email)
+            ? null
+            : t('register.errors.emailInvalid'),
           phone: /^[^01234589]\d{8}$/.test(values.phone)
             ? null
-            : 'Numéro invalide',
+            : t('register.errors.phoneInvalid'),
         };
 
       case 2:
@@ -35,7 +38,7 @@ export const regsiterValidate = (
           confirmPassword:
             values.confirmPassword === values.password
               ? null
-              : 'Les mots de passe ne correspondent pas',
+              : t('register.errors.password.dontmatch'),
         };
 
       default:

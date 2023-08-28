@@ -1,6 +1,9 @@
 import GigzFetcher from '../services/GigzFetcher';
-import IProfile from '../types/IProfile';
 
-export const getFavorites = async () => {
-  return GigzFetcher.get<IProfile[]>('hosts');
+export const likeAccountById = (id: number): void => {
+  GigzFetcher.post('me/favorites', { id });
+};
+
+export const deleteLikeAccountById = (id: number): void => {
+  GigzFetcher.delete('me/favorites', { id });
 };

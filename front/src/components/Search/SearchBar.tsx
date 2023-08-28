@@ -9,9 +9,11 @@ import {
 } from '@mantine/core';
 import { IconSearch } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
+import EProfileType from '../../types/EProfileType';
 import CapacityRange from './Filters/CapacityRange';
 import GenreSelector from './Filters/GenreSelector';
 import ProfileType from './Filters/ProfileType';
+import LocationSelector from './Filters/LocationSelector';
 
 interface ISearchBarProps {
   form: any;
@@ -85,7 +87,13 @@ const SearchBar: React.FC<ISearchBarProps> = ({ form, onSubmit }) => {
             </Box>
             <Accordion.Panel>
               <div className="flex flex-col">
-                <CapacityRange />
+                <CapacityRange
+                  form={form}
+                  disabled={
+                    form?.values?.type === EProfileType.ARTIST.toString()
+                  }
+                />
+                <LocationSelector form={form} />
                 <GenreSelector form={form} />
                 <ProfileType form={form} />
                 <Button type="submit" className="mt-2">
