@@ -1,4 +1,4 @@
-import { Autocomplete } from '@mantine/core';
+import { Autocomplete, Text } from '@mantine/core';
 import { UseFormReturnType } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import { t } from 'i18next';
@@ -40,7 +40,7 @@ const LocationSelector: React.FC<ILocationSelectorProps> = ({ form }) => {
 
   return (
     <Autocomplete
-      label={t('search.location')}
+      label={<Text c="dimmed">{t('search.location')}</Text>}
       dropdownPosition="bottom"
       placeholder="Bordeaux"
       data={searchItems}
