@@ -1,4 +1,4 @@
-import { TextInput } from '@mantine/core';
+import { TextInput, useMantineColorScheme } from '@mantine/core';
 import { useEffect, useState } from 'react';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
 
@@ -9,6 +9,9 @@ interface IBannerEditNameProps {
 const NameEdit: React.FC<IBannerEditNameProps> = ({ name }) => {
   const { editMode, setEditedName } = useProfileEdit();
   const [currentName, setCurrentName] = useState<string>(name);
+
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
 
   function updateName(updatedName: string) {
     setCurrentName(updatedName);
@@ -35,7 +38,7 @@ const NameEdit: React.FC<IBannerEditNameProps> = ({ name }) => {
           margin: 0,
           height: '1rem',
           width: '72%',
-          backgroundColor: 'rgb(241, 243, 245)',
+          backgroundColor: isDark ? ' #313338 ' : 'rgb(241, 243, 245)',
           borderRadius: '5px',
         },
       }}

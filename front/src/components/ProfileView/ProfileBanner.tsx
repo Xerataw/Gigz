@@ -1,4 +1,10 @@
-import { Badge, Flex, Skeleton, Text } from '@mantine/core';
+import {
+  Badge,
+  Flex,
+  Skeleton,
+  Text,
+  useMantineColorScheme,
+} from '@mantine/core';
 import {
   IconCheck,
   IconMapPin,
@@ -52,10 +58,15 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
   const { editMode, setEditMode, setEditConfirmed } = useProfileEdit();
   const canEdit = useLocation().pathname.includes('/auth/profile');
   const genresToDisplay = loading ? loadingGenres : genres.slice(0, 2);
+  const { colorScheme } = useMantineColorScheme();
+  const isDark = colorScheme === 'dark';
 
   return (
     <div
-      className="bg-white pl-3 pr-3 rounded-tl-md rounded-tr-md"
+      className={
+        'pl-3 pr-3 rounded-tl-md rounded-tr-md' +
+        (isDark ? ' bg-[#1A1B1E]' : ' bg-white')
+      }
       onClick={() => onClick && onClick()}
     >
       {withDrawer && (
