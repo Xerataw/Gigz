@@ -3,7 +3,9 @@ import {
   isMusicSectionAvailable,
   isSocialsSectionAvailable,
 } from '../../services/sectionAvailability';
+import { useProfileEdit } from '../../store/ProfileEditProvider';
 import IArtistProfile from '../../types/IArtistProfile';
+import BiographyEdit from './EditFields/BiographyEdit';
 import Biography from './ProfileSections/Biography';
 import MusicProfiles from './ProfileSections/MusicProfiles';
 import Socials from './ProfileSections/Socials';
@@ -18,8 +20,18 @@ const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({
   profile,
   loading,
 }) => {
+  const { editMode } = useProfileEdit();
+
   const getProfileSections = (profile: IArtistProfile): JSX.Element[] => {
     const sections: JSX.Element[] = [];
+
+    if (editMode) {
+      sections.push(
+        <BiographyEdit key="bio-edit" bio={profile?.description} />
+      );
+      return sections;
+    }
+
     isBioSectionAvaiblable(profile.description) &&
       sections.push(
         <Biography key="bio" content={profile.description as string} />

@@ -91,11 +91,12 @@ const Login: React.FC = () => {
     setFormSubmited(true);
     login(data.email, data.password)
       .then((res) => {
-        if (res.ok) {
+        if (res.ok && res.data) {
           user.setName(res.data.username);
           user.setToken(res.data.token);
           user.setProfileType(res.data.profileType);
           user.setProfilePicture(res.data.profilePicture);
+          user.setUserId(res.data.userId);
           onSuccess();
         }
         setFormSubmited(false);

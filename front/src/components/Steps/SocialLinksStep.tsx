@@ -1,6 +1,8 @@
 import { ActionIcon, Chip, TextInput, ThemeIcon } from '@mantine/core';
 import { IconExternalLink } from '@tabler/icons-react';
+import { t } from 'i18next';
 import { IStepProps } from '../../types/IStepProps';
+import Helper from '../Tooltip/Helper';
 import StepTitle from './Utils/StepTitle';
 
 interface ISocialLinksStep extends IStepProps {
@@ -13,14 +15,14 @@ interface ISocialLinksStep extends IStepProps {
   }[];
 }
 
-const SocialLinksStep: React.FC<ISocialLinksStep> = ({
-  form,
-  label,
-  links,
-}) => {
+const SocialLinksStep: React.FC<ISocialLinksStep> = ({ form, links }) => {
   return (
     <>
-      <StepTitle label={label} />
+      <StepTitle label={t('register.socialLinksStep.label')} />
+
+      <Helper.UnderTitle label={t('register.socialLinksStep.helper')}>
+        {t('register.socialLinksStep.links')}
+      </Helper.UnderTitle>
       <Chip.Group>
         {links.map((link) => (
           <div className="my-3" key={link.value}>

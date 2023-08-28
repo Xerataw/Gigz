@@ -1,11 +1,13 @@
-import { SegmentedControl, Text } from '@mantine/core';
+import { Center, SegmentedControl } from '@mantine/core';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { getCapacities } from '../../api/capacities';
 import ICapacity from '../../types/ICapacity';
 import { IStepProps } from '../../types/IStepProps';
+import Helper from '../Tooltip/Helper';
 import StepTitle from './Utils/StepTitle';
 
-const CapacityStep: React.FC<IStepProps> = ({ form, label }) => {
+const CapacityStep: React.FC<IStepProps> = ({ form }) => {
   const [capacities, setCapacities] = useState<ICapacity[]>([]);
   const [capacity, setCapacity] = useState<ICapacity>();
 
@@ -49,11 +51,12 @@ const CapacityStep: React.FC<IStepProps> = ({ form, label }) => {
 
   return (
     <>
-      <StepTitle label={label} />
-      <Text m="sm" color="dimmed" align="center">
-        Nombre de personne maxium que vous pouvez acceuillir dans votre
-        établissement
-      </Text>
+      <StepTitle label={t('register.capacityStep.label')} />
+      <Center>
+        <Helper.UnderTitle label={t('register.capacityStep.helper')}>
+          {t('register.capacityStep.capacity')}
+        </Helper.UnderTitle>
+      </Center>
       <SegmentedControl
         fullWidth
         color={capacity?.color ?? 'primary'} // only primary so don't need colors

@@ -74,7 +74,7 @@ router.get('/', async (req, res) => {
   });
 
   const likedAccounts = await database.liked_account.findMany({
-    where: { liker_account: req.account.id },
+    where: { liker_account_id: req.account.id },
   });
 
   let formattedData = data.map((artist) => ({
@@ -86,7 +86,7 @@ router.get('/', async (req, res) => {
     latitude: artist.latitude,
     profilePicture: artist.account.profile_picture,
     likedAccount: likedAccounts.find(
-      (account) => account.liked_account === artist.account_id
+      (account) => account.liked_account_id === artist.account_id
     )
       ? true
       : false,
@@ -157,7 +157,7 @@ router.get('/:id/', async (req, res) => {
   });
 
   const likedAccounts = await database.liked_account.findMany({
-    where: { liker_account: req.account.id },
+    where: { liker_account_id: req.account.id },
   });
 
   const genres = await database.account_genre.findMany({
@@ -182,7 +182,7 @@ router.get('/:id/', async (req, res) => {
 
   // @ts-ignore
   artist.likedAccount = likedAccounts.find(
-    (account) => account.liked_account === artist.account_id
+    (account) => account.liked_account_id === artist.account_id
   )
     ? true
     : false;

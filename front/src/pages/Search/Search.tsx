@@ -1,14 +1,15 @@
 import { useForm } from '@mantine/form';
-import { useState, useEffect } from 'react';
+import { useEffect, useState } from 'react';
+import { getResults } from '../../api/search';
 import ResultList from '../../components/Search/Result/ResultList';
 import SearchBar from '../../components/Search/SearchBar';
+import { useUser } from '../../store/UserProvider';
+import EProfileType from '../../types/EProfileType';
+import IFilter from '../../types/IFilter';
+import IGenre from '../../types/IGenre';
+import ILocation from '../../types/ILocation';
 import IResult from '../../types/IResult';
 import Layout from '../Layout/Layout';
-import { getResults } from '../../api/search';
-import IGenre from '../../types/IGenre';
-import IFilter from '../../types/IFilter';
-import EProfileType from '../../types/EProfileType';
-import { useUser } from '../../store/UserProvider';
 
 const Search: React.FC = () => {
   const loadingData = new Array(20)
@@ -30,6 +31,7 @@ const Search: React.FC = () => {
       capacities: [0, 0],
       genres: [] as IGenre[],
       type: userTypeFilter,
+      location: {} as ILocation,
     },
   });
 

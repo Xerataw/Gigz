@@ -1,15 +1,24 @@
 import { TextInput } from '@mantine/core';
-import StepTitle from './Utils/StepTitle';
+import { t } from 'i18next';
 import { IStepProps } from '../../types/IStepProps';
+import StepTitle from './Utils/StepTitle';
+import Helper from '../Tooltip/Helper';
 
-const NameStep: React.FC<IStepProps> = ({ form, label }) => {
+const NameStep: React.FC<IStepProps> = ({ form, translate }) => {
   return (
     <>
-      <StepTitle label="Comment on peut vous appeler ?" />
+      <StepTitle label={t('register.nameStep.label')} />
       <TextInput
         autoFocus
+        withAsterisk
         mt="sm"
-        label="Nom"
+        label={
+          <Helper.Label
+            label={t('register.nameStep.nameHelper.' + (translate ?? 'artist'))}
+          >
+            {t('register.nameStep.name')}
+          </Helper.Label>
+        }
         placeholder="Antarctic Lemur"
         {...form.getInputProps('name')}
       />

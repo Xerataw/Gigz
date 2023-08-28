@@ -1,57 +1,51 @@
-import { Button, Tooltip } from '@mantine/core';
+import { Button, Container } from '@mantine/core';
+import { t } from 'i18next';
 import { IStepProps } from '../../types/IStepProps';
+import Helper from '../Tooltip/Helper';
 import StepTitle from './Utils/StepTitle';
 
-interface IUserTypeButton {
-  labelTooltip: string;
-  label: string;
-  value: 'host' | 'artist';
-}
+const ProfileTypeStep: React.FC<IStepProps> = ({ form, nextStep }) => {
+  const handleClick = (type: string) => {
+    form.setValues((values) => ({
+      ...values,
+      userType: type,
+    }));
+    setTimeout(() => {
+      if (nextStep) nextStep();
+    }, 200);
+  };
 
-const userTypes: IUserTypeButton[] = [
-  {
-    labelTooltip: 'Un artiste, un groupe',
-    label: 'Un artiste',
-    value: 'artist',
-  },
-  {
-    labelTooltip: 'Une salle, un bar, un resto',
-    label: 'Un host',
-    value: 'host',
-  },
-];
-
-const ProfileTypeStep: React.FC<IStepProps> = ({ form, label, nextStep }) => {
   return (
     <>
-      <StepTitle label={label} />
+      <StepTitle label={t('register.profileTypeStep.label')} />
       <Button.Group orientation="vertical">
-        {userTypes.map((userType) => (
-          <Tooltip
-            key={userType.value}
-            label={userType.labelTooltip}
-            withinPortal
-            onClick={() => {
-              form.setValues((values) => ({
-                ...values,
-                userType: userType.value,
-              }));
-              setTimeout(() => {
-                if (nextStep) nextStep();
-              }, 200);
-            }}
+        <Container className="w-full relative" p="xl">
+          <Button
+            fullWidth
+            onClick={() => handleClick('artist')}
+            size="xl"
+            variant={form.values.userType === 'artist' ? 'filled' : 'outline'}
           >
-            <Button
-              size="xl"
-              m="lg"
-              variant={
-                form.values.userType === userType.value ? 'filled' : 'outline'
-              }
-            >
-              {userType.label}
-            </Button>
-          </Tooltip>
-        ))}
+            {t('register.profileTypeStep.artist')}
+          </Button>
+          <div className="absolute p-10 top-0 right-0">
+            <Helper label={t('register.profileTypeStep.artistTooltip')} />
+          </div>
+        </Container>
+
+        <Container className="w-full relative" p="xl">
+          <Button
+            fullWidth
+            onClick={() => handleClick('host')}
+            size="xl"
+            variant={form.values.userType === 'host' ? 'filled' : 'outline'}
+          >
+            {t('register.profileTypeStep.host')}
+          </Button>
+          <div className="absolute p-10 top-0 right-0">
+            <Helper label={t('register.profileTypeStep.hostTooltip')} />
+          </div>
+        </Container>
       </Button.Group>
     </>
   );

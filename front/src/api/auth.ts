@@ -1,10 +1,11 @@
 import GigzFetcher from '../services/GigzFetcher';
 import IGigzResponse from '../types/IGigzResponse';
+import ILoginUser from '../types/ILoginUser';
 
 export const login = async (
   _email: string,
   _password: string
-): Promise<IGigzResponse<any>> => {
+): Promise<IGigzResponse<ILoginUser>> => {
   return GigzFetcher.post(
     'login',
     { email: _email, password: _password },

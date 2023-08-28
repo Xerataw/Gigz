@@ -9,13 +9,16 @@ import {
   Text,
 } from '@mantine/core';
 import { IconPlus, IconTrash } from '@tabler/icons-react';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { deletePhotoGallery, postPhotoGallery } from '../../api/user';
-import { IStepProps } from '../../types/IStepProps';
-import StepTitle from './Utils/StepTitle';
+import GigzFetcher from '../../services/GigzFetcher';
 import IMedia from '../../types/IMedia';
+import { IStepProps } from '../../types/IStepProps';
+import Helper from '../Tooltip/Helper';
+import StepTitle from './Utils/StepTitle';
 
-const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
+const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
   const maxFile = 5;
   const [pictures, setPictures] = useState<IMedia[]>(form.values.gallery);
 
@@ -50,7 +53,13 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
 
   return (
     <>
-      <StepTitle label={label} />
+      <StepTitle label={t('register.presentationPicturesStep.label')} />
+      <Helper.UnderTitle
+        label={t('register.presentationPicturesStep.helper')}
+        labelDirection="right"
+      >
+        {t('register.presentationPicturesStep.max')} ({pictures.length}/5)
+      </Helper.UnderTitle>
 
       <Grid justify="center">
         {pictures.map((image, index) => (
@@ -62,7 +71,7 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
                 withPlaceholder
                 key={index}
                 height={200}
-                src={'http://localhost:3000/static/' + image.media}
+                src={GigzFetcher.getImageUri(image.media)}
               />
               <div className="absolute top-0 right-0">
                 <ActionIcon
@@ -82,28 +91,26 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form, label }) => {
               shadow="sm"
               radius="md"
               withBorder
-              className="h-[200px] py-[5px]"
+              className="h-[200px] py-[5px] flex flex-col justify-center"
             >
-              <Text align="center" mb="sm" mt="sm" weight={500}>
-                Ajouter des images
-              </Text>
-
-              <Text size="sm" color="dimmed" align="center">
-                Ajouter jusqu&apos;à 5 images ({pictures.length}/{maxFile})
-              </Text>
-              <Center mt="sm">
-                <FileButton
-                  onChange={handleAddFiles}
-                  accept="image/png,image/jpeg"
-                  multiple
-                >
-                  {(props) => (
-                    <Button {...props}>
-                      <IconPlus />
-                    </Button>
-                  )}
-                </FileButton>
-              </Center>
+              <div>
+                <Text align="center" mb="sm" weight={500}>
+                  {t('register.presentationPicturesStep.add')}
+                </Text>
+                <Center>
+                  <FileButton
+                    onChange={handleAddFiles}
+                    accept="image/png,image/jpeg"
+                    multiple
+                  >
+                    {(props) => (
+                      <Button {...props}>
+                        <IconPlus />
+                      </Button>
+                    )}
+                  </FileButton>
+                </Center>
+              </div>
             </Card>
           </Grid.Col>
         )}
