@@ -15,7 +15,7 @@ interface ISettingsDrawerProps {
   drawerLabel: string;
   children: ReactNode;
   route: string;
-  save: () => boolean;
+  save: () => Promise<boolean>;
   disabledSave: boolean;
 }
 
@@ -83,8 +83,9 @@ const SettingsDrawer: React.FC<ISettingsDrawerProps> = ({
             <Button
               leftIcon={<IconDeviceFloppy />}
               disabled={disabledSave}
-              onClick={() => {
-                if (save()) {
+              onClick={async () => {
+                const mustClose = await save();
+                if (mustClose === true) {
                   handleCloseDrawer();
                 }
               }}

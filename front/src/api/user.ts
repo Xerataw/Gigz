@@ -5,12 +5,17 @@ import IGenre from '../types/IGenre';
 import IGigzResponse from '../types/IGigzResponse';
 import IHostProfile from '../types/IHostProfile';
 import IMedia from '../types/IMedia';
+import IPatchProfile from '../types/IPatchProfile';
 import IProfilePicture from '../types/IProfilePicture';
 
 export const getProfile = async (
   profileType: EProfileType
 ): Promise<IGigzResponse<IArtistProfile | IHostProfile>> => {
   return GigzFetcher.get(`me/${profileType}`);
+};
+
+export const patchProfile = (values: IPatchProfile) => {
+  return GigzFetcher.patch<{ [key: string]: string }>('me/account', values);
 };
 
 export const patchArtistProfile = (artistValues: IArtistProfile) => {

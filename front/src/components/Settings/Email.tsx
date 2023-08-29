@@ -2,12 +2,15 @@ import { TextInput } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { patchProfile } from '../../api/user';
+import { useUser } from '../../store/UserProvider';
 import SettingsDrawer from './SettingsDrawer';
 
 const Email: React.FC = () => {
   const { t } = useTranslation();
   const [value, setValue] = useDebouncedState<string>('', 1000);
   const [error, setError] = useState<string | boolean>();
+  const user = useUser();
 
   useEffect(() => {
     if (value.length > 0 && !/^\S+@\S+$/.test(value)) {
@@ -17,12 +20,27 @@ const Email: React.FC = () => {
     }
   }, [value]);
 
-  const save = (): boolean => {
+  const save = async (): Promise<boolean> => {
     if (value.length === 0) return true;
 
-    // TODO: return if request succeed return true to close the drawer
-    //req
-    return true;
+    return await patchProfile({ email: value ?? '' })
+      .then((e) => {
+        if (e.ok === true) {
+          if (e.data?.token) {
+            user.setToken(e.data?.token);
+          } else {
+            window.location.href = '/';
+          }
+          return true;
+        } else {
+          setError(e.message);
+          return false;
+        }
+      })
+      .catch((e) => {
+        setError(e.message);
+        return false;
+      });
   };
 
   return (
