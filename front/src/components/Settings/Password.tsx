@@ -2,15 +2,20 @@ import { PasswordInput } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { patchProfile } from '../../api/user';
 import { PasswordUtils } from '../../services/PasswordUtils';
+import { useUser } from '../../store/UserProvider';
 import SettingsDrawer from './SettingsDrawer';
 
 const Password: React.FC = () => {
+  const user = useUser();
   const { t } = useTranslation();
-  const [value, setValue] = useDebouncedState<string>('', 1000);
-  const [error, setError] = useState<any | boolean>();
+  const [oldValue, setOldValue] = useDebouncedState<string>('', 1000);
 
   const [confirmation, setConfirmation] = useDebouncedState<string>('', 1000);
+  const [value, setValue] = useDebouncedState<string>('', 1000);
+
+  const [error, setError] = useState<any | boolean>();
   const [errorConfirmation, setErrorConfirmation] = useState<
     string | boolean
   >();
@@ -53,16 +58,29 @@ const Password: React.FC = () => {
     }
   }, [error, errorConfirmation]);
 
-  const save = (): boolean => {
+  const save = async (): Promise<boolean> => {
     if (value.length === 0) return true;
 
-    // TODO: return if request succeed return true to close the drawer
-    if (areValid === true) {
-      //req
-      return true;
-    }
-
-    return false;
+    return await patchProfile({
+      password: { new: value, current: oldValue },
+    })
+      .then((e) => {
+        if (e.ok === true) {
+          if (e.data?.token) {
+            user.setToken(e.data?.token);
+          } else {
+            window.location.href = '/';
+          }
+          return true;
+        } else {
+          setError(e.message);
+          return false;
+        }
+      })
+      .catch((e) => {
+        setError(e.message);
+        return false;
+      });
   };
 
   return (
@@ -75,8 +93,13 @@ const Password: React.FC = () => {
         disabledSave={!areValid}
       >
         <PasswordInput
-          error={error}
           autoFocus
+          label={t('settings.password.inputOld')}
+          placeholder={t('settings.password.placeholderOld')}
+          onChange={(e) => setOldValue(e.target.value)}
+        />
+        <PasswordInput
+          error={error}
           label={t('settings.password.input')}
           placeholder={t('settings.password.placeholder')}
           onChange={(e) => setValue(e.target.value)}
