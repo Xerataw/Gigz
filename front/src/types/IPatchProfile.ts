@@ -1,5 +1,5 @@
 export default interface IPatchProfile {
-  phone?: string;
+  phoneNumber?: string;
   password?: { current: string; new: string };
   email?: string;
 }

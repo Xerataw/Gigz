@@ -59,8 +59,6 @@ const Password: React.FC = () => {
   }, [error, errorConfirmation]);
 
   const save = async (): Promise<boolean> => {
-    if (value.length === 0) return true;
-
     return await patchProfile({
       password: { new: value, current: oldValue },
     })

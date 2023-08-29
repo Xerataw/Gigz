@@ -21,8 +21,6 @@ const Email: React.FC = () => {
   }, [value]);
 
   const save = async (): Promise<boolean> => {
-    if (value.length === 0) return true;
-
     return await patchProfile({ email: value ?? '' })
       .then((e) => {
         if (e.ok === true) {
