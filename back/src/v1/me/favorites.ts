@@ -103,8 +103,8 @@ router.post('/', async (req, res) => {
   sendResponse(res, fromDbFormat(data), 201);
 });
 
-router.delete('/:id', async (req, res) => {
-  const params = favoriteBodySchema.safeParse(req.params);
+router.delete('/', async (req, res) => {
+  const params = favoriteBodySchema.safeParse(req.body);
 
   if (!params.success) return sendError(res, ApiMessages.BadRequest);
 
