@@ -7,7 +7,13 @@ import IResult from '../types/IResult';
 
 export const getResults = (filters: IFilter) => {
   return new Promise<IGigzResponse<IResult[]>>((resolve, reject) => {
-    GigzFetcher.get<IResult[]>(`${filters.type}s`, { ...filters, type: null })
+    GigzFetcher.get<IResult[]>(`${filters.type}s`, {
+      ...filters,
+      longitude: filters.location?.longitude,
+      latitude: filters.location?.latitude,
+      location: null,
+      type: null,
+    })
       .then((response) => {
         setTimeout(() => {
           resolve(response);

@@ -158,6 +158,7 @@
     "genre": "Rechercher un genre",
     "host": "Hôte",
     "sumbit": "Rechercher",
+    "location": "Localisation",
     "capacity": {
       "label": "Capacité d'accueil",
       "amount_zero": "{{count}} personne",
@@ -207,6 +208,8 @@
       "title": "Changez votre mot de passe",
       "input": "Mot de passe",
       "placeholder": "monSup3r_M0tDePa22e",
+      "inputOld": "Ancien mot de passe",
+      "placeholderOld": "monSup3r_AnCi3n_M0tDePa22e",
       "confirmation": "Confirmation"
     },
     "phone": {

@@ -1,11 +1,4 @@
-import {
-  Button,
-  Container,
-  Divider,
-  Drawer,
-  Group,
-  Title,
-} from '@mantine/core';
+import { Container, Divider, Drawer, Group, Title } from '@mantine/core';
 import { IconSettings } from '@tabler/icons-react';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
@@ -14,13 +7,13 @@ import { LinkUtils } from '../../services/LinkUtils';
 
 import LightRoundButton from '../LightRoundButton';
 import DeleteAccount from './DeleteAccount';
+import Email from './Email';
 import InsivibleMode from './InsivibleMode';
 import Language from './Language';
 import Logout from './Logout';
-import Email from './Email';
 import Password from './Password';
-import Theme from './Theme';
 import Phone from './Phone';
+import Theme from './Theme';
 
 const Settings: React.FC = () => {
   const history = useHistory();

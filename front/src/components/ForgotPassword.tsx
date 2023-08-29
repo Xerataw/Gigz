@@ -1,9 +1,9 @@
-import { Anchor, Box, Button, Group, TextInput } from '@mantine/core';
+import { Box, Button, Group, Text, TextInput } from '@mantine/core';
 import { useForm } from '@mantine/form';
 import { useDebouncedValue } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useHistory } from 'react-router-dom';
+import { Link, useHistory } from 'react-router-dom';
 
 const ForgotPassword: React.FC = () => {
   const { t } = useTranslation();
@@ -56,14 +56,6 @@ const ForgotPassword: React.FC = () => {
     history.push('/login');
   };
 
-  const rememberPassword = () => {
-    history.push('/login');
-  };
-
-  const register = () => {
-    history.push('/register');
-  };
-
   return (
     <Box maw={300} mx="auto" className="flex justify-center flex-col h-screen">
       <div className="flex flex-col justify-center items-center text-center">
@@ -79,15 +71,23 @@ const ForgotPassword: React.FC = () => {
           {...form.getInputProps('email')}
         />
 
-        <Group position="right" align="flex-start" pt={14}>
-          <Anchor
-            color="black"
-            className="underline underline-offset-2"
+        <Group position="apart" align="flex-start" pt={14}>
+          <Text
+            component={Link}
+            to="/login"
             size={14}
-            onClick={() => rememberPassword()}
+            className="underline underline-offset-4"
           >
             {t('login.forgotPassword.rememberPassword')}
-          </Anchor>
+          </Text>
+          <Text
+            component={Link}
+            to="register"
+            size={14}
+            className="underline underline-offset-4"
+          >
+            {t('login.forgotPassword.register')}
+          </Text>
         </Group>
 
         <Group position="center" mt="md">
@@ -100,14 +100,6 @@ const ForgotPassword: React.FC = () => {
             {t('login.forgotPassword.resetPassword')}
           </Button>
         </Group>
-        <Anchor
-          color="black"
-          className="flex justify-center mt-2 underline underline-offset-2"
-          size={14}
-          onClick={() => register()}
-        >
-          {t('login.forgotPassword.register')}
-        </Anchor>
       </form>
     </Box>
   );

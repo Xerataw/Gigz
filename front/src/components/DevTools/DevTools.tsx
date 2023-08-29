@@ -34,7 +34,7 @@ const DevTools: React.FC = () => {
   }, [alwaysOpen]);
 
   return (
-    <div className="absolute top-2 left-2">
+    <div className="absolute top-2 left-2 z-[200]">
       <Menu shadow="md" opened={alwaysOpen || open} onChange={setOpen}>
         <Menu.Target>
           <ActionIcon variant="filled" color="primary">

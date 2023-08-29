@@ -157,6 +157,7 @@
     "genre": "Search for a genre",
     "host": "Host",
     "sumbit": "Search",
+    "location": "Location",
     "capacity": {
       "label": "Capacity",
       "amount_zero": "{{count}} person",
@@ -206,7 +207,9 @@
       "title": "Change your password",
       "input": "Password",
       "placeholder": "my_sUp3r-S3cret_P@sswr0d",
-      "confirmation": "Confirmation"
+      "confirmation": "Confirmation",
+      "inputOld": "Old password",
+      "placeholderOld": "my_oLd_sUp3r-S3cret_P@sswr0d"
     },
     "phone": {
       "button": "Phone number",
