@@ -58,7 +58,7 @@ model artist {
   city             String? @db.VarChar(255)
   latitude         Float?  @db.Float
   longitude        Float?  @db.Float
-  account          account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "artist_ibfk_2")
+  account          account @relation(fields: [account_id], references: [id], onDelete: Cascade, map: "artist_ibfk_2")
 
   @@index([account_id], map: "artist_ibfk_2")
 }
@@ -93,7 +93,7 @@ model host {
   longitude      Float?     @db.Float
   capacity       capacity?  @relation(fields: [capacity_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_1")
   host_type      host_type? @relation(fields: [host_type_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_2")
-  account        account    @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "host_ibfk_4")
+  account        account    @relation(fields: [account_id], references: [id], onDelete: Cascade, map: "host_ibfk_4")
 
   @@index([capacity_id], map: "capacity_id")
   @@index([host_type_id], map: "host_type_id")
@@ -109,11 +109,11 @@ model host_type {
 }
 
 model liked_account {
-  id                                           Int     @id @default(autoincrement())
-  liker_account_id                             Int
-  liked_account_id                             Int
-  liker_account                                account @relation("liked_account_liker_accountToaccount", fields: [liker_account_id], references: [id], onDelete: Cascade, map: "liked_account_ibfk_1")
-  liked_account                                account @relation("liked_account_liked_accountToaccount", fields: [liked_account_id], references: [id], onDelete: Cascade, map: "liked_account_ibfk_2")
+  id               Int     @id @default(autoincrement())
+  liked_account_id Int
+  liker_account_id Int
+  liker_account    account @relation("liked_account_liker_accountToaccount", fields: [liker_account_id], references: [id], onDelete: Cascade, map: "liked_account_ibfk_1")
+  liked_account    account @relation("liked_account_liked_accountToaccount", fields: [liked_account_id], references: [id], onDelete: Cascade, map: "liked_account_ibfk_2")
 
   @@unique([liker_account_id, liked_account_id], map: "liker_account_liked_account")
   @@index([liked_account_id], map: "liked_account")
@@ -130,10 +130,10 @@ model settings {
 }
 
 model gallery {
-  id         Int     @id @default(autoincrement())
-  account_id Int
-  media      String  @db.VarChar(255)
-  account    account @relation(fields: [account_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "gallery_ibfk_1")
+  id         Int      @id @default(autoincrement())
+  account_id Int?
+  media      String   @db.VarChar(255)
+  account    account? @relation(fields: [account_id], references: [id], map: "gallery_ibfk_1")
 
   @@unique([account_id, media], map: "account_id_media")
 }
@@ -151,9 +151,9 @@ model conversation {
   member_id         Int
   creation_date     DateTime? @default(now()) @db.DateTime(0)
   latest_message_id Int?
-  creator           account   @relation("conversation_creator_idToaccount", fields: [creator_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_1")
-  member            account   @relation("conversation_member_idToaccount", fields: [member_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_2")
-  latest_message    message?  @relation("conversation_latest_message_idTomessage", fields: [latest_message_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "conversation_ibfk_3")
+  creator           account   @relation("conversation_creator_idToaccount", fields: [creator_id], references: [id], onDelete: Cascade, map: "conversation_ibfk_1")
+  latest_message    message?  @relation("conversation_latest_message_idTomessage", fields: [latest_message_id], references: [id], map: "conversation_ibfk_3")
+  member            account   @relation("conversation_member_idToaccount", fields: [member_id], references: [id], onDelete: Cascade, map: "conversation_ibfk_2")
   messages          message[] @relation("message_conversation_idToconversation")
 
   @@unique([creator_id, member_id], map: "creator_id_member_id")
@@ -171,9 +171,9 @@ model message {
   send_date                                            DateTime?      @default(now()) @db.DateTime(0)
   seen                                                 Int            @default(0) @db.TinyInt
   conversation_conversation_latest_message_idTomessage conversation[] @relation("conversation_latest_message_idTomessage")
-  account_message_sender_idToaccount                   account        @relation("message_sender_idToaccount", fields: [sender_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_1")
-  account_message_recipient_idToaccount                account        @relation("message_recipient_idToaccount", fields: [recipient_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_2")
-  conversation_message_conversation_idToconversation   conversation   @relation("message_conversation_idToconversation", fields: [conversation_id], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "message_ibfk_3")
+  account_message_sender_idToaccount                   account        @relation("message_sender_idToaccount", fields: [sender_id], references: [id], onDelete: Cascade, map: "message_ibfk_1")
+  conversation_message_conversation_idToconversation   conversation   @relation("message_conversation_idToconversation", fields: [conversation_id], references: [id], onDelete: Cascade, map: "message_ibfk_3")
+  account_message_recipient_idToaccount                account        @relation("message_recipient_idToaccount", fields: [recipient_id], references: [id], onDelete: Cascade, map: "message_ibfk_2")
 
   @@index([conversation_id], map: "conversation_id")
   @@index([recipient_id], map: "recipient_id")
