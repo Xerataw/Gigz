@@ -1,11 +1,11 @@
-import { ReactNode, useState } from 'react';
 import { Global } from '@emotion/react';
 import { ScrollArea } from '@mantine/core';
 import SwipeableDrawer from '@mui/material/SwipeableDrawer';
-import ProfileBanner from './ProfileBanner';
-import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
+import { ReactNode, useState } from 'react';
 import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
+import ProfileBanner from './ProfileBanner';
+import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 
 interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;
