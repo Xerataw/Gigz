@@ -1,17 +1,22 @@
 import { Center, Loader, RingProgress, Text, ThemeIcon } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
+import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { getProfile } from '../../api/user';
 import { useUser } from '../../store/UserProvider';
-import { t } from 'i18next';
 
 interface IAccountCreatedProps {
   label: string;
   path: string;
+  needVerification?: boolean;
 }
 
-const StepperCompleted: React.FC<IAccountCreatedProps> = ({ label, path }) => {
+const StepperCompleted: React.FC<IAccountCreatedProps> = ({
+  label,
+  path,
+  needVerification = false,
+}) => {
   const user = useUser();
   const [time, setTime] = useState<number>(0);
   const [isVerified, setVerified] = useState<boolean>(false);
@@ -22,11 +27,15 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({ label, path }) => {
   useEffect(() => {
     if (time >= 100) {
       setTime(100);
+      if (!needVerification)
+        setTimeout(() => {
+          history.push(path);
+        }, 200);
     }
   }, [time]);
 
   useEffect(() => {
-    if (isVerified === true) {
+    if (needVerification && isVerified) {
       setTimeout(() => {
         history.push(path);
       }, 200);
