@@ -7,7 +7,7 @@ import IGigzResponse from '../types/IGigzResponse';
 import IHostProfile from '../types/IHostProfile';
 import IHostProfileEditValues from '../types/IHostProfileEditValues';
 import IMedia from '../types/IMedia';
-import IPatchProfile from '../types/IPatchProfile';
+import IPatchAccount from '../types/IPatchAccount';
 import IProfilePicture from '../types/IProfilePicture';
 
 export const getProfile = async (
@@ -16,7 +16,7 @@ export const getProfile = async (
   return GigzFetcher.get(`me/${profileType}`);
 };
 
-export const patchProfile = (values: IPatchProfile) => {
+export const patchAccount = (values: IPatchAccount) => {
   return GigzFetcher.patch<{ [key: string]: string }>('me/account', values);
 };
 
