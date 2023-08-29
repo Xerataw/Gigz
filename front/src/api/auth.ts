@@ -6,7 +6,7 @@ export const login = async (
   _email: string,
   _password: string
 ): Promise<IGigzResponse<ILoginUser>> => {
-  return GigzFetcher.post(
+  return GigzFetcher.post<ILoginUser>(
     'login',
     { email: _email, password: _password },
     {},

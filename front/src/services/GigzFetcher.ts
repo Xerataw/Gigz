@@ -237,12 +237,12 @@ export default class GigzFetcher {
     const message = (error.response?.data as any).message;
 
     if (error.response)
-      return Promise.resolve({
+      return Promise.reject({
         message,
         ok: false,
         code: error.response.status,
       });
-    return Promise.resolve({
+    return Promise.reject({
       message: error.message,
       ok: false,
       code: HttpStatusCode.InternalServerError,
