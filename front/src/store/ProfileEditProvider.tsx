@@ -53,24 +53,33 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   );
 
   // Values to edit
-  const [editedName, setEditedName] = useState<string>('');
-  const [editedPP, setEditedPP] = useState<File | null>(null);
-  const [editedBio, setEditedBio] = useState<string>('');
-  const [editedInsta, setEditedInsta] = useState<string>('');
-  const [editedFacebook, setEditedFacebook] = useState<string>('');
-  const [editedWebsite, setEditedWebsite] = useState<string>('');
+  const [editedName, setEditedName] = useState<string>();
+  const [editedPP, setEditedPP] = useState<File | null | undefined>(undefined);
+  const [editedBio, setEditedBio] = useState<string>();
+  const [editedInsta, setEditedInsta] = useState<string>();
+  const [editedFacebook, setEditedFacebook] = useState<string>();
+  const [editedWebsite, setEditedWebsite] = useState<string>();
 
   const getEditedValues = (): IProfileEditValues => {
     const editedProfileValues = {} as IProfileEditValues;
-    if (editedName !== initialValues?.name)
+    if (editedName !== undefined && editedName !== initialValues?.name)
       editedProfileValues.name = editedName;
-    if (editedBio !== initialValues?.description)
+    if (editedBio !== undefined && editedBio !== initialValues?.description)
       editedProfileValues.description = editedBio;
-    if (editedInsta !== initialValues?.instagramLink)
+    if (
+      editedInsta !== undefined &&
+      editedInsta !== initialValues?.instagramLink
+    )
       editedProfileValues.instagramLink = editedInsta;
-    if (editedFacebook !== initialValues?.facebookLink)
+    if (
+      editedFacebook !== undefined &&
+      editedFacebook !== initialValues?.facebookLink
+    )
       editedProfileValues.facebookLink = editedFacebook;
-    if (editedWebsite !== initialValues?.websiteLink)
+    if (
+      editedWebsite !== undefined &&
+      editedWebsite !== initialValues?.websiteLink
+    )
       editedProfileValues.websiteLink = editedWebsite;
     return editedProfileValues;
   };
@@ -78,7 +87,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const onProfileUpdated = (
     newProfile: IArtistProfile | IHostProfile
   ): void => {
-    if (editedPP !== null)
+    if (editedPP !== null && editedPP !== undefined)
       patchProfilePicture(editedPP).then((response) => {
         user.setProfilePicture(response.data ? response.data.media : null);
         setUpdatedProfile({
@@ -90,7 +99,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         });
         setEditConfirmed(false);
       });
-    else
+    else if (editedPP === null)
       deleteProfilePicture().then(() => {
         user.setProfilePicture(null);
         setUpdatedProfile({
@@ -108,6 +117,10 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   useEffect(() => {
     if (editConfirmed) {
       const valuesToUpdate = getEditedValues();
+      if (Object.keys(valuesToUpdate).length === 0) {
+        setEditConfirmed(false);
+        return;
+      }
       (user.getProfileType() as EProfileType) === EProfileType.ARTIST
         ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) =>
             onProfileUpdated(res.data as IArtistProfile)

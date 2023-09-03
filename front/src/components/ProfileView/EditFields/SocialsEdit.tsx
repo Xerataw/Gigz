@@ -3,7 +3,7 @@ import {
   IconBrandFacebook,
   IconBrandInstagram,
   IconCirclePlus,
-  IconEditCircle,
+  IconPencil,
   IconWorldWww,
 } from '@tabler/icons-react';
 import { useState } from 'react';
@@ -74,7 +74,7 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
               }
             >
               {currentInsta ? (
-                <IconEditCircle className="pl-[0.05rem]" color="black" />
+                <IconPencil className="pl-[0.05rem]" color="black" />
               ) : (
                 <IconCirclePlus
                   className="pt-[0.15rem] pl-[0.05rem]"
@@ -107,7 +107,7 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
               }
             >
               {currentFacebook ? (
-                <IconEditCircle className="pl-[0.05rem]" color="black" />
+                <IconPencil className="pl-[0.05rem]" color="black" />
               ) : (
                 <IconCirclePlus className="pt-[0.1rem]" color="black" />
               )}
@@ -144,7 +144,7 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
               }
             >
               {currentWebsite ? (
-                <IconEditCircle className="pl-[0.05rem]" color="black" />
+                <IconPencil className="pl-[0.05rem]" color="black" />
               ) : (
                 <IconCirclePlus className="pt-[0.1rem]" color="black" />
               )}
