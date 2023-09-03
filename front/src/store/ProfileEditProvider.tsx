@@ -19,6 +19,7 @@ interface IProfileEditContext {
   initialValues: IArtistProfile | IHostProfile;
   setInitialValues: (initialValues: IArtistProfile | IHostProfile) => void;
   updatedProfile: IArtistProfile | IHostProfile;
+  changeAfterEdit: boolean;
   setEditedName: (editedName: string) => void;
   setEditedPP: (editedPP: File | null) => void;
   setEditedBio: (editedBiography: string) => void;
@@ -51,6 +52,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [updatedProfile, setUpdatedProfile] = useState(
     {} as IArtistProfile | IHostProfile
   );
+  const [changeAfterEdit, setChangeAfterEdit] = useState<boolean>(false);
 
   // Values to edit
   const [editedName, setEditedName] = useState<string>();
@@ -97,6 +99,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
               ? { media: user.getProfilePicture() as string }
               : undefined,
         });
+        setChangeAfterEdit(true);
         setEditConfirmed(false);
       });
     else if (editedPP === null)
@@ -109,25 +112,42 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
               ? { media: user.getProfilePicture() as string }
               : undefined,
         });
+        setChangeAfterEdit(true);
         setEditConfirmed(false);
       });
+    else {
+      setUpdatedProfile({
+        ...newProfile,
+        profilePicture:
+          user.getProfilePicture() !== null
+            ? { media: user.getProfilePicture() as string }
+            : undefined,
+      });
+      setChangeAfterEdit(true);
+      setEditConfirmed(false);
+    }
   };
 
   // Send patch request if edit confirmed
   useEffect(() => {
     if (editConfirmed) {
       const valuesToUpdate = getEditedValues();
-      if (Object.keys(valuesToUpdate).length === 0) {
+      if (Object.keys(valuesToUpdate).length === 0 && editedPP === undefined) {
+        setChangeAfterEdit(false);
         setEditConfirmed(false);
         return;
       }
-      (user.getProfileType() as EProfileType) === EProfileType.ARTIST
-        ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) =>
-            onProfileUpdated(res.data as IArtistProfile)
-          )
-        : patchHostProfile(valuesToUpdate as IHostProfile).then((res) =>
-            onProfileUpdated(res.data as IHostProfile)
-          );
+      if (Object.keys(valuesToUpdate).length === 0)
+        onProfileUpdated(initialValues as IArtistProfile | IHostProfile);
+      else {
+        (user.getProfileType() as EProfileType) === EProfileType.ARTIST
+          ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) => {
+              onProfileUpdated(res.data as IArtistProfile);
+            })
+          : patchHostProfile(valuesToUpdate as IHostProfile).then((res) =>
+              onProfileUpdated(res.data as IHostProfile)
+            );
+      }
     }
   }, [editConfirmed]);
 
@@ -141,6 +161,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         initialValues: initialValues as IArtistProfile | IHostProfile,
         setInitialValues,
         updatedProfile,
+        changeAfterEdit,
         setEditedName,
         setEditedPP,
         setEditedBio,
