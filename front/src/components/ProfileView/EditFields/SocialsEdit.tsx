@@ -168,11 +168,14 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
           overlay: { zIndex: 10000 },
           inner: { zIndex: 100000 },
         }}
+        closeOnEscape={false}
       >
-        <LinkEditModalContent
-          linkProps={currentEditedLinkProps as ILinkEdit}
-          setModalOpened={setEditLinkModalOpened}
-        />
+        {editLinkModalOpened && (
+          <LinkEditModalContent
+            linkProps={currentEditedLinkProps as ILinkEdit}
+            setModalOpened={setEditLinkModalOpened}
+          />
+        )}
       </Modal>
     </>
   );
