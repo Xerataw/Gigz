@@ -6,13 +6,18 @@ import EProfileType from '../../../types/EProfileType';
 
 interface IProfileTypeProps {
   form: any;
+  isHidden?: boolean;
 }
 
-const ProfileType: React.FC<IProfileTypeProps> = ({ form }) => {
+const ProfileType: React.FC<IProfileTypeProps> = ({
+  form,
+  isHidden = false,
+}) => {
   const { t } = useTranslation();
 
   return (
     <SegmentedControl
+      hidden={isHidden}
       data={[
         {
           label: (

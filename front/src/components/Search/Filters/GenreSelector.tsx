@@ -7,9 +7,13 @@ import { useTranslation } from 'react-i18next';
 
 interface IGenreSelectorProps {
   form: any;
+  isHidden?: boolean;
 }
 
-const GenreSelector: React.FC<IGenreSelectorProps> = ({ form }) => {
+const GenreSelector: React.FC<IGenreSelectorProps> = ({
+  form,
+  isHidden = false,
+}) => {
   const { t } = useTranslation();
 
   const [selectedGenre, setSelectedGenre] = useState(form.values.genres ?? []);
@@ -41,15 +45,17 @@ const GenreSelector: React.FC<IGenreSelectorProps> = ({ form }) => {
   );
 
   return (
-    <GigzAccordion header={header}>
-      <ScrollArea h="8rem">
-        <GenreSelectionList
-          selectedGenre={selectedGenre}
-          handleAddGenre={handleAddGenre}
-          filter={genreFilter}
-        />
-      </ScrollArea>
-    </GigzAccordion>
+    <div hidden={isHidden}>
+      <GigzAccordion header={header}>
+        <ScrollArea h="8rem">
+          <GenreSelectionList
+            selectedGenre={selectedGenre}
+            handleAddGenre={handleAddGenre}
+            filter={genreFilter}
+          />
+        </ScrollArea>
+      </GigzAccordion>
+    </div>
   );
 };
 

@@ -14,9 +14,8 @@ const Result: React.FC<ISearchResultProps> = ({ result, loading, onClick }) => {
   const [isLiked, setIsLiked] = useState(result?.isLiked);
 
   const likeAccount = () => {
-    isLiked
-      ? deleteLikeAccountById(result?.profilePicture.account_id)
-      : likeAccountById(result?.profilePicture.account_id);
+    console.log(result);
+    isLiked ? deleteLikeAccountById(result?.id) : likeAccountById(result?.id);
     setIsLiked((old) => !old);
   };
 

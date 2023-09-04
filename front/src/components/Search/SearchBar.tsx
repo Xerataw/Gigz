@@ -18,6 +18,10 @@ import LocationSelector from './Filters/LocationSelector';
 interface ISearchBarProps {
   form: any;
   onSubmit: (values: any) => void;
+  hideLocationFilter?: boolean;
+  hideCapacityFilter?: boolean;
+  hideGenreFilter?: boolean;
+  hideProfileTypeFilter?: boolean;
 }
 
 const useStyles = createStyles((theme) => ({
@@ -58,7 +62,14 @@ const useStyles = createStyles((theme) => ({
   },
 }));
 
-const SearchBar: React.FC<ISearchBarProps> = ({ form, onSubmit }) => {
+const SearchBar: React.FC<ISearchBarProps> = ({
+  form,
+  onSubmit,
+  hideCapacityFilter = false,
+  hideGenreFilter = false,
+  hideLocationFilter = false,
+  hideProfileTypeFilter = false,
+}) => {
   const { t } = useTranslation();
   const { classes } = useStyles();
 
@@ -92,10 +103,11 @@ const SearchBar: React.FC<ISearchBarProps> = ({ form, onSubmit }) => {
                   disabled={
                     form?.values?.type === EProfileType.ARTIST.toString()
                   }
+                  isHidden={hideCapacityFilter}
                 />
-                <LocationSelector form={form} />
-                <GenreSelector form={form} />
-                <ProfileType form={form} />
+                <LocationSelector form={form} isHidden={hideLocationFilter} />
+                <GenreSelector form={form} isHidden={hideGenreFilter} />
+                <ProfileType form={form} isHidden={hideProfileTypeFilter} />
                 <Button type="submit" className="mt-2">
                   {t('search.sumbit')}
                 </Button>

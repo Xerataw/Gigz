@@ -1,18 +1,19 @@
 import { RangeSlider, Text } from '@mantine/core';
-import { getCapacities } from '../../../api/capacities';
-import React, { useEffect, useState } from 'react';
-import ICapacity from '../../../types/ICapacity';
 import { t } from 'i18next';
-import { IconUser, IconUsersGroup } from '@tabler/icons-react';
+import React, { useEffect, useState } from 'react';
+import { getCapacities } from '../../../api/capacities';
+import ICapacity from '../../../types/ICapacity';
 
 interface ICapacityRange {
   form: any;
   disabled?: boolean;
+  isHidden?: boolean;
 }
 
 const CapacityRange: React.FC<ICapacityRange> = ({
   form,
   disabled = false,
+  isHidden = false,
 }) => {
   const [capacities, setCapacities] = useState([] as ICapacity[]);
 
@@ -31,7 +32,7 @@ const CapacityRange: React.FC<ICapacityRange> = ({
   }, []);
 
   return (
-    <>
+    <div hidden={isHidden}>
       <Text fz="md" c="dimmed">
         {t('search.capacity.label')}
       </Text>
@@ -48,7 +49,7 @@ const CapacityRange: React.FC<ICapacityRange> = ({
         {...form.getInputProps('capacities')}
         minRange={1}
       />
-    </>
+    </div>
   );
 };
 

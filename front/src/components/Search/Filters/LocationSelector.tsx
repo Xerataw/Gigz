@@ -9,9 +9,13 @@ import MapTiler, {
 
 interface ILocationSelectorProps {
   form: UseFormReturnType<any>;
+  isHidden?: boolean;
 }
 
-const LocationSelector: React.FC<ILocationSelectorProps> = ({ form }) => {
+const LocationSelector: React.FC<ILocationSelectorProps> = ({
+  form,
+  isHidden = false,
+}) => {
   const [searchValue, setSearchValue] = useState<string>();
   const [searchItems, setSearchItems] = useState<IAddressSearchItem[]>([]);
   const [debounced] = useDebouncedValue(searchValue, 1000);
@@ -48,6 +52,7 @@ const LocationSelector: React.FC<ILocationSelectorProps> = ({ form }) => {
       {...form.getInputProps('location')}
       onChange={getAddressResult}
       value={searchValue}
+      hidden={isHidden}
     />
   );
 };
