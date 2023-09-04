@@ -75,13 +75,9 @@ export default class GigzFetcher {
 
     try {
       // Make request
-      const axiosResponse = await axios.post(
-        finalUri,
-        this.getCleanedBody(params),
-        {
-          headers: finalHeaders,
-        }
-      );
+      const axiosResponse = await axios.post(finalUri, params, {
+        headers: finalHeaders,
+      });
 
       // Return custom response
       return this.formatResponse(axiosResponse);
@@ -110,13 +106,9 @@ export default class GigzFetcher {
 
     try {
       // Make request
-      const axiosResponse = await axios.patch(
-        finalUri,
-        this.getCleanedBody(params),
-        {
-          headers: finalHeaders,
-        }
-      );
+      const axiosResponse = await axios.patch(finalUri, params, {
+        headers: finalHeaders,
+      });
 
       // Return custom response
       return this.formatResponse(axiosResponse);
@@ -145,13 +137,9 @@ export default class GigzFetcher {
 
     try {
       // Make request
-      const axiosResponse = await axios.put(
-        finalUri,
-        this.getCleanedBody(params),
-        {
-          headers: finalHeaders,
-        }
-      );
+      const axiosResponse = await axios.put(finalUri, params, {
+        headers: finalHeaders,
+      });
 
       // Return custom response
       return this.formatResponse(axiosResponse);
@@ -237,12 +225,12 @@ export default class GigzFetcher {
     const message = (error.response?.data as any).message;
 
     if (error.response)
-      return Promise.resolve({
+      return Promise.reject({
         message,
         ok: false,
         code: error.response.status,
       });
-    return Promise.resolve({
+    return Promise.reject({
       message: error.message,
       ok: false,
       code: HttpStatusCode.InternalServerError,
@@ -314,15 +302,5 @@ export default class GigzFetcher {
       code: axiosResponse.status,
       data: axiosResponse.data.data,
     };
-  }
-
-  private static getCleanedBody(body: object | FormData): object {
-    if (body instanceof FormData) return body;
-    const cleanedBody: any = {};
-    for (const [key, value] of Object.entries(body)) {
-      if (typeof value === 'string' && value.length === 0) continue;
-      cleanedBody[key] = value;
-    }
-    return cleanedBody;
   }
 }

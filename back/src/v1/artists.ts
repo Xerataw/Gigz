@@ -13,6 +13,8 @@ const {
   sendError,
   fromDbFormat,
   calculateDistance,
+  isLastPage,
+  sliceArray,
 } = useUtils();
 
 const searchFiltersBodySchemas = z.object({
@@ -20,6 +22,7 @@ const searchFiltersBodySchemas = z.object({
   genres: z.string().min(1).optional(),
   longitude: z.coerce.number().optional(),
   latitude: z.coerce.number().optional(),
+  page: z.coerce.number().default(1),
 });
 
 const buildArtistsWhereCondition = (query: {
@@ -61,6 +64,7 @@ router.get('/', async (req, res) => {
     include: {
       account: {
         select: {
+          id: true,
           profile_picture: true,
           account_genre: {
             select: {
@@ -128,7 +132,20 @@ router.get('/', async (req, res) => {
     delete artist.latitude;
   });
 
-  sendResponse(res, formattedData);
+  formattedData = formattedData.filter(
+    (artist) => artist.id !== req.account.id
+  );
+
+  const isLastPageReturn = isLastPage(formattedData, body.data.page);
+
+  const currentPageData = sliceArray(formattedData, body.data.page);
+
+  const returnedData = {
+    isLastPage: isLastPageReturn,
+    artists: currentPageData,
+  };
+
+  sendResponse(res, fromDbFormat(returnedData));
 });
 
 const GetArtistByIdParams = z.object({

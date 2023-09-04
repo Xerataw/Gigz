@@ -132,8 +132,15 @@
       "label": "How many people can you accommodate?",
       "capacity": "How many people can you accommodate?",
       "helper": "Choose the capacity which is higher than your actual capacity. If you can accommodate 30 people, choose 50 max."
-    }
-  },
+    },
+    "embedStep": {
+      "label": "A flagship song ?",
+      "embed": "Link",
+      "helper": "Copy a link to a Spotify song here",
+      "error": "Add a valid Spotify link"
+    },
+    "verified": "Verify your emails, and confirm your account creation"
+},
   "profile": {
     "banner": {
       "emptyCity": "Somewhere in the world"
@@ -207,7 +214,9 @@
       "title": "Change your password",
       "input": "Password",
       "placeholder": "my_sUp3r-S3cret_P@sswr0d",
-      "confirmation": "Confirmation"
+      "confirmation": "Confirmation",
+      "inputOld": "Old password",
+      "placeholderOld": "my_oLd_sUp3r-S3cret_P@sswr0d"
     },
     "phone": {
       "button": "Phone number",

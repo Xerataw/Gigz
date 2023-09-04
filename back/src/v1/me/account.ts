@@ -76,4 +76,16 @@ router.patch('/', async (req, res) => {
   sendResponse(res, { ...fromDbFormat(formattedAccount), token });
 });
 
+router.delete('/', async (req, res) => {
+  const account = await findAccountById(req.account.id);
+  if (!account) return sendError(res, ApiMessages.WrongToken, 401);
+
+  const deletedAccount = await database.account.delete({
+    where: {
+      id: req.account.id,
+    },
+  });
+  sendResponse(res, fromDbFormat(deletedAccount), 200);
+});
+
 export default router;

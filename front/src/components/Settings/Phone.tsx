@@ -2,9 +2,12 @@ import { Text, TextInput } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
+import { patchAccount } from '../../api/user';
+import { useUser } from '../../store/UserProvider';
 import SettingsDrawer from './SettingsDrawer';
 
 const Phone: React.FC = () => {
+  const user = useUser();
   const { t } = useTranslation();
   const [value, setValue] = useDebouncedState<string>('', 1000);
   const [error, setError] = useState<string | boolean>();
@@ -17,12 +20,25 @@ const Phone: React.FC = () => {
     }
   }, [value]);
 
-  const save = (): boolean => {
-    if (value.length === 0) return true;
-
-    // TODO: return if request succeed return true to close the drawer
-    //req
-    return true;
+  const save = async (): Promise<boolean> => {
+    return await patchAccount({ phoneNumber: '+33' + value })
+      .then((e) => {
+        if (e.ok === true) {
+          if (e.data?.token) {
+            user.setToken(e.data?.token);
+          } else {
+            window.location.href = '/';
+          }
+          return true;
+        } else {
+          setError(e.message);
+          return false;
+        }
+      })
+      .catch((e) => {
+        setError(e.message);
+        return false;
+      });
   };
 
   return (
