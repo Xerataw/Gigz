@@ -221,6 +221,18 @@ router.get('/:id/', async (req, res) => {
   // @ts-ignore
   delete conversation._count;
 
+  await database.message.updateMany({
+    where: {
+      AND: {
+        conversation_id: params.data.id,
+        recipient_id: req.account.id,
+      },
+    },
+    data: {
+      seen: 1,
+    },
+  });
+
   sendResponse(res, fromDbFormat(conversation));
 });
 
