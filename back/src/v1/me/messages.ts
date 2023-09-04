@@ -67,10 +67,11 @@ router.post('/', async (req, res) => {
     conversation.member_id
   );
 
+  const EVENT = 'private-message';
+
   userIds.forEach((user) => {
-    io.to(user.user_id).emit('private-message', {
-      message,
-    });
+    console.log(`📖 ${EVENT} to ${user.user_id}`);
+    io.to(user.user_id).emit(EVENT, { message });
   });
 
   sendResponse(res, fromDbFormat(message));

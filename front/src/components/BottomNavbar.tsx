@@ -1,4 +1,9 @@
-import { Avatar, Overlay, useMantineColorScheme } from '@mantine/core';
+import {
+  Avatar,
+  Overlay,
+  useMantineColorScheme,
+  Indicator,
+} from '@mantine/core';
 import {
   IconHeart,
   IconHeartFilled,
@@ -10,6 +15,7 @@ import {
 } from '@tabler/icons-react';
 import { Link } from 'react-router-dom';
 import GigzFetcher from '../services/GigzFetcher';
+import { useChatNotification } from '../store/ChatNotificationProvider';
 import { useUser } from '../store/UserProvider';
 import GigzIcon from './GigzIcon';
 
@@ -19,6 +25,8 @@ interface IBottomNavBarProps {
 
 const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
   const userPP = useUser().getProfilePicture();
+  const { notificationCount } = useChatNotification();
+
   const { colorScheme } = useMantineColorScheme();
   const isDark = colorScheme === 'dark';
 
@@ -80,8 +88,27 @@ const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
               size="medium"
               color="dark"
               icon={{
-                icon: <IconMessageCircle />,
-                iconFilled: <IconMessageCircle2Filled />,
+                icon: (
+                  <Indicator
+                    inline
+                    label={notificationCount}
+                    size={16}
+                    disabled={notificationCount === 0}
+                  >
+                    {' '}
+                    <IconMessageCircle />
+                  </Indicator>
+                ),
+                iconFilled: (
+                  <Indicator
+                    inline
+                    label={notificationCount}
+                    size={16}
+                    disabled={notificationCount === 0}
+                  >
+                    <IconMessageCircle2Filled />
+                  </Indicator>
+                ),
                 fillColor: 'tertiary',
                 label: 'Go to conversations page',
                 path: '/auth/conversations',

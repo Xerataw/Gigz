@@ -7,10 +7,13 @@ import { useDisclosure } from '@mantine/hooks';
 import Chat from './Chat';
 import { Avatar } from '@mui/material';
 import GigzFetcher from '../../services/GigzFetcher';
+import { useChatNotification } from '../../store/ChatNotificationProvider';
 
 const ChatList: React.FC = () => {
   const [chatList, setChatList] = useState<IChat[]>(new Array(20).fill({}));
   const [loading, setLoading] = useState(true);
+
+  const { decreaseNotificationCount } = useChatNotification();
 
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedChat, setSelectedChat] = useState<IChat>();
@@ -23,6 +26,11 @@ const ChatList: React.FC = () => {
   }, []);
 
   const openChat = (chat: IChat) => {
+    if (chat.unread > 0) {
+      decreaseNotificationCount(chat.unread);
+      chat.unread = 0;
+    }
+
     setSelectedChat(chat);
     open();
   };
