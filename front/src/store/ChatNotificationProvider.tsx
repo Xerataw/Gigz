@@ -9,6 +9,7 @@ interface IChatNotificationProviderProps {
 interface IChatNotificationContext {
   notificationCount: number;
   decreaseNotificationCount: (count: number) => void;
+  setNotificationCount: React.Dispatch<React.SetStateAction<number>>;
 }
 
 const ChatNotificationContext = createContext<IChatNotificationContext>(
@@ -33,18 +34,14 @@ const ChatNotificationProvider: React.FC<IChatNotificationProviderProps> = ({
   const listeners = socket.listeners('private-message');
 
   if (listeners.length === 0) {
-    socket.on('private-message', () => {
-      setNotificationCount((old) => {
-        console.log('notificationCount:', old, ' =>', old + 1);
-        return old + 1;
-      });
-    });
+    socket.on('private-message', () => setNotificationCount((old) => old + 1));
   }
 
   return (
     <ChatNotificationContext.Provider
       value={{
         notificationCount: notificationCount,
+        setNotificationCount: setNotificationCount,
         decreaseNotificationCount: decreaseNotificationCount,
       }}
     >
