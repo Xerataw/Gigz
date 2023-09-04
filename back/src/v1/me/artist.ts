@@ -23,6 +23,7 @@ const ArtistBodySchema = z.object({
   appleMusicLink: z.string().optional(),
   websiteLink: z.string().optional(),
   deezerLink: z.string().optional(),
+  musicLink: z.string().optional(),
 
   // Address
   city: z.string().optional(),
