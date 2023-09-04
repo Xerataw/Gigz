@@ -13,6 +13,8 @@ const {
   sendError,
   fromDbFormat,
   calculateDistance,
+  isLastPage,
+  sliceArray,
 } = useUtils();
 
 const searchFiltersBodySchemas = z.object({
@@ -130,19 +132,16 @@ router.get('/', async (req, res) => {
     delete artist.latitude;
   });
 
-  const elementsPerPage = 20;
+  const isLastPageReturn = isLastPage(formattedData, body.data.page);
 
-  const totalPages = Math.ceil(data.length / elementsPerPage);
-  const isLastPage = body.data.page === totalPages;
+  const currentPageData = sliceArray(formattedData, body.data.page);
 
-  const startIndex = (body.data.page - 1) * elementsPerPage;
-  const endIndex = startIndex + elementsPerPage;
+  const returnedData = {
+    isLastPage: isLastPageReturn,
+    artists: currentPageData,
+  };
 
-  const currentPageData = formattedData.slice(startIndex, endIndex);
-
-  const returnedData = { isLastPage: isLastPage, artists: currentPageData };
-
-  sendResponse(res, returnedData, 200);
+  sendResponse(res, fromDbFormat(returnedData));
 });
 
 const GetArtistByIdParams = z.object({
