@@ -6,6 +6,8 @@ import IArtistProfile from '../../types/IArtistProfile';
 import IHostProfile from '../../types/IHostProfile';
 import ProfileBanner from './ProfileBanner';
 import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
+import { useProfileEdit } from '../../store/ProfileEditProvider';
+import EmbedEdit from './EditFields/EmbedEdit';
 
 interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;
@@ -18,6 +20,7 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
   profileLoading,
   children,
 }) => {
+  const { editMode } = useProfileEdit();
   const [drawerOpened, setDrawerOpened] = useState<boolean>(false);
   const toggleDrawer = () => setDrawerOpened(!drawerOpened);
 
@@ -25,10 +28,11 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
   const isDark = colorScheme === 'dark';
 
   const hasMusicEmbed =
-    !profileLoading &&
-    'musicLink' in profile &&
-    typeof profile.musicLink === 'string' &&
-    profile.musicLink.length > 0;
+    (!profileLoading &&
+      'musicLink' in profile &&
+      typeof profile.musicLink === 'string' &&
+      profile.musicLink.length > 0) ||
+    editMode;
 
   return (
     <div>
@@ -80,7 +84,15 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
         >
           {hasMusicEmbed && (
             <div className="-mb-10 visible ">
-              <MusicEmbed musicLink={profile.musicLink as string} />
+              {editMode ? (
+                <EmbedEdit
+                  defaultLink={(profile as IArtistProfile)?.musicLink}
+                />
+              ) : (
+                <MusicEmbed
+                  musicLink={(profile as IArtistProfile)?.musicLink as string}
+                />
+              )}
             </div>
           )}
           {children}

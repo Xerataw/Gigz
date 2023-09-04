@@ -26,6 +26,7 @@ interface IProfileEditContext {
   setEditedInsta: (editedInsta: string) => void;
   setEditedFacebook: (editedFacebook: string) => void;
   setEditedWebsite: (editedWebsite: string) => void;
+  setEditedMusicLink: (editedMusicLink: string) => void;
 }
 
 const ProfileEditContext = createContext<IProfileEditContext>(
@@ -61,6 +62,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [editedInsta, setEditedInsta] = useState<string>();
   const [editedFacebook, setEditedFacebook] = useState<string>();
   const [editedWebsite, setEditedWebsite] = useState<string>();
+  const [editedMusicLink, setEditedMusicLink] = useState<string>();
 
   const getEditedValues = (): IProfileEditValues => {
     const editedProfileValues = {} as IProfileEditValues;
@@ -83,6 +85,11 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
       editedWebsite !== initialValues?.websiteLink
     )
       editedProfileValues.websiteLink = editedWebsite;
+    if (
+      editedMusicLink !== undefined &&
+      editedMusicLink !== (initialValues as IArtistProfile)?.musicLink
+    )
+      editedProfileValues.musicLink = editedMusicLink;
     return editedProfileValues;
   };
 
@@ -168,6 +175,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         setEditedInsta,
         setEditedFacebook,
         setEditedWebsite,
+        setEditedMusicLink,
       }}
     >
       {children}
