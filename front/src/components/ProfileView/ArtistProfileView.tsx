@@ -1,5 +1,6 @@
 import {
   isBioSectionAvaiblable,
+  isMapSectionAvailable,
   isMusicSectionAvailable,
   isSocialsSectionAvailable,
 } from '../../services/sectionAvailability';
@@ -8,6 +9,7 @@ import IArtistProfile from '../../types/IArtistProfile';
 import BiographyEdit from './EditFields/BiographyEdit';
 import SocialsEdit from './EditFields/SocialsEdit';
 import Biography from './ProfileSections/Biography';
+import LocationMap from './ProfileSections/LocationMap';
 import MusicProfiles from './ProfileSections/MusicProfiles';
 import Socials from './ProfileSections/Socials';
 import ProfileView from './ProfileView';
@@ -38,6 +40,15 @@ const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({
           websiteLink={profile.websiteLink}
         />
       );
+      sections.push(
+        <LocationMap
+          key="location"
+          longitude={profile.longitude as number}
+          latitude={profile.latitude as number}
+          isEditMode={true}
+          searchOnlyCity={true}
+        />
+      );
       return sections;
     }
 
@@ -65,7 +76,14 @@ const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({
           websiteLink={profile.websiteLink}
         />
       );
-
+    isMapSectionAvailable(profile) &&
+      sections.push(
+        <LocationMap
+          key="location"
+          longitude={profile.longitude as number}
+          latitude={profile.latitude as number}
+        />
+      );
     return sections;
   };
 

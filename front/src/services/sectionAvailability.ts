@@ -34,7 +34,9 @@ export const isMusicSectionAvailable = (profile: IArtistProfile): boolean => {
  * @param profile the host profile returned by the backend
  * @returns true if the map section can be displayed, false otherwise
  */
-export const isMapSectionAvailable = (profile: IHostProfile): boolean => {
+export const isMapSectionAvailable = (
+  profile: IHostProfile | IArtistProfile
+): boolean => {
   return (
     typeof profile.longitude === 'number' &&
     typeof profile.latitude === 'number'

@@ -11,16 +11,19 @@ interface ILocationProps {
   longitude: number;
   latitude: number;
   isEditMode?: boolean;
+  searchOnlyCity?: boolean;
 }
 
 interface ILocationSearchProps {
   onLocationSelect: LeafletEventHandlerFn;
+  searchOnlyCity?: boolean;
 }
 
 const LocationMap: React.FC<ILocationProps> = ({
   longitude,
   latitude,
   isEditMode = false,
+  searchOnlyCity = false,
 }) => {
   const { setAddress, setCity, setCityCode, setLongitude, setLatitude } =
     useProfileEdit();
@@ -49,7 +52,10 @@ const LocationMap: React.FC<ILocationProps> = ({
         className="h-[15.625rem] w-full ml-0 rounded-xl"
       >
         {isEditMode && (
-          <LocationSearchField onLocationSelect={onLocationSelect} />
+          <LocationSearchField
+            onLocationSelect={onLocationSelect}
+            searchOnlyCity={searchOnlyCity}
+          />
         )}
         <TileLayer
           attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -63,8 +69,13 @@ const LocationMap: React.FC<ILocationProps> = ({
 
 const LocationSearchField: React.FC<ILocationSearchProps> = ({
   onLocationSelect,
+  searchOnlyCity = false,
 }) => {
-  const provider = new GeoApiFrProvider();
+  const provider = new GeoApiFrProvider({
+    params: {
+      type: searchOnlyCity ? 'municipality' : '', // limit search results to city
+    },
+  });
 
   // @ts-ignore
   const searchControl = new GeoSearchControl({
