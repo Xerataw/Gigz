@@ -188,5 +188,6 @@ export const getArtistValuesReq = (values: any): IArtistProfile => {
     ...values,
     ...values.address,
     city: values.address.value.split(',')[0],
+    musicLink: 'https://open.spotify.com/track/' + values.embed,
   };
 };

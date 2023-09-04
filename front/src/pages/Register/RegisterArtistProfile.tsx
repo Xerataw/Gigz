@@ -98,7 +98,9 @@ const RegisterArtistProfile: React.FC = () => {
   }, [formStep]);
 
   useEffect(() => {
-    setFormStep(Number.parseInt(window.location.pathname.split('artist/')[1]));
+    setFormStep(
+      Number.parseInt(window.location.pathname.split('artist/')[1] ?? 0)
+    );
   }, []);
 
   return (
