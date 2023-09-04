@@ -11,8 +11,8 @@ import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
 import ExternalLinkIcon from '../../ExternalLinkIcon';
-import ProfileSection from '../ProfileSections/ProfileSection';
 import LinkEditModalContent, { ILinkEdit } from './LinkEditModalContent';
+import ProfileSection from '../ProfileSections/ProfileSection';
 
 interface IMusicProfilesEditProps {
   spotifyLink?: string;
