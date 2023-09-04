@@ -10,6 +10,10 @@ export interface IProfileEditValues {
   websiteLink?: string;
   youtubeLink?: string;
   musicLink?: string;
+  spotifyLink?: string;
+  deezerLink?: string;
+  appleMusicLink?: string;
+  soundcloudLink?: string;
   address?: string;
   city?: string;
   cityCode?: string;

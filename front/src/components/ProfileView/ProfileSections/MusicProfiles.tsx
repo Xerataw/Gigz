@@ -47,20 +47,20 @@ const MusicProfiles: React.FC<IMusicProps> = ({
             />
           </li>
         )}
+        {appleMusicLink && (
+          <li>
+            <ExternalLinkIcon
+              link={appleMusicLink}
+              logo={<IconBrandApple size="32" />}
+            />
+          </li>
+        )}
         {youtubeLink && (
           <li>
             <ExternalLinkIcon
               link={youtubeLink}
               logo={<IconBrandYoutube color="white" size="32" />}
               background="#FF0000"
-            />
-          </li>
-        )}
-        {appleMusicLink && (
-          <li>
-            <ExternalLinkIcon
-              link={appleMusicLink}
-              logo={<IconBrandApple size="32" />}
             />
           </li>
         )}

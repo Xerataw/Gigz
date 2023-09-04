@@ -27,6 +27,11 @@ interface IProfileEditContext {
   setEditedFacebook: (editedFacebook: string) => void;
   setEditedWebsite: (editedWebsite: string) => void;
   setEditedMusicLink: (editedMusicLink: string) => void;
+  setEditedSpotify: (editedSpotify: string) => void;
+  setEditedDeezer: (editedSpotify: string) => void;
+  setEditedAppleMusic: (editedSpotify: string) => void;
+  setEditedYoutube: (editedSpotify: string) => void;
+  setEditedSoundcloud: (editedSpotify: string) => void;
 }
 
 const ProfileEditContext = createContext<IProfileEditContext>(
@@ -63,6 +68,11 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [editedFacebook, setEditedFacebook] = useState<string>();
   const [editedWebsite, setEditedWebsite] = useState<string>();
   const [editedMusicLink, setEditedMusicLink] = useState<string>();
+  const [editedSpotify, setEditedSpotify] = useState<string>();
+  const [editedDeezer, setEditedDeezer] = useState<string>();
+  const [editedAppleMusic, setEditedAppleMusic] = useState<string>();
+  const [editedYoutube, setEditedYoutube] = useState<string>();
+  const [editedSoundcloud, setEditedSoundcloud] = useState<string>();
 
   const getEditedValues = (): IProfileEditValues => {
     const editedProfileValues = {} as IProfileEditValues;
@@ -90,6 +100,31 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
       editedMusicLink !== (initialValues as IArtistProfile)?.musicLink
     )
       editedProfileValues.musicLink = editedMusicLink;
+    if (
+      editedSpotify !== undefined &&
+      editedSpotify !== (initialValues as IArtistProfile)?.spotifyLink
+    )
+      editedProfileValues.spotifyLink = editedSpotify;
+    if (
+      editedDeezer !== undefined &&
+      editedDeezer !== (initialValues as IArtistProfile)?.deezerLink
+    )
+      editedProfileValues.deezerLink = editedDeezer;
+    if (
+      editedAppleMusic !== undefined &&
+      editedAppleMusic !== (initialValues as IArtistProfile)?.appleMusicLink
+    )
+      editedProfileValues.appleMusicLink = editedAppleMusic;
+    if (
+      editedYoutube !== undefined &&
+      editedYoutube !== (initialValues as IArtistProfile)?.youtubeLink
+    )
+      editedProfileValues.youtubeLink = editedYoutube;
+    if (
+      editedSoundcloud !== undefined &&
+      editedSoundcloud !== (initialValues as IArtistProfile)?.soundcloudLink
+    )
+      editedProfileValues.soundcloudLink = editedSoundcloud;
     return editedProfileValues;
   };
 
@@ -176,6 +211,11 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         setEditedFacebook,
         setEditedWebsite,
         setEditedMusicLink,
+        setEditedSpotify,
+        setEditedDeezer,
+        setEditedAppleMusic,
+        setEditedYoutube,
+        setEditedSoundcloud,
       }}
     >
       {children}

@@ -6,6 +6,7 @@ import {
 import { useProfileEdit } from '../../store/ProfileEditProvider';
 import IArtistProfile from '../../types/IArtistProfile';
 import BiographyEdit from './EditFields/BiographyEdit';
+import MusicProfilesEdit from './EditFields/MusicProfilesEdit';
 import SocialsEdit from './EditFields/SocialsEdit';
 import Biography from './ProfileSections/Biography';
 import MusicProfiles from './ProfileSections/MusicProfiles';
@@ -36,6 +37,16 @@ const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({
           instagramLink={profile.instagramLink}
           facebookLink={profile.facebookLink}
           websiteLink={profile.websiteLink}
+        />
+      );
+      sections.push(
+        <MusicProfilesEdit
+          key="socials"
+          spotifyLink={profile.spotifyLink}
+          deezerLink={profile.deezerLink}
+          appleMusicLink={profile.appleMusicLink}
+          youtubeLink={profile.youtubeLink}
+          soundcloudLink={profile.soundcloudLink}
         />
       );
       return sections;

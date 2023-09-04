@@ -7,7 +7,7 @@ export interface ILinkEdit {
   defaultLink?: string;
   updateLinkFunction: (updatedLink: string) => void;
   placeholder?: string;
-  regex?: string;
+  regex?: RegExp;
 }
 
 interface ILinkEditModalContentProps {
@@ -35,7 +35,7 @@ const LinkEditModalContent: React.FC<ILinkEditModalContentProps> = ({
   };
 
   const onValidateButtonClick = () => {
-    if (!currentLink || !regex || new RegExp(regex).test(currentLink)) {
+    if (!currentLink || !regex || regex.test(currentLink)) {
       updateLinkFunction(currentLink);
       setModalOpened(false);
     } else setCurrentLinkError('Invalid link');
