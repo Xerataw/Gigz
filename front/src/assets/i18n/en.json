@@ -138,8 +138,9 @@
       "embed": "Link",
       "helper": "Copy a link to a Spotify song here",
       "error": "Add a valid Spotify link"
-    }
-  },
+    },
+    "verified": "Verify your emails, and confirm your account creation"
+},
   "profile": {
     "banner": {
       "emptyCity": "Somewhere in the world"

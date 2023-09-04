@@ -1,6 +1,7 @@
 import { Response } from 'express';
 
 const EARTH_RADIUS = 6371;
+const ELEMENTS_PER_PAGE = 20;
 
 /**
  * Enumeration containing all API messages return to the front-end.
@@ -152,6 +153,19 @@ const degreesToRadians = (degrees: number) => {
   return (degrees * Math.PI) / 180;
 };
 
+const isLastPage = (array: Array<object>, pageNumber: number) => {
+  const totalPages = Math.ceil(array.length / ELEMENTS_PER_PAGE);
+
+  return pageNumber === totalPages;
+};
+
+const sliceArray = (array: Array<object>, pageNumber: number) => {
+  const startIndex = (pageNumber - 1) * ELEMENTS_PER_PAGE;
+  const endIndex = startIndex + ELEMENTS_PER_PAGE;
+
+  return array.slice(startIndex, endIndex);
+};
+
 const useUtils = () => ({
   ApiMessages,
 
@@ -161,6 +175,8 @@ const useUtils = () => ({
   toDbFormat,
   fromDbFormat,
   calculateDistance,
+  isLastPage,
+  sliceArray,
 });
 
 export default useUtils;

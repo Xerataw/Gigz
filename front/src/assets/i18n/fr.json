@@ -139,7 +139,8 @@
       "embed": "Lien",
       "helper": "Copiez ici un lien vers une chanson Spotify",
       "error": "Ajoutez un lien Spotify valide"
-    }
+    },
+    "verified": "Vérifier vos mails, et confirmez la création de votre compte"
   },
   "profile": {
     "banner": {

@@ -2,7 +2,7 @@ import { PasswordInput } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { patchProfile } from '../../api/user';
+import { patchAccount } from '../../api/user';
 import { PasswordUtils } from '../../services/PasswordUtils';
 import { useUser } from '../../store/UserProvider';
 import SettingsDrawer from './SettingsDrawer';
@@ -59,7 +59,7 @@ const Password: React.FC = () => {
   }, [error, errorConfirmation]);
 
   const save = async (): Promise<boolean> => {
-    return await patchProfile({
+    return await patchAccount({
       password: { new: value, current: oldValue },
     })
       .then((e) => {

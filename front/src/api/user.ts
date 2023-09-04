@@ -1,11 +1,13 @@
 import GigzFetcher from '../services/GigzFetcher';
 import EProfileType from '../types/EProfileType';
 import IArtistProfile from '../types/IArtistProfile';
+import { IArtistProfileEditValues } from '../types/IArtistProfileEditValues';
 import IGenre from '../types/IGenre';
 import IGigzResponse from '../types/IGigzResponse';
 import IHostProfile from '../types/IHostProfile';
+import IHostProfileEditValues from '../types/IHostProfileEditValues';
 import IMedia from '../types/IMedia';
-import IPatchProfile from '../types/IPatchProfile';
+import IPatchAccount from '../types/IPatchAccount';
 import IProfilePicture from '../types/IProfilePicture';
 
 export const getProfile = async (
@@ -14,30 +16,31 @@ export const getProfile = async (
   return GigzFetcher.get(`me/${profileType}`);
 };
 
-export const patchProfile = (values: IPatchProfile) => {
+export const patchAccount = (values: IPatchAccount) => {
   return GigzFetcher.patch<{ [key: string]: string }>('me/account', values);
 };
 
-export const patchArtistProfile = (artistValues: IArtistProfile) => {
-  const genreReq: Promise<IGigzResponse<IGenre>>[] = [];
-
-  artistValues.genres.forEach((genre: IGenre) => {
-    genreReq.push(postGenre(genre.id));
-  });
-
-  Promise.all(genreReq);
+export const patchArtistProfile = (artistValues: IArtistProfileEditValues) => {
+  if (artistValues.genres) {
+    const genreReq: Promise<IGigzResponse<IGenre>>[] = [];
+    artistValues.genres.forEach((genre: IGenre) => {
+      genreReq.push(postGenre(genre.id));
+    });
+    Promise.all(genreReq);
+  }
 
   cleanProfilePatchFormValues(artistValues);
   return GigzFetcher.patch<IArtistProfile>('me/artist', artistValues);
 };
 
-export const patchHostProfile = (hostValues: IHostProfile) => {
-  const genreReq: Promise<IGigzResponse<IGenre>>[] = [];
-
-  hostValues.genres.forEach((genre: IGenre) => {
-    genreReq.push(postGenre(genre.id));
-  });
-  Promise.all(genreReq);
+export const patchHostProfile = (hostValues: IHostProfileEditValues) => {
+  if (hostValues.genres) {
+    const genreReq: Promise<IGigzResponse<IGenre>>[] = [];
+    hostValues.genres.forEach((genre: IGenre) => {
+      genreReq.push(postGenre(genre.id));
+    });
+    Promise.all(genreReq);
+  }
 
   cleanProfilePatchFormValues(hostValues);
   return GigzFetcher.patch<IHostProfile>('me/host', hostValues);

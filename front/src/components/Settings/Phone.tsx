@@ -2,7 +2,7 @@ import { Text, TextInput } from '@mantine/core';
 import { useDebouncedState } from '@mantine/hooks';
 import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { patchProfile } from '../../api/user';
+import { patchAccount } from '../../api/user';
 import { useUser } from '../../store/UserProvider';
 import SettingsDrawer from './SettingsDrawer';
 
@@ -21,7 +21,7 @@ const Phone: React.FC = () => {
   }, [value]);
 
   const save = async (): Promise<boolean> => {
-    return await patchProfile({ phoneNumber: '+33' + value })
+    return await patchAccount({ phoneNumber: '+33' + value })
       .then((e) => {
         if (e.ok === true) {
           if (e.data?.token) {
