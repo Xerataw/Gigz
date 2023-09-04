@@ -6,13 +6,28 @@ import useUtils from '@composables/useUtils';
 
 const router = express.Router();
 const { database } = useDatabase();
-const { sendResponse, sendError, ApiMessages, fromDbFormat } = useUtils();
+const {
+  sendResponse,
+  sendError,
+  ApiMessages,
+  fromDbFormat,
+  isLastPage,
+  sliceArray,
+} = useUtils();
 
 const favoriteBodySchema = z.object({
   id: z.coerce.number(),
 });
 
+const favoritesBodySchema = z.object({
+  page: z.coerce.number().default(1),
+});
+
 router.get('/', async (req, res) => {
+  const body = favoritesBodySchema.safeParse(req.body);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const favorites = await database.liked_account.findMany({
     where: {
       liker_account_id: req.account.id,
@@ -85,7 +100,16 @@ router.get('/', async (req, res) => {
     return fav;
   });
 
-  sendResponse(res, fromDbFormat(newFavorites));
+  const isLastPageReturn = isLastPage(newFavorites, body.data.page);
+
+  const currentPageData = sliceArray(newFavorites, body.data.page);
+
+  const returnedData = {
+    isLastPage: isLastPageReturn,
+    artists: currentPageData,
+  };
+
+  sendResponse(res, fromDbFormat(returnedData));
 });
 
 router.post('/', async (req, res) => {
