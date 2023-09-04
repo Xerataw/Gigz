@@ -89,7 +89,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const onProfileUpdated = (
     newProfile: IArtistProfile | IHostProfile
   ): void => {
-    if (editedPP !== null && editedPP !== undefined)
+    if (editedPP)
       patchProfilePicture(editedPP).then((response) => {
         user.setProfilePicture(response.data ? response.data.media : null);
         setUpdatedProfile({
