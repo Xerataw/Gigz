@@ -68,8 +68,9 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
                   },
                   defaultLink: currentInsta,
                   placeholder: 'https://www.instagram.com/your-profile',
-                  regex:
-                    '(?:https?://)?(?:www.)?instagram.com/([a-zA-Z0-9_.]+)/?',
+                  regex: RegExp(
+                    '(?:https?://)?(?:www.)?instagram\\.com/([a-zA-Z0-9_.]+)/?'
+                  ),
                 })
               }
             >
@@ -101,8 +102,9 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
                   },
                   defaultLink: currentFacebook,
                   placeholder: 'https://facebook.com/your-profile',
-                  regex:
-                    '(?:https?://)?(?:www.)?(?:facebook.com|fb.com)/([a-zA-Z0-9_.-]+)/?',
+                  regex: RegExp(
+                    '(?:https?://)?(?:www.)?(?:facebook\\.com|fb\\.com)/([a-zA-Z0-9_.-]+)/?'
+                  ),
                 })
               }
             >
@@ -138,8 +140,9 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
                   },
                   defaultLink: currentWebsite,
                   placeholder: 'https://your-website.com/',
-                  regex:
-                    '^(?:https?://)?(?:www.)?[a-zA-Z0-9.-]+.[a-zA-Z]{2,}(?:/[^s]*)?$',
+                  regex: RegExp(
+                    '^(?:https?://)?(?:www.)?[a-zA-Z0-9.-]+.[a-zA-Z]{2,}(?:/[^s]*)?$'
+                  ),
                 })
               }
             >

@@ -84,7 +84,9 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                   },
                   defaultLink: currentSpotify,
                   placeholder: 'https://open.spotify.com/user/your-profile',
-                  regex: '(?:https?://)?open.spotify.com/user/[a-zA-Z0-9]+/?',
+                  regex: RegExp(
+                    '(?:https?://)?open\\.spotify\\.com/user/[a-zA-Z0-9]+/?'
+                  ),
                 })
               }
             >
@@ -118,8 +120,9 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                   },
                   defaultLink: currentDeezer,
                   placeholder: 'https://www.deezer.com/profile/1111111',
-                  regex:
-                    '(?:https?://)?(?:www.)?deezer.com(?:/en)?/profile/[0-9]+/?',
+                  regex: RegExp(
+                    '(?:https?://)?(?:www.)?deezer\\.com(?:/en)?/profile/[0-9]+/?'
+                  ),
                 })
               }
             >
@@ -149,8 +152,9 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                   },
                   defaultLink: currentAppleMusic,
                   placeholder: 'https://music.apple.com/your-profile',
-                  regex:
-                    '/(?:https://)?music.apple.com(?:/[a-z]{2})?/artist/[-_a-zA-Z0-9]+/[0-9]+/?',
+                  regex: RegExp(
+                    '/(?:https://)?music\\.apple\\.com(?:/[a-z]{2})?/artist/[-_a-zA-Z0-9]+/[0-9]+/?'
+                  ),
                 })
               }
             >
@@ -178,8 +182,9 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                   },
                   defaultLink: currentYoutube,
                   placeholder: 'https://youtube.com/user/your-profile',
-                  regex:
-                    '(?:(?:https://)?(?:www.)?youtube.com/(?:c/|user/|channel/)|youtube.com/(?:c/|user/|channel/))(?:[a-zA-Z0-9_-]+)',
+                  regex: RegExp(
+                    '(?:(?:https://)?(?:www.)?youtube\\.com/(?:c/|user/|channel/)|youtube\\.com/(?:c/|user/|channel/))(?:[a-zA-Z0-9_-]+)'
+                  ),
                 })
               }
             >
@@ -208,8 +213,9 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                   },
                   defaultLink: currentSoundcloud,
                   placeholder: 'https://soundcloud.com/your-profile',
-                  regex:
-                    '(?:https://)?(?:www.)?soundcloud.com/[a-zA-Z0-9-_]+/?',
+                  regex: RegExp(
+                    '(?:https://)?(?:www.)?soundcloud\\.com/[a-zA-Z0-9-_]+/?'
+                  ),
                 })
               }
             >
