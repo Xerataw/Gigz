@@ -26,6 +26,11 @@ interface IProfileEditContext {
   setEditedInsta: (editedInsta: string) => void;
   setEditedFacebook: (editedFacebook: string) => void;
   setEditedWebsite: (editedWebsite: string) => void;
+  setAddress: (address: string) => void;
+  setCity: (city: string) => void;
+  setCityCode: (cityCode: string) => void;
+  setLongitude: (longitude: number) => void;
+  setLatitude: (latitude: number) => void;
 }
 
 const ProfileEditContext = createContext<IProfileEditContext>(
@@ -61,6 +66,11 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [editedInsta, setEditedInsta] = useState<string>();
   const [editedFacebook, setEditedFacebook] = useState<string>();
   const [editedWebsite, setEditedWebsite] = useState<string>();
+  const [editedAddress, setEditedAddress] = useState<string>();
+  const [editedCity, setEditedCity] = useState<string>();
+  const [editedCityCode, setEditedCityCode] = useState<string>();
+  const [editedLongitude, setEditedLongitude] = useState<number>();
+  const [editedLatitude, setEditedLatitude] = useState<number>();
 
   const getEditedValues = (): IProfileEditValues => {
     const editedProfileValues = {} as IProfileEditValues;
@@ -83,6 +93,26 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
       editedWebsite !== initialValues?.websiteLink
     )
       editedProfileValues.websiteLink = editedWebsite;
+    if (editedAddress !== undefined && editedAddress !== initialValues?.address)
+      editedProfileValues.address = editedAddress;
+    if (editedCity !== undefined && editedCity !== initialValues?.city)
+      editedProfileValues.city = editedCity;
+    if (
+      editedCityCode !== undefined &&
+      editedCityCode !== initialValues?.cityCode
+    )
+      editedProfileValues.cityCode = editedCityCode;
+    if (
+      editedLongitude !== undefined &&
+      editedLongitude !== initialValues?.longitude
+    )
+      editedProfileValues.longitude = editedLongitude;
+    if (
+      editedLatitude !== undefined &&
+      editedLatitude !== initialValues?.latitude
+    )
+      editedProfileValues.latitude = editedLatitude;
+
     return editedProfileValues;
   };
 
@@ -168,6 +198,11 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         setEditedInsta,
         setEditedFacebook,
         setEditedWebsite,
+        setAddress: setEditedAddress,
+        setCity: setEditedCity,
+        setCityCode: setEditedCityCode,
+        setLongitude: setEditedLongitude,
+        setLatitude: setEditedLatitude,
       }}
     >
       {children}
