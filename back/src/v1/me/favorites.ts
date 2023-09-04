@@ -38,6 +38,11 @@ router.get('/', async (req, res) => {
         include: {
           host: {
             include: {
+              account: {
+                select: {
+                  id: true,
+                },
+              },
               capacity: {
                 select: {
                   id: true,

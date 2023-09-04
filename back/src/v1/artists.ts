@@ -132,6 +132,10 @@ router.get('/', async (req, res) => {
     delete artist.latitude;
   });
 
+  formattedData = formattedData.filter(
+    (artist) => artist.id !== req.account.id
+  );
+
   const isLastPageReturn = isLastPage(formattedData, body.data.page);
 
   const currentPageData = sliceArray(formattedData, body.data.page);

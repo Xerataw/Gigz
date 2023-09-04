@@ -148,6 +148,8 @@ router.get('/', async (req, res) => {
     delete host.latitude;
   });
 
+  formattedData = formattedData.filter((host) => host.id !== req.account.id);
+
   const isLastPageReturn = isLastPage(formattedData, body.data.page);
 
   const currentPageData = sliceArray(formattedData, body.data.page);
