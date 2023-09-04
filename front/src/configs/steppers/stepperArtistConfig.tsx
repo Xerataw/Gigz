@@ -25,6 +25,8 @@ export const artistInitialValues = {
   appleMusicLink: '',
   soundcloudLink: '',
 
+  embedLink: '',
+
   address: {
     value: '',
     city: '',
@@ -99,6 +101,14 @@ export const artistValidate = (
           values.websiteLink,
           'http',
           'de site web valide'
+        ),
+      };
+    case 7:
+      return {
+        embedLink: LinkUtils.validateLink(
+          values.spotifyLink,
+          'spotify.com/',
+          'Spotify'
         ),
       };
     case 2:
