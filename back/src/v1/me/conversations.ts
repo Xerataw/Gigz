@@ -71,7 +71,10 @@ router.get('/', async (req, res) => {
         select: {
           messages: {
             where: {
-              seen: 0,
+              AND: {
+                recipient_id: req.account.id,
+                seen: 0,
+              },
             },
           },
         },
