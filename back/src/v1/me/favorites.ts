@@ -12,7 +12,15 @@ const favoriteBodySchema = z.object({
   id: z.coerce.number(),
 });
 
+const favoritesBodySchema = z.object({
+  page: z.coerce.number().default(1),
+});
+
 router.get('/', async (req, res) => {
+  const body = favoritesBodySchema.safeParse(req.body);
+
+  if (!body.success) return sendError(res, ApiMessages.BadRequest);
+
   const favorites = await database.liked_account.findMany({
     where: {
       liker_account_id: req.account.id,
@@ -85,7 +93,19 @@ router.get('/', async (req, res) => {
     return fav;
   });
 
-  sendResponse(res, fromDbFormat(newFavorites));
+  const elementsPerPage = 20;
+
+  const totalPages = Math.ceil(newFavorites.length / elementsPerPage);
+  const isLastPage = body.data.page === totalPages;
+
+  const startIndex = (body.data.page - 1) * elementsPerPage;
+  const endIndex = startIndex + elementsPerPage;
+
+  const currentPageData = newFavorites.slice(startIndex, endIndex);
+
+  const returnedData = { isLastPage: isLastPage, artists: currentPageData };
+
+  sendResponse(res, fromDbFormat(returnedData));
 });
 
 router.post('/', async (req, res) => {
