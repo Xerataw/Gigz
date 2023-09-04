@@ -20,6 +20,7 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({
   const user = useUser();
   const [time, setTime] = useState<number>(0);
   const [isVerified, setVerified] = useState<boolean>(false);
+  const [intervalID, setIntervalID] = useState<NodeJS.Timeout>();
   const history = useHistory();
 
   const profileType = user.getProfileType();
@@ -36,6 +37,7 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({
 
   useEffect(() => {
     if (needVerification && isVerified) {
+      clearInterval(intervalID);
       setTimeout(() => {
         history.push(path);
       }, 200);
@@ -57,7 +59,7 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({
     /**
      * Wait for user validate it's email
      */
-    setInterval(() => {
+    const interval = setInterval(() => {
       if (profileType !== null) {
         getProfile(profileType).then((e) => {
           if (e.ok) {
@@ -66,6 +68,7 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({
         });
       }
     }, 2000);
+    setIntervalID(interval);
   }, []);
 
   return (

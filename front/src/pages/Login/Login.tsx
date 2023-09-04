@@ -63,14 +63,6 @@ const Login: React.FC = () => {
     return null;
   };
 
-  const forgotPassword = () => {
-    history.push('/login/forgot-password');
-  };
-
-  const register = () => {
-    history.push('/register');
-  };
-
   useEffect(() => {
     if (debouncedEmail !== '') {
       form.validateField('email');
