@@ -24,8 +24,6 @@ const Phone: React.FC = () => {
     return await patchAccount({ phoneNumber: '+33' + value })
       .then((e) => {
         if (e.ok === true) {
-          console.log('e', e);
-
           if (e.data?.token) {
             user.setToken(e.data?.token);
           } else {

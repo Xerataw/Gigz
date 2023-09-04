@@ -1,9 +1,8 @@
 import { RangeSlider, Text } from '@mantine/core';
-import { getCapacities } from '../../../api/capacities';
-import React, { useEffect, useState } from 'react';
-import ICapacity from '../../../types/ICapacity';
 import { t } from 'i18next';
-import { IconUser, IconUsersGroup } from '@tabler/icons-react';
+import React, { useEffect, useState } from 'react';
+import { getCapacities } from '../../../api/capacities';
+import ICapacity from '../../../types/ICapacity';
 
 interface ICapacityRange {
   form: any;
@@ -15,10 +14,6 @@ const CapacityRange: React.FC<ICapacityRange> = ({
   disabled = false,
 }) => {
   const [capacities, setCapacities] = useState([] as ICapacity[]);
-
-  useEffect(() => {
-    console.log(disabled);
-  }, []);
 
   useEffect(() => {
     getCapacities().then((res) => {

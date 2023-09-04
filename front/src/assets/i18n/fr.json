@@ -134,6 +134,12 @@
       "capacity": "Vous pouvez acceuillir combien de personnes maximum ?",
       "helper": "Choisissez la capacité qui est supérieur à votre capacité réelle. Si vous pouvez acceuillir 30 personnes, choisissez 50 max."
     },
+    "embedStep": {
+      "label": "Une chanson phare ?",
+      "embed": "Lien",
+      "helper": "Copiez ici un lien vers une chanson Spotify",
+      "error": "Ajoutez un lien Spotify valide"
+    },
     "verified": "Vérifier vos mails, et confirmez la création de votre compte"
   },
   "profile": {
