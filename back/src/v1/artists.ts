@@ -20,6 +20,7 @@ const searchFiltersBodySchemas = z.object({
   genres: z.string().min(1).optional(),
   longitude: z.coerce.number().optional(),
   latitude: z.coerce.number().optional(),
+  page: z.coerce.number().default(1),
 });
 
 const buildArtistsWhereCondition = (query: {
@@ -61,6 +62,7 @@ router.get('/', async (req, res) => {
     include: {
       account: {
         select: {
+          id: true,
           profile_picture: true,
           account_genre: {
             select: {
@@ -128,7 +130,19 @@ router.get('/', async (req, res) => {
     delete artist.latitude;
   });
 
-  sendResponse(res, formattedData);
+  const elementsPerPage = 20;
+
+  const totalPages = Math.ceil(data.length / elementsPerPage);
+  const isLastPage = body.data.page === totalPages;
+
+  const startIndex = (body.data.page - 1) * elementsPerPage;
+  const endIndex = startIndex + elementsPerPage;
+
+  const currentPageData = formattedData.slice(startIndex, endIndex);
+
+  const returnedData = { isLastPage: isLastPage, artists: currentPageData };
+
+  sendResponse(res, returnedData, 200);
 });
 
 const GetArtistByIdParams = z.object({
