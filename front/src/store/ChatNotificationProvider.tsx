@@ -34,7 +34,9 @@ const ChatNotificationProvider: React.FC<IChatNotificationProviderProps> = ({
   const listeners = socket.listeners('private-message');
 
   if (listeners.length === 0) {
-    socket.on('private-message', () => setNotificationCount((old) => old + 1));
+    socket.on('private-message', () => {
+      setNotificationCount((old) => old + 1);
+    });
   }
 
   return (

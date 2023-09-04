@@ -42,8 +42,11 @@ const ChatList: React.FC = () => {
   }, [notificationCount]);
 
   const openChat = (chat: IChat) => {
+    console.log('unread#', chat.unread);
+
     if (chat.unread > 0) {
       console.log('decreasing');
+
       decreaseNotificationCount(chat.unread);
       chat.unread = 0;
     }

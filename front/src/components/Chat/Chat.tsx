@@ -11,8 +11,6 @@ interface IChatProps {
 
 const Chat: React.FC<IChatProps> = ({ chat }) => {
   const [page, setPage] = useState(1);
-  const [loading, setLoading] = useState(true);
-
   const [conversationEndReached, setConversationEndReached] = useState(true);
 
   const [messages, setMessages] = useState<IMessage[]>([]);
