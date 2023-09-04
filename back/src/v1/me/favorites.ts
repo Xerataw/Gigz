@@ -6,7 +6,14 @@ import useUtils from '@composables/useUtils';
 
 const router = express.Router();
 const { database } = useDatabase();
-const { sendResponse, sendError, ApiMessages, fromDbFormat } = useUtils();
+const {
+  sendResponse,
+  sendError,
+  ApiMessages,
+  fromDbFormat,
+  isLastPage,
+  sliceArray,
+} = useUtils();
 
 const favoriteBodySchema = z.object({
   id: z.coerce.number(),
@@ -93,17 +100,14 @@ router.get('/', async (req, res) => {
     return fav;
   });
 
-  const elementsPerPage = 20;
+  const isLastPageReturn = isLastPage(newFavorites, body.data.page);
 
-  const totalPages = Math.ceil(newFavorites.length / elementsPerPage);
-  const isLastPage = body.data.page === totalPages;
+  const currentPageData = sliceArray(newFavorites, body.data.page);
 
-  const startIndex = (body.data.page - 1) * elementsPerPage;
-  const endIndex = startIndex + elementsPerPage;
-
-  const currentPageData = newFavorites.slice(startIndex, endIndex);
-
-  const returnedData = { isLastPage: isLastPage, artists: currentPageData };
+  const returnedData = {
+    isLastPage: isLastPageReturn,
+    artists: currentPageData,
+  };
 
   sendResponse(res, fromDbFormat(returnedData));
 });
