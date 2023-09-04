@@ -6,6 +6,7 @@ import {
 import { useProfileEdit } from '../../store/ProfileEditProvider';
 import IHostProfile from '../../types/IHostProfile';
 import BiographyEdit from './EditFields/BiographyEdit';
+import SocialsEdit from './EditFields/SocialsEdit';
 import Biography from './ProfileSections/Biography';
 import LocationChip from './ProfileSections/LocationChip';
 import LocationMap from './ProfileSections/LocationMap';
@@ -28,6 +29,14 @@ const HostProfileView: React.FC<IHostProfileViewProps> = ({
     if (editMode) {
       sections.push(
         <BiographyEdit key="bio-edit" bio={profile?.description} />
+      );
+      sections.push(
+        <SocialsEdit
+          key="socials"
+          instagramLink={profile.instagramLink}
+          facebookLink={profile.facebookLink}
+          websiteLink={profile.websiteLink}
+        />
       );
       return sections;
     }

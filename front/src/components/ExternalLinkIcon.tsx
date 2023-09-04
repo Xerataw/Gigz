@@ -1,7 +1,7 @@
 import { Card, Center } from '@mantine/core';
 
 interface IExternalLinkProps {
-  link: string;
+  link: string | undefined;
   logo: JSX.Element;
   background?: string;
 }
