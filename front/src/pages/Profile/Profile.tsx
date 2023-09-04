@@ -16,7 +16,8 @@ import Layout from '../Layout/Layout';
 const Profile: React.FC = () => {
   const history = useHistory();
   const user = useUser();
-  const { editConfirmed, updatedProfile } = useProfileEdit();
+  const { editConfirmed, changeAfterEdit, updatedProfile, setInitialValues } =
+    useProfileEdit();
   const [profileLoading, setProfileLoading] = useState<boolean>(true);
   const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
@@ -47,25 +48,28 @@ const Profile: React.FC = () => {
               : undefined,
         })
       );
+      setInitialValues(profile.data as IArtistProfile | IHostProfile);
       setProfileLoading(false);
     });
   };
 
   const adjustUpdatedProfile = () => {
-    setProfile(
-      buildProfile({
-        ...updatedProfile,
-        gallery: profile?.gallery as IMedia[],
-        genres: profile?.genres as IGenre[],
-      })
-    );
+    const newProfile = buildProfile({
+      ...updatedProfile,
+      gallery: profile?.gallery as IMedia[],
+      genres: profile?.genres as IGenre[],
+    });
+    setProfile(newProfile);
+    setInitialValues(newProfile);
   };
 
-  // Update the profile data
+  // Update profile data if edited
   useEffect(() => {
-    if (editConfirmed) adjustUpdatedProfile();
-    else fetchProfile();
-  }, [history, editConfirmed]);
+    if (changeAfterEdit) adjustUpdatedProfile();
+  }, [editConfirmed]);
+
+  // Update profile data if page changed
+  useEffect(() => fetchProfile(), [history]);
 
   return <Layout navBarShadow={false}>{displayProfileView()}</Layout>;
 };
