@@ -16,7 +16,7 @@ const EmbedStep: React.FC<IStepProps> = ({ form }) => {
   };
 
   const isSpotifyURL = (url: string) => {
-    if (url.includes('https://open.spotify.com/track/')) {
+    if (url.startsWith('https://open.spotify.com/track/')) {
       setError(undefined);
       return true;
     }
