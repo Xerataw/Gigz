@@ -34,9 +34,12 @@ import {
   getArtistValuesReq,
   linksArtist,
 } from '../../configs/steppers/stepperArtistConfig';
+import { useHistory } from 'react-router';
+import EmbedStep from '../../components/Steps/EmbedStep';
 
 const RegisterArtistProfile: React.FC = () => {
   const NUMBER_OF_STEPS = 8;
+  const history = useHistory();
 
   const { t } = useTranslation();
   const [formStep, setFormStep] = useState<number>(0);
@@ -89,6 +92,14 @@ const RegisterArtistProfile: React.FC = () => {
         break;
     }
   }, [debounced]);
+
+  useEffect(() => {
+    if (formStep > 0) history.push('/register/artist/' + formStep);
+  }, [formStep]);
+
+  useEffect(() => {
+    setFormStep(Number.parseInt(window.location.pathname.split('artist/')[1]));
+  }, []);
 
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center relative h-full">
@@ -154,14 +165,13 @@ const RegisterArtistProfile: React.FC = () => {
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <div>EMBED</div>
-              {/* <SocialLinksStep links={linksArtist} form={form} /> */}
+              <SocialLinksStep links={linksArtist} form={form} />
             </Fade>
           </Stepper.Step>
 
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
-              <SocialLinksStep links={linksArtist} form={form} />
+              <EmbedStep form={form} />
             </Fade>
           </Stepper.Step>
 

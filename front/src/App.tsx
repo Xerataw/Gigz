@@ -55,7 +55,7 @@ const App: React.FC = () => {
               <Route exact path="/host">
                 <RegisterHostProfile />
               </Route>
-              <Route exact path="/artist">
+              <Route path="/artist">
                 <RegisterArtistProfile />
               </Route>
             </NestedRoute>
