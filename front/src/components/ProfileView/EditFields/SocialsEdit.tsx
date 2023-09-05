@@ -1,4 +1,4 @@
-import { ActionIcon, Modal } from '@mantine/core';
+import { ActionIcon, Modal, useMantineColorScheme } from '@mantine/core';
 import {
   IconBrandFacebook,
   IconBrandInstagram,
@@ -19,11 +19,34 @@ interface ISocialsEditProps {
   websiteLink?: string;
 }
 
+export const iconPencilOrPlus = (
+  link: string | undefined,
+  isLightTheme: boolean
+) => {
+  return link ? (
+    <IconCirclePlus
+      className="pt-[0.1rem]"
+      color={isLightTheme ? 'black' : 'white'}
+    />
+  ) : (
+    <IconPencil
+      className="pl-[0.05rem]"
+      color={isLightTheme ? 'black' : 'white'}
+    />
+  );
+};
+
+export const actionIconClassname = (isLightTheme: boolean) =>
+  'absolute -top-3 -right-3 z-10 rounded-full' +
+  (isLightTheme ? ' bg-white ' : ' bg-[#25262B] ');
+
 const SocialsEdit: React.FC<ISocialsEditProps> = ({
   instagramLink,
   facebookLink,
   websiteLink,
 }) => {
+  const isLightTheme = useMantineColorScheme().colorScheme === 'light';
+
   const { t } = useTranslation();
   const { setEditedInsta, setEditedFacebook, setEditedWebsite } =
     useProfileEdit();
@@ -50,14 +73,13 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
     setCurrentEditedLinkProps(undefined);
     setEditLinkModalOpened(false);
   };
-
   return (
     <>
       <ProfileSection name={t('profile.socials.title')}>
         <ul className="flex flex-flow flex-nowrap justify-start gap-4">
           <li className="relative">
             <ActionIcon
-              className="absolute -top-3 -right-3 bg-white z-10 rounded-full"
+              className={actionIconClassname(isLightTheme)}
               onClick={() =>
                 openEditionModal({
                   linkName: 'Instagram',
@@ -74,14 +96,7 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
                 })
               }
             >
-              {currentInsta ? (
-                <IconPencil className="pl-[0.05rem]" color="black" />
-              ) : (
-                <IconCirclePlus
-                  className="pt-[0.15rem] pl-[0.05rem]"
-                  color="black"
-                />
-              )}
+              {iconPencilOrPlus(currentInsta, isLightTheme)}
             </ActionIcon>
             <ExternalLinkIcon
               link={currentInsta}
@@ -91,7 +106,7 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
           </li>
           <li className="relative">
             <ActionIcon
-              className="absolute -top-3 -right-3 bg-white z-10 rounded-full"
+              className={actionIconClassname(isLightTheme)}
               onClick={() =>
                 openEditionModal({
                   linkName: 'Facebook',
@@ -108,11 +123,7 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
                 })
               }
             >
-              {currentFacebook ? (
-                <IconPencil className="pl-[0.05rem]" color="black" />
-              ) : (
-                <IconCirclePlus className="pt-[0.1rem]" color="black" />
-              )}
+              {iconPencilOrPlus(currentFacebook, isLightTheme)}
             </ActionIcon>
             <ExternalLinkIcon
               link={currentFacebook}
@@ -129,7 +140,7 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
           </li>
           <li className="relative">
             <ActionIcon
-              className="absolute -top-3 -right-3 bg-white z-10 rounded-full"
+              className={actionIconClassname(isLightTheme)}
               onClick={() =>
                 openEditionModal({
                   linkName: 'Website',
@@ -146,11 +157,7 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
                 })
               }
             >
-              {currentWebsite ? (
-                <IconPencil className="pl-[0.05rem]" color="black" />
-              ) : (
-                <IconCirclePlus className="pt-[0.1rem]" color="black" />
-              )}
+              {iconPencilOrPlus(currentWebsite, isLightTheme)}
             </ActionIcon>
             <ExternalLinkIcon
               link={currentWebsite}

@@ -1,4 +1,10 @@
-import { Button, Center, Modal, Skeleton } from '@mantine/core';
+import {
+  Button,
+  Center,
+  Modal,
+  Skeleton,
+  useMantineColorScheme,
+} from '@mantine/core';
 import { IconBrandSpotify, IconPencil } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
@@ -9,6 +15,7 @@ interface IEmbedEditProps {
 }
 
 const EmbedEdit: React.FC<IEmbedEditProps> = ({ defaultLink }) => {
+  const isLightTheme = useMantineColorScheme().colorScheme === 'light';
   const { setEditedMusicLink } = useProfileEdit();
   const [skeletonVisible, setSkeletonVisible] = useState<boolean>(
     defaultLink ? true : false
@@ -77,7 +84,11 @@ const EmbedEdit: React.FC<IEmbedEditProps> = ({ defaultLink }) => {
         ) : (
           <div
             className="w-full h-32 border-0 mb-12 rounded-2xl"
-            style={{ backgroundColor: 'rgb(241, 243, 245)' }}
+            style={{
+              backgroundColor: isLightTheme
+                ? 'rgb(241, 243, 245)'
+                : 'rgb(37,38,43)',
+            }}
           >
             <a
               href={currentLink}
@@ -85,7 +96,12 @@ const EmbedEdit: React.FC<IEmbedEditProps> = ({ defaultLink }) => {
               rel="noreferrer"
               style={{ textDecoration: 'none', color: 'inherit' }}
             >
-              <IconBrandSpotify className="w-[12%] h-auto p-0 ml-[44%] mr-[44%] mt-5" />
+              <IconBrandSpotify
+                className={
+                  'w-[12%] h-auto p-0 ml-[44%] mr-[44%] mt-5 ' +
+                  (isLightTheme ? ' text-black ' : ' text-white ')
+                }
+              />
             </a>
             <Center>
               <Button
