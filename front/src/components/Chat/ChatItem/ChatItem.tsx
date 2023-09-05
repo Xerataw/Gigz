@@ -1,4 +1,5 @@
 import { Container, Indicator, Skeleton, Text } from '@mantine/core';
+import GigzFetcher from '../../../services/GigzFetcher';
 import IChat from '../../../types/chat/IChat';
 import ProfilePicture from '../../ProfilePicture';
 
@@ -33,7 +34,7 @@ const ChatItem: React.FC<IChatItemProps> = ({
           offset={3}
         >
           <ProfilePicture
-            src={chat?.profilePicture}
+            src={GigzFetcher.getImageUri(chat?.from?.profilePicture ?? '')}
             radius={20}
             size={64}
             alt={chat?.from?.name}

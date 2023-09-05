@@ -48,7 +48,8 @@ const ArtistProfileView: React.FC<IArtistProfileViewProps> = ({
           latitude={profile.latitude as number}
           isEditMode={true}
           searchOnlyCity={true}
-        />);
+        />
+      );
       sections.push(
         <MusicProfilesEdit
           key="socials"
