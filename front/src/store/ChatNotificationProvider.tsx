@@ -1,9 +1,16 @@
 import React, { ReactNode, createContext, useContext, useState } from 'react';
 
 import { useSocket } from '../store/SocketProvider';
+import type IMessage from '../types/chat/IMessage';
+import { useUser } from './UserProvider';
 
 interface IChatNotificationProviderProps {
   children: ReactNode;
+}
+
+interface IPrivateMessageEvent {
+  message: IMessage;
+  recipientUuid: string;
 }
 
 interface IChatNotificationContext {
@@ -21,6 +28,7 @@ const ChatNotificationProvider: React.FC<IChatNotificationProviderProps> = ({
   children,
 }) => {
   const socket = useSocket();
+  const user = useUser();
   const [notificationCount, setNotificationCount] = useState(0);
 
   const decreaseNotificationCount = (count: number) => {
@@ -34,8 +42,13 @@ const ChatNotificationProvider: React.FC<IChatNotificationProviderProps> = ({
   const listeners = socket.listeners('private-message');
 
   if (listeners.length === 0) {
-    socket.on('private-message', () => {
-      setNotificationCount((old) => old + 1);
+    socket.on('private-message', ({ recipientUuid }: IPrivateMessageEvent) => {
+      const uuid = user.getUserId();
+
+      // Only send notification if we are the recipient
+      if (uuid && uuid === recipientUuid) {
+        setNotificationCount((old) => old + 1);
+      }
     });
   }
 
