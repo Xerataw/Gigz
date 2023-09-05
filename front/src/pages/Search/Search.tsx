@@ -62,8 +62,7 @@ const Search: React.FC = () => {
   };
 
   const loadMoreResults = () => {
-    setPage((old) => old + 1);
-    getResults(getFilters() as IFilter, page).then((res) =>
+    getResults(getFilters() as IFilter, page + 1).then((res) =>
       setResults(
         (old) =>
           ({
@@ -72,6 +71,7 @@ const Search: React.FC = () => {
           } as IResult)
       )
     );
+    setPage((old) => old + 1);
   };
 
   const getFilters = () => {
