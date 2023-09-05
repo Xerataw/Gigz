@@ -5,11 +5,7 @@ import { useEffect, useState } from 'react';
 import { getConversations } from '../../api/chat';
 import GigzFetcher from '../../services/GigzFetcher';
 import { useChatNotification } from '../../store/ChatNotificationProvider';
-import {
-  default as IChat,
-  IConversation,
-  default as IConversationList,
-} from '../../types/chat/IChat';
+import IConversationList, { IConversation } from '../../types/chat/IChat';
 import Chat from './Chat';
 import ChatItem from './ChatItem/ChatItem';
 
