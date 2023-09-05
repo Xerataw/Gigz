@@ -1,20 +1,22 @@
 import { IconHeart, IconHeartFilled } from '@tabler/icons-react';
 import { useState } from 'react';
 import { deleteLikeAccountById, likeAccountById } from '../../../api/favorites';
-import IResult from '../../../types/IResult';
+import IProfile from '../../../types/IProfile';
 import ProfileBanner from '../../ProfileView/ProfileBanner';
 
 interface ISearchResultProps {
-  result: IResult;
+  result: IProfile;
   loading: boolean;
-  onClick: (profile: IResult) => void;
+  onClick: (profile: IProfile) => void;
 }
 
 const Result: React.FC<ISearchResultProps> = ({ result, loading, onClick }) => {
   const [isLiked, setIsLiked] = useState(result?.isLiked);
 
   const likeAccount = () => {
-    isLiked ? deleteLikeAccountById(result?.id) : likeAccountById(result?.id);
+    isLiked
+      ? deleteLikeAccountById(result?.accountId)
+      : likeAccountById(result?.accountId);
     setIsLiked((old) => !old);
   };
 

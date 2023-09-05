@@ -83,6 +83,7 @@ router.get('/', async (req, res) => {
 
   let formattedData = data.map((artist) => ({
     id: artist.id,
+    accountId: artist.account_id,
     name: artist.name,
     city: artist.city,
     genres: artist.account.account_genre.map((genre) => genre.genre),
