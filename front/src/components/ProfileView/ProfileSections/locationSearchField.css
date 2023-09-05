@@ -1,0 +1,13 @@
+.geosearch {
+  position: absolute;
+  left: 12vw;
+  background-color: white;
+}
+
+.geosearch form {
+  width: max-content;
+}
+
+.leaflet-bar-part.leaflet-bar-part-single {
+  height: 0px !important;
+}
