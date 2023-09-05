@@ -1,5 +1,5 @@
 export default interface IConversationList {
-  artists: IConversation[];
+  conversations: IConversation[];
   isLastPage: boolean;
 }
 

@@ -1,4 +1,5 @@
 import { Container, Drawer } from '@mantine/core';
+import { useForm } from '@mantine/form';
 import { useDisclosure } from '@mantine/hooks';
 import { Avatar } from '@mui/material';
 import { useEffect, useState } from 'react';
@@ -6,14 +7,13 @@ import { getConversations } from '../../api/chat';
 import GigzFetcher from '../../services/GigzFetcher';
 import { useChatNotification } from '../../store/ChatNotificationProvider';
 import IConversationList, { IConversation } from '../../types/chat/IChat';
+import SearchBar from '../Search/SearchBar';
 import Chat from './Chat';
 import ChatItem from './ChatItem/ChatItem';
 
 const ConversationList: React.FC = () => {
-  const [conversationList, setConversationList] = useState<
-    IConversationList | undefined
-  >({
-    artists: new Array(20).fill([]),
+  const [conversationList, setConversationList] = useState<IConversationList>({
+    conversations: new Array(20).fill([]),
     isLastPage: false,
   } as IConversationList);
   const [loading, setLoading] = useState(true);
@@ -26,10 +26,10 @@ const ConversationList: React.FC = () => {
 
   useEffect(() => {
     getConversations().then((res) => {
-      setConversationList(res.data);
+      setConversationList(res.data ?? getEmptyConversationList());
       setLoading(false);
 
-      const unread = res.data?.artists.map((chat) => chat.unread);
+      const unread = res.data?.conversations.map((chat) => chat.unread);
 
       if (unread && unread.length > 0) {
         setNotificationCount(unread.reduce((a, b) => a + b));
@@ -44,7 +44,7 @@ const ConversationList: React.FC = () => {
     }
 
     getConversations().then((res) => {
-      setConversationList(res.data);
+      setConversationList(res.data ?? getEmptyConversationList());
       setLoading(false);
     });
   }, [notificationCount]);
@@ -59,12 +59,30 @@ const ConversationList: React.FC = () => {
     }
   };
 
+  const getEmptyConversationList = (): IConversationList => {
+    return { conversations: [], isLastPage: true };
+  };
+
   const renderChatList = () => {
-    return conversationList?.artists.map((chat, index) => (
+    return conversationList?.conversations.map((chat, index) => (
       <div key={index} onClick={() => openChat(chat)}>
         <ChatItem chat={chat} loading={loading} />
       </div>
     ));
+  };
+
+  const form = useForm({
+    initialValues: {
+      name: '',
+    },
+  });
+
+  const filterConversations = (filter: { name: string }) => {
+    console.log(filter);
+    // TODO
+    getConversations().then((res) =>
+      setConversationList(res.data ?? getEmptyConversationList())
+    );
   };
 
   // TODO Render something else if conversation list is empty
@@ -94,6 +112,14 @@ const ConversationList: React.FC = () => {
       </Drawer.Root>
 
       <Container size={'xs'} px={0} pt={20}>
+        <SearchBar
+          form={form}
+          onSubmit={filterConversations}
+          hideCapacity
+          hideGenreSelector
+          hideLocationSelector
+          hideProfileType
+        />
         {renderChatList()}
       </Container>
     </>

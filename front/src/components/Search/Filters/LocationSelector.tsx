@@ -9,9 +9,13 @@ import MapTiler, {
 
 interface ILocationSelectorProps {
   form: UseFormReturnType<any>;
+  hidden?: boolean;
 }
 
-const LocationSelector: React.FC<ILocationSelectorProps> = ({ form }) => {
+const LocationSelector: React.FC<ILocationSelectorProps> = ({
+  form,
+  hidden = false,
+}) => {
   const [searchValue, setSearchValue] = useState<string>();
   const [searchItems, setSearchItems] = useState<IAddressSearchItem[]>([]);
   const [debounced] = useDebouncedValue(searchValue, 1000);
@@ -39,16 +43,18 @@ const LocationSelector: React.FC<ILocationSelectorProps> = ({ form }) => {
   };
 
   return (
-    <Autocomplete
-      label={<Text c="dimmed">{t('search.location')}</Text>}
-      dropdownPosition="bottom"
-      placeholder="Bordeaux"
-      data={searchItems}
-      filter={() => true} //whitout this autocomplete take only items' value which start with search value
-      {...form.getInputProps('location')}
-      onChange={getAddressResult}
-      value={searchValue}
-    />
+    !hidden && (
+      <Autocomplete
+        label={<Text c="dimmed">{t('search.location')}</Text>}
+        dropdownPosition="bottom"
+        placeholder="Bordeaux"
+        data={searchItems}
+        filter={() => true} //whitout this autocomplete take only items' value which start with search value
+        {...form.getInputProps('location')}
+        onChange={getAddressResult}
+        value={searchValue}
+      />
+    )
   );
 };
 

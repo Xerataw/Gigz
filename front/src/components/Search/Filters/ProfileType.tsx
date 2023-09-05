@@ -6,36 +6,39 @@ import EProfileType from '../../../types/EProfileType';
 
 interface IProfileTypeProps {
   form: any;
+  hidden?: boolean;
 }
 
-const ProfileType: React.FC<IProfileTypeProps> = ({ form }) => {
+const ProfileType: React.FC<IProfileTypeProps> = ({ form, hidden = false }) => {
   const { t } = useTranslation();
 
   return (
-    <SegmentedControl
-      data={[
-        {
-          label: (
-            <Center>
-              <IconBuilding size="1rem" />
-              <Box ml={10}>{t('search.host')}</Box>
-            </Center>
-          ),
-          value: EProfileType.HOST,
-        },
-        {
-          label: (
-            <Center>
-              <IconMusic size="1rem" />
-              <Box ml={10}>{t('search.artist')}</Box>
-            </Center>
-          ),
-          value: EProfileType.ARTIST,
-        },
-      ]}
-      className="mt-4"
-      {...form.getInputProps('type')}
-    />
+    !hidden && (
+      <SegmentedControl
+        data={[
+          {
+            label: (
+              <Center>
+                <IconBuilding size="1rem" />
+                <Box ml={10}>{t('search.host')}</Box>
+              </Center>
+            ),
+            value: EProfileType.HOST,
+          },
+          {
+            label: (
+              <Center>
+                <IconMusic size="1rem" />
+                <Box ml={10}>{t('search.artist')}</Box>
+              </Center>
+            ),
+            value: EProfileType.ARTIST,
+          },
+        ]}
+        className="mt-4"
+        {...form.getInputProps('type')}
+      />
+    )
   );
 };
 

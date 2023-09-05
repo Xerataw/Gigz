@@ -43,12 +43,14 @@ interface IGigzAccordionProps {
   header: any;
   children: React.ReactNode;
   className?: string;
+  hidden?: boolean;
 }
 
 const GigzAccordion: React.FC<IGigzAccordionProps> = ({
   header,
   children,
   className,
+  hidden = false,
 }) => {
   const { classes } = useStyles();
   return (
@@ -57,6 +59,7 @@ const GigzAccordion: React.FC<IGigzAccordionProps> = ({
       variant="filled"
       classNames={classes}
       className={[classes.root, className ?? ''].join(' ')}
+      hidden={hidden}
     >
       <Accordion.Item value="gigz-accordion">
         <Accordion.Control>{header}</Accordion.Control>
