@@ -79,7 +79,7 @@ router.post('/', async (req, res) => {
   const EVENT = 'private-message';
 
   userIds.forEach((user) => {
-    console.log(`📖 @${EVENT} to ${user.user_id}`);
+    console.log(`🧦 @${EVENT} to ${user.user_id}`);
 
     io.to(user.user_id).emit(EVENT, {
       message: message,
