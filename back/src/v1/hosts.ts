@@ -97,6 +97,7 @@ router.get('/', async (req, res) => {
 
   let formattedData = data.map((host) => ({
     id: host.id,
+    accountId: host.account.id,
     name: host.name,
     address: host.address,
     city: host.city,

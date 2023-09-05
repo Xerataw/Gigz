@@ -8,13 +8,17 @@ import EProfileType from '../../types/EProfileType';
 import IFilter from '../../types/IFilter';
 import IGenre from '../../types/IGenre';
 import ILocation from '../../types/ILocation';
+import IProfile from '../../types/IProfile';
 import IResult from '../../types/IResult';
 import Layout from '../Layout/Layout';
 
 const Search: React.FC = () => {
-  const loadingData = new Array(20)
-    .fill({})
-    .map((val, index) => ({ id: index } as IResult));
+  const loadingData: IResult = {
+    artists: new Array(20)
+      .fill({})
+      .map((val, index) => ({ id: index } as IProfile)),
+    isLastPage: false,
+  };
 
   const connectedUser = useUser();
   const userTypeFilter =
@@ -24,6 +28,7 @@ const Search: React.FC = () => {
   const [results, setResults] = useState(loadingData);
   const [loading, setLoading] = useState(true);
   const [profileType, setProfileType] = useState(userTypeFilter);
+  const [page, setPage] = useState(1);
 
   const form = useForm({
     initialValues: {
@@ -41,15 +46,12 @@ const Search: React.FC = () => {
 
   const getProfilesWithFilter = () => {
     setLoading(true);
-    const filters = { ...form.values };
-    // Remove the capacities from the filter when we search for an artsit
-    filters.capacities =
-      filters.type === EProfileType.HOST
-        ? filters.capacities.map((c) => c * 10)
-        : [];
 
-    getResults(filters as IFilter).then((res) => {
-      setResults(res?.data ?? []);
+    getResults(getFilters() as IFilter).then((res) => {
+      setResults({
+        artists: res?.data?.artists ?? [],
+        isLastPage: res?.data?.isLastPage,
+      } as IResult);
       setLoading(false);
     });
   };
@@ -59,6 +61,30 @@ const Search: React.FC = () => {
     setProfileType(values.type);
   };
 
+  const loadMoreResults = () => {
+    setPage((old) => old + 1);
+    getResults(getFilters() as IFilter, page).then((res) =>
+      setResults(
+        (old) =>
+          ({
+            artists: [...old.artists, ...(res?.data?.artists ?? [])],
+            isLastPage: res?.data?.isLastPage,
+          } as IResult)
+      )
+    );
+  };
+
+  const getFilters = () => {
+    const filters = { ...form.values };
+    // Remove the capacities from the filter when we search for an artsit
+    filters.capacities =
+      filters.type === EProfileType.HOST
+        ? filters.capacities.map((c) => c * 10)
+        : [];
+
+    return filters;
+  };
+
   return (
     <Layout>
       <SearchBar form={form} onSubmit={onSubmit} />
@@ -66,6 +92,7 @@ const Search: React.FC = () => {
         profileType={profileType}
         results={results}
         loading={loading}
+        loadMoreResults={loadMoreResults}
       />
     </Layout>
   );
