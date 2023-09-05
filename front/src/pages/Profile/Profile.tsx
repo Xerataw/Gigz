@@ -54,7 +54,6 @@ const Profile: React.FC = () => {
   };
 
   const adjustUpdatedProfile = () => {
-    console.log(updatedProfile);
     const newProfile = buildProfile({
       ...updatedProfile,
       gallery: profile?.gallery as IMedia[],

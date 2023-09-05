@@ -296,7 +296,6 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         delete valuesToUpdate.genresToRemove;
       }
       if (Object.keys(valuesToUpdate).length === 0) {
-        console.log(editedGenres);
         if (editedGenres !== undefined)
           onProfileUpdated({
             ...(initialValues as IArtistProfile | IHostProfile),
