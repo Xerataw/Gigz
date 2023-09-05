@@ -2,6 +2,7 @@ import {
   Box,
   Button,
   Group,
+  Modal,
   PasswordInput,
   Text,
   TextInput,
@@ -13,7 +14,10 @@ import { useEffect, useState } from 'react';
 import { useTranslation } from 'react-i18next';
 import { Link, useHistory } from 'react-router-dom';
 import { login } from '../../api/auth';
+import { getProfile } from '../../api/user';
+import EmailValidator from '../../components/Steps/Utils/EmailValidator';
 import { useUser } from '../../store/UserProvider';
+import EProfileType from '../../types/EProfileType';
 
 const Login: React.FC = () => {
   const { t } = useTranslation();
@@ -40,6 +44,7 @@ const Login: React.FC = () => {
 
   const [debouncedEmail] = useDebouncedValue(form.values.email, 1000);
   const [debouncedPassword] = useDebouncedValue(form.values.password, 0);
+  const [opened, setOpened] = useState<boolean>(false);
 
   const validateEmail = (email: string) => {
     if (!email) {
@@ -61,14 +66,6 @@ const Login: React.FC = () => {
     }
     setIncompleteOrInvalidForm(false);
     return null;
-  };
-
-  const forgotPassword = () => {
-    history.push('/login/forgot-password');
-  };
-
-  const register = () => {
-    history.push('/register');
   };
 
   useEffect(() => {
@@ -117,59 +114,83 @@ const Login: React.FC = () => {
   };
 
   const onSuccess = () => {
-    history.push('/auth/profile');
+    getProfile(user.getProfileType() ?? EProfileType.ARTIST)
+      .then(() => {
+        history.push('/auth/profile');
+      })
+      .catch((e) => setOpened(e.message === 'EMAIL_NOT_VALIDATED'));
   };
 
   return (
-    <Box maw={300} mx="auto" className="flex justify-center flex-col h-screen">
-      <h1 className="m-0 text-center">{t('login.title')}</h1>
-      <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
-        <TextInput
-          withAsterisk
-          type="email"
-          label={t('login.email.label')}
-          placeholder={t('login.email.placeholder')}
-          {...form.getInputProps('email')}
+    <>
+      <Modal
+        opened={opened}
+        centered
+        onClose={() => setOpened(false)}
+        title="Email"
+      >
+        <EmailValidator
+          after={() => {
+            setTimeout(() => {
+              history.push('/auth/profile');
+            }, 200);
+          }}
         />
+      </Modal>
+      <Box
+        maw={300}
+        mx="auto"
+        className="flex justify-center flex-col h-screen"
+      >
+        <h1 className="m-0 text-center">{t('login.title')}</h1>
+        <form onSubmit={form.onSubmit((values) => onSubmit(values))}>
+          <TextInput
+            withAsterisk
+            type="email"
+            label={t('login.email.label')}
+            placeholder={t('login.email.placeholder')}
+            {...form.getInputProps('email')}
+          />
 
-        <PasswordInput
-          withAsterisk
-          label={t('login.password.label')}
-          placeholder={t('login.password.placeholder')}
-          {...form.getInputProps('password')}
-        />
+          <PasswordInput
+            withAsterisk
+            label={t('login.password.label')}
+            placeholder={t('login.password.placeholder')}
+            {...form.getInputProps('password')}
+          />
 
-        <Group position="apart" align="flex-start" pt={14}>
-          <Text
-            component={Link}
-            to="/login/forgot-password"
-            size={14}
-            className="underline underline-offset-4"
-          >
-            {t('login.forgotPassword.label')}
-          </Text>
-          <Text
-            component={Link}
-            to="register"
-            size={14}
-            className="underline underline-offset-4"
-          >
-            {t('login.register')}
-          </Text>
-        </Group>
+          <Group position="apart" align="flex-start" pt={14}>
+            <Text
+              component={Link}
+              to="/login/forgot-password"
+              size={14}
+              className="underline underline-offset-4"
+            >
+              {t('login.forgotPassword.label')}
+            </Text>
+            <Text
+              component={Link}
+              to="register"
+              size={14}
+              className="underline underline-offset-4"
+            >
+              {t('login.register')}
+            </Text>
+          </Group>
 
-        <Group position="center" mt="md">
-          <Button
-            type="submit"
-            disabled={incompleteOrInvalidForm}
-            loading={formSubmited}
-            className="w-full"
-          >
-            {t('login.submit')}
-          </Button>
-        </Group>
-      </form>
-    </Box>
+          <Group position="center" mt="md">
+            <Button
+              type="submit"
+              disabled={incompleteOrInvalidForm}
+              loading={formSubmited}
+              className="w-full"
+            >
+              {t('login.submit')}
+            </Button>
+          </Group>
+        </form>
+      </Box>
+    </>
   );
 };
 

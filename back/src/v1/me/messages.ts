@@ -62,6 +62,15 @@ router.post('/', async (req, res) => {
     data: { latest_message_id: message.id },
   });
 
+  const recipientUuid = await database.account.findUnique({
+    where: {
+      id: recipientId,
+    },
+    select: {
+      user_id: true,
+    },
+  });
+
   const userIds = await findUsersIds(
     conversation.creator_id,
     conversation.member_id
@@ -70,8 +79,12 @@ router.post('/', async (req, res) => {
   const EVENT = 'private-message';
 
   userIds.forEach((user) => {
-    console.log(`📖 ${EVENT} to ${user.user_id}`);
-    io.to(user.user_id).emit(EVENT, { message });
+    console.log(`📖 @${EVENT} to ${user.user_id}`);
+
+    io.to(user.user_id).emit(EVENT, {
+      message: message,
+      recipientUuid: recipientUuid?.user_id,
+    });
   });
 
   sendResponse(res, fromDbFormat(message));
