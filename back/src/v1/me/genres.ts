@@ -39,8 +39,12 @@ router.post('/', async (req, res) => {
   sendResponse(res, fromDbFormat(account_genre));
 });
 
+const deleteGenresSchema = z.object({
+  id: z.coerce.number(),
+});
+
 router.delete('/:id', async (req, res) => {
-  const params = PostGenresSchema.safeParse(req.params);
+  const params = deleteGenresSchema.safeParse(req.params);
 
   if (!params.success) return sendError(res, ApiMessages.BadRequest);
 
@@ -48,7 +52,7 @@ router.delete('/:id', async (req, res) => {
     where: {
       account_id_genre_id: {
         account_id: req.account.id,
-        genre_id: params.data.genreId,
+        genre_id: params.data.id,
       },
     },
   });
@@ -61,7 +65,7 @@ router.delete('/:id', async (req, res) => {
     where: {
       account_id_genre_id: {
         account_id: req.account.id,
-        genre_id: params.data.genreId,
+        genre_id: params.data.id,
       },
     },
   });
