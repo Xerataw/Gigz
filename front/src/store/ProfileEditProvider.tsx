@@ -26,6 +26,7 @@ interface IProfileEditContext {
   setEditedInsta: (editedInsta: string) => void;
   setEditedFacebook: (editedFacebook: string) => void;
   setEditedWebsite: (editedWebsite: string) => void;
+  setEditedMusicLink: (editedMusicLink: string) => void;
   setAddress: (address: string) => void;
   setCity: (city: string) => void;
   setCityCode: (cityCode: string) => void;
@@ -71,6 +72,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [editedInsta, setEditedInsta] = useState<string>();
   const [editedFacebook, setEditedFacebook] = useState<string>();
   const [editedWebsite, setEditedWebsite] = useState<string>();
+  const [editedMusicLink, setEditedMusicLink] = useState<string>();
   const [editedAddress, setEditedAddress] = useState<string>();
   const [editedCity, setEditedCity] = useState<string>();
   const [editedCityCode, setEditedCityCode] = useState<string>();
@@ -123,6 +125,11 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
     )
       editedProfileValues.latitude = editedLatitude;
 
+    if (
+      editedMusicLink !== undefined &&
+      editedMusicLink !== (initialValues as IArtistProfile)?.musicLink
+    )
+      editedProfileValues.musicLink = editedMusicLink;
     if (
       editedSpotify !== undefined &&
       editedSpotify !== (initialValues as IArtistProfile)?.spotifyLink
@@ -233,6 +240,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         setEditedInsta,
         setEditedFacebook,
         setEditedWebsite,
+        setEditedMusicLink,
         setAddress: setEditedAddress,
         setCity: setEditedCity,
         setCityCode: setEditedCityCode,
