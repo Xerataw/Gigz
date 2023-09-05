@@ -1,4 +1,5 @@
 import { Button, Flex, TextInput } from '@mantine/core';
+import { t } from 'i18next';
 import { useState } from 'react';
 
 export interface ILinkEdit {
@@ -52,9 +53,11 @@ const LinkEditModalContent: React.FC<ILinkEditModalContentProps> = ({
         error={currentLinkError}
       />
       <Flex gap="xs" mt="md">
-        <Button onClick={() => onValidateButtonClick()}>Validate</Button>
+        <Button onClick={() => onValidateButtonClick()}>
+          {t('profile.modal.validate')}
+        </Button>
         <Button variant="outline" onClick={() => setModalOpened(false)}>
-          Cancel
+          {t('profile.modal.cancel')}
         </Button>
       </Flex>
     </>

@@ -9,6 +9,7 @@ import { IconBrandSpotify, IconPencil } from '@tabler/icons-react';
 import { useState } from 'react';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
 import LinkEditModalContent, { ILinkEdit } from './LinkEditModalContent';
+import { t } from 'i18next';
 
 interface IEmbedEditProps {
   defaultLink?: string;
@@ -122,7 +123,7 @@ const EmbedEdit: React.FC<IEmbedEditProps> = ({ defaultLink }) => {
                   })
                 }
               >
-                Add your song
+                {t('profile.embed')}
               </Button>
             </Center>
           </div>

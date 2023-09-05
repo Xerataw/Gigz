@@ -214,7 +214,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
         opened={editLinkModalOpened}
         onClose={() => closeEditionModal()}
         withCloseButton={false}
-        title="Edit social media link"
+        title={t('profile.musicProfiles.modalTitle')}
         centered
         styles={{
           overlay: { zIndex: 10000 },

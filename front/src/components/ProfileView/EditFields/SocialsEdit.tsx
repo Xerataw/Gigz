@@ -24,13 +24,13 @@ export const iconPencilOrPlus = (
   isLightTheme: boolean
 ) => {
   return link ? (
-    <IconCirclePlus
-      className="pt-[0.1rem]"
+    <IconPencil
+      className="pl-[0.05rem]"
       color={isLightTheme ? 'black' : 'white'}
     />
   ) : (
-    <IconPencil
-      className="pl-[0.05rem]"
+    <IconCirclePlus
+      className="pt-[0.1rem]"
       color={isLightTheme ? 'black' : 'white'}
     />
   );
@@ -172,7 +172,7 @@ const SocialsEdit: React.FC<ISocialsEditProps> = ({
         opened={editLinkModalOpened}
         onClose={() => closeEditionModal()}
         withCloseButton={false}
-        title="Edit social media link"
+        title={t('profile.socials.modalTitle')}
         centered
         styles={{
           overlay: { zIndex: 10000 },
