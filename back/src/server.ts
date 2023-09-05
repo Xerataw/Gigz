@@ -69,7 +69,7 @@ io.on('connection', (socket) => {
     return;
   }
 
-  console.log(`📖 ${userId} connected`);
+  console.log(`🧦 ${userId} connected`);
   socket.join(socket.handshake.auth.userId);
 });
 

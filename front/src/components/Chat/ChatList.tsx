@@ -7,10 +7,14 @@ import { useDisclosure } from '@mantine/hooks';
 import Chat from './Chat';
 import { Avatar } from '@mui/material';
 import GigzFetcher from '../../services/GigzFetcher';
+import { useChatNotification } from '../../store/ChatNotificationProvider';
 
 const ChatList: React.FC = () => {
   const [chatList, setChatList] = useState<IChat[]>(new Array(20).fill({}));
   const [loading, setLoading] = useState(true);
+
+  const { decreaseNotificationCount, setNotificationCount, notificationCount } =
+    useChatNotification();
 
   const [opened, { open, close }] = useDisclosure(false);
   const [selectedChat, setSelectedChat] = useState<IChat>();
@@ -19,12 +23,35 @@ const ChatList: React.FC = () => {
     getChats().then((res) => {
       setChatList(res.data ?? []);
       setLoading(false);
+
+      const unread = res.data?.map((chat) => chat.unread);
+
+      if (unread && unread.length > 0) {
+        setNotificationCount(unread.reduce((a, b) => a + b));
+      }
     });
   }, []);
+
+  // Fetch list of conversations when receiving a private-message
+  useEffect(() => {
+    if (opened) {
+      return;
+    }
+
+    getChats().then((res) => {
+      setChatList(res.data ?? []);
+      setLoading(false);
+    });
+  }, [notificationCount]);
 
   const openChat = (chat: IChat) => {
     setSelectedChat(chat);
     open();
+
+    if (chat.unread > 0) {
+      decreaseNotificationCount(chat.unread);
+      chat.unread = 0;
+    }
   };
 
   const renderChatList = () => {

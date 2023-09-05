@@ -1,4 +1,10 @@
-import React, { ReactNode, createContext, useContext } from 'react';
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from 'react';
 
 import { io, Socket } from 'socket.io-client';
 import { useUser } from './UserProvider';
@@ -18,16 +24,21 @@ const URL =
 
 const SocketProvider: React.FC<ISocketProviderProps> = ({ children }) => {
   const user = useUser();
+  const [socket, setSocket] = useState<Socket>();
 
-  const socket = io(URL, {
-    auth: {
-      userId: user.getUserId(),
-    },
-  });
+  useEffect(() => {
+    setSocket(
+      io(URL, {
+        auth: {
+          userId: user.getUserId(),
+        },
+      })
+    );
+  }, []);
 
   return (
     <SocketContext.Provider value={socket as Socket}>
-      {children}
+      {socket && children}
     </SocketContext.Provider>
   );
 };

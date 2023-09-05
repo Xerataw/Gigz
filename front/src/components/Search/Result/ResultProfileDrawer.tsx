@@ -4,11 +4,11 @@ import { getProfileByIdAndType } from '../../../api/search';
 import { buildProfile } from '../../../services/apiTypesHelper';
 import EProfileType from '../../../types/EProfileType';
 import IHostProfile from '../../../types/IHostProfile';
-import IResult from '../../../types/IResult';
+import IProfile from '../../../types/IProfile';
 import HostProfileView from '../../ProfileView/HostProfileView';
 
 interface IResultProfileDrawerProps {
-  resultProfile: IResult | null;
+  resultProfile: IProfile | null;
   profileType: EProfileType;
   onClose: () => void;
 }
