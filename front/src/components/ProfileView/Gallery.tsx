@@ -1,20 +1,26 @@
 import { Carousel } from '@mantine/carousel';
 import {
+  ActionIcon,
   Button,
   Card,
   Center,
   FileButton,
+  Grid,
   Image,
   Loader,
   Text,
 } from '@mantine/core';
-import { IconPlus } from '@tabler/icons-react';
+import { IconPlus, IconTrash } from '@tabler/icons-react';
 import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import GigzFetcher from '../../services/GigzFetcher';
 import EMediaType from '../../types/EMediaType';
 import IMedia from '../../types/IMedia';
-import { handleAddFiles, maxFile } from '../Steps/PresentationPicturesStep';
+import {
+  handleAddFiles,
+  handleRemovePicture,
+  maxFile,
+} from '../Steps/PresentationPicturesStep';
 
 interface IGalleryProps {
   mediaList: IMedia[];
@@ -34,12 +40,11 @@ const Gallery: React.FC<IGalleryProps> = ({
   );
 
   const handleSetPictures = (pictures: IMedia[]) => {
-    setPictures((old) => [...pictures, ...old]);
+    setPictures(pictures);
   };
-
-  useEffect(() => {
-    console.log('update pictures :', pictures);
-  }, [pictures]);
+  const handleAddPictures = (pictures: IMedia[]) => {
+    setPictures((old) => [...old, ...pictures]);
+  };
 
   return loading ? (
     <Center h={slidesHeight}>
@@ -56,7 +61,7 @@ const Gallery: React.FC<IGalleryProps> = ({
           />
         </Carousel.Slide>
       ))}
-      {isOnProfile && pictures.length < maxFile && (
+      {isOnProfile && (
         <Carousel.Slide
           key="edit profile"
           className="flex flex-col justify-center"
@@ -65,22 +70,24 @@ const Gallery: React.FC<IGalleryProps> = ({
             shadow="sm"
             radius="md"
             withBorder
-            className="h-[200px] py-[5px] flex flex-col justify-center m-5"
+            className="h-[150px] py-[5px] flex flex-col justify-center m-5"
           >
             <div>
               <Text align="center" mb="sm" weight={500}>
-                {t('register.presentationPicturesStep.add')}
+                {t('register.presentationPicturesStep.add')} {pictures.length}/
+                {maxFile}
               </Text>
               <Center>
                 <FileButton
+                  disabled={pictures.length >= maxFile}
                   onChange={(e) =>
-                    handleAddFiles(e, handleSetPictures, pictures, maxFile)
+                    handleAddFiles(e, handleAddPictures, pictures, maxFile)
                   }
                   accept="image/png,image/jpeg"
                   multiple
                 >
                   {(props) => (
-                    <Button {...props}>
+                    <Button {...props} disabled={pictures.length >= maxFile}>
                       <IconPlus />
                     </Button>
                   )}
@@ -88,6 +95,38 @@ const Gallery: React.FC<IGalleryProps> = ({
               </Center>
             </div>
           </Card>
+
+          <Grid justify="center" px="md">
+            {pictures.map((image, index) => (
+              <Grid.Col key={index} span={6}>
+                <div className="relative">
+                  <Image
+                    radius="md"
+                    fit="cover"
+                    withPlaceholder
+                    key={index}
+                    height={100}
+                    src={GigzFetcher.getImageUri(image.media)}
+                  />
+                  <div className="absolute top-0 right-0">
+                    <ActionIcon
+                      color="red"
+                      className="bg-white rounded-none rounded-bl-lg"
+                      onClick={() =>
+                        handleRemovePicture(
+                          image.id,
+                          pictures,
+                          handleSetPictures
+                        )
+                      }
+                    >
+                      <IconTrash size={'sm'} />
+                    </ActionIcon>
+                  </div>
+                </div>
+              </Grid.Col>
+            ))}
+          </Grid>
         </Carousel.Slide>
       )}
     </Carousel>
