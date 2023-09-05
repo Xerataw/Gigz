@@ -38,6 +38,14 @@ const HostProfileView: React.FC<IHostProfileViewProps> = ({
           websiteLink={profile.websiteLink}
         />
       );
+      sections.push(
+        <LocationMap
+          key="location"
+          longitude={profile.longitude as number}
+          latitude={profile.latitude as number}
+          isEditMode={true}
+        />
+      );
       return sections;
     }
 
