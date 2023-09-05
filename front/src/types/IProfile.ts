@@ -3,6 +3,9 @@ import IMedia from './IMedia';
 import IProfilePicture from './IProfilePicture';
 
 export default interface IProfile {
+  id: number;
+  accountId: number;
+
   name: string;
   description?: string;
 
@@ -21,4 +24,6 @@ export default interface IProfile {
   profilePicture?: IProfilePicture;
   genres: IGenre[];
   gallery: IMedia[];
+
+  isLiked: boolean;
 }

@@ -1,4 +1,9 @@
-export default interface IChat {
+export default interface IConversationList {
+  artists: IConversation[];
+  isLastPage: boolean;
+}
+
+export interface IConversation {
   id: number;
   profilePicture: string;
   unread: number;

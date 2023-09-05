@@ -1,4 +1,4 @@
-import IChat from '../../types/chat/IChat';
+import IChat, { IConversation } from '../../types/chat/IChat';
 
 import { Textarea } from '@mantine/core';
 import { IconSend } from '@tabler/icons-react';
@@ -8,30 +8,21 @@ import { getChatById, postMessage } from '../../api/chat';
 import { ScrollArea, Text } from '@mantine/core';
 import IMessage from '../../types/chat/IMessage';
 import { useChatNotification } from '../../store/ChatNotificationProvider';
+import GigzScrollArea from '../GigzScrollArea';
 
 interface IChatProps {
-  chat?: IChat;
+  chat?: IConversation;
 }
 
 const Chat: React.FC<IChatProps> = ({ chat }) => {
   const [page, setPage] = useState(1);
-  const [conversationEndReached, setConversationEndReached] = useState(true);
+  const [conversationEndReached, setConversationEndReached] = useState(false);
 
   const [inputContent, setInputContent] = useState('');
 
   const { notificationCount } = useChatNotification();
 
   const [messages, setMessages] = useState<IMessage[]>([]);
-  const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
-
-  const viewport = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    viewport?.current?.scrollTo({
-      top: viewport.current.scrollHeight,
-      behavior: 'smooth',
-    });
-  }, [viewport]);
 
   useEffect(() => {
     if (!chat) {
@@ -40,27 +31,30 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
 
     setPage(1);
     getChatById(chat.id, 1).then((res) => {
-      setMessages(res.data?.messages ?? []);
+      setMessages(res.data?.messages.reverse() ?? []);
     });
   }, [notificationCount]);
 
-  useEffect(() => {
+  const loadMoreMessages = () => {
     if (!chat) {
       return;
     }
 
-    if (conversationEndReached && scrollPosition.y === 0) {
-      setPage((old) => old + 1);
-      getChatById(chat.id, page).then((res) => {
-        if (res.data?.messages.length === 0) {
-          setConversationEndReached(false);
-          return;
-        }
+    getChatById(chat.id, page + 1).then((res) => {
+      if (res.data?.messages.length === 0) {
+        setConversationEndReached(true);
+        console.log('END PAGINATION');
+        return;
+      }
 
-        setMessages((old) => [...(res.data?.messages.reverse() ?? []), ...old]);
-      });
-    }
-  }, [scrollPosition]);
+      if (!res.data || !res.data?.messages) {
+        return;
+      }
+
+      setMessages((old) => [...res.data.messages, ...old]);
+    });
+    setPage((old) => old + 1);
+  };
 
   const renderMessages = () => {
     return messages?.map((message) => {
@@ -91,24 +85,29 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
       // Handle error here
       setInputContent('');
 
-      getChatById(chat.id, 1).then((res) => {
-        setMessages(res.data?.messages ?? []);
-      });
+      if (!res.data) {
+        // handle error
+        return;
+      }
+
+      console.log(res.data);
+      setMessages((old) => [...old, res.data]);
     });
   };
 
   return (
     <>
-      <ScrollArea
-        viewportRef={viewport}
+      <GigzScrollArea
         className="h-full"
         type="never"
-        onScrollPositionChange={onScrollPositionChange}
+        onBottomReached={loadMoreMessages}
+        isLastPage={conversationEndReached}
+        inverted
       >
         <div className="flex flex-col items-end justify-end">
           {renderMessages()}
         </div>
-      </ScrollArea>
+      </GigzScrollArea>
       <Textarea
         rightSection={
           <IconSend fill="orange" color="orange" onClick={sendMessage} />

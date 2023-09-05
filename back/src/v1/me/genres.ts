@@ -39,4 +39,34 @@ router.post('/', async (req, res) => {
   sendResponse(res, fromDbFormat(account_genre));
 });
 
+router.delete('/:id', async (req, res) => {
+  const params = PostGenresSchema.safeParse(req.params);
+
+  if (!params.success) return sendError(res, ApiMessages.BadRequest);
+
+  let account_genre = await database.account_genre.findUnique({
+    where: {
+      account_id_genre_id: {
+        account_id: req.account.id,
+        genre_id: params.data.genreId,
+      },
+    },
+  });
+
+  if (account_genre) {
+    return sendError(res, ApiMessages.BadRequest);
+  }
+
+  account_genre = await database.account_genre.delete({
+    where: {
+      account_id_genre_id: {
+        account_id: req.account.id,
+        genre_id: params.data.genreId,
+      },
+    },
+  });
+
+  sendResponse(res, fromDbFormat(account_genre));
+});
+
 export default router;

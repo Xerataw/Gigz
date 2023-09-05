@@ -6,7 +6,14 @@ import useUtils from '@composables/useUtils';
 
 const router = express.Router();
 const { database } = useDatabase();
-const { sendResponse, sendError, fromDbFormat, ApiMessages } = useUtils();
+const {
+  sendResponse,
+  sendError,
+  fromDbFormat,
+  ApiMessages,
+  isLastPage,
+  sliceArray,
+} = useUtils();
 
 const PostBodySchema = z.object({
   memberId: z.coerce.number(),
@@ -52,7 +59,17 @@ router.post('/', async (req, res) => {
   sendResponse(res, fromDbFormat(conversation));
 });
 
+const getBodySchema = z.object({
+  page: z.coerce.number().default(1),
+});
+
 router.get('/', async (req, res) => {
+  const body = getBodySchema.safeParse(req.body);
+
+  if (!body.success) {
+    return sendError(res, ApiMessages.BadRequest);
+  }
+
   const conversations = await database.conversation.findMany({
     where: {
       OR: [
@@ -156,7 +173,20 @@ router.get('/', async (req, res) => {
     return conversation;
   });
 
-  sendResponse(res, fromDbFormat(formattedConversation));
+  const filteredConversations = formattedConversation.filter(
+    (conv) => conv.latest_message !== null
+  );
+
+  const isLastPageReturn = isLastPage(filteredConversations, body.data.page);
+
+  const currentPageData = sliceArray(filteredConversations, body.data.page);
+
+  const returnedData = {
+    isLastPage: isLastPageReturn,
+    artists: currentPageData,
+  };
+
+  sendResponse(res, fromDbFormat(returnedData));
 });
 
 const ConversationParamsSchema = z.object({
@@ -197,7 +227,7 @@ router.get('/:id/', async (req, res) => {
 
       messages: {
         orderBy: {
-          send_date: 'asc',
+          send_date: 'desc',
         },
 
         take: query.data.take,
