@@ -1,11 +1,14 @@
 import express from 'express';
 import { z } from 'zod';
 import validator from 'validator';
+import { readFile } from 'fs/promises';
+import path from 'path';
 
 import useHash from '@composables/useHash';
 import useToken from '@composables/useToken';
 import useUtils from '@composables/useUtils';
 import useDatabase from '@composables/useDatabase';
+import useEmail from '@composables/useEmail';
 
 const router = express.Router();
 
@@ -13,6 +16,7 @@ const { generateToken } = useToken();
 const { compare, hash } = useHash();
 const { database, findAccountById } = useDatabase();
 const { ApiMessages, sendResponse, sendError, fromDbFormat } = useUtils();
+const { sendMail } = useEmail();
 
 const AccountBodySchema = z.object({
   email: z.string().email().optional(),
@@ -67,6 +71,32 @@ router.patch('/', async (req, res) => {
       account_genre: true,
     },
   });
+
+  if (body.data.email) {
+    const htmlToSend = await readFile(
+      path.join(__dirname, '../../public', 'emailChangingEmail.html'),
+      'utf8'
+    );
+
+    sendMail({
+      to: account.email,
+      subject: 'Votre mail à été modifié !',
+      html: htmlToSend,
+    });
+  }
+
+  if (body.data.password) {
+    const htmlToSend = await readFile(
+      path.join(__dirname, '../../public', 'emailChangingPassword.html'),
+      'utf8'
+    );
+
+    sendMail({
+      to: account.email,
+      subject: 'Votre mot de passe à été modifié !',
+      html: htmlToSend,
+    });
+  }
 
   const formattedAccount = {
     ...newAccount,
