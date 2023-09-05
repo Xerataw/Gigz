@@ -56,13 +56,16 @@ const Gallery: React.FC<IGalleryProps> = ({
           />
         </Carousel.Slide>
       ))}
-      {isOnProfile && (
-        <Carousel.Slide key="edit profile">
+      {isOnProfile && pictures.length < maxFile && (
+        <Carousel.Slide
+          key="edit profile"
+          className="flex flex-col justify-center"
+        >
           <Card
             shadow="sm"
             radius="md"
             withBorder
-            className="h-[200px] py-[5px] flex flex-col justify-center"
+            className="h-[200px] py-[5px] flex flex-col justify-center m-5"
           >
             <div>
               <Text align="center" mb="sm" weight={500}>
