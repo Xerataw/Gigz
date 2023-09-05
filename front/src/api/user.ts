@@ -21,41 +21,37 @@ export const patchAccount = (values: IPatchAccount) => {
 };
 
 export const patchArtistProfile = (artistValues: IArtistProfileEditValues) => {
-  if (artistValues.genres) {
-    const genreReq: Promise<IGigzResponse<IGenre>>[] = [];
-    artistValues.genres.forEach((genre: IGenre) => {
-      genreReq.push(postGenre(genre.id));
-    });
-    Promise.all(genreReq);
-  }
+  // Post new genres
+  if (artistValues.genres) postGenresList(artistValues.genres);
+  // Delete previous genres
+  if (artistValues.genresToRemove)
+    deleteGenresList(artistValues.genresToRemove);
 
   cleanProfilePatchFormValues(artistValues);
   return GigzFetcher.patch<IArtistProfile>('me/artist', artistValues);
 };
 
 export const patchHostProfile = (hostValues: IHostProfileEditValues) => {
-  if (hostValues.genres) {
-    const genreReq: Promise<IGigzResponse<IGenre>>[] = [];
-    hostValues.genres.forEach((genre: IGenre) => {
-      genreReq.push(postGenre(genre.id));
-    });
-    Promise.all(genreReq);
-  }
+  // Post new genres
+  if (hostValues.genres) postGenresList(hostValues.genres);
+  // Delete previous genres
+  if (hostValues.genresToRemove) deleteGenresList(hostValues.genresToRemove);
 
   cleanProfilePatchFormValues(hostValues);
   return GigzFetcher.patch<IHostProfile>('me/host', hostValues);
 };
 
-function cleanProfilePatchFormValues(hostValues: any) {
-  delete hostValues.value;
-  delete hostValues.cityCode;
-  delete hostValues.picture;
-  delete hostValues.gallery;
-  delete hostValues.code;
-  delete hostValues.genres;
-  if (hostValues.city === 0) hostValues.city = '';
-  if (hostValues.longitude === 0) delete hostValues.longitude;
-  if (hostValues.latitude === 0) delete hostValues.latitude;
+function cleanProfilePatchFormValues(profileValues: any) {
+  delete profileValues.value;
+  delete profileValues.cityCode;
+  delete profileValues.picture;
+  delete profileValues.gallery;
+  delete profileValues.code;
+  delete profileValues.genres;
+  delete profileValues.genresToRemove;
+  if (profileValues.city === 0) profileValues.city = '';
+  if (profileValues.longitude === 0) delete profileValues.longitude;
+  if (profileValues.latitude === 0) delete profileValues.latitude;
 }
 
 export const patchProfilePicture = async (file: File) => {
@@ -96,4 +92,26 @@ export const postGenre = async (
   genreId: number
 ): Promise<IGigzResponse<IGenre>> => {
   return GigzFetcher.post<IGenre>('me/genres', { genreId });
+};
+
+export const deleteGenre = async (
+  genreId: number
+): Promise<IGigzResponse<IGenre>> => {
+  return GigzFetcher.delete(`me/genres/${genreId}`);
+};
+
+export const postGenresList = async (genres: IGenre[]) => {
+  const postGenreReqs: Promise<IGigzResponse<IGenre>>[] = [];
+  genres.forEach((genre: IGenre) => {
+    postGenreReqs.push(postGenre(genre.id));
+  });
+  return Promise.all(postGenreReqs);
+};
+
+export const deleteGenresList = async (genres: IGenre[]) => {
+  const deleteGenreReqs: Promise<IGigzResponse<IGenre>>[] = [];
+  genres.forEach((genre: IGenre) => {
+    deleteGenreReqs.push(deleteGenre(genre.id));
+  });
+  return Promise.all(deleteGenreReqs);
 };

@@ -1,9 +1,11 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import {
+  deleteGenresList,
   deleteProfilePicture,
   patchArtistProfile,
   patchHostProfile,
   patchProfilePicture,
+  postGenresList,
 } from '../api/user';
 import EProfileType from '../types/EProfileType';
 import IArtistProfile from '../types/IArtistProfile';
@@ -11,6 +13,7 @@ import IHostProfile from '../types/IHostProfile';
 import { IProfileEditValues } from '../types/IProfileEditValues';
 import { useUser } from './UserProvider';
 import IGenre from '../types/IGenre';
+import IGigzResponse from '../types/IGigzResponse';
 
 interface IProfileEditContext {
   editMode: boolean;
@@ -160,7 +163,6 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
     )
       editedProfileValues.soundcloudLink = editedSoundcloud;
     if (editedGenres !== undefined) {
-      console.log('tet');
       const genresToAdd = getGenresToAdd();
       const genresToRemove = getGenresToRemove();
       if (genresToAdd.length > 0) editedProfileValues.genres = genresToAdd;
@@ -278,19 +280,34 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   useEffect(() => {
     if (editConfirmed) {
       const valuesToUpdate = getEditedValues();
-      console.log(valuesToUpdate);
       if (Object.keys(valuesToUpdate).length === 0 && editedPP === undefined) {
         setChangeAfterEdit(false);
         setEditConfirmed(false);
         return;
       }
-      if (Object.keys(valuesToUpdate).length === 0)
-        onProfileUpdated(initialValues as IArtistProfile | IHostProfile);
-      else {
+      // Post new genres
+      if (valuesToUpdate.genres) {
+        postGenresList(valuesToUpdate.genres);
+        delete valuesToUpdate.genres;
+      }
+      // Delete previous genres
+      if (valuesToUpdate.genresToRemove) {
+        deleteGenresList(valuesToUpdate.genresToRemove);
+        delete valuesToUpdate.genresToRemove;
+      }
+      if (Object.keys(valuesToUpdate).length === 0) {
+        console.log(editedGenres);
+        if (editedGenres !== undefined)
+          onProfileUpdated({
+            ...(initialValues as IArtistProfile | IHostProfile),
+            genres: editedGenres as IGenre[],
+          });
+        else onProfileUpdated(initialValues as IArtistProfile | IHostProfile);
+      } else {
         (user.getProfileType() as EProfileType) === EProfileType.ARTIST
-          ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) => {
-              onProfileUpdated(res.data as IArtistProfile);
-            })
+          ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) =>
+              onProfileUpdated(res.data as IArtistProfile)
+            )
           : patchHostProfile(valuesToUpdate as IHostProfile).then((res) =>
               onProfileUpdated(res.data as IHostProfile)
             );
