@@ -227,7 +227,7 @@ router.get('/:id/', async (req, res) => {
 
       messages: {
         orderBy: {
-          send_date: 'asc',
+          send_date: 'desc',
         },
 
         take: query.data.take,

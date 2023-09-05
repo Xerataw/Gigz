@@ -1,62 +1,60 @@
-import IChat from '../../types/chat/IChat';
+import IChat, { IConversation } from '../../types/chat/IChat';
+
+import { Textarea } from '@mantine/core';
+import { IconSend } from '@tabler/icons-react';
 
 import { useEffect, useRef, useState } from 'react';
-import { getChatById } from '../../api/chat';
+import { getChatById, postMessage } from '../../api/chat';
 import { ScrollArea, Text } from '@mantine/core';
 import IMessage from '../../types/chat/IMessage';
 import { useChatNotification } from '../../store/ChatNotificationProvider';
+import GigzScrollArea from '../GigzScrollArea';
 
 interface IChatProps {
-  chat?: IChat;
+  chat?: IConversation;
 }
 
 const Chat: React.FC<IChatProps> = ({ chat }) => {
   const [page, setPage] = useState(1);
-  const [conversationEndReached, setConversationEndReached] = useState(true);
+  const [conversationEndReached, setConversationEndReached] = useState(false);
+
+  const [inputContent, setInputContent] = useState('');
 
   const { notificationCount } = useChatNotification();
 
   const [messages, setMessages] = useState<IMessage[]>([]);
-  const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
-
-  const viewport = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    viewport?.current?.scrollTo({
-      top: viewport.current.scrollHeight,
-      behavior: 'smooth',
-    });
-  }, [viewport]);
 
   useEffect(() => {
     if (!chat) {
       return;
     }
 
-    setPage((old) => old - old + 1);
-
-    getChatById(chat.id, page).then((res) => {
+    setPage(1);
+    getChatById(chat.id, 1).then((res) => {
       setMessages(res.data?.messages.reverse() ?? []);
     });
   }, [notificationCount]);
 
-  useEffect(() => {
+  const loadMoreMessages = () => {
     if (!chat) {
       return;
     }
 
-    if (conversationEndReached && scrollPosition.y === 0) {
-      setPage((old) => old + 1);
-      getChatById(chat.id, page).then((res) => {
-        if (res.data?.messages.length === 0) {
-          setConversationEndReached(false);
-          return;
-        }
+    getChatById(chat.id, page + 1).then((res) => {
+      if (res.data?.messages.length === 0) {
+        setConversationEndReached(true);
+        console.log('END PAGINATION');
+        return;
+      }
 
-        setMessages((old) => [...(res.data?.messages.reverse() ?? []), ...old]);
-      });
-    }
-  }, [scrollPosition]);
+      if (!res.data || !res.data?.messages) {
+        return;
+      }
+
+      setMessages((old) => [...res.data.messages, ...old]);
+    });
+    setPage((old) => old + 1);
+  };
 
   const renderMessages = () => {
     return messages?.map((message) => {
@@ -69,7 +67,7 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
           <Text
             className={`rounded-lg text-white ${
               isMe ? 'bg-gigz-primary' : 'bg-gray-500'
-            } w-fit mb-2 px-2 py-1`}
+            } max-w-[70%] mb-2 px-2 py-1`}
           >
             {message.content}
           </Text>
@@ -78,17 +76,48 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
     });
   };
 
+  const sendMessage = () => {
+    if (!chat) {
+      return;
+    }
+
+    postMessage(chat.id, inputContent).then((res) => {
+      // Handle error here
+      setInputContent('');
+
+      if (!res.data) {
+        // handle error
+        return;
+      }
+
+      console.log(res.data);
+      setMessages((old) => [...old, res.data]);
+    });
+  };
+
   return (
-    <ScrollArea
-      viewportRef={viewport}
-      className="h-full"
-      type="never"
-      onScrollPositionChange={onScrollPositionChange}
-    >
-      <div className="flex flex-col items-end justify-end">
-        {renderMessages()}
-      </div>
-    </ScrollArea>
+    <>
+      <GigzScrollArea
+        className="h-full"
+        type="never"
+        onBottomReached={loadMoreMessages}
+        isLastPage={conversationEndReached}
+        inverted
+      >
+        <div className="flex flex-col items-end justify-end">
+          {renderMessages()}
+        </div>
+      </GigzScrollArea>
+      <Textarea
+        rightSection={
+          <IconSend fill="orange" color="orange" onClick={sendMessage} />
+        }
+        placeholder="Message"
+        minRows={1}
+        value={inputContent}
+        onChange={(event) => setInputContent(event.currentTarget.value)}
+      />
+    </>
   );
 };
 
