@@ -1,10 +1,10 @@
 import Layout from '../Layout/Layout';
-import ChatList from '../../components/Chat/ChatList';
+import ConversationList from '../../components/Chat/ConversationList';
 
 const Conversations: React.FC = () => {
   return (
     <Layout>
-      <ChatList />
+      <ConversationList />
     </Layout>
   );
 };

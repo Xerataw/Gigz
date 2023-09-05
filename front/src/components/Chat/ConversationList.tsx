@@ -1,30 +1,39 @@
 import { Container, Drawer } from '@mantine/core';
-import { useEffect, useState } from 'react';
-import { getChats } from '../../api/chat';
-import IChat from '../../types/chat/IChat';
-import ChatItem from './ChatItem/ChatItem';
 import { useDisclosure } from '@mantine/hooks';
-import Chat from './Chat';
 import { Avatar } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { getConversations } from '../../api/chat';
 import GigzFetcher from '../../services/GigzFetcher';
 import { useChatNotification } from '../../store/ChatNotificationProvider';
+import {
+  default as IChat,
+  IConversation,
+  default as IConversationList,
+} from '../../types/chat/IChat';
+import Chat from './Chat';
+import ChatItem from './ChatItem/ChatItem';
 
-const ChatList: React.FC = () => {
-  const [chatList, setChatList] = useState<IChat[]>(new Array(20).fill({}));
+const ConversationList: React.FC = () => {
+  const [conversationList, setConversationList] = useState<
+    IConversationList | undefined
+  >({
+    artists: new Array(20).fill([]),
+    isLastPage: false,
+  } as IConversationList);
   const [loading, setLoading] = useState(true);
 
   const { decreaseNotificationCount, setNotificationCount, notificationCount } =
     useChatNotification();
 
   const [opened, { open, close }] = useDisclosure(false);
-  const [selectedChat, setSelectedChat] = useState<IChat>();
+  const [selectedChat, setSelectedChat] = useState<IConversation>();
 
   useEffect(() => {
-    getChats().then((res) => {
-      setChatList(res.data ?? []);
+    getConversations().then((res) => {
+      setConversationList(res.data);
       setLoading(false);
 
-      const unread = res.data?.map((chat) => chat.unread);
+      const unread = res.data?.artists.map((chat) => chat.unread);
 
       if (unread && unread.length > 0) {
         setNotificationCount(unread.reduce((a, b) => a + b));
@@ -38,13 +47,13 @@ const ChatList: React.FC = () => {
       return;
     }
 
-    getChats().then((res) => {
-      setChatList(res.data ?? []);
+    getConversations().then((res) => {
+      setConversationList(res.data);
       setLoading(false);
     });
   }, [notificationCount]);
 
-  const openChat = (chat: IChat) => {
+  const openChat = (chat: IConversation) => {
     setSelectedChat(chat);
     open();
 
@@ -55,7 +64,7 @@ const ChatList: React.FC = () => {
   };
 
   const renderChatList = () => {
-    return chatList?.map((chat, index) => (
+    return conversationList?.artists.map((chat, index) => (
       <div key={index} onClick={() => openChat(chat)}>
         <ChatItem chat={chat} loading={loading} />
       </div>
@@ -95,4 +104,4 @@ const ChatList: React.FC = () => {
   );
 };
 
-export default ChatList;
+export default ConversationList;

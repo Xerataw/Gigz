@@ -1,10 +1,10 @@
 import { Container, Indicator, Skeleton, Text } from '@mantine/core';
 import GigzFetcher from '../../../services/GigzFetcher';
-import IChat from '../../../types/chat/IChat';
+import { IConversation } from '../../../types/chat/IChat';
 import ProfilePicture from '../../ProfilePicture';
 
 interface IChatItemProps {
-  chat: IChat | null;
+  chat: IConversation | null;
   loading: boolean;
 }
 
