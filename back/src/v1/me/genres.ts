@@ -57,7 +57,7 @@ router.delete('/:id', async (req, res) => {
     },
   });
 
-  if (account_genre) {
+  if (!account_genre) {
     return sendError(res, ApiMessages.BadRequest);
   }
 
