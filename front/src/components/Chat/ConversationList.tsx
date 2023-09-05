@@ -15,7 +15,8 @@ const ConversationList: React.FC = () => {
   >({
     artists: new Array(20).fill([]),
     isLastPage: false,
-  } as IConversationList);
+  });
+
   const [loading, setLoading] = useState(true);
 
   const { decreaseNotificationCount, setNotificationCount, notificationCount } =
@@ -59,7 +60,7 @@ const ConversationList: React.FC = () => {
     }
   };
 
-  const renderChatList = () => {
+  const renderConversationList = () => {
     return conversationList?.artists.map((chat, index) => (
       <div key={index} onClick={() => openChat(chat)}>
         <ChatItem chat={chat} loading={loading} />
@@ -94,7 +95,7 @@ const ConversationList: React.FC = () => {
       </Drawer.Root>
 
       <Container size={'xs'} px={0} pt={20}>
-        {renderChatList()}
+        {renderConversationList()}
       </Container>
     </>
   );
