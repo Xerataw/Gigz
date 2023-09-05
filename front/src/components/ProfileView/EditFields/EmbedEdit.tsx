@@ -64,8 +64,9 @@ const EmbedEdit: React.FC<IEmbedEditProps> = ({ defaultLink }) => {
                     },
                     defaultLink: currentLink,
                     placeholder: 'https://open.spotify.com/track/your-track',
-                    regex:
-                      '(?:https://open\\.spotify\\.com/track/[a-zA-Z0-9]+)/?',
+                    regex: RegExp(
+                      '(?:https://open\\.spotify\\.com/track/[a-zA-Z0-9]+)/?'
+                    ),
                   })
                 }
               >
@@ -99,8 +100,9 @@ const EmbedEdit: React.FC<IEmbedEditProps> = ({ defaultLink }) => {
                     },
                     defaultLink: currentLink,
                     placeholder: 'https://open.spotify.com/track/your-track',
-                    regex:
-                      '(?:https://open\\.spotify\\.com/track/[a-zA-Z0-9]+)/?',
+                    regex: RegExp(
+                      '(?:https://open\\.spotify\\.com/track/[a-zA-Z0-9]+)/?'
+                    ),
                   })
                 }
               >
