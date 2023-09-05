@@ -3,7 +3,7 @@ import ChatList from '../../components/Chat/ChatList';
 
 const Conversations: React.FC = () => {
   return (
-    <Layout>
+    <Layout navBarShadow={false}>
       <ChatList />
     </Layout>
   );

@@ -1,7 +1,10 @@
 import IChat from '../../types/chat/IChat';
 
+import { Textarea } from '@mantine/core';
+import { IconSend } from '@tabler/icons-react';
+
 import { useEffect, useRef, useState } from 'react';
-import { getChatById } from '../../api/chat';
+import { getChatById, postMessage } from '../../api/chat';
 import { ScrollArea, Text } from '@mantine/core';
 import IMessage from '../../types/chat/IMessage';
 import { useChatNotification } from '../../store/ChatNotificationProvider';
@@ -13,6 +16,8 @@ interface IChatProps {
 const Chat: React.FC<IChatProps> = ({ chat }) => {
   const [page, setPage] = useState(1);
   const [conversationEndReached, setConversationEndReached] = useState(true);
+
+  const [inputContent, setInputContent] = useState('');
 
   const { notificationCount } = useChatNotification();
 
@@ -33,10 +38,9 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
       return;
     }
 
-    setPage((old) => old - old + 1);
-
-    getChatById(chat.id, page).then((res) => {
-      setMessages(res.data?.messages.reverse() ?? []);
+    setPage(1);
+    getChatById(chat.id, 1).then((res) => {
+      setMessages(res.data?.messages ?? []);
     });
   }, [notificationCount]);
 
@@ -69,7 +73,7 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
           <Text
             className={`rounded-lg text-white ${
               isMe ? 'bg-gigz-primary' : 'bg-gray-500'
-            } w-fit mb-2 px-2 py-1`}
+            } max-w-[70%] mb-2 px-2 py-1`}
           >
             {message.content}
           </Text>
@@ -78,17 +82,43 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
     });
   };
 
+  const sendMessage = () => {
+    if (!chat) {
+      return;
+    }
+
+    postMessage(chat.id, inputContent).then((res) => {
+      // Handle error here
+      setInputContent('');
+
+      getChatById(chat.id, 1).then((res) => {
+        setMessages(res.data?.messages ?? []);
+      });
+    });
+  };
+
   return (
-    <ScrollArea
-      viewportRef={viewport}
-      className="h-full"
-      type="never"
-      onScrollPositionChange={onScrollPositionChange}
-    >
-      <div className="flex flex-col items-end justify-end">
-        {renderMessages()}
-      </div>
-    </ScrollArea>
+    <>
+      <ScrollArea
+        viewportRef={viewport}
+        className="h-full"
+        type="never"
+        onScrollPositionChange={onScrollPositionChange}
+      >
+        <div className="flex flex-col items-end justify-end">
+          {renderMessages()}
+        </div>
+      </ScrollArea>
+      <Textarea
+        rightSection={
+          <IconSend fill="orange" color="orange" onClick={sendMessage} />
+        }
+        placeholder="Message"
+        minRows={1}
+        value={inputContent}
+        onChange={(event) => setInputContent(event.currentTarget.value)}
+      />
+    </>
   );
 };
 

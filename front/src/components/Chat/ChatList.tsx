@@ -32,6 +32,23 @@ const ChatList: React.FC = () => {
     });
   }, []);
 
+  useEffect(() => {
+    if (opened) {
+      return;
+    }
+
+    getChats().then((res) => {
+      setChatList(res.data ?? []);
+      setLoading(false);
+
+      const unread = res.data?.map((chat) => chat.unread);
+
+      if (unread && unread.length > 0) {
+        setNotificationCount(unread.reduce((a, b) => a + b));
+      }
+    });
+  }, [opened]);
+
   // Fetch list of conversations when receiving a private-message
   useEffect(() => {
     if (opened) {
