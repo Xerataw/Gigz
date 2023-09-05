@@ -173,9 +173,13 @@ router.get('/', async (req, res) => {
     return conversation;
   });
 
-  const isLastPageReturn = isLastPage(formattedConversation, body.data.page);
+  const filteredConversations = formattedConversation.filter(
+    (conv) => conv._count.messages !== 0
+  );
 
-  const currentPageData = sliceArray(formattedConversation, body.data.page);
+  const isLastPageReturn = isLastPage(filteredConversations, body.data.page);
+
+  const currentPageData = sliceArray(filteredConversations, body.data.page);
 
   const returnedData = {
     isLastPage: isLastPageReturn,
