@@ -1,10 +1,8 @@
-import { Center, Loader, RingProgress, Text, ThemeIcon } from '@mantine/core';
+import { Center, RingProgress, Text, ThemeIcon } from '@mantine/core';
 import { IconCheck } from '@tabler/icons-react';
-import { t } from 'i18next';
 import { useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
-import { getProfile } from '../../api/user';
-import { useUser } from '../../store/UserProvider';
+import EmailValidator from './Utils/EmailValidator';
 
 interface IAccountCreatedProps {
   label: string;
@@ -17,12 +15,8 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({
   path,
   needVerification = false,
 }) => {
-  const user = useUser();
   const [time, setTime] = useState<number>(0);
-  const [isVerified, setVerified] = useState<boolean>(false);
   const history = useHistory();
-
-  const profileType = user.getProfileType();
 
   useEffect(() => {
     if (time >= 100) {
@@ -35,14 +29,6 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({
   }, [time]);
 
   useEffect(() => {
-    if (needVerification && isVerified) {
-      setTimeout(() => {
-        history.push(path);
-      }, 200);
-    }
-  }, [isVerified]);
-
-  useEffect(() => {
     /**
      * show a progress ring
      * for the user to understand he is waiting
@@ -53,19 +39,6 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({
         return old;
       });
     }, 50);
-
-    /**
-     * Wait for user validate it's email
-     */
-    setInterval(() => {
-      if (profileType !== null) {
-        getProfile(profileType).then((e) => {
-          if (e.ok) {
-            setVerified(true);
-          }
-        });
-      }
-    }, 2000);
   }, []);
 
   return (
@@ -92,12 +65,15 @@ const StepperCompleted: React.FC<IAccountCreatedProps> = ({
         }
       />
       {time === 100 && (
-        <div className="flex flex-col items-center mt-10">
-          <Loader variant="bars" mb="md" />
-          <Text size="lg" align="center">
-            {t('register.verified')}
-          </Text>
-        </div>
+        <EmailValidator
+          after={() => {
+            if (needVerification) {
+              setTimeout(() => {
+                history.push(path);
+              }, 200);
+            }
+          }}
+        />
       )}
     </div>
   );

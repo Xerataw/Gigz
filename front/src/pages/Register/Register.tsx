@@ -157,6 +157,7 @@ const Register: React.FC = () => {
           <StepperCompleted
             label={t('register.completeRegister')}
             path={form.values.userType === 'artist' ? artistPath : hostPath}
+            needVerification
           />
         </Stepper.Completed>
       </Stepper>
