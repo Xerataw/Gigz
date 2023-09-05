@@ -10,6 +10,7 @@ import useUtils from '@composables/useUtils';
 import useHash from '@composables/useHash';
 import useToken from '@composables/useToken';
 import useEmail from '@composables/useEmail';
+import rateLimiter from '@/middlewares/rateLimiter';
 
 const { database, findAccountByEmail } = useDatabase();
 const { ApiMessages, sendResponse, sendError, getEnv } = useUtils();
@@ -29,7 +30,7 @@ const RegisterBodySchema = z.object({
   profileType: z.union([z.literal('host'), z.literal('artist')]),
 });
 
-router.post('/', async (req, res) => {
+router.post('/', rateLimiter, async (req, res) => {
   const body = RegisterBodySchema.safeParse(req.body);
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
 
