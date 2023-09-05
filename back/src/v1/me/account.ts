@@ -9,6 +9,7 @@ import useToken from '@composables/useToken';
 import useUtils from '@composables/useUtils';
 import useDatabase from '@composables/useDatabase';
 import useEmail from '@composables/useEmail';
+import rateLimiter from '@/middlewares/rateLimiter';
 
 const router = express.Router();
 
@@ -33,7 +34,7 @@ const AccountBodySchema = z.object({
     .optional(),
 });
 
-router.patch('/', async (req, res) => {
+router.patch('/', rateLimiter, async (req, res) => {
   const account = await findAccountById(req.account.id);
   if (!account) return sendError(res, ApiMessages.WrongToken, 401);
 
