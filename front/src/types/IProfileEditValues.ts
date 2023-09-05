@@ -9,6 +9,7 @@ export interface IProfileEditValues {
   facebookLink?: string;
   websiteLink?: string;
   youtubeLink?: string;
+  musicLink?: string;
   spotifyLink?: string;
   deezerLink?: string;
   appleMusicLink?: string;

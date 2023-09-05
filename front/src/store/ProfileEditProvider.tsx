@@ -26,6 +26,7 @@ interface IProfileEditContext {
   setEditedInsta: (editedInsta: string) => void;
   setEditedFacebook: (editedFacebook: string) => void;
   setEditedWebsite: (editedWebsite: string) => void;
+  setEditedMusicLink: (editedMusicLink: string) => void;
   setEditedSpotify: (editedSpotify: string) => void;
   setEditedDeezer: (editedSpotify: string) => void;
   setEditedAppleMusic: (editedSpotify: string) => void;
@@ -66,6 +67,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [editedInsta, setEditedInsta] = useState<string>();
   const [editedFacebook, setEditedFacebook] = useState<string>();
   const [editedWebsite, setEditedWebsite] = useState<string>();
+  const [editedMusicLink, setEditedMusicLink] = useState<string>();
   const [editedSpotify, setEditedSpotify] = useState<string>();
   const [editedDeezer, setEditedDeezer] = useState<string>();
   const [editedAppleMusic, setEditedAppleMusic] = useState<string>();
@@ -93,6 +95,11 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
       editedWebsite !== initialValues?.websiteLink
     )
       editedProfileValues.websiteLink = editedWebsite;
+    if (
+      editedMusicLink !== undefined &&
+      editedMusicLink !== (initialValues as IArtistProfile)?.musicLink
+    )
+      editedProfileValues.musicLink = editedMusicLink;
     if (
       editedSpotify !== undefined &&
       editedSpotify !== (initialValues as IArtistProfile)?.spotifyLink
@@ -203,6 +210,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         setEditedInsta,
         setEditedFacebook,
         setEditedWebsite,
+        setEditedMusicLink,
         setEditedSpotify,
         setEditedDeezer,
         setEditedAppleMusic,

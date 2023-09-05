@@ -12,6 +12,7 @@ const SpotifyEmbed: React.FC<ISpotifyEmbedProps> = ({ spotifyLink }) => {
     <Skeleton
       visible={skeletonVisible}
       radius={skeletonVisible ? 'md' : undefined}
+      className="w-full h-24 mb-12 border-0"
     >
       <iframe
         className="w-full h-32 border-0"
