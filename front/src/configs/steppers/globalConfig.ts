@@ -11,5 +11,5 @@ export const stepperProps = {
     },
   },
 };
-export const artistPath = '/register/artist';
+export const artistPath = '/register/artist/0';
 export const hostPath = '/register/host';

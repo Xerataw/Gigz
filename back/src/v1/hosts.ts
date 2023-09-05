@@ -13,6 +13,8 @@ const {
   sendError,
   fromDbFormat,
   calculateDistance,
+  isLastPage,
+  sliceArray,
 } = useUtils();
 
 const searchFiltersBodySchemas = z.object({
@@ -21,6 +23,7 @@ const searchFiltersBodySchemas = z.object({
   genres: z.string().min(1).optional(),
   latitude: z.coerce.number().optional(),
   longitude: z.coerce.number().optional(),
+  page: z.coerce.number().default(1),
 });
 
 type SearchQueryType = z.infer<typeof searchFiltersBodySchemas>;
@@ -76,6 +79,7 @@ router.get('/', async (req, res) => {
       capacity: true,
       account: {
         select: {
+          id: true,
           profile_picture: true,
           account_genre: {
             select: {
@@ -144,7 +148,18 @@ router.get('/', async (req, res) => {
     delete host.latitude;
   });
 
-  sendResponse(res, formattedData, 200);
+  formattedData = formattedData.filter((host) => host.id !== req.account.id);
+
+  const isLastPageReturn = isLastPage(formattedData, body.data.page);
+
+  const currentPageData = sliceArray(formattedData, body.data.page);
+
+  const returnedData = {
+    isLastPage: isLastPageReturn,
+    artists: currentPageData,
+  };
+
+  sendResponse(res, fromDbFormat(returnedData));
 });
 
 const GetHostByIdParams = z.object({

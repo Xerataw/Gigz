@@ -6,6 +6,7 @@ import {
   IconArrowUpBar,
   IconBoxMultiple,
   IconChecks,
+  IconDeviceTvOld,
   IconExternalLink,
   IconMapPin,
   IconMusic,
@@ -33,9 +34,12 @@ import {
   getArtistValuesReq,
   linksArtist,
 } from '../../configs/steppers/stepperArtistConfig';
+import { useHistory } from 'react-router';
+import EmbedStep from '../../components/Steps/EmbedStep';
 
 const RegisterArtistProfile: React.FC = () => {
-  const NUMBER_OF_STEPS = 7;
+  const NUMBER_OF_STEPS = 8;
+  const history = useHistory();
 
   const { t } = useTranslation();
   const [formStep, setFormStep] = useState<number>(0);
@@ -89,6 +93,16 @@ const RegisterArtistProfile: React.FC = () => {
     }
   }, [debounced]);
 
+  useEffect(() => {
+    if (formStep > 0) history.push('/register/artist/' + formStep);
+  }, [formStep]);
+
+  useEffect(() => {
+    setFormStep(
+      Number.parseInt(window.location.pathname.split('artist/')[1] ?? 0)
+    );
+  }, []);
+
   return (
     <div className="pt-10 border border-red-500 flex flex-col items-center relative h-full">
       <div className="absolute">
@@ -104,6 +118,7 @@ const RegisterArtistProfile: React.FC = () => {
             <IconMusic key={4} />,
             <IconBoxMultiple key={5} />,
             <IconExternalLink key={2} />,
+            <IconDeviceTvOld key={10} />,
 
             <IconArrowUpBar key={8} />,
             <IconChecks key={9} />,
@@ -153,6 +168,12 @@ const RegisterArtistProfile: React.FC = () => {
           <Stepper.Step>
             <Fade isVisible={stepWillChange} afterHide={nextStep}>
               <SocialLinksStep links={linksArtist} form={form} />
+            </Fade>
+          </Stepper.Step>
+
+          <Stepper.Step>
+            <Fade isVisible={stepWillChange} afterHide={nextStep}>
+              <EmbedStep form={form} />
             </Fade>
           </Stepper.Step>
 
