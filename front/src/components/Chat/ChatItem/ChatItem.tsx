@@ -34,7 +34,7 @@ const ChatItem: React.FC<IChatItemProps> = ({
           offset={3}
         >
           <ProfilePicture
-            src={GigzFetcher.getImageUri(chat?.from.profilePicture ?? '')}
+            src={GigzFetcher.getImageUri(chat?.from?.profilePicture ?? '')}
             radius={20}
             size={64}
             alt={chat?.from?.name}

@@ -4,6 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { getChatById } from '../../api/chat';
 import { ScrollArea, Text } from '@mantine/core';
 import IMessage from '../../types/chat/IMessage';
+import { useChatNotification } from '../../store/ChatNotificationProvider';
 
 interface IChatProps {
   chat?: IChat;
@@ -12,6 +13,8 @@ interface IChatProps {
 const Chat: React.FC<IChatProps> = ({ chat }) => {
   const [page, setPage] = useState(1);
   const [conversationEndReached, setConversationEndReached] = useState(true);
+
+  const { notificationCount } = useChatNotification();
 
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [scrollPosition, onScrollPositionChange] = useState({ x: 0, y: 0 });
@@ -24,6 +27,18 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
       behavior: 'smooth',
     });
   }, [viewport]);
+
+  useEffect(() => {
+    if (!chat) {
+      return;
+    }
+
+    setPage((old) => old - old + 1);
+
+    getChatById(chat.id, page).then((res) => {
+      setMessages(res.data?.messages.reverse() ?? []);
+    });
+  }, [notificationCount]);
 
   useEffect(() => {
     if (!chat) {
