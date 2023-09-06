@@ -1,13 +1,13 @@
-import IChat, { IConversation } from '../../types/chat/IChat';
+import { IConversation } from '../../types/chat/IChat';
 
 import { Textarea } from '@mantine/core';
 import { IconSend } from '@tabler/icons-react';
 
-import { useEffect, useRef, useState } from 'react';
+import { Text } from '@mantine/core';
+import { useEffect, useState } from 'react';
 import { getChatById, postMessage } from '../../api/chat';
-import { ScrollArea, Text } from '@mantine/core';
-import IMessage from '../../types/chat/IMessage';
 import { useChatNotification } from '../../store/ChatNotificationProvider';
+import IMessage from '../../types/chat/IMessage';
 import GigzScrollArea from '../GigzScrollArea';
 
 interface IChatProps {
@@ -41,17 +41,12 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
     }
 
     getChatById(chat.id, page + 1).then((res) => {
-      if (res.data?.messages.length === 0) {
+      if (res.data?.messages?.length === 0) {
         setConversationEndReached(true);
-        console.log('END PAGINATION');
         return;
       }
 
-      if (!res.data || !res.data?.messages) {
-        return;
-      }
-
-      setMessages((old) => [...res.data.messages, ...old]);
+      setMessages((old) => [...(res.data?.messages?.reverse() ?? []), ...old]);
     });
     setPage((old) => old + 1);
   };
@@ -82,7 +77,6 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
     }
 
     postMessage(chat.id, inputContent).then((res) => {
-      // Handle error here
       setInputContent('');
 
       if (!res.data) {
@@ -90,8 +84,7 @@ const Chat: React.FC<IChatProps> = ({ chat }) => {
         return;
       }
 
-      console.log(res.data);
-      setMessages((old) => [...old, res.data]);
+      setMessages((old) => (res.data ? [...old, res.data] : [...old]));
     });
   };
 

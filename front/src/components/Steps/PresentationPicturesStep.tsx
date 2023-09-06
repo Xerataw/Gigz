@@ -18,38 +18,47 @@ import { IStepProps } from '../../types/IStepProps';
 import Helper from '../Tooltip/Helper';
 import StepTitle from './Utils/StepTitle';
 
-const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
-  const maxFile = 5;
-  const [pictures, setPictures] = useState<IMedia[]>(form.values.gallery);
+export const handleRemovePicture = (
+  idToRemove: number,
+  pictures: IMedia[],
+  handleSetPictures: (pictures: IMedia[]) => void
+) => {
+  const indexToRemove = pictures.findIndex((pic) => pic.id === idToRemove) ?? 0;
 
-  const handleRemovePicture = (idToRemove: number) => {
-    const indexToRemove =
-      pictures.findIndex((pic) => pic.id === idToRemove) ?? 0;
+  deletePhotoGallery(idToRemove).then(() => {
+    handleSetPictures([
+      ...pictures.slice(0, indexToRemove),
+      ...pictures.slice(indexToRemove + 1, pictures.length),
+    ]);
+  });
+};
 
-    deletePhotoGallery(idToRemove).then(() => {
-      setPictures((old) => [
-        ...old.slice(0, indexToRemove),
-        ...old.slice(indexToRemove + 1, old.length),
-      ]);
-    });
-  };
-
-  const handleAddFiles = (filesToAdd: File[]) => {
-    postPhotoGallery(filesToAdd)
-      .then((res) => res.data)
-      .then((res) => {
-        res?.forEach((picture) => {
-          setPictures((old) => {
-            if (old.length === maxFile) return old;
-            return [...old, picture];
-          });
-        });
+export const handleAddFiles = (
+  filesToAdd: File[],
+  handleSetPictures: (pictures: IMedia[]) => void,
+  pictures: IMedia[],
+  maxFile: number
+) => {
+  postPhotoGallery(filesToAdd)
+    .then((res) => res.data)
+    .then((res) => {
+      res?.forEach((picture) => {
+        if (pictures.length < maxFile) handleSetPictures([picture]);
       });
-  };
+    });
+};
+export const maxFile = 5;
+
+const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
+  const [pictures, setPictures] = useState<IMedia[]>(form.values.gallery);
 
   useEffect(() => {
     form.values.gallery = pictures;
   }, [pictures]);
+
+  const handleSetPictures = (pictures: IMedia[]) => {
+    setPictures((old) => [...pictures, ...old]);
+  };
 
   return (
     <>
@@ -77,7 +86,9 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
                 <ActionIcon
                   color="red"
                   className="bg-white rounded-none rounded-bl-lg"
-                  onClick={() => handleRemovePicture(image.id)}
+                  onClick={() =>
+                    handleRemovePicture(image.id, pictures, handleSetPictures)
+                  }
                 >
                   <IconTrash size={'sm'} />
                 </ActionIcon>
@@ -85,7 +96,7 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
             </div>
           </Grid.Col>
         ))}
-        {pictures.length < 5 && (
+        {pictures.length < maxFile && (
           <Grid.Col span={6}>
             <Card
               shadow="sm"
@@ -99,7 +110,9 @@ const PresentationPicturesStep: React.FC<IStepProps> = ({ form }) => {
                 </Text>
                 <Center>
                   <FileButton
-                    onChange={handleAddFiles}
+                    onChange={(e) =>
+                      handleAddFiles(e, handleSetPictures, pictures, maxFile)
+                    }
                     accept="image/png,image/jpeg"
                     multiple
                   >

@@ -31,7 +31,7 @@ const ProfileView: React.FC<IProfileViewProps> = ({
     <div className="relative">
       {canEdit && <Settings />}
       <Gallery
-        mediaList={profile && profile.gallery}
+        mediaList={profile?.gallery ?? []}
         loading={loading}
         withEmbed={hasMusicEmbed}
       />
