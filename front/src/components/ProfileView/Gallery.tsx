@@ -46,6 +46,10 @@ const Gallery: React.FC<IGalleryProps> = ({
     setPictures((old) => [...old, ...pictures]);
   };
 
+  useEffect(() => {
+    setPictures(mediaList.filter((media) => media.type === EMediaType.IMAGE));
+  }, [mediaList]);
+
   return loading ? (
     <Center h={slidesHeight}>
       <Loader />

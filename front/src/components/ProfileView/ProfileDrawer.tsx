@@ -8,6 +8,8 @@ import ProfileBanner from './ProfileBanner';
 import MusicEmbed from './ProfileSections/MusicEmbeds/MusicEmbed';
 import { useProfileEdit } from '../../store/ProfileEditProvider';
 import EmbedEdit from './EditFields/EmbedEdit';
+import { useUser } from '../../store/UserProvider';
+import EProfileType from '../../types/EProfileType';
 
 interface IProfileDrawerProps {
   profile: IArtistProfile | IHostProfile;
@@ -21,6 +23,7 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
   children,
 }) => {
   const { editMode } = useProfileEdit();
+  const userProfileType = useUser().getProfileType() as EProfileType;
   const [drawerOpened, setDrawerOpened] = useState<boolean>(false);
   const toggleDrawer = () => setDrawerOpened(!drawerOpened);
 
@@ -84,7 +87,7 @@ const ProfileDrawer: React.FC<IProfileDrawerProps> = ({
         >
           {hasMusicEmbed && (
             <div className="-mb-10 visible ">
-              {editMode ? (
+              {editMode && userProfileType === EProfileType.ARTIST ? (
                 <EmbedEdit
                   defaultLink={(profile as IArtistProfile)?.musicLink}
                 />

@@ -8,16 +8,13 @@ import { useProfileEdit } from '../../store/ProfileEditProvider';
 import { useUser } from '../../store/UserProvider';
 import EProfileType from '../../types/EProfileType';
 import IArtistProfile from '../../types/IArtistProfile';
-import IGenre from '../../types/IGenre';
 import IHostProfile from '../../types/IHostProfile';
-import IMedia from '../../types/IMedia';
 import Layout from '../Layout/Layout';
 
 const Profile: React.FC = () => {
   const history = useHistory();
   const user = useUser();
-  const { editConfirmed, changeAfterEdit, updatedProfile, setInitialValues } =
-    useProfileEdit();
+  const { editConfirmed, setInitialValues } = useProfileEdit();
   const [profileLoading, setProfileLoading] = useState<boolean>(true);
   const [profileType, setProfileType] = useState<EProfileType>();
   const [profile, setProfile] = useState<IArtistProfile | IHostProfile>();
@@ -53,23 +50,8 @@ const Profile: React.FC = () => {
     });
   };
 
-  const adjustUpdatedProfile = () => {
-    const newProfile = buildProfile({
-      ...updatedProfile,
-      gallery: profile?.gallery as IMedia[],
-      genres: updatedProfile.genres as IGenre[],
-    });
-    setProfile(newProfile);
-    setInitialValues(newProfile);
-  };
-
-  // Update profile data if edited
-  useEffect(() => {
-    if (changeAfterEdit) adjustUpdatedProfile();
-  }, [editConfirmed]);
-
   // Update profile data if page changed
-  useEffect(() => fetchProfile(), [history]);
+  useEffect(() => fetchProfile(), [history, editConfirmed]);
 
   return <Layout navBarShadow={false}>{displayProfileView()}</Layout>;
 };

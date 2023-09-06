@@ -53,6 +53,15 @@ const HostProfileView: React.FC<IHostProfileViewProps> = ({
       sections.push(
         <Biography key="bio" content={profile.description as string} />
       );
+    isSocialsSectionAvailable(profile) &&
+      sections.push(
+        <Socials
+          key="socials"
+          instagramLink={profile.instagramLink}
+          facebookLink={profile.facebookLink}
+          websiteLink={profile.websiteLink}
+        />
+      );
     if (isMapSectionAvailable(profile))
       sections.push(
         <LocationMap
@@ -63,15 +72,6 @@ const HostProfileView: React.FC<IHostProfileViewProps> = ({
       );
     else if (typeof profile.address === 'string' && profile.address.length > 0)
       sections.push(<LocationChip key="location" address={profile.address} />);
-    isSocialsSectionAvailable(profile) &&
-      sections.push(
-        <Socials
-          key="socials"
-          instagramLink={profile.instagramLink}
-          facebookLink={profile.facebookLink}
-          websiteLink={profile.websiteLink}
-        />
-      );
 
     return sections;
   };
