@@ -57,7 +57,7 @@ const Profile: React.FC = () => {
     const newProfile = buildProfile({
       ...updatedProfile,
       gallery: profile?.gallery as IMedia[],
-      genres: profile?.genres as IGenre[],
+      genres: updatedProfile.genres as IGenre[],
     });
     setProfile(newProfile);
     setInitialValues(newProfile);

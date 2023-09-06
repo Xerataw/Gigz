@@ -21,5 +21,6 @@ export interface IProfileEditValues {
   latitude?: number;
   profilePicture?: IProfilePicture;
   genres?: IGenre[];
+  genresToRemove?: IGenre[];
   gallery?: IMedia[];
 }

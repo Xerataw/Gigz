@@ -1,18 +1,5 @@
-import {
-  Badge,
-  Flex,
-  Skeleton,
-  Text,
-  useMantineColorScheme,
-} from '@mantine/core';
-import {
-  IconCheck,
-  IconMapPin,
-  IconPencil,
-  IconSeparator,
-  IconUsersGroup,
-  IconX,
-} from '@tabler/icons-react';
+import { Flex, Skeleton, Text, useMantineColorScheme } from '@mantine/core';
+import { IconCheck, IconMapPin, IconPencil, IconX } from '@tabler/icons-react';
 import { useTranslation } from 'react-i18next';
 import { useLocation } from 'react-router';
 import GigzFetcher from '../../services/GigzFetcher';
@@ -24,6 +11,8 @@ import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
 import NameEdit from './EditFields/NameEdit';
 import ProfilePictureEdit from './EditFields/ProfilePictureEdit';
+import GenresEdit from './EditFields/GenresEdit';
+import GenresList from './GenresList';
 
 interface IProfileBannerProps {
   username: string;
@@ -151,36 +140,15 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
               {city ? city : t('profile.banner.emptyCity')}
             </p>
           </Skeleton>
-          <ul className="flex flex-row flew-wrap p-0 m-0">
-            {genresToDisplay?.map((genre) => (
-              <li key={genre.id} className="mr-1">
-                <Skeleton
-                  h={loading ? '1.5rem' : 'inherit'}
-                  mr={loading ? '0.25rem' : 'inherit'}
-                  visible={loading}
-                >
-                  <Badge variant="filled">{genre.name}</Badge>
-                </Skeleton>
-              </li>
-            ))}
-            {capacity && !loading && (
-              <>
-                <IconSeparator className="mr-2" />
-                <li>
-                  <Badge
-                    variant="filled"
-                    bg={capacity.bgColor}
-                    px={8}
-                    rightSection={
-                      <IconUsersGroup size="1rem" className="mt-[0.3rem]" />
-                    }
-                  >
-                    {capacity.max}
-                  </Badge>
-                </li>
-              </>
-            )}
-          </ul>
+          {editMode ? (
+            <GenresEdit defaultGenres={genres} />
+          ) : (
+            <GenresList
+              genres={genresToDisplay}
+              capacity={capacity}
+              loading={loading}
+            />
+          )}
         </div>
       </div>
     </div>

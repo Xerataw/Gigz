@@ -1,15 +1,19 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import {
+  deleteGenresList,
   deleteProfilePicture,
   patchArtistProfile,
   patchHostProfile,
   patchProfilePicture,
+  postGenresList,
 } from '../api/user';
 import EProfileType from '../types/EProfileType';
 import IArtistProfile from '../types/IArtistProfile';
 import IHostProfile from '../types/IHostProfile';
 import { IProfileEditValues } from '../types/IProfileEditValues';
 import { useUser } from './UserProvider';
+import IGenre from '../types/IGenre';
+import IGigzResponse from '../types/IGigzResponse';
 
 interface IProfileEditContext {
   editMode: boolean;
@@ -37,6 +41,8 @@ interface IProfileEditContext {
   setEditedAppleMusic: (editedSpotify: string) => void;
   setEditedYoutube: (editedSpotify: string) => void;
   setEditedSoundcloud: (editedSpotify: string) => void;
+  addGenre: (newGenre: IGenre) => void;
+  removeGenre: (genreToRemove: IGenre) => void;
 }
 
 const ProfileEditContext = createContext<IProfileEditContext>(
@@ -83,6 +89,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [editedAppleMusic, setEditedAppleMusic] = useState<string>();
   const [editedYoutube, setEditedYoutube] = useState<string>();
   const [editedSoundcloud, setEditedSoundcloud] = useState<string>();
+  const [editedGenres, setEditedGenres] = useState<IGenre[]>();
 
   const getEditedValues = (): IProfileEditValues => {
     const editedProfileValues = {} as IProfileEditValues;
@@ -155,7 +162,50 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
       editedSoundcloud !== (initialValues as IArtistProfile)?.soundcloudLink
     )
       editedProfileValues.soundcloudLink = editedSoundcloud;
+    if (editedGenres !== undefined) {
+      const genresToAdd = getGenresToAdd();
+      const genresToRemove = getGenresToRemove();
+      if (genresToAdd.length > 0) editedProfileValues.genres = genresToAdd;
+      if (genresToRemove.length > 0)
+        editedProfileValues.genresToRemove = genresToRemove;
+    }
     return editedProfileValues;
+  };
+
+  const getGenresToAdd = (): IGenre[] => {
+    if (editedGenres === undefined) return [];
+
+    const genresToAdd: IGenre[] = [];
+    if (initialValues?.genres) {
+      for (const editedGenre of editedGenres) {
+        if (
+          initialValues.genres.find(
+            (initalGenre) => initalGenre.id === editedGenre.id
+          ) === undefined
+        )
+          genresToAdd.push(editedGenre);
+      }
+    } else {
+      for (const editedGenre of editedGenres) genresToAdd.push(editedGenre);
+    }
+    return genresToAdd;
+  };
+
+  const getGenresToRemove = (): IGenre[] => {
+    if (editedGenres === undefined) return [];
+
+    const genresToRemove: IGenre[] = [];
+    if (initialValues?.genres) {
+      for (const initialGenre of initialValues.genres) {
+        if (
+          editedGenres.find(
+            (editedGenre) => editedGenre.id === initialGenre.id
+          ) === undefined
+        )
+          genresToRemove.push(initialGenre);
+      }
+    }
+    return genresToRemove;
   };
 
   const onProfileUpdated = (
@@ -200,6 +250,32 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
     }
   };
 
+  const addGenre = (newGenre: IGenre) => {
+    const newEditedGenres: IGenre[] = [];
+    if (editedGenres === undefined) {
+      if (initialValues?.genres && initialValues.genres.length > 0)
+        for (const genre of initialValues.genres) newEditedGenres.push(genre);
+    } else {
+      for (const genre of editedGenres) newEditedGenres.push(genre);
+    }
+    newEditedGenres.push(newGenre);
+    setEditedGenres(newEditedGenres);
+  };
+
+  const removeGenre = (genreToRemove: IGenre) => {
+    let newEditedGenres: IGenre[] = [];
+    if (editedGenres === undefined) {
+      if (initialValues?.genres && initialValues.genres.length > 0)
+        for (const genre of initialValues.genres) newEditedGenres.push(genre);
+    } else {
+      for (const genre of editedGenres) newEditedGenres.push(genre);
+    }
+    newEditedGenres = newEditedGenres.filter(
+      (genre) => genre.id !== genreToRemove.id
+    );
+    setEditedGenres(newEditedGenres);
+  };
+
   // Send patch request if edit confirmed
   useEffect(() => {
     if (editConfirmed) {
@@ -209,13 +285,28 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         setEditConfirmed(false);
         return;
       }
-      if (Object.keys(valuesToUpdate).length === 0)
-        onProfileUpdated(initialValues as IArtistProfile | IHostProfile);
-      else {
+      // Post new genres
+      if (valuesToUpdate.genres) {
+        postGenresList(valuesToUpdate.genres);
+        delete valuesToUpdate.genres;
+      }
+      // Delete previous genres
+      if (valuesToUpdate.genresToRemove) {
+        deleteGenresList(valuesToUpdate.genresToRemove);
+        delete valuesToUpdate.genresToRemove;
+      }
+      if (Object.keys(valuesToUpdate).length === 0) {
+        if (editedGenres !== undefined)
+          onProfileUpdated({
+            ...(initialValues as IArtistProfile | IHostProfile),
+            genres: editedGenres as IGenre[],
+          });
+        else onProfileUpdated(initialValues as IArtistProfile | IHostProfile);
+      } else {
         (user.getProfileType() as EProfileType) === EProfileType.ARTIST
-          ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) => {
-              onProfileUpdated(res.data as IArtistProfile);
-            })
+          ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) =>
+              onProfileUpdated(res.data as IArtistProfile)
+            )
           : patchHostProfile(valuesToUpdate as IHostProfile).then((res) =>
               onProfileUpdated(res.data as IHostProfile)
             );
@@ -251,6 +342,8 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         setEditedAppleMusic,
         setEditedYoutube,
         setEditedSoundcloud,
+        addGenre,
+        removeGenre,
       }}
     >
       {children}
