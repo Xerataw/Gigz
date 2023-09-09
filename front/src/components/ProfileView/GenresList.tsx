@@ -15,7 +15,7 @@ const GenresList: React.FC<IGenresListProps> = ({
   capacity,
 }) => {
   return (
-    <ul className="flex flex-row flew-wrap p-0 m-0">
+    <ul className="flex flex-row flex-nowrap p-0 m-0">
       {genres?.map((genre) => (
         <li key={genre.id} className="mr-1">
           <Skeleton
@@ -29,7 +29,7 @@ const GenresList: React.FC<IGenresListProps> = ({
       ))}
       {capacity && !loading && (
         <>
-          <IconSeparator className="mr-2" />
+          {genres.length > 0 && <IconSeparator className="mr-2" />}
           <li>
             <Badge
               variant="filled"

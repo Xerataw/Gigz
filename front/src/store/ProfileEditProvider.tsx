@@ -10,10 +10,11 @@ import {
 import EProfileType from '../types/EProfileType';
 import IArtistProfile from '../types/IArtistProfile';
 import IHostProfile from '../types/IHostProfile';
-import { IProfileEditValues } from '../types/IProfileEditValues';
+import IProfileEditValues from '../types/IProfileEditValues';
 import { useUser } from './UserProvider';
 import IGenre from '../types/IGenre';
-import IGigzResponse from '../types/IGigzResponse';
+import ICapacity from '../types/ICapacity';
+import IHostProfileEditValues from '../types/IHostProfileEditValues';
 
 interface IProfileEditContext {
   editMode: boolean;
@@ -22,8 +23,6 @@ interface IProfileEditContext {
   setEditConfirmed: (editConfirmed: boolean) => void;
   initialValues: IArtistProfile | IHostProfile;
   setInitialValues: (initialValues: IArtistProfile | IHostProfile) => void;
-  updatedProfile: IArtistProfile | IHostProfile;
-  changeAfterEdit: boolean;
   setEditedName: (editedName: string) => void;
   setEditedPP: (editedPP: File | null) => void;
   setEditedBio: (editedBiography: string) => void;
@@ -43,6 +42,7 @@ interface IProfileEditContext {
   setEditedSoundcloud: (editedSpotify: string) => void;
   addGenre: (newGenre: IGenre) => void;
   removeGenre: (genreToRemove: IGenre) => void;
+  setEditedCapacity: (newCapacity: ICapacity) => void;
 }
 
 const ProfileEditContext = createContext<IProfileEditContext>(
@@ -66,10 +66,6 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [initialValues, setInitialValues] = useState<
     IArtistProfile | IHostProfile
   >();
-  const [updatedProfile, setUpdatedProfile] = useState(
-    {} as IArtistProfile | IHostProfile
-  );
-  const [changeAfterEdit, setChangeAfterEdit] = useState<boolean>(false);
 
   // Values to edit
   const [editedName, setEditedName] = useState<string>();
@@ -90,6 +86,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [editedYoutube, setEditedYoutube] = useState<string>();
   const [editedSoundcloud, setEditedSoundcloud] = useState<string>();
   const [editedGenres, setEditedGenres] = useState<IGenre[]>();
+  const [editedCapacity, setEditedCapacity] = useState<ICapacity>();
 
   const getEditedValues = (): IProfileEditValues => {
     const editedProfileValues = {} as IProfileEditValues;
@@ -169,6 +166,12 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
       if (genresToRemove.length > 0)
         editedProfileValues.genresToRemove = genresToRemove;
     }
+    if (
+      editedCapacity !== undefined &&
+      editedCapacity !== (initialValues as IHostProfile).capacity
+    )
+      (editedProfileValues as IHostProfileEditValues).capacityId =
+        editedCapacity.id;
     return editedProfileValues;
   };
 
@@ -208,46 +211,18 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
     return genresToRemove;
   };
 
-  const onProfileUpdated = (
-    newProfile: IArtistProfile | IHostProfile
-  ): void => {
+  const onProfileUpdated = (): void => {
     if (editedPP)
       patchProfilePicture(editedPP).then((response) => {
         user.setProfilePicture(response.data ? response.data.media : null);
-        setUpdatedProfile({
-          ...newProfile,
-          profilePicture:
-            user.getProfilePicture() !== null
-              ? { media: user.getProfilePicture() as string }
-              : undefined,
-        });
-        setChangeAfterEdit(true);
         setEditConfirmed(false);
       });
     else if (editedPP === null)
       deleteProfilePicture().then(() => {
         user.setProfilePicture(null);
-        setUpdatedProfile({
-          ...newProfile,
-          profilePicture:
-            user.getProfilePicture() !== null
-              ? { media: user.getProfilePicture() as string }
-              : undefined,
-        });
-        setChangeAfterEdit(true);
         setEditConfirmed(false);
       });
-    else {
-      setUpdatedProfile({
-        ...newProfile,
-        profilePicture:
-          user.getProfilePicture() !== null
-            ? { media: user.getProfilePicture() as string }
-            : undefined,
-      });
-      setChangeAfterEdit(true);
-      setEditConfirmed(false);
-    }
+    else setEditConfirmed(false);
   };
 
   const addGenre = (newGenre: IGenre) => {
@@ -280,11 +255,6 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   useEffect(() => {
     if (editConfirmed) {
       const valuesToUpdate = getEditedValues();
-      if (Object.keys(valuesToUpdate).length === 0 && editedPP === undefined) {
-        setChangeAfterEdit(false);
-        setEditConfirmed(false);
-        return;
-      }
       // Post new genres
       if (valuesToUpdate.genres) {
         postGenresList(valuesToUpdate.genres);
@@ -296,19 +266,15 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         delete valuesToUpdate.genresToRemove;
       }
       if (Object.keys(valuesToUpdate).length === 0) {
-        if (editedGenres !== undefined)
-          onProfileUpdated({
-            ...(initialValues as IArtistProfile | IHostProfile),
-            genres: editedGenres as IGenre[],
-          });
-        else onProfileUpdated(initialValues as IArtistProfile | IHostProfile);
+        if (editedPP !== undefined) onProfileUpdated();
+        else setEditConfirmed(false);
       } else {
         (user.getProfileType() as EProfileType) === EProfileType.ARTIST
-          ? patchArtistProfile(valuesToUpdate as IArtistProfile).then((res) =>
-              onProfileUpdated(res.data as IArtistProfile)
+          ? patchArtistProfile(valuesToUpdate as IArtistProfile).then(() =>
+              onProfileUpdated()
             )
-          : patchHostProfile(valuesToUpdate as IHostProfile).then((res) =>
-              onProfileUpdated(res.data as IHostProfile)
+          : patchHostProfile(valuesToUpdate as IHostProfile).then(() =>
+              onProfileUpdated()
             );
       }
     }
@@ -323,8 +289,6 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         setEditConfirmed,
         initialValues: initialValues as IArtistProfile | IHostProfile,
         setInitialValues,
-        updatedProfile,
-        changeAfterEdit,
         setEditedName,
         setEditedPP,
         setEditedBio,
@@ -344,6 +308,7 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
         setEditedSoundcloud,
         addGenre,
         removeGenre,
+        setEditedCapacity,
       }}
     >
       {children}

@@ -2,7 +2,7 @@ import IGenre from './IGenre';
 import IMedia from './IMedia';
 import IProfilePicture from './IProfilePicture';
 
-export interface IProfileEditValues {
+export default interface IProfileEditValues {
   name?: string;
   description?: string;
   instagramLink?: string;

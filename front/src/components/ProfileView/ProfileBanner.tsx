@@ -13,6 +13,7 @@ import NameEdit from './EditFields/NameEdit';
 import ProfilePictureEdit from './EditFields/ProfilePictureEdit';
 import GenresEdit from './EditFields/GenresEdit';
 import GenresList from './GenresList';
+import CapacityEdit from './EditFields/CapacityEdit';
 
 interface IProfileBannerProps {
   username: string;
@@ -141,7 +142,10 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             </p>
           </Skeleton>
           {editMode ? (
-            <GenresEdit defaultGenres={genres} />
+            <div className="flex flex-row flex-nowrap p-0 m-0">
+              <GenresEdit defaultGenres={genres} />
+              {capacity && <CapacityEdit defaultCapacity={capacity} />}
+            </div>
           ) : (
             <GenresList
               genres={genresToDisplay}

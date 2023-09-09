@@ -1,4 +1,4 @@
-import { IProfileEditValues } from './IProfileEditValues';
+import IProfileEditValues from './IProfileEditValues';
 
 export interface IArtistProfileEditValues extends IProfileEditValues {
   spotifyLink?: string;
