@@ -12,6 +12,7 @@ const {
   ApiMessages,
   fromDbFormat,
   isLastPage,
+  calculateDistance,
   sliceArray,
 } = useUtils();
 
@@ -128,9 +129,43 @@ router.get('/', async (req, res) => {
     },
   });
 
-  console.log(favorites);
+  let newFavorites = [];
 
-  const newFavorites = favorites.map((fav) => {
+  if (
+    typeof req.account.longitude === 'number' &&
+    typeof req.account.latitude === 'number'
+  ) {
+    const searchLongitude = query.data.longitude
+      ? query.data.longitude
+      : req.account.longitude;
+
+    const searchLatitude = query.data.latitude
+      ? query.data.latitude
+      : req.account.latitude;
+
+    newFavorites = favorites.sort((profileA, profileB) => {
+      return (
+        calculateDistance(
+          searchLatitude,
+          searchLongitude,
+          profileA.liked_account?.host?.latitude ??
+            (profileA.liked_account?.artist?.latitude as number),
+          profileA.liked_account?.host?.longitude ??
+            (profileA.liked_account?.artist?.longitude as number)
+        ) -
+        calculateDistance(
+          searchLatitude,
+          searchLongitude,
+          profileB.liked_account?.host?.latitude ??
+            (profileB.liked_account?.artist?.latitude as number),
+          profileB.liked_account?.host?.longitude ??
+            (profileB.liked_account?.artist?.longitude as number)
+        )
+      );
+    });
+  }
+
+  newFavorites = favorites.map((fav) => {
     const genres = fav.liked_account.account_genre.map((union) => ({
       id: union.genre.id,
       name: union.genre.name,
