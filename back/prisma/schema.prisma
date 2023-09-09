@@ -18,8 +18,8 @@ model account {
   user_id                                            String               @unique(map: "user_id") @db.VarChar(36)
   account_genre                                      account_genre[]
   artist                                             artist?
-  conversation_conversation_creator_idToaccount      conversation[]       @relation("conversation_creator_idToaccount")
-  conversation_conversation_member_idToaccount       conversation[]       @relation("conversation_member_idToaccount")
+  created_conversations                              conversation[]       @relation("conversation_creator_idToaccount")
+  other_conversations                                conversation[]       @relation("conversation_member_idToaccount")
   gallery                                            gallery[]
   host                                               host?
   liked_account_liked_account_liker_accountToaccount liked_account[]      @relation("liked_account_liker_accountToaccount")

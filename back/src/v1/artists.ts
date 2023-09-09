@@ -169,6 +169,16 @@ router.get('/:id/', async (req, res) => {
             select: { id: true, media: true },
           },
           profile_picture: true,
+          created_conversations: {
+            where: {
+              member_id: req.account.id,
+            },
+          },
+          other_conversations: {
+            where: {
+              creator_id: req.account.id,
+            },
+          },
         },
       },
     },
@@ -191,6 +201,12 @@ router.get('/:id/', async (req, res) => {
 
   // @ts-ignore
   artist.gallery = artist.account.gallery;
+
+  // @ts-ignore
+  artist.conversations = [
+    ...artist.account.created_conversations,
+    ...artist.account.other_conversations,
+  ];
 
   // @ts-ignore
   delete artist.account;
