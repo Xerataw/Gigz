@@ -29,6 +29,7 @@ const searchFiltersBodySchemas = z.object({
   genres: z.string().min(1).optional(),
   longitude: z.coerce.number().optional(),
   latitude: z.coerce.number().optional(),
+  type: z.union([z.literal('host'), z.literal('artist')]),
   page: z.coerce.number().default(1),
 });
 
@@ -80,6 +81,7 @@ router.get('/', async (req, res) => {
             artist: filterByQueries(query.data),
           },
         ],
+        profile_type: query.data.type,
       },
     },
 
