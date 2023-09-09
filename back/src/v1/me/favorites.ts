@@ -12,6 +12,7 @@ const {
   ApiMessages,
   fromDbFormat,
   isLastPage,
+  calculateDistance,
   sliceArray,
 } = useUtils();
 
@@ -23,15 +24,67 @@ const favoritesBodySchema = z.object({
   page: z.coerce.number().default(1),
 });
 
+const searchFiltersBodySchemas = z.object({
+  name: z.string().min(1).optional(),
+  genres: z.string().min(1).optional(),
+  longitude: z.coerce.number().optional(),
+  latitude: z.coerce.number().optional(),
+  page: z.coerce.number().default(1),
+});
+
+const filterByQueries = (query: { name?: string; genres?: string }) => {
+  return {
+    AND: {
+      longitude: {
+        not: null,
+      },
+      latitude: {
+        not: null,
+      },
+    },
+    name: {
+      contains: query.name ? query.name : undefined,
+    },
+    account: query.genres
+      ? {
+          account_genre: {
+            some: {
+              genre_id: {
+                in: query.genres.split(',').map((x) => +x),
+              },
+            },
+          },
+        }
+      : undefined,
+  };
+};
+
 router.get('/', async (req, res) => {
   const body = favoritesBodySchema.safeParse(req.body);
+  const query = searchFiltersBodySchemas.safeParse(req.query);
 
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
+  if (!query.success) return sendError(res, ApiMessages.BadRequest);
+
+  const PAGE_SIZE = 20;
 
   const favorites = await database.liked_account.findMany({
     where: {
       liker_account_id: req.account.id,
+      liked_account: {
+        OR: [
+          {
+            host: filterByQueries(query.data),
+          },
+          {
+            artist: filterByQueries(query.data),
+          },
+        ],
+      },
     },
+
+    take: PAGE_SIZE,
+    skip: Math.max((query.data.page - 1) * PAGE_SIZE, 0),
 
     include: {
       liked_account: {
@@ -76,7 +129,43 @@ router.get('/', async (req, res) => {
     },
   });
 
-  const newFavorites = favorites.map((fav) => {
+  let newFavorites = [];
+
+  if (
+    typeof req.account.longitude === 'number' &&
+    typeof req.account.latitude === 'number'
+  ) {
+    const searchLongitude = query.data.longitude
+      ? query.data.longitude
+      : req.account.longitude;
+
+    const searchLatitude = query.data.latitude
+      ? query.data.latitude
+      : req.account.latitude;
+
+    newFavorites = favorites.sort((profileA, profileB) => {
+      return (
+        calculateDistance(
+          searchLatitude,
+          searchLongitude,
+          profileA.liked_account?.host?.latitude ??
+            (profileA.liked_account?.artist?.latitude as number),
+          profileA.liked_account?.host?.longitude ??
+            (profileA.liked_account?.artist?.longitude as number)
+        ) -
+        calculateDistance(
+          searchLatitude,
+          searchLongitude,
+          profileB.liked_account?.host?.latitude ??
+            (profileB.liked_account?.artist?.latitude as number),
+          profileB.liked_account?.host?.longitude ??
+            (profileB.liked_account?.artist?.longitude as number)
+        )
+      );
+    });
+  }
+
+  newFavorites = favorites.map((fav) => {
     const genres = fav.liked_account.account_genre.map((union) => ({
       id: union.genre.id,
       name: union.genre.name,
@@ -111,7 +200,7 @@ router.get('/', async (req, res) => {
 
   const returnedData = {
     isLastPage: isLastPageReturn,
-    artists: currentPageData,
+    profiles: currentPageData,
   };
 
   sendResponse(res, fromDbFormat(returnedData));
