@@ -52,9 +52,9 @@ const GenreStep: React.FC<IStepProps> = ({ form }) => {
             onClick={() => {
               handleAddGenre(genre);
             }}
-            //must be disabled if len >= 3 && selectedGenre doesn't includes it
+            //must be disabled if len >= 2 && selectedGenre doesn't includes it
             disabled={
-              selectedGenres.length >= 3 &&
+              selectedGenres.length >= 2 &&
               selectedGenres.find((g) => g.id === genre.id) === undefined
             }
             isSelected={selectedGenres.includes(genre)}

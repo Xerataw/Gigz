@@ -56,7 +56,7 @@ const ProfilePictureEdit: React.FC<IProfilePictureEditProps> = ({
         <ActionIcon
           className={
             'w-[2rem] h-[2rem] absolute -left-2 -top-2 z-[11] rounded-full p-1' +
-            (isDark ? ' bg-[#1A1B1E] ' : ' bg-white ')
+            (isDark ? ' bg-[#25262B] ' : ' bg-white ')
           }
           onClick={() => deletePP()}
         >
@@ -69,13 +69,13 @@ const ProfilePictureEdit: React.FC<IProfilePictureEditProps> = ({
             {...props}
             className={
               'w-[2rem] h-[2rem] absolute -right-2 -top-2 z-[11] rounded-full p-1 m-0' +
-              (isDark ? ' bg-[#1A1B1E] ' : ' bg-white ')
+              (isDark ? ' bg-[#25262B] ' : ' bg-white ')
             }
           >
             {currentPP === null ? (
-              <IconPhotoPlus width="100%" color="black" />
+              <IconPhotoPlus width="100%" color={isDark ? 'white' : 'black'} />
             ) : (
-              <IconPhotoEdit width="100%" color="black" />
+              <IconPhotoEdit width="100%" color={isDark ? 'white' : 'black'} />
             )}
           </ActionIcon>
         )}

@@ -1,18 +1,17 @@
-import { ActionIcon, Modal } from '@mantine/core';
+import { ActionIcon, Modal, useMantineColorScheme } from '@mantine/core';
 import {
   IconBrandApple,
   IconBrandSoundcloud,
   IconBrandSpotify,
   IconBrandYoutube,
-  IconCirclePlus,
-  IconPencil,
 } from '@tabler/icons-react';
+import { t } from 'i18next';
 import { useState } from 'react';
-import { useTranslation } from 'react-i18next';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
 import ExternalLinkIcon from '../../ExternalLinkIcon';
-import LinkEditModalContent, { ILinkEdit } from './LinkEditModalContent';
 import ProfileSection from '../ProfileSections/ProfileSection';
+import LinkEditModalContent, { ILinkEdit } from './LinkEditModalContent';
+import { actionIconClassname, iconPencilOrPlus } from './SocialsEdit';
 
 interface IMusicProfilesEditProps {
   spotifyLink?: string;
@@ -29,7 +28,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
   youtubeLink,
   soundcloudLink,
 }) => {
-  const { t } = useTranslation();
+  const isLightTheme = useMantineColorScheme().colorScheme === 'light';
   const {
     setEditedSpotify,
     setEditedDeezer,
@@ -73,7 +72,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
         <ul className="flex flex-flow flex-nowrap justify-start gap-4">
           <li className="relative">
             <ActionIcon
-              className="absolute -top-3 -right-3 bg-white z-10 rounded-full"
+              className={actionIconClassname(isLightTheme)}
               onClick={() =>
                 openEditionModal({
                   linkName: 'Spotify',
@@ -90,14 +89,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                 })
               }
             >
-              {currentSpotify ? (
-                <IconPencil className="pl-[0.05rem]" color="black" />
-              ) : (
-                <IconCirclePlus
-                  className="pt-[0.15rem] pl-[0.05rem]"
-                  color="black"
-                />
-              )}
+              {iconPencilOrPlus(currentSpotify, isLightTheme)}
             </ActionIcon>
             <ExternalLinkIcon
               link={spotifyLink}
@@ -107,7 +99,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
           </li>
           <li className="relative">
             <ActionIcon
-              className="absolute -top-3 -right-3 bg-white z-10 rounded-full"
+              className={actionIconClassname(isLightTheme)}
               onClick={() =>
                 openEditionModal({
                   linkName: 'Deezer',
@@ -126,11 +118,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                 })
               }
             >
-              {currentDeezer ? (
-                <IconPencil className="pl-[0.05rem]" color="black" />
-              ) : (
-                <IconCirclePlus className="pt-[0.1rem]" color="black" />
-              )}
+              {iconPencilOrPlus(currentDeezer, isLightTheme)}
             </ActionIcon>
             <ExternalLinkIcon
               link={deezerLink}
@@ -141,7 +129,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
           </li>
           <li className="relative">
             <ActionIcon
-              className="absolute -top-3 -right-3 bg-white z-10 rounded-full"
+              className={actionIconClassname(isLightTheme)}
               onClick={() =>
                 openEditionModal({
                   linkName: 'Apple Music',
@@ -158,11 +146,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                 })
               }
             >
-              {currentAppleMusic ? (
-                <IconPencil className="pl-[0.05rem]" color="black" />
-              ) : (
-                <IconCirclePlus className="pt-[0.1rem]" color="black" />
-              )}
+              {iconPencilOrPlus(currentAppleMusic, isLightTheme)}
             </ActionIcon>
             <ExternalLinkIcon
               link={appleMusicLink}
@@ -171,7 +155,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
           </li>
           <li className="relative">
             <ActionIcon
-              className="absolute -top-3 -right-3 bg-white z-10 rounded-full"
+              className={actionIconClassname(isLightTheme)}
               onClick={() =>
                 openEditionModal({
                   linkName: 'Youtube',
@@ -188,11 +172,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                 })
               }
             >
-              {currentYoutube ? (
-                <IconPencil className="pl-[0.05rem]" color="black" />
-              ) : (
-                <IconCirclePlus className="pt-[0.1rem]" color="black" />
-              )}
+              {iconPencilOrPlus(currentYoutube, isLightTheme)}
             </ActionIcon>
             <ExternalLinkIcon
               link={youtubeLink}
@@ -202,7 +182,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
           </li>
           <li className="relative">
             <ActionIcon
-              className="absolute -top-3 -right-3 bg-white z-10 rounded-full"
+              className={actionIconClassname(isLightTheme)}
               onClick={() =>
                 openEditionModal({
                   linkName: 'Soundcloud',
@@ -219,11 +199,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
                 })
               }
             >
-              {currentSoundcloud ? (
-                <IconPencil className="pl-[0.05rem]" color="black" />
-              ) : (
-                <IconCirclePlus className="pt-[0.1rem]" color="black" />
-              )}
+              {iconPencilOrPlus(currentSoundcloud, isLightTheme)}
             </ActionIcon>
             <ExternalLinkIcon
               link={soundcloudLink}
@@ -238,7 +214,7 @@ const MusicProfilesEdit: React.FC<IMusicProfilesEditProps> = ({
         opened={editLinkModalOpened}
         onClose={() => closeEditionModal()}
         withCloseButton={false}
-        title="Edit social media link"
+        title={t('profile.musicProfiles.modalTitle')}
         centered
         styles={{
           overlay: { zIndex: 10000 },

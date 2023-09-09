@@ -1,5 +1,5 @@
 // Types
-import { Skeleton } from '@mantine/core';
+import { Header, Skeleton, Title, useMantineColorScheme } from '@mantine/core';
 import { ReactNode } from 'react';
 
 interface IProfileSectionProps {
@@ -13,10 +13,19 @@ const ProfileSection: React.FC<IProfileSectionProps> = ({
   loading = false,
   children,
 }) => {
+  const isLightTheme = useMantineColorScheme().colorScheme === 'light';
+
   return (
     <section className="mt-2 mb-5">
       <Skeleton visible={loading}>
-        <h4 className="mb-2">{name}</h4>
+        <Title
+          order={4}
+          className={
+            'mb-2 ' + (isLightTheme ? ' text-black ' : ' text-gray-400 ')
+          }
+        >
+          {name}
+        </Title>
       </Skeleton>
       <div>{children}</div>
     </section>

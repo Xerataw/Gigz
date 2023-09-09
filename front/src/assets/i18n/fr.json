@@ -152,11 +152,18 @@
     "locationMap": {
       "title": "Localisation"
     },
+    "embed": "Ajoutez votre musique",
     "musicProfiles": {
-      "title": "Musique"
+      "title": "Musique",
+      "modalTitle": "Modifiez votre lien"
     },
     "socials": {
-      "title": "Réseaux sociaux"
+      "title": "Réseaux sociaux",
+      "modalTitle": "Modifiez votre lien"
+    },
+    "modal": {
+      "validate": "Valider",
+      "cancel": "Annuler"
     }
   },
   "search": {

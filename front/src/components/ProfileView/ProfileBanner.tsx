@@ -124,7 +124,10 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             ) : (
               <Text
                 truncate
-                className="font-bold text-xl pr-2 h-[1.8rem] max-w-[15rem] text-ellipsis"
+                className={
+                  'font-bold text-xl pr-2 h-[1.8rem] max-w-[15rem] text-ellipsis ' +
+                  (isDark ? ' text-white ' : ' text-black ')
+                }
               >
                 {username}
               </Text>
@@ -136,7 +139,12 @@ const ProfileBanner: React.FC<IProfileBannerProps> = ({
             mb={loading ? '0.25rem' : 'inherit'}
             className="flex flex-row flex-nowrap"
           >
-            <IconMapPin size="20" className="mt-[2px]" />
+            {/* TODO: */}
+            <IconMapPin
+              size="20"
+              className="mt-[2px]"
+              color={isDark ? ' white ' : ' black '}
+            />
             <p className="italic text-gray-600 font-semibold">
               {city ? city : t('profile.banner.emptyCity')}
             </p>
