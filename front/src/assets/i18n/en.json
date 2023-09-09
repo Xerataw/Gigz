@@ -140,7 +140,7 @@
       "error": "Add a valid Spotify link"
     },
     "verified": "Verify your emails, and confirm your account creation"
-},
+  },
   "profile": {
     "banner": {
       "emptyCity": "Somewhere in the world"
@@ -183,7 +183,9 @@
     },
     "list": {
       "endOfProfiles": "You have seen everything...",
-      "noResult": "No result found for your search"
+      "endOfFavorites": "You have seen all your favorites",
+      "noResult": "No result found for your search",
+      "noFavorites": "No favorites"
     }
   },
   "settings": {

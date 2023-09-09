@@ -184,7 +184,9 @@
     },
     "list": {
       "endOfProfiles": "Vous avez regardé tous les profils",
-      "noResult": "Aucun résultats pour votre recherche"
+      "endOfFavorites": "Vous avez regardé tous vos favoris",
+      "noResult": "Aucun résultats pour votre recherche",
+      "noFavorites": "Aucun favoris"
     }
   },
   "settings": {

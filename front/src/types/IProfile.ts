@@ -25,5 +25,5 @@ export default interface IProfile {
   genres: IGenre[];
   gallery: IMedia[];
 
-  isLiked: boolean;
+  likedAccount: boolean;
 }

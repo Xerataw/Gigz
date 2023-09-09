@@ -200,9 +200,15 @@ router.get('/', async (req, res) => {
 
   const currentPageData = sliceArray(newFavorites, body.data.page);
 
+  // @ts-ignore
+  const formatedData = currentPageData.map((profile) => ({
+    ...profile,
+    likedAccount: true,
+  }));
+
   const returnedData = {
     isLastPage: isLastPageReturn,
-    profiles: currentPageData,
+    profiles: formatedData,
   };
 
   sendResponse(res, fromDbFormat(returnedData));
