@@ -1,11 +1,15 @@
 import { CapacitorConfig } from '@capacitor/cli';
 
 const config: CapacitorConfig = {
-  appId: 'io.ionic.starter',
-  appName: 'front',
+  appId: 'com.gigz.gigz',
+  appName: 'Gigz',
   webDir: 'dist',
   server: {
-    androidScheme: 'https',
+    androidScheme: 'http',
+    cleartext: true,
+  },
+  android: {
+    allowMixedContent: true,
   },
 };
 
