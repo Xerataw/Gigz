@@ -152,7 +152,10 @@
     "locationMap": {
       "title": "Localisation"
     },
-    "embed": "Ajoutez votre musique",
+    "embed": {
+      "new": "Ajoutez votre musique",
+      "edit": "Mettez à jour votre musique"
+    },
     "musicProfiles": {
       "title": "Musique",
       "modalTitle": "Modifiez votre lien"

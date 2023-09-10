@@ -151,7 +151,10 @@
     "locationMap": {
       "title": "Location"
     },
-    "embed": "Add your song",
+    "embed": {
+      "new": "Add your song",
+      "edit": "Update your song"
+    },
     "musicProfiles": {
       "title": "Music",
       "modalTitle": "Edit your link"
