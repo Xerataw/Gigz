@@ -1,6 +1,7 @@
 import IGenre from './IGenre';
 import IMedia from './IMedia';
 import IProfilePicture from './IProfilePicture';
+import { IConversationDetails } from './chat/IChat';
 
 export default interface IProfile {
   id: number;
@@ -26,4 +27,6 @@ export default interface IProfile {
   gallery: IMedia[];
 
   likedAccount: boolean;
+
+  conversations: IConversationDetails[];
 }

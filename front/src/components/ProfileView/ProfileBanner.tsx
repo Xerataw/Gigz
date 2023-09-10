@@ -9,11 +9,11 @@ import IGenre from '../../types/IGenre';
 import IProfilePicture from '../../types/IProfilePicture';
 import LightRoundButton from '../LightRoundButton';
 import ProfilePicture from '../ProfilePicture';
+import CapacityEdit from './EditFields/CapacityEdit';
+import GenresEdit from './EditFields/GenresEdit';
 import NameEdit from './EditFields/NameEdit';
 import ProfilePictureEdit from './EditFields/ProfilePictureEdit';
-import GenresEdit from './EditFields/GenresEdit';
 import GenresList from './GenresList';
-import CapacityEdit from './EditFields/CapacityEdit';
 
 interface IProfileBannerProps {
   username: string;

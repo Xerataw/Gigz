@@ -2,7 +2,7 @@ import IChatDetails from '../types/chat/IChatDetails';
 
 import GigzFetcher from '../services/GigzFetcher';
 import IMessage from '../types/chat/IMessage';
-import IConversationList from '../types/chat/IChat';
+import IConversationList, { IConversationDetails } from '../types/chat/IChat';
 
 export const getConversations = async () => {
   return GigzFetcher.get<IConversationList>('me/conversations');
@@ -18,5 +18,11 @@ export const postMessage = async (conversationId: number, content: string) => {
   return GigzFetcher.post<IMessage>(`me/messages`, {
     conversationId,
     content,
+  });
+};
+
+export const createConversation = async (memberId: number) => {
+  return GigzFetcher.post<IConversationDetails>(`me/conversations`, {
+    memberId,
   });
 };

@@ -18,6 +18,7 @@ const Result: React.FC<ISearchResultProps> = ({ result, loading, onClick }) => {
   }, [result.likedAccount]);
 
   const likeAccount = () => {
+    // result.likedAccount = !isLiked;
     isLiked
       ? deleteLikeAccountById(result?.accountId)
       : likeAccountById(result?.accountId);
@@ -32,7 +33,9 @@ const Result: React.FC<ISearchResultProps> = ({ result, loading, onClick }) => {
         city={result?.city}
         profilePicture={result?.profilePicture}
         loading={loading}
-        onClick={() => !loading && onClick(result)}
+        onClick={() =>
+          !loading && onClick({ ...result, likedAccount: isLiked })
+        }
       />
       <div
         hidden={loading}

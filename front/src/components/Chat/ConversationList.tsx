@@ -8,6 +8,7 @@ import { useChatNotification } from '../../store/ChatNotificationProvider';
 import IConversationList, { IConversation } from '../../types/chat/IChat';
 import Chat from './Chat';
 import ChatItem from './ChatItem/ChatItem';
+import { useHistory } from 'react-router';
 
 const ConversationList: React.FC = () => {
   const [conversationList, setConversationList] = useState<
@@ -16,19 +17,30 @@ const ConversationList: React.FC = () => {
     artists: new Array(20).fill([]),
     isLastPage: false,
   });
+  const history = useHistory();
 
   const [loading, setLoading] = useState(true);
 
   const { decreaseNotificationCount, setNotificationCount, notificationCount } =
     useChatNotification();
 
-  const [opened, { open, close }] = useDisclosure(false);
+  const [opened, setOpened] = useState(false);
   const [selectedChat, setSelectedChat] = useState<IConversation>();
 
   useEffect(() => {
     getConversations().then((res) => {
       setConversationList(res.data);
       setLoading(false);
+
+      if (history.location.search) {
+        const conversationId = history.location.search.replace('?', '');
+        history.replace('/auth/conversations');
+        const conversation = res.data?.artists.find((conversation) => {
+          console.log(conversation);
+          return conversation.id === parseInt(conversationId ?? '');
+        });
+        conversation && openChat(conversation);
+      }
 
       const unread = res.data?.artists.map((chat) => chat.unread);
 
@@ -52,12 +64,18 @@ const ConversationList: React.FC = () => {
 
   const openChat = (chat: IConversation) => {
     setSelectedChat(chat);
-    open();
+    setOpened(!opened);
+    history.push('/auth/conversations/' + chat.id);
 
     if (chat.unread > 0) {
       decreaseNotificationCount(chat.unread);
       chat.unread = 0;
     }
+  };
+
+  const onClose = () => {
+    setOpened(false);
+    history.replace('/auth/conversations');
   };
 
   const renderConversationList = () => {
@@ -71,7 +89,7 @@ const ConversationList: React.FC = () => {
   // TODO Render something else if conversation list is empty
   return (
     <>
-      <Drawer.Root opened={opened} position="right" onClose={close}>
+      <Drawer.Root opened={opened} position="right" onClose={onClose}>
         <Drawer.Overlay />
         <Drawer.Content className="h-full flex flex-col">
           <Drawer.Header>
