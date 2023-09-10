@@ -17,3 +17,11 @@ export interface IConversation {
     sendDate: string;
   };
 }
+
+export interface IConversationDetails {
+  id: number;
+  creatorId: number;
+  memberId: number;
+  latestMessageId: number;
+  creationDate: string;
+}
