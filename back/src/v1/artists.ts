@@ -143,7 +143,7 @@ router.get('/', async (req, res) => {
 
   const returnedData = {
     isLastPage: isLastPageReturn,
-    artists: currentPageData,
+    profiles: currentPageData,
   };
 
   sendResponse(res, fromDbFormat(returnedData));

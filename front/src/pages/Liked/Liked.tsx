@@ -1,9 +1,10 @@
 import Layout from '../Layout/Layout';
+import Search from '../Search/Search';
 
 const Liked: React.FC = () => {
   return (
     <Layout>
-      <div>Liked</div>
+      <Search isFavorites />
     </Layout>
   );
 };
