@@ -10,12 +10,14 @@ import { useState } from 'react';
 import { useProfileEdit } from '../../../store/ProfileEditProvider';
 import LinkEditModalContent, { ILinkEdit } from './LinkEditModalContent';
 import { t } from 'i18next';
+import { useTranslation } from 'react-i18next';
 
 interface IEmbedEditProps {
   defaultLink?: string;
 }
 
 const EmbedEdit: React.FC<IEmbedEditProps> = ({ defaultLink }) => {
+  const { t } = useTranslation();
   const isLightTheme = useMantineColorScheme().colorScheme === 'light';
   const { setEditedMusicLink } = useProfileEdit();
   const [skeletonVisible, setSkeletonVisible] = useState<boolean>(
@@ -78,7 +80,7 @@ const EmbedEdit: React.FC<IEmbedEditProps> = ({ defaultLink }) => {
                   })
                 }
               >
-                Change your song
+                {t('profile.embed.edit')}
               </Button>
             </Center>
           </>
@@ -123,7 +125,7 @@ const EmbedEdit: React.FC<IEmbedEditProps> = ({ defaultLink }) => {
                   })
                 }
               >
-                {t('profile.embed')}
+                {t('profile.embed.new')}
               </Button>
             </Center>
           </div>

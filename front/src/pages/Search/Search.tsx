@@ -1,5 +1,6 @@
 import { useForm } from '@mantine/form';
 import { useEffect, useState } from 'react';
+import { getFavorites } from '../../api/favorites';
 import { getResults } from '../../api/search';
 import ResultList from '../../components/Search/Result/ResultList';
 import SearchBar from '../../components/Search/SearchBar';
@@ -12,9 +13,13 @@ import IProfile from '../../types/IProfile';
 import IResult from '../../types/IResult';
 import Layout from '../Layout/Layout';
 
-const Search: React.FC = () => {
+interface ISearchProps {
+  isFavorites?: boolean;
+}
+
+const Search: React.FC<ISearchProps> = ({ isFavorites = false }) => {
   const loadingData: IResult = {
-    artists: new Array(20)
+    profiles: new Array(20)
       .fill({})
       .map((val, index) => ({ id: index } as IProfile)),
     isLastPage: false,
@@ -47,13 +52,21 @@ const Search: React.FC = () => {
   const getProfilesWithFilter = () => {
     setLoading(true);
 
-    getResults(getFilters() as IFilter).then((res) => {
-      setResults({
-        artists: res?.data?.artists ?? [],
-        isLastPage: res?.data?.isLastPage,
-      } as IResult);
-      setLoading(false);
-    });
+    isFavorites
+      ? getFavorites(getFilters() as IFilter).then((res) => {
+          setResults({
+            profiles: res?.data?.profiles ?? [],
+            isLastPage: res?.data?.isLastPage,
+          } as IResult);
+          setLoading(false);
+        })
+      : getResults(getFilters() as IFilter).then((res) => {
+          setResults({
+            profiles: res?.data?.profiles ?? [],
+            isLastPage: res?.data?.isLastPage,
+          } as IResult);
+          setLoading(false);
+        });
   };
 
   const onSubmit = (values: any) => {
@@ -66,7 +79,7 @@ const Search: React.FC = () => {
       setResults(
         (old) =>
           ({
-            artists: [...old.artists, ...(res?.data?.artists ?? [])],
+            profiles: [...old.profiles, ...(res?.data?.profiles ?? [])],
             isLastPage: res?.data?.isLastPage,
           } as IResult)
       )
@@ -93,6 +106,7 @@ const Search: React.FC = () => {
         results={results}
         loading={loading}
         loadMoreResults={loadMoreResults}
+        isFavorites={isFavorites}
       />
     </Layout>
   );

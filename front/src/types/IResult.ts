@@ -3,7 +3,7 @@ import IProfile from './IProfile';
 import IProfilePicture from './IProfilePicture';
 
 export default interface IResult {
-  artists: IProfile[];
+  profiles: IProfile[];
   isLastPage: boolean;
 }
 
@@ -13,5 +13,5 @@ export interface IProfileResult {
   name: string;
   city: string;
   genres: IGenre[];
-  isLiked: boolean;
+  likedAccount: boolean;
 }
