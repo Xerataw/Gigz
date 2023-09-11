@@ -12,14 +12,19 @@ const ChatItem: React.FC<IChatItemProps> = ({
   chat = null,
   loading = false,
 }) => {
+  const date = new Date(chat?.latestMessage?.sendDate ?? '');
+  const now = new Date();
+
   const lastMessage = () => {
-    return (
-      new Date(chat?.latestMessage?.sendDate ?? '')?.getDate() +
-      '/' +
-      new Date(chat?.latestMessage?.sendDate ?? '')?.getMonth() +
-      ' - ' +
-      chat?.latestMessage?.content
-    );
+    return now.getDay() === date.getDay() && now.getMonth() === date.getMonth()
+      ? `Aujourd'hui à ${date.getHours()}:${date.getMinutes()} - ${
+          chat?.latestMessage?.content
+        }`
+      : `Le ${date?.getDate()}/${
+          date?.getMonth() + 1
+        } à ${date.getHours()}:${date.getMinutes()} - ${
+          chat?.latestMessage?.content
+        }`;
   };
 
   return (

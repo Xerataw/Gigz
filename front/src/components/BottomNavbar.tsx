@@ -13,7 +13,9 @@ import {
   IconUserCircle,
   IconZoomFilled,
 } from '@tabler/icons-react';
+import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import { getConversations } from '../api/chat';
 import GigzFetcher from '../services/GigzFetcher';
 import { useChatNotification } from '../store/ChatNotificationProvider';
 import { useUser } from '../store/UserProvider';
@@ -25,7 +27,17 @@ interface IBottomNavBarProps {
 
 const BottomNavbar: React.FC<IBottomNavBarProps> = ({ isShadow }) => {
   const userPP = useUser().getProfilePicture();
-  const { notificationCount } = useChatNotification();
+  const { notificationCount, setNotificationCount } = useChatNotification();
+
+  useEffect(() => {
+    getConversations().then((res) => {
+      const unread = res.data?.artists.map((chat) => chat.unread);
+
+      if (unread && unread.length > 0) {
+        setNotificationCount(unread.reduce((a, b) => a + b));
+      }
+    });
+  });
 
   const { colorScheme } = useMantineColorScheme();
   const isDark = colorScheme === 'dark';

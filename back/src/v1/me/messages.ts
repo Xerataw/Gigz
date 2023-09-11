@@ -17,7 +17,7 @@ const PostBodySchema = z.object({
 router.post('/', async (req, res) => {
   const body = PostBodySchema.safeParse(req.body);
 
-  if (!body.success) {
+  if (!body.success || body.data.content.length === 0) {
     console.error('Error: invalid body parameters');
     return sendError(res, ApiMessages.BadRequest);
   }
