@@ -66,6 +66,10 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   const [initialValues, setInitialValues] = useState<
     IArtistProfile | IHostProfile
   >();
+  const [genresUpdated, setGenresUpdated] = useState<boolean>(false);
+  const [valuesToUpdate, setValuesToUpdate] = useState<IProfileEditValues>(
+    {} as IProfileEditValues
+  );
 
   // Values to edit
   const [editedName, setEditedName] = useState<string>();
@@ -255,16 +259,38 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
   useEffect(() => {
     if (editConfirmed) {
       const valuesToUpdate = getEditedValues();
+      if (!valuesToUpdate.genres && !valuesToUpdate.genresToRemove) {
+        setValuesToUpdate(valuesToUpdate);
+        setGenresUpdated(true);
+      }
+
       // Post new genres
       if (valuesToUpdate.genres) {
-        postGenresList(valuesToUpdate.genres);
-        delete valuesToUpdate.genres;
+        postGenresList(valuesToUpdate.genres).then(() => {
+          delete valuesToUpdate.genres;
+          if (valuesToUpdate.genresToRemove) {
+            deleteGenresList(valuesToUpdate.genresToRemove).then(() => {
+              delete valuesToUpdate.genresToRemove;
+              setValuesToUpdate(valuesToUpdate);
+              setGenresUpdated(true);
+            });
+          } else {
+            setValuesToUpdate(valuesToUpdate);
+            setGenresUpdated(true);
+          }
+        });
+      } else if (valuesToUpdate.genresToRemove) {
+        deleteGenresList(valuesToUpdate.genresToRemove).then(() => {
+          delete valuesToUpdate.genresToRemove;
+          setValuesToUpdate(valuesToUpdate);
+          setGenresUpdated(true);
+        });
       }
-      // Delete previous genres
-      if (valuesToUpdate.genresToRemove) {
-        deleteGenresList(valuesToUpdate.genresToRemove);
-        delete valuesToUpdate.genresToRemove;
-      }
+    }
+  }, [editConfirmed]);
+
+  useEffect(() => {
+    if (genresUpdated) {
       if (Object.keys(valuesToUpdate).length === 0) {
         if (editedPP !== undefined) onProfileUpdated();
         else setEditConfirmed(false);
@@ -277,8 +303,9 @@ const ProfileEditProvider: React.FC<IProfileEditProviderProps> = ({
               onProfileUpdated()
             );
       }
+      setGenresUpdated(false);
     }
-  }, [editConfirmed]);
+  }, [genresUpdated]);
 
   return (
     <ProfileEditContext.Provider
