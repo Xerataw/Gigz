@@ -115,6 +115,7 @@ const ProfileView: React.FC<IProfileViewProps> = ({
           onClose={() => setNewMessageModalOpened(false)}
           closeOnClickOutside
           centered
+          className="new-message-modal"
         >
           <Modal.Overlay className="opacity-50 blur-s z-[5000]" />
           <Modal.Content>
