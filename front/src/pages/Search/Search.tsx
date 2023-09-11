@@ -38,7 +38,7 @@ const Search: React.FC<ISearchProps> = ({ isFavorites = false }) => {
   const form = useForm({
     initialValues: {
       name: '',
-      capacities: [0, 0],
+      capacities: [0, 9999999],
       genres: [] as IGenre[],
       type: userTypeFilter,
       location: {} as ILocation,
