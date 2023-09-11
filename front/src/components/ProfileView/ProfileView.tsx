@@ -77,7 +77,7 @@ const ProfileView: React.FC<IProfileViewProps> = ({
   const canEdit = useLocation().pathname.includes('/auth/profile');
 
   return (
-    <div className="relative">
+    <div className="profile-view relative">
       {!canEdit && (
         <div className="absolute z-[5000] p-3 -left-4 -top-[3.5rem]">
           <Group>
