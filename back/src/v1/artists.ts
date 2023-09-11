@@ -74,7 +74,14 @@ router.get('/', async (req, res) => {
         },
       },
     },
-    where: buildArtistsWhereCondition(body.data),
+    where: {
+      ...buildArtistsWhereCondition(body.data),
+      account_id: {
+        not: {
+          equals: req.account.id,
+        },
+      },
+    },
   });
 
   const likedAccounts = await database.liked_account.findMany({

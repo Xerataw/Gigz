@@ -70,10 +70,16 @@ router.get('/', async (req, res) => {
   const body = searchFiltersBodySchemas.safeParse(req.query);
 
   if (!body.success) return sendError(res, ApiMessages.BadRequest);
-  const where = buildHostsWhereCondition(body.data);
 
   const data = await database.host.findMany({
-    where: where,
+    where: {
+      ...buildHostsWhereCondition(body.data),
+      account_id: {
+        not: {
+          equals: req.account.id,
+        },
+      },
+    },
 
     include: {
       capacity: true,
