@@ -26,7 +26,7 @@ const Result: React.FC<ISearchResultProps> = ({ result, loading, onClick }) => {
   };
 
   return (
-    <div className="flex items-center">
+    <div className="flex items-center justify-between w-full">
       <ProfileBanner
         username={result?.name}
         genres={result?.genres}
